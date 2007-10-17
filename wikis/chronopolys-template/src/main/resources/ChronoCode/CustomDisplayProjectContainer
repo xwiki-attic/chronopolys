@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xwikidoc>
+<web>ChronoCode</web>
+<name>CustomDisplayProjectContainer</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>XWiki.jvdrean</creator>
+<author>XWiki.Admin</author>
+<customClass></customClass>
+<contentAuthor>XWiki.Admin</contentAuthor>
+<creationDate>1175618637000</creationDate>
+<date>1189687931000</date>
+<contentUpdateDate>1189687931000</contentUpdateDate>
+<version>1.97</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<object>
+<class>
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<cache>0</cache>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+<name>tags</name>
+<number>1</number>
+<prettyName>Tags</prettyName>
+<relationalStorage>1</relationalStorage>
+<separator> </separator>
+<separators> ,|</separators>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<values></values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>ChronoCode.CustomDisplayProjectContainer</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<property>
+<tags/>
+</property>
+</object>
+<content>#if($type=="view")
+$value
+#else
+{pre}
+&lt;style&gt;
+#nav, #nav ul {
+	float: left;
+	list-style: none;
+	line-height: 1;
+	background: #fff;
+	font-weight: bold;
+	padding: 0;
+	border: 1px solid #ddd;
+	margin: 0 0 1em 0;
+}
+
+#nav a {
+	display: block;
+	color: #000;
+	text-decoration: none;
+	padding: 0.25em 1.5em 0.25em 0.5em;
+}
+
+#nav a.daddy {
+	background: url($xwiki.getSkinFile("rightarrow.gif")) center right no-repeat;
+}
+
+#nav a.grandpa {
+	background: url($xwiki.getSkinFile("rollarrow.gif")) center right no-repeat;
+	margin-right: 5px;
+	width: 140px;
+}
+
+#nav li {
+	float: left;
+	padding: 0;
+}
+
+#nav li ul {
+	position: absolute;
+	left: -999em;
+	//height: auto;
+	width: 14.4em;
+	w\idth: 13.9em;
+	font-weight: normal;
+	border-width: 1px;
+	margin: 0;
+}
+
+#nav li li {
+	padding-right: 0.9em;
+	width: 13em
+}
+
+#nav li ul a {
+	width: 13em;
+	w\idth: 11.5em;
+}
+
+#nav li ul ul {
+	margin: -1.75em 0 0 14em;
+}
+
+#nav li:hover ul ul, #nav li:hover ul ul ul, #nav li.sfhover ul ul, #nav li.sfhover ul ul ul {
+	left: -999em;
+}
+
+#nav li:hover ul, #nav li li:hover ul, #nav li li li:hover ul, #nav li.sfhover ul, #nav li li.sfhover ul, #nav li li li.sfhover ul {
+	left: auto;
+}
+
+#nav li:hover ul ul, #nav li:hover ul ul ul, #nav li:hover ul ul ul ul, #nav li.sfhover ul ul, #nav li.sfhover ul ul ul, #nav li.sfhover ul ul ul ul {
+	left: -999em;
+}
+
+#nav li:hover ul, #nav li li:hover ul, #nav li li li:hover ul, #nav li li li li:hover ul, #nav li.sfhover ul, #nav li li.sfhover ul, #nav li li li.sfhover ul, #nav li li li li.sfhover ul {
+	left: auto;
+}
+
+#nav li:hover, #nav li.sfhover {
+	background: #ffd;
+}
+&lt;/style&gt;
+&lt;script type="text/javascript"&gt;&lt;!--//--&gt;&lt;![CDATA[//&gt;&lt;!--
+sfHover = function() {
+	var sfEls = document.getElementById("nav").getElementsByTagName("LI");
+	for (var i=0; i&lt;sfEls.length; i++) {
+		/* sfEls[i].onmouseover=function() {
+			this.className+=" sfhover";
+		}
+		sfEls[i].onmouseout=function() {
+			this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
+		} */
+		sfEls[i].onclick=function() {
+			this.className+=" sfhover";
+		}
+		sfEls[i].onblur=function() {
+			this.className=this.className.replace(new RegExp(" sfhover\\b"), "");
+		}
+	}
+}
+function projectcontainerchange(name, page, displayConfirm) {
+  if (displayConfirm) {
+    confirm("confirmprojetcontainerchange");
+  }
+  $('ChronoClasses.ProjectClass_0_container').value = page;
+  var vis = $('ChronoClasses.ProjectClass_0_container_visible');
+  vis.value = name;
+  if (eltHasClass(vis, 'hidden')) {
+    rmClass(vis, 'hidden');
+  }
+}
+if (window.attachEvent) window.attachEvent("onload", sfHover);
+//--&gt;&lt;!]]&gt;&lt;/script&gt;
+{/pre}
+&lt;input type="hidden" name="$prefix$name" id="$prefix$name" value="$value"&gt;
+#set($contname="ProjectContainers.${value}")
+&lt;input type="text" size="30" name="$prefix${name}_visible" id="$prefix${name}_visible" value="$xwiki.getDocument($contname).display("name", "view")" disabled="disabled" class="#if($value=="OrphanActivity")hidden#end"&gt;
+&lt;ul id="nav"&gt;
+&lt;li&gt;&lt;a class="grandpa" href="#"&gt;#if($value=="OrphanActivity")$msg.get("selectactivity")#else$msg.get("changeactivity")#end&lt;/a&gt;
+&lt;ul&gt;
+#foreach($axis in $xwiki.chronopolys.getProjectContainers("axis"))
+  #set ($tmp = $axis.name)
+  #set ($count = $tmp.indexOf(".") + 1)
+  #set($axispage = $tmp.substring($count))
+  #set ($ylist = "")
+  #set ($ylist = $xwiki.chronopolys.getProjectContainerChilds($axispage))
+  #if ($ylist.size() &gt; 0)
+    &lt;li&gt;&lt;a href="#" class="daddy"&gt;$xwiki.getXMLEncoded($axis.get("name"))&lt;/a&gt;
+      &lt;ul&gt;
+        #foreach($yard in $xwiki.chronopolys.getProjectContainerChilds($axispage))        
+          #set ($tmp = $yard.name)
+          #set ($count = $tmp.indexOf(".") + 1)
+          #set ($apage = $tmp.substring($count))
+          #set ($alist = "")
+          #set ($alist = $xwiki.chronopolys.getProjectContainerChilds($apage))
+          #if ($alist.size() &gt; 0)
+            &lt;li&gt;&lt;a href="#" class="daddy"&gt;$xwiki.getXMLEncoded($yard.get("name"))&lt;/a&gt;
+              #if ($alist.size() &gt; 0)
+                &lt;ul&gt;
+                  #foreach($activity in $alist)
+                    #set ($tmp = $activity.name)
+                    #set ($count = $tmp.indexOf(".") + 1)
+                    #set ($apage = $tmp.substring($count))
+                    &lt;li&gt;&lt;a href="#" onclick="projectcontainerchange('$xwiki.getXMLEncoded($activity.get("name"))', '$apage', #if($value=="OrphanActivity")false#else true#end); return false;"&gt;$xwiki.getXMLEncoded($activity.get("name"))&lt;/a&gt;&lt;/li&gt;
+                  #end
+                &lt;/ul&gt;
+              #end
+            &lt;/li&gt;
+          #end        
+        #end
+      &lt;/ul&gt;
+    &lt;/li&gt;
+  #end
+#end
+&lt;/ul&gt;
+&lt;/ul&gt;
+#end</content>
+</xwikidoc>

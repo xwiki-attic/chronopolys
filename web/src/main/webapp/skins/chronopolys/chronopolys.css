@@ -1,0 +1,1022 @@
+td.styleeditinput {
+    float:left;
+    width: 170px;
+}
+
+.fright { float: right; }
+.fleft  { float: left; }
+.sicon  { width: 16px; height: 16px; border: 0; }
+.opencloseiconcontainer { margin-left:5px; margin-right:5px; width:16px; }
+.timeline_side { height: 34px; width:10px; }
+
+#dashboard_masterinfos {
+    float: right;
+    padding-bottom: 8px;
+    padding-right: 30px;
+    border: 1px solid #aaa;
+    margin-right: 30px;
+    width: 370px;
+    height: 32px;
+}
+
+#dashboard_options {
+    height:61px;
+}
+
+#dashboardmode_l, #dashboardmode_r, #dashboardadd_l, #dashboardaddmode_r {
+    width:7px;
+    height:32px;
+    float:left;
+}
+
+#dashboardmode_c, #dashboardadd_c {
+    padding-top:8px;
+    height:32px;
+    float:left;
+}
+
+#master_timeline {
+    height: 40px;
+    width: 400px;
+    border: 0px;
+}
+
+#master_quality {
+    width:428px;
+}
+
+.projectquality {
+    height:40px;
+}
+
+.projectquality {
+    float: right;
+    color: #32353F;
+    font-size: 10px;
+    line-height: 12px;
+    height: 100%;
+    width: 100%;
+}
+
+.projectquality td {
+    padding-left: 2px;
+    padding-right: 2px;
+    overflow: hidden;
+}
+
+.projectquality .lborder {
+    border-left: solid 1px #B2B2B2;
+    text-align: center;
+}
+
+.projectdatas_container {
+    height: 34px;
+}
+
+.timeline-event-bubble-time {
+    display: none;
+}
+
+a.addlink {
+    background: transparent url( add.gif ) no-repeat scroll left center;
+    padding-left: 20px;
+    text-decoration: none;
+}
+
+a.modifylink {
+    background: transparent url( page_white_edit.gif ) no-repeat scroll left center;
+    padding-left: 20px;
+    text-decoration: none;
+}
+
+.timeline-default {
+    font-family: Trebuchet MS, Helvetica, Arial, sans serif;
+    font-size: 8pt;
+    height: 32px;
+    width:400px;
+    border: 1px solid #aaa;
+    border-left:0;
+    border-right:0;
+    background-color: #EEE;
+}
+
+.timeline-event-bubble-body {
+    font-family: Trebuchet MS, Helvetica, Arial, sans serif;
+    font-size: 10pt;
+}
+
+#userscontainer {
+    padding-left: 16px;
+}
+
+.userscol {
+    width: 200px;
+    float: left;
+}
+
+#plogbar-actions {
+    float: right;
+    margin-right: 10px;
+}
+
+#plogbar-actions a {
+    color: #fff;
+    text-decoration: none;
+}
+
+#meeting_edit td, #task_edit td {
+    height: 30px;
+}
+
+#projectlogarticle_edit tr {
+    min-height: 30px;
+}
+
+/*
+**
+** CHRONOPOLYS
+**
+*/
+
+#body, .viewbody {
+    background: #B2B2B2;
+    text-align: center;
+}
+
+#body #contentcontainer, #headerglobal, #xwikieditor {
+    border-color: transparent;
+}
+
+#leftPanels, #rightPanels, #editPanels {
+    background-color: transparent;
+    border-top: 20px solid transparent;
+    color: #FFFFFF;
+}
+
+#rightPanels, #leftPanels {
+    float: left;
+    padding-top: 0px;
+    position: relative;
+    width: 200px;
+    margin-right: -210px;
+    border-top: 0px;
+}
+
+.panel, .fakepanel {
+    color: #32353F;
+    width: 170px;
+    margin-top: 10px;
+    background: transparent url( panelheader_collapsed.gif ) top left no-repeat;
+}
+
+.panel a {
+    color: #32353F;
+    font-weight: normal;
+    font-size: 11px;
+}
+
+.expanded .xwikipaneltitle {
+    background: transparent url( panelheader_expanded.gif ) top left no-repeat;
+    color: #D61385;
+    height: 25px;
+}
+
+.collapsed .xwikipaneltitle {
+    background: transparent;
+    color: #D61385;
+    height: 25px;
+}
+
+#globalsearch input {
+    font-size: 12px;
+}
+
+#globalsearch {
+    margin: 0px;
+    padding: 0px 0px 10px;
+    text-align: center;
+}
+
+panel .accordionTabTitleBar {
+    background-color: #E6E6E6 !important;
+}
+
+.panel .accordionTabTitleBar {
+    background-color: #E6E6E6 !important;
+    border-color: #E6E6E6 !important;
+}
+
+.panel .accordionTabTitleBar h6 {
+    border-bottom: 2px solid #E6E6E6 !important;
+    font-weight: normal;
+    color: #909090 !important;
+}
+
+.panel .accordionTabContentBox {
+    background-color: #F1F1F1 !important;
+    border: 1px solid #F1F1F1 !important;
+}
+
+.xwikipanelcontents {
+    background: transparent url( panel_bottom.gif ) left bottom no-repeat;
+    line-height: 13px;
+}
+
+/*
+** VIEW
+*/
+
+#xwikimaincontainer {
+    width: 870px;
+    font-size: 12px;
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 40px auto;
+    border: 2px solid transparent;
+    background: transparent url( bckgrnd_central.gif ) repeat-y;
+}
+
+#xwikimaincontainerinner {
+    background: transparent url( bckgd_header.gif ) top left no-repeat;
+    border: 1px solid transparent;
+}
+
+/* IE6 */
+* html #xwikimaincontainerinner {
+    background-position: 1px 0px;
+}
+
+/* IE7 */
+html* #xwikimaincontainerinner {
+    background-position: 1px 0px;
+}
+
+#headerglobal {
+    background: transparent;
+}
+
+#companylogo {
+    padding: 20px 0pt 0pt 76px;
+}
+
+#globallinks {
+    background: transparent;
+    background-color: transparent;
+    width: 500px;
+    height: 20px;
+    margin-right: -525px;
+}
+
+#headerglobal {
+    border-right: 525px solid transparent !important;
+}
+
+#headerglobal {
+    _border-right: 0;
+    _margin-right: -550px;
+}
+
+#rightPanels, #globallinks {
+    _margin: 0;
+    _margin-left: 0;
+}
+
+.editbody #headerglobal {
+    border-right-color: transparent;
+}
+
+.editbody #globallinks {
+    margin-right: -500px;
+    width: 500px;
+}
+
+.contenthideleft, #headerglobal {
+    _border-right: 0;
+}
+
+#globallinks {
+    _margin: 0;
+    _margin-left: -550px;
+}
+
+#rightPanels {
+    _margin: 0;
+    _margin-left: -200px;
+}
+
+#globalmenu {
+    font-size: 10px;
+    width: 234px;
+    background: url( login-box.gif ) bottom;
+    margin: 14px 0 0 245px;
+    _margin: 13px 0 0 245px;
+    padding: 4px 8px;
+}
+
+#globalmenu .glink {
+    line-height: 150%;
+    font-size: 10px;
+    font-weight: normal;
+    display: inline;
+}
+
+.main {
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+#footerglobal {
+    text-align: left;
+    text-indent: 26px;
+    background: #B2B2B2 url( footer.gif ) left top no-repeat;
+}
+
+#contentcontainer {
+    background: transparent url( bckgrnd_central.gif ) repeat-y;
+}
+
+#contentcontainerinner, #xwikieditorinner {
+    background-color: transparent;
+}
+
+#headerspace {
+    background-color: transparent;
+    background: transparent url( bckgrnd_central.gif ) repeat-y;
+    color: black;
+}
+
+#headerspace a, #headerspace alink, #headerspace a:visited, #headerspace a:active {
+    color: black;
+    text-decoration: none;
+}
+
+/*
+** MAIN LAYOUT SECTION
+*/
+
+#contentcolumn .layoutsubsection {
+    padding-right: 18px;
+}
+
+.content #contentcolumn, .contenthideleft #contentcolumn, #editcolumn {
+    background: transparent;
+}
+
+.heading-1 {
+    border-bottom: 0px solid;
+    font-size: 2.6em;
+    line-height: 1.1em;
+    margin: 10px 0pt 30px;
+}
+
+/*
+** EDIT
+*/
+
+html > body #xwikieditcontent {
+    padding: 3px 3px 3px 3px;
+}
+
+#xwikieditor {
+    background: transparent url( bckgrnd_central.gif ) repeat-y;
+    border-right: 0px;
+    padding-right: 10px;
+}
+
+#xwikieditcontent textarea#content {
+    width: 99%;
+}
+
+.alleditcontent {
+    margin-top: 20px;
+    margin-left: 24px;
+    margin-right: 10px;
+}
+
+#editPanels .panel {
+    float: left;
+    width: 290px;
+    margin-left: 6px;
+    background: transparent url( editpanelheader_collapsed.gif )
+}
+
+#editPanels.panels {
+    float: left;
+    border: 0px;
+    padding-left: 20px;
+    margin-right: 0px;
+    width: 100%;
+}
+
+#editPanels .expanded .xwikipaneltitle {
+    background: transparent url( editpanelheader_expanded.gif ) no-repeat
+}
+
+#editPanels .xwikipanelcontents {
+    color: black !important;
+    background: transparent url( editpanel_bottom.gif ) left bottom no-repeat;
+}
+
+#xwikidoctitleinput {
+    font-size: 150%;
+    width: 70%;
+}
+
+.xwikitabbar li {
+    width: 110px;
+}
+
+.xwikitabbar li a {
+    font-size: 12px;
+    color: #D1278B !important;
+}
+
+.xwikitabbar li.active a {
+    color: black !important;
+}
+
+#body .buttonwrapper * {
+    color: #D1278B;
+    font-weight: bold !important;
+}
+
+/*
+** SPECIFIC
+*/
+
+#chronotabs {
+    margin-right: 30px;
+    margin-left: 30px;
+    background: transparent url( chronotabs.gif ) bottom left repeat-x;
+}
+
+.chronotab, .chronotabselected {
+    float: left;
+}
+
+.tablinkl, .tablinkr {
+    float: left;
+    height: 18px;
+}
+
+.tablink {
+    float: left;
+    height: 18px;
+    background: transparent url( tab_center.gif ) top left repeat-x;
+}
+
+#headerspace a, #headerspace alink, #headerspace a:visited, #headerspace a:active {
+    color: black;
+    text-decoration: none;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+#headerspace a:hover {
+    color: #D1278B;
+}
+
+/*
+** FIELDSET
+*/
+
+fieldset.xwikimessage {
+    border-color: #B2B2B2;
+}
+
+fieldset.xwikimessage {
+    background-color: #ffffff;
+    border-color: #BBBBBB;
+}
+
+fieldset.xwikimessage legend {
+    background-color: #E6E6E6;
+    border: solid 2px #B2B2B2;
+    color: #D1278B;
+}
+
+/*
+** BUTTONS
+*/
+
+input.button, button.button {
+    color: black;
+}
+
+input.button:hover {
+    color: #D1278B;
+}
+
+input[type="submit"] {
+    color: #D1278B;
+    background-color: gainsboro;
+}
+
+input[type="text"], input[type="password"], input[type="checkbox"], input[type="file"], select {
+    background: white;
+    border-color: #CCC;
+}
+
+#chronoapp textarea {
+    background-color: white;
+    background-image: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+html {
+    min-height: 100%;
+    margin-bottom: 1px;
+}
+
+.project_name a, .project_name pace alink, .project_name a:visited, .project_name a:active {
+    color: #fff;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+#project_bar_actions a, #project_bar_actions alink, #project_bar_actions a:visited, #project_bar_actions a:active {
+    color: #fff;
+    font-weight: bold;
+    font-size: 12px;
+    text-decoration: none;
+    _position: relative;
+}
+
+#headerlanguages .glink {
+    display: none;
+}
+
+#chronocontainers {
+    width: 620px;
+}
+
+#body .buttonwrapper * {
+    color: #D1278B;
+    font-weight: bold !important;
+}
+
+#chronoapp input[type="text"], #chronoapp input[type="password"], #chronoapp input[type="checkbox"], #chronoapp input[type="file"], #chronoapp select {
+    font-size: 10px;
+    padding: 1px;
+    border-color: #CCC;
+}
+
+#chronoapp textarea {
+    font-size: 11px;
+    padding: 1px;
+    border-color: #CCC;
+}
+
+.wiki-table {
+    background-color: #F4F4F4;
+    border: 20px solid #F4F4F4 !important;
+    width: 90%;
+    margin: 0px auto;
+}
+
+.wiki-table .table-odd {
+    background-color: #FFFFFF;
+}
+
+.wiki-table th {
+    background-color: #F4F4F4;
+}
+
+.article_footer {
+    text-align: right;
+    border-color: #E6E6E6;
+    clear: both;
+    margin: 0 -10px -10px;
+    padding: 0 10px;
+    height: 12px;
+    line-height: 12px;
+}
+
+.article_header {
+    font-size: 10px;
+    float: left;
+}
+
+.article_deploy_closed, .article_deploy_open {
+    height: 22px;
+    width: 22px;
+    float: right;
+    cursor: pointer;
+    display: block;
+}
+
+.article_deploy_closed {
+    background: url( plog-closed.gif ) no-repeat;
+}
+
+.article_deploy_open {
+    background: url( plog-open.gif ) no-repeat;
+}
+
+.article_title {
+    clear: left;
+    float: left;
+    margin: -5px 0 0;
+    width: 270px;
+}
+
+.articles_filter {
+    text-align: right;
+}
+
+.article_type {
+    padding: 3px;
+    font-weight: bold;
+    font-size: 12px;
+    margin-right: 2px;
+    line-height: 16px;
+    float: left;
+    border: 1px solid #E6E6E6;
+}
+
+.article_type_text {
+    float: left;
+    padding-left: 3px;
+}
+
+.collapsed .xwikipaneltitle:hover {
+    background-image: none;
+    color: #D1278B;
+}
+
+.expanded .xwikipaneltitle:hover {
+    color: #D1278B;
+}
+
+.rounded-title {
+    background: url( plog-bar.png ) no-repeat;
+    _position: relative;
+    _background-image: url( );
+    _filter:
+    progid: DXImageTransform . Microsoft . AlphaImageLoader( src = '$xwiki.getSkinFile("plog-bar.png")', sizingMethod = 'scale' );
+    height: 20px;
+    padding: 4px 0 0 10px;
+    margin: 0 -5px;
+    color: #fff;
+    font-weight: bold;
+}
+
+.rounded-medium-title {
+    background: url( axis.png ) no-repeat;
+    _position: relative;
+    _background-image: url( );
+    _filter:
+    progid: DXImageTransform . Microsoft . AlphaImageLoader( src = '$xwiki.getSkinFile("axis.png")', sizingMethod = 'scale' );
+    height: 20px;
+    padding: 4px 0 0 10px;
+    margin: 0 -5px;
+    color: #fff;
+    font-weight: bold;
+}
+
+#xwikidatacontents {
+    margin: 22px;
+}
+
+#xwikidata #commentscontent, #body #attachmentscontent, #xwikidata #attw {
+    background: none transparent;
+}
+
+#comments, #attachments {
+    padding: 0;
+}
+
+.attachmentsno {
+    background: transparent url( mail-attachment.png ) no-repeat;
+    _background-image: url( );
+    _filter:
+    progid: DXImageTransform . Microsoft . AlphaImageLoader( src = '$xwiki.getSkinFile("mail-attachment.png")', sizingMethod = 'scale' );
+    padding: 0;
+    height: 16px;
+    width: 16px;
+}
+
+.commentsno {
+    background: transparent url( comments.png ) no-repeat;
+    _background-image: url( );
+    _filter:
+    progid: DXImageTransform . Microsoft . AlphaImageLoader( src = '$xwiki.getSkinFile("comments.png")', sizingMethod = 'scale' );
+    padding: 0;
+    height: 16px;
+    width: 16px;
+}
+
+form#inline {
+    margin: 0 31px;
+}
+
+.article_content {
+    padding: 10px 5px 5px 5px;
+    font-size: 11px;
+    line-height: 12px;
+    clear: both;
+    overflow: hidden;
+    width: 290px;
+}
+
+.task .article_content, .meeting .article_content {
+    padding-bottom: 10px;
+}
+
+.article_content table {
+    line-height: 8px;
+    margin-bottom: 10px;
+}
+
+.article_content_container {
+    width: 300px;
+    float: left;
+    margin-left: 10px;
+}
+
+#loginForm .centered {
+    width: 760px;
+}
+
+#members_view .roundedcontent {
+    padding: 2px 5px;
+}
+
+#createplogitem a {
+    margin: 0 20px 0 10px;
+}
+
+#createplogitem {
+    border-right: 1px solid #bfbfbf;
+}
+
+#article_filter {
+    margin-top: 3px;
+}
+
+.styleeditinput input {
+    margin-bottom: 5px;
+}
+
+.linknonedecoration {
+    text-decoration: none;
+    color: #000;
+}
+
+a.meetingyes, a.meetingno, a.meetingmaybe {
+    display: block;
+    height: 15px;
+    width: 16px;
+    float: right;
+}
+
+a.meetingyes {
+    background: url( meeting_alpha_yes.gif ) no-repeat;
+}
+
+a.meetingno {
+    background: url( meeting_alpha_no.gif ) no-repeat;
+}
+
+a.meetingmaybe {
+    background: url( meeting_alpha_maybe.gif ) no-repeat;
+}
+
+a.meetingyes:hover {
+    background: url( meeting_yes.gif ) no-repeat;
+}
+
+a.meetingno:hover {
+    background: url( meeting_no.gif ) no-repeat;
+}
+
+a.meetingmaybe:hover {
+    background: url( meeting_maybe.gif ) no-repeat;
+}
+
+tr.row.even, .even {
+    background-color: #F3F3F3;
+}
+
+input.button, .xwikibuttonlink a {
+    background-color: #F1F1F1;
+    color: #D1278B;
+    border: 1px solid #ccc;
+}
+
+input.button:hover, .xwikibuttonlink a:hover {
+    color: #000;
+}
+
+.deletebody #contentcolumn .layoutsubsection {
+    padding: 10px 55px 20px;
+}
+
+#admincontainer {
+    margin: 0 6px;
+}
+
+.clearall {
+    clear: both;
+}
+
+#plogbar-actions {
+    margin-right: 10px;
+}
+
+#chronoapp {
+    margin: 15px 37px 0 25px;
+}
+
+.contenthideleft #chronoapp {
+    margin: 0;
+}
+
+#projectcontainer {
+    margin: 0 -23px;
+}
+
+#groupcontent {
+    margin: 0 6px;
+}
+
+#plog_view .roundedcontent {
+    padding-top: 0;
+}
+
+#containall {
+    margin: 0 37px 0 25px;
+}
+
+tr.row.even, tr.row.odd {
+    text-align: center;
+}
+
+#historycontent {
+    width: 610px;
+}
+
+#notifications_view .buttonwrapper {
+    margin-top: 0;
+}
+
+#notifications_edit .buttonwrapper {
+    margin: 10px 0 0;
+    float: right;
+}
+
+#register .rounded-medium-title span, #panelprojectcreate h5 {
+    background: url( add.gif ) no-repeat left center;
+    padding-left: 20px;
+    display: block;
+}
+
+#panelprojectcreate h5, #panelsearch h5, #panelmytasks h5, #panelmymeetings h5, #panelmyprojects h5 {
+    margin-left: 4px;
+    padding-left: 18px;
+}
+
+#panelsearch h5 {
+    background: url( search.gif ) no-repeat left center;
+}
+
+#panelmytasks h5 {
+    background: url( tasks.gif ) no-repeat left center;
+}
+
+#panelmymeetings h5 {
+    background: url( meetings.gif ) no-repeat left center;
+}
+
+#panelmyprojects h5 {
+    background: url( projects.gif ) no-repeat left center;
+}
+
+.plogheaderleft {
+    float: left;
+}
+
+#projectcol_1 .roundedcontent {
+    width: 346px;
+}
+
+#project_bar_actions a {
+    text-transform: lowercase;
+    _position: relative;
+}
+
+a#backtoproject {
+    background: url( back.gif ) no-repeat;
+    padding-left: 20px;
+    _position: relative;
+}
+
+a#deleteproject, a#deleteplogarticle, a#deletewikipage {
+    background: url( bin.gif ) no-repeat;
+    padding-left: 20px;
+    margin-right: 5px;
+    _position: relative;
+}
+
+a#editwikipage, a#editprofile {
+    background: transparent url( page_white_edit.gif ) no-repeat;
+    height: 16px;
+    margin-right: 10px;
+    padding-left: 20px;
+    _position: relative;
+}
+
+a#editprofile {
+    color: #D1278B;
+}
+
+.yard_container {
+    margin: 0 0 2px;
+}
+
+.axis_container {
+    margin: 0 0 2px;
+}
+
+.container_add {
+    margin: 0 0 2px;
+}
+
+.error {
+    background: url( warning.gif );
+    padding: 3px;
+    color: #fff;
+    _width: 100%;
+    height: 100%
+}
+
+.errorcontent {
+    width: 100%;
+    height: 100%;
+}
+
+#panelmytasks tr, #panelmymeetings tr, #panelmyprojects tr {
+    border-top: 1px #ccc solid;
+}
+
+.loginbody #globalmenu {
+    display: none;
+    background: transparent none;
+}
+
+#notifications_edit, #notifications_view {
+    width: 170px;
+}
+
+#body .buttonwrapper * {
+    background: transparent url( black-button24r.gif ) no-repeat right center;
+    cursor: pointer;
+}
+
+.buttonwrapper {
+    background: transparent url( black-button24l.gif ) no-repeat left center;
+}
+
+#powered {
+    float: right;
+    margin: 14px 24px 0 0;
+    _margin: 16px 12px 0 0;
+}
+
+#wikipage {
+    margin: 10px 40px 0 22px;
+}
+
+#wikipage #chronoapp {
+    margin: 7px;
+}
+
+.rounded-actions {
+    float: right;
+    margin-right: 10px;
+}
+
+.rounded-actions a {
+    color: #fff;
+    text-decoration: none;
+}
+
+table.grid {
+    _width: 620px;
+}
+
+#footerglobal {
+    height: 18px;
+}
+
+.phaseedit {
+    width: 168px;
+}
+
+#plogbar-edit {
+    background: transparent url( page_white_edit.gif ) no-repeat;
+    padding-left: 20px;
+}

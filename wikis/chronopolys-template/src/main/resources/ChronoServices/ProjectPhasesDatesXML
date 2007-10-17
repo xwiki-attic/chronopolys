@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xwikidoc>
+<web>ChronoServices</web>
+<name>ProjectPhasesDatesXML</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>XWiki.jvdrean</creator>
+<author>XWiki.Admin</author>
+<customClass></customClass>
+<contentAuthor>XWiki.jvdrean</contentAuthor>
+<creationDate>1177511619000</creationDate>
+<date>1186397075000</date>
+<contentUpdateDate>1186396918000</contentUpdateDate>
+<version>1.5</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<object>
+<class>
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<cache>0</cache>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+<name>tags</name>
+<number>1</number>
+<prettyName>Tags</prettyName>
+<relationalStorage>1</relationalStorage>
+<separator> </separator>
+<separators> ,|</separators>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<values></values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>ChronoServices.ProjectPhasesDatesXML</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<property>
+<tags/>
+</property>
+</object>
+<content>{pre}
+#set($phases = $xwiki.getDocument("${request.project}.ProjectPhases").getObjects("ChronoClasses.ProjectPhaseClass"))
+#set($color = $xwiki.chronopolys.getProjectContainerStyle($xwiki.getDocument("${request.project}.WebHome").display("container","view")))
+&lt;data date-time-format="iso8601"&gt;
+#foreach($phase in $phases)
+#if ($phase.type == "milestone")
+&lt;event start="$xwiki.formatDate($phase.getProperty("start").getValue(), "yyyy-MM-dd")" title="" color="$color"&gt;$xwiki.getXMLEncoded($phase.name)&lt;/event&gt;
+#else
+&lt;event start="$xwiki.formatDate($phase.getProperty("start").getValue(), "yyyy-MM-dd")" end="$xwiki.formatDate($phase.getProperty("end").getValue(), "yyyy-MM-dd")" isDuration="true" title="$xwiki.getXMLEncoded($phase.get("name"))" color="$color"&gt;$xwiki.getXMLEncoded($phase.desc) $xwiki.getXMLEncoded("&lt;br/&gt;") $xwiki.getXMLEncoded("&lt;br/&gt;")&lt;/event&gt;
+#end
+#end
+&lt;/data&gt;
+{/pre}</content>
+</xwikidoc>

@@ -1,0 +1,46 @@
+###
+### Frequently used documents
+###
+### Define variables useful for most document
+###
+#set($spacehome = $!xwiki.getDocument("${doc.web}.WebHome").getTranslatedDocument())
+#set($spaceDoc = $spacehome)
+#set($parentDoc = ${xwiki.getDocument($doc.parent).getTranslatedDocument()})
+#set($prefdoc = $!xwiki.getDocument("XWiki.XWikiPreferences"))
+#set($docuser = $!xwiki.getDocument($context.localUser))
+#if ($context.user!="XWiki.XWikiGuest" && $xwiki.chronopolys)
+#set($ret = $xwiki.chronopolys.setLanguage($context.localUser))
+#end
+#set($searchdoc = $xwiki.getDocument("Main.WebSearch"))
+##
+## Chronopolys
+##
+#set ($isXWikiAdmin=$xwiki.hasAccessLevel("admin", $context.getUser(), "XWiki.XWikiPreferences"))
+#if ($context.action=="view"||$context.action=="edit"||$context.action=="inline")
+  #set ($cUser=$xwiki.getUser())
+  #set ($isChronoManager=$cUser.isUserInGroup("ChronoAdmin.ManagerGroup") || $isXWikiAdmin)
+  #set ($isChronoAdmin=$cUser.isUserInGroup("ChronoAdmin.AdminGroup") || $isXWikiAdmin)
+#end
+#set ($isProject = false)
+#if ($xwiki.chronopolys.isProject($doc.web))
+  #set ($isProject = true)
+  #set ($project=$xwiki.chronopolys.getProject($doc.web))
+  #set ($projectMembersDoc = $xwiki.getDocument("${doc.web}.ProjectMembers"))
+  #set ($isMember = false)
+  #if ($project.isMember($context.localUser))
+    #set ($isMember = true)
+    #foreach ($obj in $projectMembersDoc.getObjects("XWiki.XWikiGroups"))
+      #if ($obj.display("member", "view") == $context.localUser)
+        #set ($projectMemberObjNb = $obj.getNumber())
+      #end
+    #end
+  #end
+  #set ($projectLeader = $project.getProjectLeader())
+  #set ($projectCreator = $project.getProjectCreator())
+  #set ($isProjectLeader = ($context.localUser == $projectLeader))
+  #set ($isProjectCreator = ($context.localUser == $projectCreator))
+  #set ($currentActivity=$xwiki.chronopolys.getProjectContainer($project.get("container")))
+  #set ($currentYard=$xwiki.chronopolys.getProjectContainer($currentActivity.display("parent", "view")))
+  #set ($currentAxis=$xwiki.chronopolys.getProjectContainer($currentYard.display("parent", "view")))
+  #set ($currentStyle=$xwiki.chronopolys.getProjectContainerStyle($currentAxis.display("uid", "view")))
+#end

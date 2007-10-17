@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xwikidoc>
+<web>ChronoCode</web>
+<name>CreateUser</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>XWiki.jvdrean</creator>
+<author>XWiki.Admin</author>
+<customClass></customClass>
+<contentAuthor>XWiki.Admin</contentAuthor>
+<creationDate>1175875998000</creationDate>
+<date>1187281605000</date>
+<contentUpdateDate>1187281605000</contentUpdateDate>
+<version>1.34</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<object>
+<class>
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<cache>0</cache>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+<name>tags</name>
+<number>1</number>
+<prettyName>Tags</prettyName>
+<relationalStorage>1</relationalStorage>
+<separator> </separator>
+<separators> ,|</separators>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<values></values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>ChronoCode.CreateUser</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<property>
+<tags/>
+</property>
+</object>
+<content>#if ($request.register=="1")
+  #if ($request.register_email == "")
+    #error($msg.get("mustprovideemail"))
+  #else
+    #set ($reg = $xwiki.createUser())
+  #end
+#end
+#if($reg&lt;=0)
+  #if($reg==-2)
+    #error("$msg.get('passwordmismatch').")
+  #elseif($reg==-3)
+    #error("$msg.get('useralreadyexists').")
+  #elseif($reg==-4)
+    #error("$msg.get('invalidusername').")
+  #else
+    #error("$msg.get('registerfailed') ($msg.get('registerfailedcode') $reg).")
+  #end
+#elseif($reg)
+  #set($xwname = "XWiki.${request.xwikiname}")
+  #set($xwurl = $xwiki.getDocument("Main.WebHome").getExternalURL())
+  #set($pdoc = $xwiki.getDocument($xwname))
+  ##set($ret = $pdoc.set("chronolanguage", "fr"))
+  ##set($ret = $pdoc.save())
+  $xwiki.xWiki.sendValidationEmail($request.xwikiname, $request.register_password, $request.register_email, "xwurl", $xwurl, "validation_email_content", $context.context)
+  #info("$xwiki.getUserName($xwname) ($request.xwikiname): $msg.get('registersuccessful').")
+#end
+
+&lt;div class="xwikiintracontent"&gt;
+&lt;form id="register" name="register" style="margin-left: 12px;_margin-left: 15px;" action="$doc.getURL("view")" method="post"&gt;
+  &lt;div class="rounded-medium-title" style="background-color:gainsboro;color:#D61385;cursor:pointer;" onclick="javascript:toggleClass($('adduser-content'), 'hidden')"&gt;&lt;span&gt;$msg.get("adduser")&lt;/span&gt;&lt;/div&gt;
+    &lt;div class="hidden" id="adduser-content" style="_margin: 0 7px 0 -7px;"&gt;
+      &lt;div class="roundedcontent"&gt;
+&lt;input type="hidden" name="template" value="XWiki.XWikiUserTemplate" /&gt;
+&lt;input type="hidden" name="register" value="1"&gt;
+#set( $class = $xwiki.getDocument("XWiki.XWikiUsers").xWikiClass)
+#set( $serverclass = $xwiki.getDocument("XWiki.XWikiServerClass").xWikiClass)
+#set( $obj = $class.newObject() )
+#set( $serverobj = $class.newObject() )
+#set( $ok = $doc.use("XWiki.XWikiUsers"))
+#if($request.register_first_name)
+$doc.set("first_name", $request.register_first_name)
+#end
+#if($request.register_last_name)
+$doc.set("last_name", $request.register_last_name)
+#end
+&lt;dl&gt;
+#set($prop = $class.first_name)
+   &lt;dt&gt;$msg.get("firstname"):&lt;/dt&gt;
+   &lt;dd&gt;$doc.displayEdit($prop, "register_",  $obj)&lt;/dd&gt;
+#set($prop = $class.last_name)
+   &lt;dt&gt;$msg.get("lastname"):&lt;/dt&gt;
+   &lt;dd&gt;$doc.displayEdit($prop, "register_",  $obj)&lt;/dd&gt;
+   &lt;dt&gt;$msg.get("loginid"):&lt;/dt&gt;
+   &lt;dd&gt;&lt;input name="xwikiname" type="text" size="20" onfocus=" prepareName(document.forms.register);" /&gt;&lt;/dd&gt;
+#set($prop = $class.password)
+#set($prop = $class.email)
+   &lt;dt&gt;$msg.get("email"):&lt;/dt&gt;
+   &lt;dd&gt;$doc.displayEdit($prop, "register_",  $obj)&lt;/dd&gt;
+&lt;/dl&gt;
+#set ($randomPassword=$xwiki.chronopolys.getRandomAlphanumeric(6))
+&lt;input type="hidden" name="register_password" value="$randomPassword" /&gt;
+&lt;input type="hidden" name="register2_password" value="$randomPassword" /&gt;
+&lt;span class="buttonwrapper"&gt;&lt;input type="submit" value="$msg.get("iregister")"&gt;&lt;/span&gt;
+#roundedbottom()
+&lt;/div&gt;            
+&lt;/form&gt;
+&lt;/div&gt;
+
+</content></xwikidoc>

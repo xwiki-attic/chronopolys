@@ -1,0 +1,78 @@
+###
+### Main "view" template
+###
+### General wrapper for view actions
+###
+#if ($request.getParameter("raw").equals("1"))
+#template("code.vm")
+#else
+#template("startpage.vm")
+#if((!$viewer) || ($viewer == ""))
+#set($viewer = $request.getParameter("viewer"))
+#end
+#if((!$viewer) || ($viewer == ""))
+#set($viewer = "view")
+#end
+#if($viewer == "view")
+<div class="minwidthb"></div>
+<div class="main layoutsubsection">
+  #if ($isProject)
+    <div id="project_header" style="background-color:$currentStyle;">
+      <span class="project_name"><a href="$xwiki.getURL("${doc.web}.WebHome")">$project.get("name")</a></span>  #if ($context.action=="view")
+    #if ($project.isWikiPage($doc.name) || $doc.getObject("ChronoClasses.ProjectArticleClass"))
+      #if($context.action != "edit")
+          #if ($project.isWikiPage($doc.name))
+            #set ($editurl=$doc.getURL("edit"))
+            #set ($editmsg=$msg.get("editwikipage"))
+          #else
+            #set ($editurl=$doc.getURL("inline"))
+            #if ($doc.type == "post")
+              #set ($editmsg=$msg.get("editpost"))
+            #elseif ($doc.type == "task")
+              #set ($editmsg=$msg.get("edittask"))
+            #elseif ($doc.type == "meeting")
+              #set ($editmsg=$msg.get("editmeeting"))
+            #end
+          #end
+      #end
+    #end
+    <span id="project_bar_actions">
+    #if ($doc.name !=  "WebHome")
+      <a id="backtoproject" href="$xwiki.getURL("${doc.web}.WebHome")">$msg.get("backtoproject")</a>
+    #else
+      #if ($isChronoAdmin)
+        <a id="deleteproject" href="$doc.getURL('view', 'do=delete')">$msg.get("deleteproject")</a>
+      #end
+    #end
+    </span>
+  #end
+    </div>
+    <div class="container_breadcrumb">$currentAxis.display("name", "view") > $currentYard.display("name", "view") > $currentActivity.display("name", "view")</div>
+  #end
+#if ($project.isWikiPage($doc.name))
+  <div id="wikipage">
+    <div class="rounded-title" style="background-color: $currentStyle"><img width="16" height="16" style="float:left; margin-right: 5px;" src="$xwiki.getSkinFile('page.png')"/><span style="float:left;"> $doc.getDisplayTitle()</span><span class="rounded-actions">
+      <a id="editwikipage" href="$doc.getURL('edit')">$msg.get("editwikipage")</a>
+      ##if($isXWikiAdmin || $isChronoManager || $isChronoAdmin || $context.user == $doc.creator)
+      #if($xwiki.hasAccessLevel("delete", $doc.fullName))
+        | <a id="deletewikipage" href="$doc.getURL('delete')">$msg.get("deletewikipage")</a>
+      #end
+</span></div>
+<div class="roundedcontent">
+#end
+#template("contentview.vm")
+#if ($project.isWikiPage($doc.name))
+    #roundedbottom()
+  </div>
+#end
+#template("docextra.vm")
+<div class="clearfloats"></div>
+#else
+<div class="main layoutsubsection">
+#template("${viewer}.vm")
+<div class="clearfloats">
+</div>
+#end
+</div>## main
+#template("endpage.vm")
+#end

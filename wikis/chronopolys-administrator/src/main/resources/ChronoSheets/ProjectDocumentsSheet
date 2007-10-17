@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xwikidoc>
+<web>ChronoSheets</web>
+<name>ProjectDocumentsSheet</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>XWiki.jvdrean</creator>
+<author>XWiki.Admin</author>
+<customClass></customClass>
+<contentAuthor>XWiki.jvdrean</contentAuthor>
+<creationDate>1173359528000</creationDate>
+<date>1186397075000</date>
+<contentUpdateDate>1186396919000</contentUpdateDate>
+<version>1.6</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<object>
+<class>
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<cache>0</cache>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+<name>tags</name>
+<number>1</number>
+<prettyName>Tags</prettyName>
+<relationalStorage>1</relationalStorage>
+<separator> </separator>
+<separators> ,|</separators>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<values></values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>ChronoSheets.ProjectDocumentsSheet</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<property>
+<tags/>
+</property>
+</object>
+<content>###
+### Display an icon according to the mimetype
+###
+### @param mime The reported mimetype of the file
+### @param fname The name of the file
+###
+#macro(mimetypeimg $mime $fname $size)
+#set($idx = $fname.lastIndexOf("."))
+#set($idx = $idx + 1)
+#if(($idx != 0) &amp;&amp; ($idx != -1))
+#set($ext = $fname.substring($idx))
+#else
+#set($ext = "")
+#end
+#####    images
+#if($mime.equals("image/svg"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/vectorgfx.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("application/svg+xml"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/vectorgfx.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.startsWith("image/"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/jpg.png")" style="width:$size;height:$size;"/&gt;#####    text based
+#elseif($mime.equals("text/plain"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/txt.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("text/html"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/html.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("text/css"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/url.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.startsWith("text/"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/txt.png")" style="width:$size;height:$size;"/&gt;#####    documents
+#elseif($mime.equals("application/xml"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/xml.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("application/pdf"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/pdf.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("application/postscript"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/ps.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("application/msword"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/word.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("application/powerpoint"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/ppt.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("application/x-shockwave-flash"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/swf.png")" style="width:$size;height:$size;"/&gt;#####    archives
+#elseif($mime.equals("application/x-tar"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/tar.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("application/zip"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/zip1.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("application/x-gzip"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/tar_gz.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("application/java-archive"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/jar.png")" style="width:$size;height:$size;"/&gt;#####    media
+#elseif($mime.startsWith("audio/"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/wav.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.startsWith("video/"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/video.png")" style="width:$size;height:$size;"/&gt;#####    octet-streams extensions
+#elseif($mime.equals("application/octet-stream"))
+#if($ext.equals("xls"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/excel.png")" style="width:$size;height:$size;"/&gt;#elseif($ext.equals("bz") || $ext.equals("bz2") || $ext.equals("tbz"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/tar_bz.png")" style="width:$size;height:$size;"/&gt;#elseif($ext.equals("tgz"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/tar_gz.png")" style="width:$size;height:$size;"/&gt;#elseif($ext.equals("rar"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/zip1.png")" style="width:$size;height:$size;"/&gt;#elseif($ext.equals("odp") || $ext.equals("odt") || $ext.equals("odf") || $ext.equals("sxw") || $ext.equals("stw"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/openoffice.png")" style="width:$size;height:$size;"/&gt;#else
+&lt;img src="$xwiki.getSkinFile("mimetypes/bin.png")" style="width:$size;height:$size;"/&gt;#end
+#elseif($mime.startsWith("application/"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/exec.png")" style="width:$size;height:$size;"/&gt;#end
+#end
+#macro(dynamicsize $sz)
+#if($sz &lt; 1024)
+$sz bytes
+#else
+#set($ksz = $sz / 1024)
+#if($ksz &lt; 1024)
+${ksz}kb
+#else
+#set($Msz = $sz / 1048576)
+${Msz}Mb
+#end
+#end
+#end
+###
+### List document attachments
+###
+### TODO: web service?
+###
+## #if(!$showattachments)
+## #set($showattachments = $xwiki.getWebPreference("showattachments"))
+## #end
+## #if($showattachments!="no")
+#if($request.xredirect)
+#set( $redirect = $request.xredirect)
+#else
+#set( $redirect = $xwiki.getRequestURL().replaceAll("&amp;", "&amp;amp;"))
+#end
+#set($showactions = 0)
+#set($attachments = $doc.attachmentList)
+&lt;div id="projectmanager" class="xwikiintracontent"&gt;
+#if($inline == true)
+    &lt;div class="xwikititlewrapper" onclick="toggleClass($('attachments'), 'hidden'); toggleClass($('attachmentscontent'), 'exp')"&gt;&lt;h3 class="xwikiintratitle"&gt;$msg.get("attachments")&lt;span class="hidden"&gt;:&lt;/span&gt; &lt;span class="attachmentsno"&gt;$attachments.size()&lt;/span&gt;&lt;/h3&gt;&lt;/div&gt;
+#end
+      &lt;div id="projectdocuments"&gt;
+#if($hasedit || $hasadmin)
+  &lt;form action="$doc.getURL("upload")" enctype="multipart/form-data" method="post"&gt;
+    &lt;div&gt;
+      &lt;input type="hidden" name="xredirect" value="$xwiki.getFormEncoded($redirect)" /&gt;
+      #roundedmediumtitletop($msg.get("addprojectdocument"))
+        &lt;div&gt;&lt;input id="xwikiuploadname" type="hidden" name="filename" value="" size="40"/&gt;&lt;/div&gt;
+        &lt;div&gt;&lt;label id="xwikiuploadfilelabel" for="xwikiuploadfile"&gt;$msg.get("choosefiletoupload"):&lt;/label&gt;&lt;/div&gt;
+        &lt;span style="float:left;"&gt;&lt;input id="xwikiuploadfile" type="file" name="filepath" value="" size="40"/&gt;&lt;/span&gt;
+        &lt;span class="buttonwrapper" style="float:left;margin-top:0;"&gt;&lt;input type="submit" value="$msg.get("uploadthisprojectdocument")" onclick="return updateAttachName(this.form, '$msg.get("doyouwanttoreplace")')" class="button"/&gt;&lt;/span&gt;
+        &lt;div style="clear:both;margin-bottom:-10px;"&gt;&lt;/div&gt;
+      #roundedbottom()
+    &lt;/div&gt;
+  &lt;/form&gt;
+#end
+#roundedtop()
+#if($attachments.size()&gt;0)
+#foreach ($attach in $attachments)
+        &lt;div class="attachment"&gt;
+          &lt;span class="mime"&gt;#mimetypeimg($attach.getMimeType().toLowerCase() $attach.getFilename().toLowerCase() 16)&lt;/span&gt;
+          &lt;div class="information"&gt;
+          &lt;span class="name"&gt;&lt;a href="$doc.getAttachmentURL("${attach.filename}", "download")" title="$msg.get("downloadthisattachment")"&gt;#packName($attach.filename)&lt;/a&gt;&lt;/span&gt;
+#if($hasedit || $hasadmin)
+          &lt;span class="xwikibuttonlinks"&gt;&lt;a class="deletelink" href="$doc.getAttachmentURL("${attach.filename}", "delattachment", "xredirect=${redirect}")" onclick="return confirm('$msg.get("confirmdelattachment")');" title="$msg.get("deletethisattachment")"&gt;$msg.get("delete")&lt;/a&gt;&lt;/span&gt;
+#end
+          &lt;span class="version"&gt;&lt;a href="$doc.getAttachmentURL("${attach.filename}", "viewattachrev")" title="$msg.get("viewattachmenthistory")"&gt;$attach.version&lt;/a&gt;&lt;/span&gt;
+          &lt;div class="meta"&gt;
+          &lt;span class="publisher"&gt;$msg.get("PostedBy"): &lt;span&gt;$xwiki.getLocalUserName($attach.author)&lt;/span&gt;&lt;/span&gt;
+          &lt;span class="date"&gt;$msg.get("on") $!xwiki.formatDate($attach.date, "dd/MM/yyyy")&lt;/span&gt;
+          &lt;span class="size"&gt;(#dynamicsize($attach.filesize))&lt;/span&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+  &lt;/div&gt; ## row
+#end
+#else
+&lt;div&gt;*$msg.get("noprojectdocuments")*&lt;/div&gt;
+#end
+#roundedbottom()
+      &lt;/div&gt; ## attachments
+    &lt;/div&gt; ## attachmentscontent
+#if($inline == true)
+&lt;script type="text/javascript"&gt;
+//&lt;!--
+#if($hasedit || $hasadmin)
+document.getElementById("attachform").className = "collapsed";
+#end
+document.getElementById("attachments").className = "hidden";
+//--&gt;
+&lt;/script&gt;
+#end
+## #end</content>
+</xwikidoc>

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xwikidoc>
+<web>ChronoTemplates</web>
+<name>DefaultNotificationEmail</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>XWiki.jvdrean</creator>
+<author>XWiki.jvdrean</author>
+<customClass></customClass>
+<contentAuthor>XWiki.jvdrean</contentAuthor>
+<creationDate>1181146997000</creationDate>
+<date>1185208523000</date>
+<contentUpdateDate>1185208523000</contentUpdateDate>
+<version>1.114</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<object>
+<class>
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<name>tags</name>
+<prettyName>Tags</prettyName>
+<unmodifiable>0</unmodifiable>
+<relationalStorage>1</relationalStorage>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+<size>30</size>
+<separator> </separator>
+<cache>0</cache>
+<separators> ,|</separators>
+<values></values>
+<number>1</number>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>ChronoTemplates.DefaultNotificationEmail</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<property>
+<tags/>
+</property>
+</object>
+<content>#if ($html) 
+$htmlheader
+#end 
+#set ($toSend = false)
+#set ($userDoc = $xwiki.getDocument($currentUser))
+#foreach($modSet in $pagemodifications)
+  #set($mod=${modSet.lastModification})
+  #set($mdocname="${modSet.pageData.web}.${modSet.pageData.docName}")
+  #if ($xwiki.chronopolys.isProject(${modSet.pageData.web}))
+    #set($chronoproject=$xwiki.chronopolys.getProject(${modSet.pageData.web}))
+    #if ($chronoproject.get("status") == 1)
+      #set($mdoc=$xwiki.getDocument($mdocname))
+      #set($wdoc=$xwiki.getDocument("${modSet.pageData.web}.WebHome"))
+      #set($notifs=$chronoproject.getUserNotifications($currentUser))
+      #if ($notifs.size() &gt; 0)
+        #set ($toSendLocal = false)
+        #if ($chronoproject.isPlogPage(${modSet.pageData.docName}))
+          #if ($notifs.contains("0"))
+            #set ($toSend = true)
+            #set ($toSendLocal = true)
+            #set ($ret=$mdoc.display("title", "view"))
+            #set ($notifType = $msg.get("modificationsinplog"))         
+            #set ($notifTitle = $mdoc.display("title", "view"))
+            #set ($notifContent = $mdoc.display("content", "view"))
+          #end
+        #elseif ($chronoproject.isWikiPage(${modSet.pageData.docName}))
+          #if ($notifs.contains("1"))
+            #set ($toSend = true)
+            #set ($toSendLocal = true)
+            #set ($notifType = $msg.get("modificationsinwiki"))
+            #set ($notifTitle = $mdoc.getDisplayTitle())
+            #set ($content=$mdoc.getRenderedContent())
+            #if ($content.length() &gt; 300)
+              #set ($content = $content.substring(0, 300))
+              #set ($notifContent=$content.substring(0, $content.lastIndexOf('&gt;')))
+            #else
+              #set ($notifContent = $content)
+            #end
+          #end
+        #elseif (${modSet.pageData.docName} == "ProjectPhases")
+          #if ($notifs.contains("2"))
+            #set ($toSend = true)
+            #set ($toSendLocal = true)
+            #set ($notifType = $msg.get("modificationsinphases"))
+            #set ($notifTitle = $msg.get("projectphases"))
+            ## AFFICHER LES PHASES
+          #end
+        #elseif (${modSet.pageData.docName} == "ProjectDocuments")
+          #if ($notifs.contains("3"))
+            #set ($toSend = true)
+            #set ($toSendLocal = true)
+            #set ($notifType = $msg.get("modificationsindocuments"))
+            #set ($notifTitle = $msg.get("projectdocuments"))
+            ## AFFICHER LES DOCUMENTS
+          #end
+        #elseif (${modSet.pageData.docName} == "WebHome")
+          #if ($notifs.contains("4"))
+            #set ($toSend = true)
+            #set ($toSendLocal = true)
+            #set ($notifType = $msg.get("modificationsininfos"))
+            #set ($notifTitle = $msg.get("projectinfos"))
+          #end
+          ## AFFICHER LES INFOS
+        #end
+        #if ($toSendLocal == true)
+          #if ($html)
+          #set ($ret = $chronoproject.get("container"))
+          #set ($container = $chronoproject.get("container"))
+&lt;p style="border:solid 2px $xwiki.chronopolys.getProjectContainerStyle($container);padding:10px;"&gt;
+&lt;span style="font-size:18px;font-weight:bold;margin-top:-60px;"&gt;$chronoproject.get("name")&lt;/span&gt;&lt;br&gt;
+&lt;b&gt;$notifType&lt;/b&gt; : &lt;a href="http://${xwiki.getXWikiPreference("server_name")}${modSet.pageData.url}"&gt;${notifTitle}&amp;nbsp;&lt;/a&gt;&lt;br&gt;
+$msg.get("modificationdate") : $xwiki.formatDate(${mod.modificationDate}, "HH:mm dd/MM/yyyy") $msg.get("by") $xwiki.getLocalUserName(${mod.modifier}, false)
+&lt;/p&gt;
+&lt;p&gt;
+$!notifContent
+&lt;/p&gt;
+          #else
+$chronoproject.get("name")
+---------------------------------------------------- 
+$notifType, $notifTitle : http://${xwiki.getXWikiPreference("server_name")}${modSet.pageData.url}
+$msg.get("modificationdate") : $xwiki.formatDate(${mod.modificationDate}, "HH:mm dd/MM/yyyy") $msg.get("by") $xwiki.getLocalUserName(${mod.modifier}, false)
+
+$!notifContent
+          #end
+        #end
+      #end
+    #end
+  #end
+#end
+
+#if ($toSend == true)
+  #if ($html) 
+&lt;br&gt;
+&lt;br&gt;
+$xwiki.chronopolys.getChronoPreference("notifications_signature")
+$htmlfooter
+  #else
+$xwiki.chronopolys.getChronoPreference("notifications_signature")
+  #end  
+#else
+  ## The notification plugin won't send the email if it's content ends by "INVALID_NOTIFICATION"
+INVALID_NOTIFICATION
+#end</content>
+</xwikidoc>

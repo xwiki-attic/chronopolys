@@ -1,0 +1,6 @@
+###
+### Attachments page in the "view" mode
+###
+###
+<div class="rounded-medium-title" style="background-color: rgb(238, 238, 238); color: rgb(214, 19, 133);">  $xwiki.parseMessage("viewattachmentstitle") </div>
+#template("attachmentsinline.vm")

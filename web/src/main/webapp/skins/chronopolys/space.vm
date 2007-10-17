@@ -1,0 +1,45 @@
+#if($context.getMode()==0) ## Visible only in a page
+#macro(displayTab $page $args $name $selected)
+<div class="chronotab$selected">
+  <div class="tablinkl"><img src="$xwiki.getSkinFile("tab_left${selected}.gif")" style="display:inline;" /></div>
+  <div class="tablink" style="background-image:url($xwiki.getSkinFile("tab_center${selected}.gif"))">
+    <a href="${xwiki.getURL($page)}?$args" class="atablink">$name</a>
+  </div>
+  <div class="tablinkr"><img src="$xwiki.getSkinFile("tab_right${selected}.gif")" style="display:inline;" /></div>
+</div>
+#end
+<div id="headerspace" class="layoutsection">
+<div class="minwidth"></div>
+#if ($context.user != "XWiki.XWikiGuest")
+<hr/>
+  <div id="chronotabs">
+    #set($pagesList = ["Main.Documents", "Main.Users", "Main.About"])
+    #set($usersList=$xwiki.chronopolys.getXWikiUsers())
+    #set($spacesList = ["ChronoAdmin"])
+    #if (!$pagesList.contains($doc.fullName) && !$spacesList.contains($doc.web) && !$usersList.contains($doc.fullName) && $doc.fullName != "Main.ProjectsZoom")
+      #set($sel="selected") #else #set($sel="")
+    #end
+    #displayTab("Main.Projects" "" $msg.get("projectstab") $sel)
+    #set ($zooms = $xwiki.getDocument("ChronoAdmin.ChronoPreferences").getObjects("ChronoClasses.ProjectsZoomClass"))
+    #foreach($zoom in $zooms)
+      ##if ($xwiki.chronopolys.getAllProjectContainers().contains($zoom))
+        #if ($doc.fullName == "Main.ProjectsZoom" && $request.folder == $zoom.folder) #set($sel="selected") #else #set($sel="") #end
+        #displayTab("Main.ProjectsZoom" "folder=${zoom.display('folder', 'view')}" $zoom.display("name", "view") $sel)
+      ##end
+    #end
+    #if ($doc.fullName == "Main.Users" || ($usersList.contains($doc.fullName)&&$doc.fullName!=$context.user)) #set($sel="selected") #else #set($sel="") #end
+    #displayTab("Main.Users" "" $msg.get("userdirectorytab") $sel)
+    #if ($isChronoAdmin)
+      #if ($doc.web == "ChronoAdmin") #set($sel="selected") #else #set($sel="") #end
+      #displayTab("ChronoAdmin.WebHome" "" $msg.get("administrationtab") $sel)
+    #end
+    #if ($doc.fullName == $context.user) #set($sel="selected") #else #set($sel="") #end
+    #displayTab($context.user "" $msg.get("profiletab") $sel)
+    <div class="spacer"></div>
+  </div>
+  #end
+</div>
+<div class="spacer"></div>
+#end
+#set($showattachments = "no")
+#set($showcomments = "no")

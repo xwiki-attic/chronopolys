@@ -1,0 +1,271 @@
+.leftpanelcolumn {
+  border-top: solid 2px;
+  border-bottom: solid 2px;
+  width:26px;
+  padding-left:2px;
+  padding-right:2px;
+  font-weight:bold;color:white;
+  text-align:center;
+}
+
+#dashboard_options {
+  font-size:10px;
+  line-height: 22px;
+  float:right;
+  text-align:right;
+  padding-right: 6px;
+}
+
+#projectdashboard {
+  width: 620px;
+  min-height: 40px;
+  background-image: url(ajax-loader.gif);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.underlined { border-bottom:1px solid #E6E6E6; }
+
+.chronopanel_content input {
+  font-size:10px;
+  padding: 2px;
+  border-color: #CCC;
+}
+
+.debug {
+  font-size:8px;
+  font-family: courier, monospace;
+}
+
+.container_add a {
+  font-weight: bold;
+  color: #464851;
+}
+
+.container_add {
+  border: solid 1px #E6E6E6;
+  background: transparent url(add.gif) 3px 4px no-repeat;
+  cursor:pointer;
+  padding-left: 22px;
+  padding-top: 3px;
+  height: 22px;
+  float:left;
+}
+
+.addaxis_container {
+  width: 596px;
+  _margin-left: 0px;
+}
+.addyard_container {
+  width: 576px;
+  margin-left:10px;
+  margin-right:10px;
+  _margin-left: 5px;
+}
+.addactivity_container {
+  width: 556px;
+  margin-left: 20px;
+  margin-right: 20px;
+  _margin-left: 10px;
+}
+
+.actions {
+  height:16px;
+  float:right;
+  margin-right: 10px;
+}
+
+.spacer {
+  clear: both;
+}
+
+.axis, .yard, .activity {
+  cursor:pointer;
+}
+
+.infos {
+  float:right;
+  margin-right: 10px;
+}
+
+.axis {
+  padding:4px 0px 0px 15px;
+  height:20px;
+  background-image:url(axis.png);
+  _background-image:url();
+  _filter:
+progid:DXImageTransform.Microsoft.AlphaImageLoader(src='$xwiki.getSkinFile("axis.png")', sizingMethod='scale');
+  background-repeat:no-repeat;
+  margin-top:0px;
+}
+
+.axis_edit, .axis_delete, .axis_info {
+
+  width: 600px;
+  margin-left: 10px;
+  background: transparent url(axis_bottom.gif) bottom left no-repeat;
+}
+
+.yard_edit, .yard_delete, .yard_info {
+
+  width: 580px;
+  margin-left: 20px;
+  background: transparent url(axis_bottom.gif) bottom left no-repeat;
+}
+
+.container_action_table {
+  width: 598px;
+}
+
+.action_table td {
+  padding:6px;
+  font-weight:bold;
+}
+
+.axis .name {
+  width:350px;
+  color:#32353F;
+  text-transform:uppercase;
+  font-weight:bold;
+  font-size:12px;
+  float:left;
+}
+
+.openClose {
+  height: 16px;
+  padding-left: 6px;
+  padding-right: 6px;
+  text-align:center;
+  background: transparent url(a180.png) top left repeat-y;
+  _background: url();
+  margin-left: 0px;
+  float:right;
+}
+
+.yard {
+  padding:4px 0px 0px 15px;
+  height:20px;
+  background-image:url(yard.png);
+  _background-image: url();
+  _filter:
+progid:DXImageTransform.Microsoft.AlphaImageLoader(src='$xwiki.getSkinFile("yard.png")', sizingMethod='scale');
+  background-repeat:no-repeat;
+  margin-top:0px;
+  margin-left:10px;
+  margin-right:10px;
+}
+
+.yard .name {
+  color:#32353F;
+  width:240px;
+  text-transform:uppercase;
+  font-weight:bold;
+  font-size:12px; color:#333333;
+  padding:0px 0px 0px 0px;
+  float:left;
+}
+
+.yard .projectsNumber {
+  width:80px;
+  color:#666666;
+  font-style:italic;
+  font-size:11px;
+  float:left
+}
+
+.activity {
+  padding:3px 0px 5px 0px;
+  margin:0px 20px 0px 20px;
+}
+
+.activity .name {
+  width:235px;
+  color:#32353F;
+  float:left;
+  padding:2px 0px 0px 10px;
+  font-weight:bold;
+}
+
+.project .name {
+  width: 142px;
+  color:#32353F;
+  float:right;
+  padding:6px 0px 0px 0px;
+  font-weight:bold;
+  line-height: 14px;
+  height: 32px;
+  overflow: hidden;
+}
+
+.activity .projectsNumber {
+  width:80px;
+  color:#666666;
+  font-style:italic;
+  font-size:11px;
+  float:left;
+  padding:2px 0px 0px 0px;
+}
+
+.activity.even {
+  background-image:url(a180.png);
+  _background-image:url();
+  _filter:
+progid:DXImageTransform.Microsoft.AlphaImageLoader(src='$xwiki.getSkinFile("a180.png")', sizingMethod='scale');
+  _width: 580px;
+}
+
+.activity.odd {
+  background-image:url(a240.png);
+  _background-image:url();
+  _filter:
+progid:DXImageTransform.Microsoft.AlphaImageLoader(src='$xwiki.getSkinFile("a240.png")', sizingMethod='scale');
+  _width: 580px;
+}
+
+.project {
+  border-top: 1px solid gainsboro;
+  padding-bottom: 2px;
+}
+
+.project .name a {
+  font-size:10px;
+  text-decoration:none;
+}
+
+.projectdatas_container {
+  padding-top:4px;
+  padding-right:2px;
+  float:right;
+  width: 428px;
+}
+
+.timeline {
+  font-size:10px;
+  min-width:300px;
+}
+
+.axis_edit, .yard_edit, .activity_edit {
+  background: transparent none;
+}
+.edit-arrow {
+  margin: 2px 0 -12px 0;
+  height: 16px;
+  padding: 0 65px 0 0;
+  text-align: right;
+}
+.activity_edit {
+  padding: 0 12px;
+}
+.axis-edit .rounded {
+  clear:both;
+}
+.axis_edit .roundedcontent, .yard_edit .roundedcontent, .activity_edit .roundedcontent {
+  padding: 0 60px;
+}
+#orphansprojects .roundedcontent {
+  padding: 0;
+  margin: -1px 0 0;
+}
+#orphansprojects {
+  padding: 0 5px;
+}

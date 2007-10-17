@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xwikidoc>
+<web>ChronoSheets</web>
+<name>ProjectMembersSheet</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>XWiki.jvdrean</creator>
+<author>XWiki.Admin</author>
+<customClass></customClass>
+<contentAuthor>XWiki.jvdrean</contentAuthor>
+<creationDate>1173375905000</creationDate>
+<date>1186397075000</date>
+<contentUpdateDate>1186396919000</contentUpdateDate>
+<version>1.16</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<object>
+<class>
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<cache>0</cache>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+<name>tags</name>
+<number>1</number>
+<prettyName>Tags</prettyName>
+<relationalStorage>1</relationalStorage>
+<separator> </separator>
+<separators> ,|</separators>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<values></values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>ChronoSheets.ProjectMembersSheet</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<property>
+<tags/>
+</property>
+</object>
+<content>#if ($request.do=="addmember")
+#set ($ret = $project.addMember($request.member))
+$response.sendRedirect($doc.getURL())
+#elseif ($request.do=="removemember")
+#set ($ret = $project.removeMember($request.member))
+$response.sendRedirect($doc.getURL())
+#end
+
+#roundedtitletop($msg.get("projectmembers"))
+
+#set($redirect = $xwiki.getRequestURL())
+#set($projectMembers = $doc.getObjects("XWiki.XWikiGroups"))
+&lt;table width="400px" class="projetmembers"&gt;
+#foreach($obj in $projectMembers)
+&lt;tr class="underlined" style="height:25px;"&gt;
+#set ($memberpage=$doc.display("member", $obj))
+&lt;td&gt;$xwiki.getLocalUserName($memberpage)&lt;/td&gt;
+&lt;td&gt;
+#if ($memberpage == $projectLeader)
+*$msg.get("projectleader")* &amp;nbsp;
+#end
+$doc.display("role", $obj)&lt;/td&gt;
+&lt;td&gt;
+#if ($xwiki.hasAccessLevel("edit"))
+#if ($memberpage != $projectCreator)
+&lt;a href="$doc.getURL("view", "do=removemember&amp;amp;member=$memberpage")" title="$msg.get("removethisuserfromgroup")" class="deletelink"&gt;$msg.get("delete")&lt;/a&gt;
+#else
+~~$msg.get("projectcreator")~~
+#end
+#end
+&lt;/td&gt;
+&lt;/tr&gt;
+#end
+&lt;/table&gt;
+#roundedbottom()
+
+
+#if ($xwiki.hasAccessLevel("edit"))
+#roundedtitletop($msg.get("addmember")) 
+
+#set ($members = $xwiki.chronopolys.getProject($doc.web).getMembers())
+#set ($users=$xwiki.chronopolys.getXWikiUsers())
+#if ($members.size() &lt; $users.size())
+&lt;form name="addusertogroup" action="$doc.getURL("view")" method="post"&gt;
+&lt;input type="hidden" id="do" name="do" value="addmember" /&gt;
+## &lt;input type="hidden" id="classname" name="classname" value="XWiki.XWikiGroups" /&gt;
+## &lt;input type="hidden" id="xredirect" name="xredirect" value="$redirect" /&gt;
+$msg.get("user") : 
+&lt;select id="member" name="member"&gt;
+#foreach ($user in $xwiki.chronopolys.getXWikiUsers())
+  #if (!$members.contains($user))
+    &lt;option value="$user"&gt;#displayUserFullName($user)&lt;/option&gt;
+  #end
+#end
+&lt;/select&gt;
+&lt;a class="addlink" href="" onclick="document.addusertogroup.submit();return false;" title="$msg.get("addusertogroup")" style="cursor:pointer;"&gt;$msg.get("addtomembers")&lt;/a&gt;&lt;/td&gt;
+&lt;/a&gt;
+&lt;/form&gt;
+#roundedbottom()
+#else
+#roundedtop()
+$msg.get("nomorewikiuserstoadd")
+#roundedbottom()
+#end
+
+
+#if ($projectMembers.size() &gt; 1)
+#roundedtitletop($msg.get("changeprojectleader"))
+
+&lt;form name="changeprojectleader" action="$xwiki.getDocument("${doc.web}.ProjectLeaders").getURL("saveandcontinue")" method="post"&gt;
+$msg.get("user") : 
+&lt;select id="XWiki.XWikiGroups_0_member" name="XWiki.XWikiGroups_0_member"&gt;
+  #foreach($user in $projectMembers)
+    #set ($userName = $doc.display("member", $user))
+    #if ($userName != $projectLeader)
+      &lt;option value="$userName"&gt;#displayUserFullName($userName)&lt;/option&gt;
+    #end
+  #end
+&lt;/select&gt;
+&lt;a class="modifylink" href="" onclick="document.changeprojectleader.submit();return false;" title="$msg.get("changeprojectleader")" style="cursor:pointer;"&gt;$msg.get("changeprojectleader")&lt;/a&gt;&lt;/td&gt;
+&lt;/a&gt;
+&lt;/form&gt;
+#roundedbottom()
+#end
+
+#end
+</content></xwikidoc>

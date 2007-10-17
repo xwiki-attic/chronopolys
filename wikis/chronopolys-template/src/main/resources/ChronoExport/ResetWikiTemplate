@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xwikidoc>
+<web>ChronoExport</web>
+<name>ResetWikiTemplate</name>
+<language></language>
+<defaultLanguage>fr</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>XWiki.jvdrean</creator>
+<author>XWiki.jvdrean</author>
+<customClass></customClass>
+<contentAuthor>XWiki.jvdrean</contentAuthor>
+<creationDate>1185975210000</creationDate>
+<date>1185985392000</date>
+<contentUpdateDate>1185985392000</contentUpdateDate>
+<version>1.42</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<object>
+<class>
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<name>tags</name>
+<prettyName>Tags</prettyName>
+<unmodifiable>0</unmodifiable>
+<relationalStorage>1</relationalStorage>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+<size>30</size>
+<separator> </separator>
+<cache>0</cache>
+<separators> ,|</separators>
+<values></values>
+<number>1</number>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>ChronoExport.ResetWikiTemplate</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<property>
+<tags/>
+</property>
+</object>
+<content>&lt;%
+
+if (request.get("confirm") == "1") {
+
+  if (context.getDatabase() != "xwiki") {
+
+    // Get template documents whitelist
+    def rawList = xwiki.getDocument("ChronoExport.CommonList").content
+    def list = rawList.split("\r\n")
+    def BLSpaces = ["ChronoTemplates", "ChronoClasses"]
+    def BLDocs = ["WebPreferences", "XWikiPreferences"]
+    for (dname in list) {
+      def xdoc = xwiki.getDocument(dname)
+      if ((!BLSpaces.contains(xdoc.getSpace())) &amp;&amp; (!BLDocs.contains(xdoc.getName()))) {
+        // isClass = (xdoc.getxWikiClass().getProperties().size() &gt; 0)
+        // Replace document content with an IncludeFromWikiSheet()
+        def incContent = '#IncludeFromWikiSheet("'
+        def incContent += 'xwiki:' + xdoc.fullName()
+        def incContent += '")'
+        xdoc.setContent(incContent)      
+      }      
+    }
+
+    // reset templates dates
+    plogdoc = xwiki.getDocument("ChronoTemplates.ProjectArticleTemplate")
+    projectdoc= xwiki.getDocument("ChronoTemplates.ProjectTemplate")
+    plogobj= plogdoc.getObject("ChronoClasses.ProjectArticleClass")
+    projectobj= projectdoc.getObject("ChronoClasses.ProjectClass")
+    plogobj.set("taskduedate", "")
+    plogobj.set("meetingstart", "")
+    plogobj.set("meetingend", "")
+    projectobj.set("start", "")
+    projectobj.set("end", "")
+    projectobj.set("projected_start", "")
+    projectobj.set("projected_end", "")
+    plogdoc.save()
+    projectdoc.save() 
+  
+    // set properties pages reference to global references
+    wkprefsdoc = xwiki.getDocument("XWiki.XWikiPreferences")
+    wkprefsobj = wkprefsdoc.getObject("XWiki.XWikiPreferences")
+    wkprefsobj.set("rightPanels", "xwiki:Panels.Search,xwiki:Panels.New Project,xwiki:Panels.MyTasks,xwiki:Panels.MyMeetings,xwiki:Panels.My Projects,xwiki:Panels.Navigation")
+    wkprefsobj.set("documentBundles", "xwiki:ChronoCode.Translations")
+    wkprefsobj.set("skin", "xwiki:XWiki.Skin01")
+    wkprefsdoc.save()
+
+    // set ChronoAdmin.AdminGroup content
+    admdoc = xwiki.getDocument("ChronoAdmin.AdminGroup")
+    admdoc.setContent('#includeForm("xwiki:XWiki.XWikiGroupSheet")')
+    admdoc.save()
+
+    // set ChronoAdmin.ManagerGroup content
+    admdoc = xwiki.getDocument("ChronoAdmin.ManagerGroup")
+    admdoc.setContent('#includeForm("xwiki:XWiki.XWikiGroupSheet")')
+    admdoc.save()
+
+    // delete this script
+    /*
+    xwiki.deleteDocument(doc.getFullName())
+    */
+
+  } else {
+    println("error : this script is not supposed to be runned on administrator wiki")
+  }
+} else {
+  println("[Confirm&gt;$doc.fullName?confirm=1]")
+}
+
+%&gt;</content>
+</xwikidoc>

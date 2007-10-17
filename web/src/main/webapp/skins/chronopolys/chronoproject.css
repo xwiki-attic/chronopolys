@@ -1,0 +1,221 @@
+#body #attachmentscontent {
+  background-color:white;
+}
+
+.project_name {
+  background: url(house.gif) no-repeat;
+  padding-left: 20px;
+  padding-top: 2px;
+  line-height: 12px;
+  float: left;
+}
+#project_bar_actions {
+  float: right;
+}
+
+#projectmanager {
+  padding: 20px 75px 0;
+}
+
+#projectmanager table {
+  width:100%;
+}
+
+#projectmanager td {
+  vertical-align: center;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+div.projectmanager_item {
+  border-color:#EEEEEE rgb(204, 204, 204) rgb(221, 221, 221) rgb(238, 238, 238);
+  border-style:solid;
+  border-width:1px;
+  clear:both;
+  font-size:85%;
+  margin:8px 0px;
+  overflow:hidden;
+  padding: 4px;
+}
+
+.projectmanager_item .name {
+  display:block;
+  font-weight:bold;
+  float:left;
+  font-size:120%;
+  padding:0px 6px 4px 0px;
+}
+
+.projectmanager_item .mime {
+  display:block;
+  float:left;
+  padding-bottom:4px;
+  padding-right:8px;
+}
+
+.projectmanager_item .information {
+  overflow:hidden;
+  position:relative;
+}
+
+.projectmanager_item .version {
+  display:block;
+}
+.projectmanager_item .meta {
+  clear:left;
+}
+.projectmanager_item .xwikibuttonlinks {
+  float: right;
+  font-size: 130%;
+  padding: 4px 10px;
+}
+
+.attachment {
+  border-color:#EEEEEE rgb(204, 204, 204) rgb(221, 221, 221) rgb(238, 238, 238);
+  font-size:85%;
+  margin:4px 0px;
+  padding: 4px;
+}
+
+.projectdata_label {
+  display:block;
+  padding-bottom:2px;
+  padding-right:4px;
+  color:#32353F;
+  font-weight:bold;
+  font-size:9px;
+}
+
+.projectdata_value {
+  font-weight:bold;
+  line-height: 22px;
+}
+
+.phasesedit {
+  font-size: 10px;
+}
+
+.phasesedit td {
+  padding: 2px;
+}
+
+.addphase {
+  text-align:right;
+  font-size: 10px;
+  line-height: 16px;
+  font-weight: bold;
+}
+
+.phase_name {
+  line-height:12px;
+  font-size:10px;
+  font-weight:bold;
+  text-transform:uppercase;
+}
+.phase_desc, .phase_dates {
+  line-height:11px;
+  font-size:9px;
+  font-weight:bold;
+  color:#32353F;
+}
+
+.panel_prevnext {
+  text-align:right;
+}
+
+.project_managers_tr {
+  border-top: 1px solid #E6E6E6;
+}
+
+.project_managers_tr a {
+  text-decoration: none;
+  font-weight:bold;
+  color:#32353F;
+}
+
+#project_header {
+  overflow:hidden;
+  padding: 4px 10px 2px;
+  margin: 0 0 0 8px;
+  height:18px;
+  width:770px;
+  color: #fff;
+  background:url(project-header.png) left top no-repeat;
+  _background-image:url();
+  _filter:
+progid:DXImageTransform.Microsoft.AlphaImageLoader(src='$xwiki.getSkinFile("project-header.png")', sizingMethod='scale');
+}
+#headerglobal {
+  height:96px;
+}
+.container_breadcrumb {
+  color:#32353F;
+  font-size:11px;
+  font-weight: bold;
+  margin-left: 20px;
+}
+
+.chronopanel_content .underlined {
+  border-bottom: solid 1px #E6E6E6;
+}
+
+#projectcontainer {
+  padding-top:0px;
+  width: 806px;
+}
+
+#projectcol_1 {
+  width: 400px;
+  float:left;
+}
+
+#projectcol_2 {
+  width: 200px;
+  float:left;
+}
+#projectcol_3 {
+  width: 200px;
+  float:left;
+}
+.chronopanel {
+  padding-left:5px;
+  padding-right:5px;
+}
+.chronopanel_header {
+  padding:4px 0px 0px 15px;
+  height:20px;
+  //color:#32353F;
+  color:white;
+  text-transform:uppercase;
+  font-weight:bold;
+  font-size:12px;
+  background: transparent url(panel_190.png) top left no-repeat;
+  _background-image:url();
+  _filter:
+progid:DXImageTransform.Microsoft.AlphaImageLoader(src='$xwiki.getSkinFile("panel_190.png")', sizingMethod='scale');
+}
+
+#projectcol_1 .chronopanel_header {
+  background-image: url(panel_390.png);
+  _background-image:url();
+  _filter:
+progid:DXImageTransform.Microsoft.AlphaImageLoader(src='$xwiki.getSkinFile("panel_390.png")', sizingMethod='scale');
+}
+.panel_table {
+  width:170px;
+}
+.chronopanel_content {
+  padding:10px;
+}
+.chronopanel_editicon {
+  float: right;
+  margin-right: 10px;
+}
+
+#article_type_choice optgroup {
+  padding: 2px;
+}
+
+#article_filter {
+  text-align:right;
+}

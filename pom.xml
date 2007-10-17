@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+ *
+ * Copyright 2006-2007, XpertNet SARL, and individual contributors as indicated
+ * by the contributors.txt.
+ *
+ * This is free software; you can redistribute it and/or modify it
+ * under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation; either version 2.1 of
+ * the License, or (at your option) any later version.
+ *
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this software; if not, write to the Free
+ * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
+ * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
+ *
+-->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.xpn.xwiki.platform</groupId>
+    <artifactId>xwiki</artifactId>
+    <version>1-SNAPSHOT</version>
+  </parent>
+  <groupId>com.chronopolys</groupId>
+  <artifactId>chronopolys-parent</artifactId>
+  <packaging>pom</packaging>
+  <name>XWiki Products - Chronopolys - Parent POM</name>
+  <version>1.0-SNAPSHOT</version>
+  <description>XWiki Products - Chronopolys - Parent POM</description>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.5</source>
+          <target>1.5</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>com.xpn.xwiki.platform</groupId>
+        <artifactId>xwiki-build-xar-plugin</artifactId>
+        <version>1.1</version>
+      </plugin>
+    </plugins>
+    <extensions>
+      <extension>
+        <groupId>com.xpn.xwiki.platform</groupId>
+        <artifactId>xwiki-build-xar-handlers</artifactId>
+        <version>1.1</version>
+      </extension>
+    </extensions>
+  </build>
+  <modules>
+    <module>plugins</module>
+    <module>web</module>
+    <module>wikis</module>
+  </modules>
+  <!-- Note: Even though this repository is defined in the com.xpn.xwiki.platform:xwiki module we
+       still need to define it here because if com.xpn.xwiki.platform:xwiki is not in the local
+       repository we want to fetch it from the remote repo to provide a seamless build experience
+  -->
+  <repositories>
+    <repository>
+      <id>xwiki</id>
+      <name>XWiki Maven2 Remote Repository</name>
+      <url>http://maven.xwiki.org</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
+    </repository>
+  </repositories>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.xpn.xwiki.platform</groupId>
+      <artifactId>xwiki-core</artifactId>
+      <version>1.1-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+
+  <profiles>
+    <profile>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <id>mysql</id>
+      <properties>
+        <xwiki.db>mysql</xwiki.db>
+        <xwiki.db.jdbc.groupId>mysql</xwiki.db.jdbc.groupId>
+        <xwiki.db.jdbc.artifactId>mysql-connector-java</xwiki.db.jdbc.artifactId>
+        <xwiki.db.jdbc.version>5.0.4</xwiki.db.jdbc.version>
+        <xwiki.db.connection.url>jdbc:mysql://localhost/xwiki?useServerPrepStmts=false</xwiki.db.connection.url>
+        <xwiki.db.connection.username>xwiki</xwiki.db.connection.username>
+        <xwiki.db.connection.password>xwiki</xwiki.db.connection.password>
+        <xwiki.db.connection.driver_class>com.mysql.jdbc.Driver</xwiki.db.connection.driver_class>
+        <xwiki.db.dialect>org.hibernate.dialect.MySQLDialect</xwiki.db.dialect>
+        <xwiki.db.hbm.xwiki>xwiki.hbm.xml</xwiki.db.hbm.xwiki>
+        <xwiki.db.hbm.feeds>feeds.hbm.xml</xwiki.db.hbm.feeds>
+      </properties>
+    </profile>
+  </profiles>
+</project>

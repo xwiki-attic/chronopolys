@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xwikidoc>
+<web>ChronoAdmin</web>
+<name>DataExport</name>
+<language></language>
+<defaultLanguage>fr</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>XWiki.jvdrean</creator>
+<author>XWiki.jvdrean</author>
+<customClass></customClass>
+<contentAuthor>XWiki.jvdrean</contentAuthor>
+<creationDate>1186129327000</creationDate>
+<date>1186130015000</date>
+<contentUpdateDate>1186130015000</contentUpdateDate>
+<version>1.4</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<object>
+<class>
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<cache>0</cache>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+<name>tags</name>
+<number>1</number>
+<prettyName>Tags</prettyName>
+<relationalStorage>1</relationalStorage>
+<separator> </separator>
+<separators> ,|</separators>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<values></values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>ChronoAdmin.DataExport</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<property>
+<tags/>
+</property>
+</object>
+<content>
+
+1 XML Export of the Wiki
+&lt;%
+import com.xpn.xwiki.*;
+import com.xpn.xwiki.plugin.packaging.*;
+def filter = xwiki.parseGroovyFromPage("ChronoAdmin.DataFilter")
+
+if (request.confirm=="1") {
+pack = new Package()
+pack.setWithVersions(false)
+pack.addDocumentFilter(filter)
+pack.addAllWikiDocuments(context.context)
+try {
+  response.setContentType("application/zip");
+  response.addHeader("Content-disposition", "attachment; filename=chronopolys-data.xar");
+  context.setFinished(true);
+  pack.export(response.getOutputStream(), context.context)
+} catch (Exception e) {
+ println "Error exporting"
+ println e.getMessage()
+}
+println "Finished."
+} else {
+ println "[Confirm export&gt;$doc.fullName?xpage=plain&amp;confirm=1]"
+}
+
+%&gt;</content>
+</xwikidoc>

@@ -1,0 +1,86 @@
+.rounded h1, .panel p {
+margin:0pt 10px;
+}
+.rounded p {
+padding-bottom:0.5em;
+}
+.rounded .top, .rounded .bottom {
+display:block;
+font-size:1px;
+}
+.b1, .b2, .b3, .b4, .b1b, .b2b, .b3b, .b4b {
+display:block;
+overflow:hidden;
+}
+.b1, .b2, .b3, .b1b, .b2b, .b3b {
+height:1px;
+}
+.b2 {
+border-left: 2px solid #A9B6C3;
+border-right: 2px solid #A9B6C3;
+background: #dfdfdf;
+}
+.b3 {
+border-left:2px solid #A9B6C3;
+border-right:2px solid #A9B6C3;
+}
+.b4 {
+border-left:2px solid #A9B6C3;
+border-right:2px solid #A9B6C3;
+}
+.b4b {
+border-left:2px solid #A9B6C3;
+border-right:2px solid #A9B6C3;
+}
+.b3b {
+border-left:2px solid #A9B6C3;
+border-right:2px solid #A9B6C3;
+}
+.b2b {
+border-left:2px solid #A9B6C3;
+border-right:2px solid #A9B6C3;
+background: #9F9F9F;
+}
+.b1 {
+background:#A9B6C3 none repeat scroll 0% 50%;
+margin:0pt 5px;
+}
+.b2, .b2b {
+border-width:0pt 2px;
+margin:0pt 3px;
+}
+.b3, .b3b {
+margin:0pt 2px;
+}
+.b4, .b4b {
+height:2px;
+margin:0pt 1px;
+}
+.b1b {
+background: #DFDFDF;
+margin:0pt 5px;
+}
+.b2b {
+margin:0pt 3px;
+border-width: 0 2px;
+border_color: #9F9F9F;
+}
+.roundedcontent {
+  border: solid #BFBFBF;
+  border-width: 0 2px;
+  padding: 10px;
+  zoom:1;
+  overflow: hidden;
+}
+.roundedcontent p.paragraph, .roundedcontent ul {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+.rounded .top {
+  margin-top: 10px;
+}
+.rounded .bottom {
+  margin-bottom: 10px;
+}

@@ -1,0 +1,27 @@
+#xwikiad {
+  float: right;
+  margin-right: 30px;
+}
+#xwikireadonly {
+  color: red;
+}
+#xwikimessage {
+  margin: auto;
+  padding: 0px;
+  margin-top: 5px;
+}
+#xwikiuseravatar{
+  max-width: 150px;
+}
+
+/* Recognize velocity comments */
+.vcomment {
+  background-color: #ccccff;
+  font-style: italic; 
+}
+
+.edit_section {
+  float: right;
+  margin-left: 5px;
+  margin-right: 5px;
+}

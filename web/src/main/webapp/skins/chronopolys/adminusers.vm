@@ -1,0 +1,6 @@
+#set($formname = "update")
+#set($saveaction = "save")
+<div id="xwikieditcontent">
+<p>$xwiki.parseMessage("editusersredirect")</p>
+<p>$xwiki.parseMessage("editgroupsredirect")</p>
+</div> ## xwikieditcontent

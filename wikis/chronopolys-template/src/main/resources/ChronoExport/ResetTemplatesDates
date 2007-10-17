@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xwikidoc>
+<web>ChronoExport</web>
+<name>ResetTemplatesDates</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>XWiki.jvdrean</creator>
+<author>XWiki.jvdrean</author>
+<customClass></customClass>
+<contentAuthor>XWiki.jvdrean</contentAuthor>
+<creationDate>1182865393000</creationDate>
+<date>1185975186000</date>
+<contentUpdateDate>1185975186000</contentUpdateDate>
+<version>1.2</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<object>
+<class>
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<name>tags</name>
+<prettyName>Tags</prettyName>
+<unmodifiable>0</unmodifiable>
+<relationalStorage>1</relationalStorage>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+<size>30</size>
+<separator> </separator>
+<cache>0</cache>
+<separators> ,|</separators>
+<values></values>
+<number>1</number>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>ChronoExport.ResetTemplatesDates</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<property>
+<tags/>
+</property>
+</object>
+<content>1 Reset ChronoTemplates dates
+
+[Confim&gt;$doc.fullName?confirm=1]
+#if ($request.confirm)
+  #set($plogdoc=$xwiki.getDocument("ChronoTemplates.ProjectArticleTemplate"))
+  #set($projectdoc=$xwiki.getDocument("ChronoTemplates.ProjectTemplate"))
+  #set($plogobj=$plogdoc.getObject("ChronoClasses.ProjectArticleClass"))
+  #set($projectobj=$projectdoc.getObject("ChronoClasses.ProjectClass"))
+  $plogobj.set("taskduedate", "")
+  $plogobj.set("meetingstart", "")
+  $plogobj.set("meetingend", "")
+  $projectobj.set("start", "")
+  $projectobj.set("end", "")
+  $projectobj.set("projected_start", "")
+  $projectobj.set("projected_end", "")
+  $plogdoc.save()
+  $projectdoc.save()
+  ... done
+#end
+
+</content></xwikidoc>

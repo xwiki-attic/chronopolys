@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xwikidoc>
+<web>ChronoCode</web>
+<name>ProjectMacros</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>XWiki.jvdrean</creator>
+<author>XWiki.Admin</author>
+<customClass></customClass>
+<contentAuthor>XWiki.Admin</contentAuthor>
+<creationDate>1172749409000</creationDate>
+<date>1189705858000</date>
+<contentUpdateDate>1189705858000</contentUpdateDate>
+<version>1.105</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<object>
+<class>
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<cache>0</cache>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+<name>tags</name>
+<number>1</number>
+<prettyName>Tags</prettyName>
+<relationalStorage>1</relationalStorage>
+<separator> </separator>
+<separators> ,|</separators>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<values></values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>ChronoCode.ProjectMacros</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<property>
+<tags/>
+</property>
+</object>
+<content>#macro(displayNote $project)
+&lt;div id="projectnote" onmouseout="initstars();"&gt;
+&lt;style type="text/css"&gt;
+.nstar {
+  display: block;
+  float: left;
+  padding-right: 5px;
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+  background: url($xwiki.getSkinFile('star.gif')) no-repeat;
+}
+.empty {
+  background: url($xwiki.getSkinFile('starempty.gif')) no-repeat;
+}
+&lt;/style&gt;
+  #foreach ($i in [1..5])
+    &lt;span onmouseover="setdisplayednote($i);"&gt;&lt;a title="$msg.get("star$i")" id="note-star-$i" class="nstar" onclick="addNote($i)"&gt;&lt;/a&gt;&lt;/span&gt;
+  #end
+  &lt;script type="text/javascript"&gt;
+    var initialnote = $project.getNote();
+
+    function addNote(note) {
+      var id = 'projectnote';
+      var options = "&amp;do=note&amp;note=" + note;
+      var surl = getXWikiURL("$doc.web", "$doc.name", "view", "xpage=plain" + options);
+      var myAjax = new Ajax.Updater(
+        id, 
+        surl, 
+        {
+          method: 'get',
+          evalScripts: true
+        });
+    }
+
+    function setdisplayednote(note) {
+      for (var i = 1; i &lt;= 5; i++) {
+        var sobj = $('note-star-'+i);
+        if (i &gt; note) {
+          if (!eltHasClass(sobj, "empty"))
+            addClass(sobj, "empty");
+        } else {
+          if (eltHasClass(sobj, "empty"))
+            rmClass(sobj, "empty");
+        }
+      }
+    }
+
+    function initstars() {
+      setdisplayednote(initialnote);
+    }
+
+    initstars();
+  &lt;/script&gt;
+&lt;div style="float:right;text-align:center;font-size:10px;line-height:13px;"&gt;$project.getNote() / 5&lt;br/&gt;
+#set ($vnb = $project.getNotes().size())
+($vnb #if($vnb &gt; 1)$msg.get("votes")#else$msg.get("vote")#end)
+&lt;/div&gt;
+&lt;div style="clear:both;"&gt;&lt;/div&gt;
+&lt;/div&gt;
+#end
+#macro(chronopanelheaderengine $project $title $page $label $edittitle)
+  &lt;div class="chronopanel" id="${title}_panel" onmouseover="panel_mouseover('${title}_panel');" onmouseout="panel_mouseout('${title}_panel');"&gt;
+    &lt;div class="chronopanel_header" style="background-color:${currentStyle};"&gt;
+      &lt;div style="float:left;"&gt;$msg.get($title)&lt;/div&gt;
+        &lt;div id="${title}_panel_actions" class="hidden" style="float:right;margin-right:10px;_margin-right:5px;"&gt;
+          #if ($isMember)
+          &lt;a href="$xwiki.getURL($page)" style="cursor:pointer;" title="$edittitle"&gt;
+            &lt;img src="$xwiki.getSkinFile("task.png")" alt="$label" width="16" height="16" border="0" /&gt;
+          &lt;/a&gt;
+          #end
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="chronopanel_content"&gt;
+    &lt;div id="${title}_view"&gt;
+#end
+#macro(chronopanelfooter $editable)
+    &lt;/div&gt;
+    &lt;/div&gt;
+  #if ($editable) &lt;/form&gt; #end
+  &lt;/div&gt;
+#end
+#macro(chronopanelheader $project $title $editable $edittitle)
+  &lt;div class="chronopanel" id="${title}_panel"#if ($editable) onmouseover="panel_mouseover('${title}_panel');" onmouseout="panel_mouseout('${title}_panel');" #end&gt;
+  #if ($editable) &lt;form id="${title}_form"&gt; #end
+    &lt;div class="chronopanel_header" style="background-color:${currentStyle};"&gt;
+      &lt;div style="float:left;"&gt;$msg.get($title)&lt;/div&gt;
+        &lt;div id="${title}_panel_actions" class="hidden" style="float:right;margin-right:10px;_margin-right: 5px;"&gt;
+          #if ($editable)
+            #if ($isProjectLeader || $isChronoAdmin || $title=="notifications")
+          &lt;a onclick="panel_edit('${title}')" style="cursor:pointer;" title="$edittitle"&gt;
+            &lt;img src="$xwiki.getSkinFile("page_white_edit.png")" alt="" width="16" height="16" border="0" /&gt;
+          &lt;/a&gt;
+            #end
+          #end
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="chronopanel_content"&gt;
+      &lt;div id="${title}_edit" class="hidden" style="background:url($xwiki.getSkinFile("ajax-loader.gif")) no-repeat center;"&gt;
+      #if ($title == "description" || $title == "projectdata" || $title == "projectphases" || $title == "notifications")
+        &lt;div id="${title}_content_edit" class="chronopanel_content_edit" style="background:white;"&gt;
+          #if ($title == "description")
+            $project.display("desc", "edit")
+          #elseif ($title == "projectdata")
+            #displayProjectData($project "edit")
+          #elseif ($title == "projectphases")
+            #displayProjectPhases($project "edit")
+          #elseif ($title == "notifications")
+            #displayProjectNotifications($project "edit")
+          #end          
+          &lt;table width="100%"&gt;
+          &lt;tr&gt;
+          &lt;td align="right"&gt;&lt;span class="buttonwrapper"&gt;&lt;input type="button" onclick="panel_edit('$title')" value="$msg.get("cancel")"/&gt;&lt;/span&gt;&lt;/td&gt;
+          &lt;td align="left"&gt;&lt;span class="buttonwrapper"&gt;&lt;input type="button" onclick="panel_save('$title')" value="$msg.get("save")"/&gt;&lt;/span&gt;&lt;/td&gt;
+          &lt;/tr&gt;
+          &lt;/table&gt;          
+        &lt;/div&gt;
+      #end
+      &lt;/div&gt;
+    &lt;div id="${title}_view"&gt;
+#end
+#macro(chronopanelfooter $editable)
+    &lt;/div&gt;
+    &lt;/div&gt;
+  #if ($editable) &lt;/form&gt; #end
+  &lt;/div&gt;
+#end
+#macro(displayProjectData $obj $action)
+&lt;table class="panel_table"&gt;
+&lt;tr class="underlined"&gt;&lt;td colspan="2"&gt;&lt;span class="projectdata_label"&gt;$msg.get("projectname")&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2"&gt;&lt;span class="projectdata_value"&gt;$obj.display("name", $action)&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr class="underlined"&gt;&lt;td colspan="2"&gt;&lt;span class="projectdata_label"&gt;$msg.get("activity")&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2"&gt;
+#set ($contname = $obj.display("container", "view"))
+&lt;span class="projectdata_value"&gt;#if($action=="edit") $obj.display("container", $action) #else $xwiki.getDocument("ProjectContainers.$contname").display("name", "view") #end&lt;/span&gt;
+&lt;/td&gt;&lt;/tr&gt;
+## &lt;tr class="underlined"&gt;&lt;td colspan="2"&gt;&lt;span class="projectdata_label"&gt;$msg.get("codename")&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+## &lt;tr&gt;&lt;td colspan="2"&gt;&lt;span class="projectdata_value"&gt;$obj.display("codename", $action) &amp;nbsp;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+## &lt;tr class="underlined"&gt;&lt;td&gt;&lt;span class="projectdata_label"&gt;$msg.get("status")&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;span class="projectdata_label"&gt;$msg.get("backuped")&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+## &lt;tr&gt;&lt;td&gt;&lt;span class="projectdata_value"&gt;$obj.display("status", $action)&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;span class="projectdata_value"&gt;$obj.display("backuped", $action)&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr class="underlined"&gt;&lt;td&gt;&lt;span class="projectdata_label"&gt;$msg.get("codename")&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;span class="projectdata_label"&gt;$msg.get("status")&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;span class="projectdata_value"&gt;$obj.display("codename", $action)&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;span class="projectdata_value"&gt;$obj.display("status", $action)&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr class="underlined"&gt;&lt;td&gt;&lt;span class="projectdata_label"&gt;$msg.get("start")&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;span class="projectdata_label"&gt;$msg.get("end")&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;&lt;span class="projectdata_value"&gt;$obj.display("start", $action)&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;span class="projectdata_value"&gt;$obj.display("end", $action)&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+#if ($obj.getProperty("status").getValue()==0)
+&lt;tr&gt;&lt;td colspan="2"&gt;
+#warning($msg.get("projectdraftstatusinfo"))
+&lt;/td&gt;&lt;/tr&gt;
+#end
+&lt;/table&gt;
+#end
+#macro(displayProjectPhaseEdition $phase)
+#set ($phasesDoc = $xwiki.getDocument("${doc.web}.ProjectPhases"))
+#set ($trid = "phaseedition_$phase.getNumber()")
+&lt;tbody id="$trid"&gt;
+&lt;tr class="phasesedit"&gt;
+  &lt;td colspan="2"&gt;
+    &lt;div class="spacer" style="height:4px;"&gt;&lt;/div&gt;
+    &lt;table class="phaseedittable"&gt;
+      &lt;tr&gt;
+        &lt;td colspan="2"&gt;
+          &lt;div style="float:left;"&gt;
+            $phase.display("type", "edit")
+          &lt;/div&gt;
+          $phase.display("iscurrentphase", "hidden")
+          &lt;div style="width:16px;float:right;"&gt;
+            &lt;a onclick="deletephase($phase.getNumber())" title="$msg.get("deletethisphase")" style="cursor:pointer;"&gt;&lt;img width="16" height="16" src="$xwiki.getSkinFile("bin.png")" /&gt;&lt;/a&gt;
+          &lt;/div&gt;
+          &lt;div onclick="switchPhase('$phase.getNumber()')" title="$msg.get("iscurrentphase")" style="cursor:pointer;float:right;margin-right:4px;_margin-right:0px;background:url($xwiki.getSkinFile("lightbulb_off.png")) no-repeat right top;"&gt;
+            #set ($iscurrent=$phasesDoc.getValue("iscurrentphase", $phase))
+            &lt;nobr&gt;
+            &lt;span id="${phase.getNumber()}_iscurrent_text" class="#if($iscurrent != 1)hidden#end"&gt;$msg.get("active")&lt;/span&gt;
+            &lt;span id="${phase.getNumber()}_notcurrent_text" class="#if($iscurrent != 0)hidden#end"&gt;$msg.get("inactive")&lt;/span&gt;
+            &lt;img  width="16" height="16" id="${phase.getNumber()}_iscurrent" class="#if($iscurrent != 1)invisible#end" src="$xwiki.getSkinFile("lightbulb.png")" /&gt;
+            &lt;/nobr&gt;
+          &lt;/div&gt;
+          {pre}
+          #set($pnb = $phase.getNumber())
+          &lt;script type="text/javascript"&gt;
+            var nb = "$pnb";
+            /* add the phase id to the phases list */
+            registerPhase(nb);
+            /* add the onchange handler on phase's type */
+            $('ChronoClasses.ProjectPhaseClass_' + nb + '_type').onchange = function() { phaseTypeOnChange("$phase.getNumber()") };
+          &lt;/script&gt;
+          {/pre}
+        &lt;/td&gt;
+      &lt;/tr&gt;            
+      &lt;tr&gt;
+        &lt;td colspan="2"&gt;$phase.display("name", "edit")&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td colspan="2"&gt;$phase.display("desc", "edit")&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        #set ($ptype = $phasesDoc.getValue('type', $phase))
+        &lt;td&gt;&lt;span id="phaseedition_${pnb}_start" class="#if($ptype != 0) hidden#end"&gt;$msg.get("start")&lt;/span&gt;&lt;span id="phaseedition_${pnb}_mile" class="#if($ptype != 1) hidden#end"&gt;$msg.get("date")&lt;/span&gt;&lt;/td&gt;
+        &lt;td&gt;&lt;span id="phaseedition_${pnb}_end" class="#if($ptype != 0) hidden#end"&gt;$msg.get("end")&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+      &lt;tr&gt;
+        &lt;td&gt;$phase.display("start", "edit")&lt;/td&gt;
+        &lt;td&gt;&lt;span id="phaseedition_${pnb}_endd" class="#if($ptype != 0) hidden#end"&gt;$phase.display("end", "edit")&lt;/span&gt;&lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;div class="spacer" style="height:4px;"&gt;&lt;/div&gt;
+  &lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr id="${trid}_add" class="phasesedit_add"&gt;
+  &lt;td id="${trid}_addtd" colspan="2" class="addphase"&gt;
+    &lt;div style="background:url($xwiki.getSkinFile("add.png")) no-repeat top right;"&gt;
+    &lt;span id="${trid}_addel" class="hidden"&gt;      
+      &lt;a onclick="addphase('$trid', true)" title="$msg.get('addphase')" style="cursor:pointer;"&gt;$msg.get("addphasehere") &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/a&gt;
+    &lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+#end
+#macro(displayProjectPhases $project $action)
+  #if (!$prjobj)
+    #set ($prjobj = $xwiki.chronopolys.getProject($project.name.replaceAll('.WebHome', '')))
+  #end
+  #if (!$obj)
+    #set ($obj = $xwiki.getDocument($project.name).getObject("ChronoClasses.ProjectClass"))
+  #end
+  #set ($phasesDoc = $xwiki.getDocument("${doc.web}.ProjectPhases"))
+  #set ($phases = $prjobj.getPhases())
+  &lt;style&gt;
+    .phasesedit_add {
+      margin-bottom: 4px;
+    }
+    .addphase {
+      height: 6px;
+      width: 100%;
+      border-top: solid 1px #666;
+      border-bottom: solid 1px #666;
+      background: #EFEFEF;
+    }
+    .invisible {
+      visibility: hidden;
+    }
+  &lt;/style&gt;
+  &lt;table id="phase_$action" class="panel_table" style="line-height:14px;width:100%;"&gt;
+    #if ($phases.size() == 0)
+      &lt;tr&gt;
+        #if ($action == "view")
+          &lt;td colspan="2"&gt;$msg.get("noprojectphases")&lt;/td&gt;
+        #end
+      &lt;/tr&gt;
+    #end
+    #if ($action == "edit")
+      &lt;input type="hidden" value="$phases.size()" id="ChronoClasses.ProjectPhaseClass_nb" name="ChronoClasses.ProjectPhaseClass_nb"/&gt;
+      &lt;input type="hidden" name="classname" value="ChronoClasses.ProjectPhaseClass" /&gt;  
+    #end
+    #set ($level = 0)
+    #foreach($phase in $phases)
+      #if ($action == "view")
+      #set ($ptype = $phasesDoc.getValue('type', $phase))
+        &lt;tr&gt;
+          #if (!$currentStyle || $currentStyle == "")
+            #set($currentStyle = $xwiki.chronopolys.getProjectContainerStyle($prjobj.get("container")))
+          #end
+          &lt;td&gt;&lt;img src="$xwiki.getSkinFile("phase_${ptype}.gif")" #if(${phasesDoc.getValue("iscurrentphase", $phase)} == "1") style="background-color:${currentStyle};" #end&gt;&lt;/td&gt;
+          &lt;td style="vertical-align:top;"&gt;
+            &lt;span class="phase_name"&gt;$phase.display("name", "view")&lt;/span&gt;&lt;br/&gt;
+            #if ($phase.display("desc", "view") != "")
+              &lt;span class="phase_desc"&gt;$phase.display("desc", "view")&lt;/span&gt;&lt;br/&gt;
+            #end
+            #if ($ptype == 0)
+              &lt;span class="phase_dates"&gt;$msg.get("datefrom") $phase.display("start", "view") $msg.get("dateto") $phase.display("end", "view")&lt;/span&gt;
+            #else
+              &lt;span class="phase_dates"&gt;$msg.get("ondate") $phase.display("start", "view")&lt;/span&gt;
+            #end
+          &lt;/td&gt;
+        &lt;/tr&gt;
+      #else
+        #displayProjectPhaseEdition($phase)
+        #set ($level = $phase.getNumber())
+      #end
+    #end
+    #if ($action == "edit")
+    &lt;tbody id="phases_edit_add"&gt;
+      &lt;tr class="phasesedit_add"&gt;
+        &lt;td colspan="2" class="addphase"&gt;
+          &lt;div style="background:url($xwiki.getSkinFile("add.png")) no-repeat top right;"&gt;
+          &lt;a onclick="addphase('phases_edit_add', false)" title="$msg.get('addphase')" style="cursor:pointer;"&gt;$msg.get('addphase') &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/a&gt;
+          &lt;/div&gt;
+        &lt;/td&gt;
+      &lt;/tr&gt;
+    &lt;/tbody&gt;
+    #end
+  &lt;/table&gt;
+#end
+#macro(displayProjectNotifications $project $action)
+  #if (!$prjobj)
+    #set ($prjobj = $xwiki.chronopolys.getProject($project.name.replaceAll('.WebHome', '')))
+  #end  
+  #if ($doc.getValue("status")!="1")
+    #info($msg.get("notificationsinactive"))
+  #else
+    #set($subscribeupdate=$request.getParameter("subscribeupdate"))
+      #if($subscribeupdate)
+        #set ($subscribeid = $request.getParameter("subscribeid"))
+        #set ($subscribevalues = $request.getParameterValues("ChronoClasses.NotificationsClass_${subscribeid}_notifications"))
+        #set ($ret = $prjobj.setUserNotifications($context.user, $xwiki.chronopolys.arrayToString($subscribevalues, "|")))
+      #end
+    #set($notifs = $prjobj.getUserNotificationsObj())
+    #if ($action == "edit")
+&lt;input type="hidden" name="subscribeupdate" id="subscribeupdate" value="1" /&gt;
+&lt;input type="hidden" name="subscribeid" id="subscribeid" value="$notifs.getNumber()" /&gt;
+$notifs.display("notifications", "edit")
+    #else      
+      #set($rawList=$notifs.display("notifications", "view"))
+      #if ($rawList=="")
+        #info("nonotifications")
+      #else
+        #set($nList = $rawList.split(","))
+        #foreach ($nItem in $nList)
+          * $nItem
+        #end
+      #end
+    #end
+  #end
+#end
+#macro(packName $name $length)
+#set($maxnamelength = $length)
+#set($idx = $name.lastIndexOf("."))
+#if(($idx != 0) &amp;&amp; ($idx != -1))
+#set($ext = $name.substring($idx))
+#else
+#set($ext = "")
+#set($idx = $name.length())
+#end
+#set($fname = $name.substring(0, $idx))
+#if($fname.length() &gt; $maxnamelength)$fname.substring(0, $maxnamelength)~$ext#else$name#end
+#end
+#macro(displayFile $file)
+#set ($url = $xwiki.getAttachmentURL($xwiki.chronopolys.getListTool().get($file, 0), $xwiki.chronopolys.getListTool().get($file, 1)))
+#set ($pageName = $xwiki.chronopolys.getListTool().get($file, 0))
+#set ($fileName = $xwiki.chronopolys.getListTool().get($file, 1))
+#set ($attach = $xwiki.getDocument($pageName).getAttachment($fileName))
+  &lt;div style="float:left;width:20px;padding-right:4px;"&gt;
+    &lt;a href="$url" style="border 1px #CDCDCD;"&gt;
+      #mimetypeimg($attach.getMimeType().toLowerCase() $attach.getFilename().toLowerCase() "16px")
+    &lt;/a&gt;
+  &lt;/div&gt;
+  &lt;div style="float:left;"&gt;
+    #set ($attachDate = $!xwiki.formatDate($attach.date, "dd/MM/yyyy"))
+    #set ($title = "$fileName, #dynamicsize($attach.getFilesize()), $attach.version, $attachDate")
+    &lt;a href="$url" title="$title"&gt;#packName($xwiki.chronopolys.getListTool().get($file, 1), 20)&lt;/a&gt;
+  &lt;/div&gt;
+&lt;div style="clear:both;border-top:1px solid #E6E6E6;margin:5px 0;"&gt;&lt;/div&gt;
+#end
+###
+### Display an icon according to the mimetype
+###
+### @param mime The reported mimetype of the file
+### @param fname The name of the file
+###
+#macro(mimetypeimg $mime $fname $size)
+#set($idx = $fname.lastIndexOf("."))
+#set($idx = $idx + 1)
+#if(($idx != 0) &amp;&amp; ($idx != -1))
+#set($ext = $fname.substring($idx))
+#else
+#set($ext = "")
+#end
+#####    images
+#if($mime.equals("image/svg"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/vectorgfx.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("application/svg+xml"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/vectorgfx.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.startsWith("image/"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/jpg.png")" style="width:$size;height:$size;"/&gt;#####    text based
+#elseif($mime.equals("text/plain"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/txt.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("text/html"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/html.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("text/css"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/url.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.startsWith("text/"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/txt.png")" style="width:$size;height:$size;"/&gt;#####    documents
+#elseif($mime.equals("application/xml"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/xml.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("application/pdf"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/pdf.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("application/postscript"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/ps.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("application/msword"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/word.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("application/powerpoint"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/ppt.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("application/x-shockwave-flash"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/swf.png")" style="width:$size;height:$size;"/&gt;#####    archives
+#elseif($mime.equals("application/x-tar"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/tar.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("application/zip"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/zip1.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("application/x-gzip"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/tar_gz.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.equals("application/java-archive"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/jar.png")" style="width:$size;height:$size;"/&gt;#####    media
+#elseif($mime.startsWith("audio/"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/wav.png")" style="width:$size;height:$size;"/&gt;#elseif($mime.startsWith("video/"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/video.png")" style="width:$size;height:$size;"/&gt;#####    octet-streams extensions
+#elseif($mime.equals("application/octet-stream"))
+#if($ext.equals("xls"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/excel.png")" style="width:$size;height:$size;"/&gt;#elseif($ext.equals("bz") || $ext.equals("bz2") || $ext.equals("tbz"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/tar_bz.png")" style="width:$size;height:$size;"/&gt;#elseif($ext.equals("tgz"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/tar_gz.png")" style="width:$size;height:$size;"/&gt;#elseif($ext.equals("rar"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/zip1.png")" style="width:$size;height:$size;"/&gt;#elseif($ext.equals("odp") || $ext.equals("odt") || $ext.equals("odf") || $ext.equals("sxw") || $ext.equals("stw"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/openoffice.png")" style="width:$size;height:$size;"/&gt;#else
+&lt;img src="$xwiki.getSkinFile("mimetypes/bin.png")" style="width:$size;height:$size;"/&gt;#end
+#elseif($mime.startsWith("application/"))
+&lt;img src="$xwiki.getSkinFile("mimetypes/exec.png")" style="width:$size;height:$size;"/&gt;#end
+#end
+</content></xwikidoc>

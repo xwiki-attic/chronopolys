@@ -1,0 +1,37 @@
+#template("startpage.vm")
+<div class="main layoutsubsection" id="containall">
+<div id="project_header" style="background-color:$currentStyle;margin: 0 0 0 -13px;">
+    <span class="project_name"><a href="$xwiki.getURL("${doc.web}.WebHome")">$project.get("name")</a></span>
+    <span id="project_bar_actions"><a id="backtoproject" href="$xwiki.getURL("${doc.web}.WebHome")">$msg.get("backtoproject")</a></span>
+</div>
+<div class="container_breadcrumb" style="margin: 0 0 10px 0;">$currentAxis.display("name", "view") > $currentYard.display("name", "view") > $currentActivity.display("name", "view")</div>
+#roundedtitletop($xwiki.parseMessage("availableversionsattachment"))
+#if ($tdoc.realLanguage!="")
+#set($lang = "&language=${tdoc.realLanguage}")
+#else
+#set($lang = "")
+#end
+<table class="xwikidatatable">
+  <tr>
+      <th></th><th>$msg.get("version")</th><th>$msg.get("size")</th>
+      <th>$msg.get("author")</th><th>$msg.get("date")</th>
+  </tr>
+#foreach ($version in $attachment.getVersions())
+  <tr class="row#if($velocityCount % 2 == 1) even #else odd #end">
+#set($attachrev = $attachment.getAttachmentRevision($version.toString()))
+#set($url = $doc.getAttachmentRevisionURL("${attachment.filename}", ${version.toString()}))
+#if ($attachment.isImage())
+      <td><img src="${url}" alt="${attachment.filename}" width="80" />#else
+      <td class="mime">#mimetypeimg($attachment.getMimeType().toLowerCase() $attachment.getFilename().toLowerCase())
+#end
+      </td>
+      <td><a href="$url">$version</a></td>
+      <td>$attachrev.getFilesize()</td>
+      <td>$xwiki.getLocalUserName($attachrev.getAuthor())</td>
+      <td>$xwiki.formatDate($attachrev.getDate())</td>
+  </tr>
+#end
+</table>
+#roundedbottom()
+</div> ## main
+#template("endpage.vm")

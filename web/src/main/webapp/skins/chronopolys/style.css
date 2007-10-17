@@ -1,0 +1,112 @@
+@import "elements.css";
+@import "classes.css";
+@import "xwiki.css";
+@import "wiki.css";
+@import "page.css";
+@import "rss.css";
+@import "screenlayout.css";
+@import "microformats.css";
+@import "presentation.css";
+@import "colorsblack.css";
+@import "xwikileftovers.css";
+@import "chronopolys.css";
+@import "chronoprojects.css";
+@import "chronoproject.css";
+@import "rounded.css";
+@import "css/table/table.css";
+
+#xwiki-form-notifications {
+  display:block;
+}
+
+/* UIMM */
+
+#xwikidocinfo { display:none; }
+
+.chronopanel_header {
+  background-color:gainsboro;
+}
+
+#body .buttonwrapper a, #body .buttonwrapper alink, #body .buttonwrapper a:visited, #body .buttonwrapper a:active {
+  font-size:12px;
+  padding-top:8px;
+  color: #D61385;
+  font-weight:bold;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+#plogbar-actions .buttonwrapper {
+  padding:0px;
+  margin:0px;
+}
+
+#headerglobal {
+  border-right:525px solid transparent !important;
+}
+
+
+/* debug IE flix */
+
+html>/**/body {
+  overflow-y: scroll;
+}
+
+#xwikimaincontainer, #xwikimaincontainerinner {
+  border: 0 solid transparent;
+}
+
+
+
+#loginForm .rounded-title, #loginForm .rounded-medium-title, #xwikidata .rounded-title, #xwikidata .rounded-medium-title {
+  _margin: 0;
+  _overflow: visible;
+}
+#loginForm .roundedcontent, #loginForm .bottom, #xwikidata .roundedcontent, #xwikidata .bottom, #xwikidata .top {
+  _margin: 0 5px;
+}
+.xwikiintracontent {
+  _width: 620px;
+  _overflow: visible;
+}
+#admincontainer {
+  _width: 610px;
+  _overflow: visible;
+}
+#headerspace, #contentcontainer, #footerglobal {
+  margin-left: 0 !important;
+  margin-left: 1px;
+}
+#projectlogarticle {
+  _padding-left: 10px;
+  _padding-right: 9px;
+}
+.activity_container{zoom: 1; _margin: 0;}
+.project { _width: 580px; }
+#commentscontent, #attachmentscontent {
+  _width: 760px;
+}
+#attachform {
+  _width: 500px;
+}
+#attachments .roundedcontent {
+  _overflow: hidden;
+}
+#body .buttonwrapper *, #body .buttonwrapper a, #body .buttonwrapper alink, #body .buttonwrapper a:visited, #body .buttonwrapper a:active {
+  _overflow: visible;
+  _width: 1px;
+}
+.buttonwrapper {
+  _margin-left: 2px;
+}
+#body #mypassword_panel .buttonwrapper *, #body #mypassword_panel .buttonwrapper a, #body #mypassword_panel .buttonwrapper alink, #body #mypassword_panel .buttonwrapper a:visited, #body #mypassword_panel .buttonwrapper a:active {
+  _width: auto;
+}
+
+
+form#register .roundedcontent, form#register .rounded {
+  _margin: 0 0 0 10px;
+}
+#plogbar-actions, #plogbar-actions a, #plogheaderleft, #deleteplogarticle, .chronopanel_header a, .actions img, .name, .rounded-medium-title a, .rounded-title a, .rounded-title #plogbar-actions a,  .rounded-title #plogbar-actions, #plogbar-edit, a#plogbar-edit {
+  _position: relative;
+}

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xwikidoc>
+<web>ChronoServices</web>
+<name>ContainersDisplay</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>XWiki.jvdrean</creator>
+<author>XWiki.Admin</author>
+<customClass></customClass>
+<contentAuthor>XWiki.Admin</contentAuthor>
+<creationDate>1175592481000</creationDate>
+<date>1189607307000</date>
+<contentUpdateDate>1189607307000</contentUpdateDate>
+<version>1.54</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<object>
+<class>
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<cache>0</cache>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+<name>tags</name>
+<number>1</number>
+<prettyName>Tags</prettyName>
+<relationalStorage>1</relationalStorage>
+<separator> </separator>
+<separators> ,|</separators>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<values></values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>ChronoServices.ContainersDisplay</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<property>
+<tags/>
+</property>
+</object>
+<content>#includeMacros("ChronoCode.ContainerMacros")
+#if ($request.mode)
+#set ($mode = $request.mode)
+#else
+#set ($mode = "timelinemode")
+#end
+#set ($list = $xwiki.chronopolys.getProjectContainers("axis"))
+#set ($hasEdit = $xwiki.hasAccessLevel("edit", $context.user, "${xwiki.chronopolys.getProjectContainerSpace()}.WebHome"))
+#set ($hasAdmin = $xwiki.hasAccessLevel("admin", $context.user, "${xwiki.chronopolys.getProjectContainerSpace()}.WebHome"))
+#if ($request.prefered_timeline_view &amp;&amp; $request.prefered_timeline_view != "")
+  #set ($prefered_view = $request.prefered_timeline_view)
+#else
+  #set ($prefered_view = $docuser.prefered_timeline_view)
+#end
+#if ($prefered_view == "3years")
+  #set($masterIntervalUnit = "Timeline.DateTime.YEAR")
+  #set($masterIntervalPixels = "150")
+  #set($yearIntervalPixels = "50")
+  #set($tysel = "selected='selected'")
+#elseif ($prefered_view == "1year")
+  #set($masterIntervalUnit = "Timeline.DateTime.YEAR")
+  #set($masterIntervalPixels = "400")
+  #set($yearIntervalPixels = "200")
+  #set($oysel = "selected='selected'")
+#elseif ($prefered_view == "3months")
+  #set($masterIntervalUnit = "Timeline.DateTime.MONTH")
+  #set($masterIntervalPixels = "150")
+  #set($yearIntervalPixels = "200")
+  #set($tmsel = "selected='selected'")
+#elseif ($prefered_view == "1month")
+  #set($masterIntervalUnit = "Timeline.DateTime.MONTH")
+  #set($masterIntervalPixels = "400")
+  #set($yearIntervalPixels = "400")
+  #set($omsel = "selected='selected'")
+#else
+  #set($masterIntervalUnit = "Timeline.DateTime.MONTH")
+  #set($masterIntervalPixels = "150")
+  #set($yearIntervalPixels = "200")
+  #set($tmsel = "selected='selected'")
+#end
+{pre}
+&lt;script type="text/javascript"&gt;
+  master_onLoad = function() {
+  var today = new Date();
+  var master_eventSource = new Timeline.DefaultEventSource();
+            var theme = Timeline.ClassicTheme.create();
+            theme.event.label.width = 250; // px
+            theme.event.bubble.width = 250;
+            theme.event.bubble.height = 100;
+  var master_bandInfos = [
+    Timeline.createBandInfo({
+        date:           today.toUTCString(),
+        width:          "48%", 
+        intervalUnit:   Timeline.DateTime.YEAR, 
+        intervalPixels: $yearIntervalPixels,
+        theme:          theme
+    }),
+    Timeline.createBandInfo({
+        eventSource:    master_eventSource,
+        date:           today.toUTCString(),
+        width:          "48%", 
+        intervalUnit:   $masterIntervalUnit, 
+        intervalPixels: $masterIntervalPixels,
+        theme:          theme
+    })
+  ];
+  master_tl = Timeline.create(document.getElementById("master_timeline"), master_bandInfos);
+
+  var syncingTimelines = false;
+  master_tl.getBand(0).addOnScrollListener(function(band) {
+       if (!syncingTimelines) {
+          syncingTimelines = true;
+          syncTimeline(band.getCenterVisibleDate());
+          syncingTimelines = false;
+       }
+    });
+  master_tl.getBand(1).addOnScrollListener(function(band) {
+       if (!syncingTimelines) {
+          syncingTimelines = true;
+          syncTimeline(band.getCenterVisibleDate());
+          syncingTimelines = false;
+       }
+    });
+  /* compute band1 width on band0 */
+  var startd1 = master_tl.getBand(1).getMinVisibleDate();
+  var endd1 = master_tl.getBand(1).getMaxVisibleDate();
+  master_tl.getBand(0).getEtherPainter().setHighlight(startd1, endd1);
+
+  /* old method to draw band1 on band0 */
+  /* var cur0 = Math.round(master_tl.getBand(0).dateToPixelOffset(new Date()));
+  var rstart0 = Math.round(master_tl.getBand(0).dateToPixelOffset(startd1));
+  var rend0 = Math.round(master_tl.getBand(0).dateToPixelOffset(endd1));
+  var range = Math.abs(rstart0 - rend0);
+  var fromLeft = 200 - range / 2;
+  var tdiv = document.createElement('div');
+  tdiv.style.zIndex = '10';
+  tdiv.style.position = 'absolute';
+  tdiv.style.width = range + 'px';
+  tdiv.style.height = '20px';
+  tdiv.style.background = 'url($xwiki.getSkinFile("a180.png"))';
+  tdiv.style.top = '0px';
+  tdiv.style.left = fromLeft + 'px';
+  master_tl.addDiv(tdiv); */
+  
+  /* draw today on band0 */
+  var tdiv = master_tl.getBand(0).createLayerDiv('106');
+  tdiv.style.width = '1px';
+  tdiv.style.height = '100%';
+  tdiv.style.backgroundColor = '#32353F';
+  tdiv.style.left = Math.round(master_tl.getBand(0).dateToPixelOffset(new Date())) + 'px';
+  
+  /* draw today on band1 */
+  tdiv = master_tl.getBand(1).createLayerDiv('106');
+  tdiv.style.width = '1px';
+  tdiv.style.height = '100%';
+  tdiv.style.backgroundColor = '#32353F';
+  tdiv.style.left = Math.round(master_tl.getBand(1).dateToPixelOffset(new Date())) + 'px';
+};
+Event.observe(window, 'load', master_onLoad, false);
+masterloader = master_onLoad;
+
+function toggleContainerAdd() {
+  var els = document.getElementsByClassName('container_add', $('chronoapp'));  
+  for (var i = 0; i &lt; els.length; i++) {
+    toggleClass(els[i], 'hidden');        
+  }
+  toggleClass($('addfolders'), 'enabled');
+}
+
+&lt;/script&gt;
+&lt;style&gt;
+.dashboard_masterinfos{
+  float:right; 
+  padding-bottom: 8px;
+  padding-right:30px;
+}
+&lt;/style&gt;
+&lt;div id="dashboard_masterinfos" style="float:right; border: 1px solid #aaa; margin-right:30px;"&gt;
+&lt;div id="master_timeline" class="timeline-default mode timelinemode #if($mode!="timelinemode")hidden#end" style="height: 40px; width:400px;"&gt;&lt;/div&gt;
+&lt;div id="master_quality" class="mode qualitymode #if($mode!="qualitymode")hidden#end" style="width:428px;" &gt;
+  &lt;table class="projectquality" style="height:40px;"&gt;&lt;tr&gt;
+      &lt;td&gt;$msg.get("qdesc")&lt;/td&gt;
+      &lt;td class="lborder" style="width:70px;"&gt;$msg.get("qleader")&lt;/td&gt;
+      &lt;td class="lborder" style="width:70px;"&gt;$msg.get("qcodename")&lt;/td&gt;
+      &lt;td class="lborder" style="width:30px;"&gt;$msg.get("qnote")&lt;/td&gt;
+      &lt;td class="lborder" style="width:65px;"&gt;$msg.get("qlastmodificationdate")&lt;/td&gt;
+  &lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="dashboard_options" style="height:61px;"&gt;
+&lt;div class="mode timelinemode #if($mode!="timelinemode")hidden#end"&gt;
+&lt;select id="timeline_range" onchange="changeTimelineRange(this.value)"&gt;
+&lt;option value="1month" $!omsel&gt;$msg.get("view1month")&lt;/option&gt;
+&lt;option value="3months" $!tmsel&gt;$msg.get("view3months")&lt;/option&gt;
+&lt;option value="1year" $!oysel&gt;$msg.get("view1year")&lt;/option&gt;
+&lt;option value="3years" $!tysel&gt;$msg.get("view3years")&lt;/option&gt;
+&lt;/select&gt;&lt;br/&gt;
+&lt;a onclick="syncTimeline(new Date())" style="cursor:pointer;"&gt;$msg.get("backtotoday")&lt;/a&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div id="dashboardmode" style="float:left;"&gt;
+&lt;div id="dashboardmode_l" style="width:7px;height:32px;float:left;background:url($xwiki.getSkinFile('dashboardmode_l.gif')) no-repeat;"&gt;&lt;/div&gt;
+&lt;div id="dashboarmode_c" style="padding-top:8px;height:32px;float:left;background:url($xwiki.getSkinFile('dashboardmode_c.gif')) repeat-x;"&gt;
+&lt;img src="$xwiki.getSkinFile("calendar.gif")" title="$msg.get("timelineswitch")" onclick="switchDashboardMode('timelinemode');" style="cursor:pointer;" /&gt;
+&amp;nbsp;&lt;img src="$xwiki.getSkinFile("star_grey.gif")" title="$msg.get("qualityswitch")" onclick="switchDashboardMode('qualitymode');" style="cursor:pointer;" /&gt;
+&lt;/div&gt;
+&lt;div id="dashboard_mode_r" style="width:7px;height:32px;float:left;background:url($xwiki.getSkinFile('dashboardmode_r.gif')) no-repeat;"&gt;&lt;/div&gt;
+&lt;/div&gt;
+#if ($isChronoAdmin || $isChronoManager)
+&lt;div id="dashboardadd" style="float:left;"&gt;
+&lt;div id="dashboardadd_l" style="width:7px;height:32px;float:left;background:url($xwiki.getSkinFile('dashboardmode_l.gif')) no-repeat;"&gt;&lt;/div&gt;
+&lt;div id="dashboardadd_c" style="padding-top:8px;height:32px;float:left;background:url($xwiki.getSkinFile('dashboardmode_c.gif')) repeat-x;"&gt;
+&lt;img src="$xwiki.getSkinFile("folder_add_grey.gif")" title="$msg.get("foldersaddmode")" onclick="toggleContainerAdd();" style="cursor:pointer;" /&gt;
+&lt;/div&gt;
+&lt;div id="dashboardadd_mode_r" style="width:7px;height:32px;float:left;background:url($xwiki.getSkinFile('dashboardmode_r.gif')) no-repeat;"&gt;&lt;/div&gt;
+#end
+&lt;/div&gt;
+## &lt;style&gt;
+## .addfolders {
+##   line-height: 12px;
+##   float:right;
+##   width:90px;  
+##   height: 24px;
+##   padding-left: 24px;
+##   font-size:10px;
+##   cursor: pointer;
+##   background: url($xwiki.getSkinFile('addfoldersdisabled.gif')) left center no-repeat;
+## }
+## #addfolders.enabled {
+##   background: url($xwiki.getSkinFile('addfolders.gif')) left center no-repeat;
+## }
+## &lt;/style&gt;
+## &lt;div onclick="toggleContainerAdd();" id="addfolders" class="addfolders"&gt;
+## &lt;span&gt;$msg.get("foldersaddmode")&lt;/span&gt;
+## &lt;/div&gt;
+{/pre}
+&lt;div id="axis_all"&gt;
+#foreach ($item in $list)
+  &lt;div id="$item.get("uid")" class="axis_container"&gt;
+  #displayAxis($item)
+  &lt;/div&gt;
+#end
+&lt;/div&gt;
+&lt;div class="clearall"&gt;&lt;/div&gt;
+#if ($hasEdit)
+&lt;div id="" class="container_add addaxis_container hidden"&gt;
+&lt;a id="addaxis" onclick="container_add('axis', '')"&gt;$msg.get("addaxis")&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class="clearall"&gt;&lt;/div&gt;
+#end
+#includeInContext("ChronoCode.ContainerOrphans")
+&lt;br/&gt;
+&lt;br/&gt;
+{pre}
+&lt;script type="text/javascript"&gt;
+  Event.observe(window, 'load', initContainersStates('$xwiki.getDocument($context.getLocalUser()).display("prefered_containers_state", "view")'), false);
+  Event.observe(window, 'unload', updateContainersStates, false);
+&lt;/script&gt;
+{/pre}</content>
+</xwikidoc>

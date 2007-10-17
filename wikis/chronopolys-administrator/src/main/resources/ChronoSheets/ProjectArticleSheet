@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xwikidoc>
+<web>ChronoSheets</web>
+<name>ProjectArticleSheet</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>XWiki.jvdrean</creator>
+<author>XWiki.Admin</author>
+<customClass></customClass>
+<contentAuthor>XWiki.Admin</contentAuthor>
+<creationDate>1175079222000</creationDate>
+<date>1188893449000</date>
+<contentUpdateDate>1188893449000</contentUpdateDate>
+<version>1.79</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<object>
+<class>
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<cache>0</cache>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+<name>tags</name>
+<number>1</number>
+<prettyName>Tags</prettyName>
+<relationalStorage>1</relationalStorage>
+<separator> </separator>
+<separators> ,|</separators>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<values></values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>ChronoSheets.ProjectArticleSheet</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<property>
+<tags/>
+</property>
+</object>
+<content>#set($obj = $doc.getObject("ChronoClasses.ProjectArticleClass"))
+#set($bentrydoc = $doc)
+#set($creationDate = $xwiki.formatDate($bentrydoc.creationDate,"dd MMMM yyyy"))
+#if($context.action!="inline")
+## ----------------------------------------------------------------------------
+## VIEW
+## ----------------------------------------------------------------------------
+#set($showattachments = "yes")
+#set($showcomments = "yes")
+&lt;div id="projectlogarticle"&gt;
+#if ($doc.taskcompletion == "100%")
+  #set ($type = "${bentrydoc.type}-complete")
+#else
+  #set ($type = $bentrydoc.type)
+#end
+&lt;div class="rounded-title" #if (!$currentStyle) style="background-color:#eee;color:#D61385;" #else style="background-color:$currentStyle" #end &gt;
+  &lt;span class="plogheaderleft"&gt;$msg.get($type)&lt;/span&gt;
+  #if($context.action != "edit")
+    &lt;span id="plogbar-actions"&gt;
+      &lt;a id="plogbar-edit" href="$editurl"&gt;$editmsg&lt;/a&gt;
+      #if($isXWikiAdmin || $isChronoManager || $isChronoAdmin || $context.user == $doc.creator)
+        | &lt;a id="deleteplogarticle" href="$doc.getURL('delete')"&gt;$msg.get("delete$type")&lt;/a&gt;
+      #end
+    &lt;/span&gt;
+  #end
+&lt;/div&gt;
+&lt;div class="roundedcontent"&gt;
+&lt;div class="article_header"&gt;
+&lt;img src="$xwiki.getSkinFile("${type}-large.gif")" width="32" height="32" style="float:left;margin-right:10px;" /&gt;
+&lt;div style="float:left;margin-top:-5px;"&gt;$msg.get("$type") $msg.get("article_date") $creationDate, $msg.get("article_author") #displayUser($bentrydoc.getCreator())&lt;br/&gt;
+&lt;span style="font-size:20px;font-weight:bold;"&gt;$doc.title&lt;/span&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div style="clear:both;"&gt;&lt;/div&gt;
+#roundedbottom()
+
+#if ($doc.type == "task")
+#roundedtop()
+* *$msg.get("taskduedate")* : $doc.taskduedate
+* *$msg.get("taskassignee")* : $doc.taskassignee
+* *$msg.get("taskcompletion")* : $doc.taskcompletion &lt;span style="display:block; width:70%; border:1px solid #aaa; margin-left:5px;"&gt;&lt;span style="display:block; background:#ccc; width:$doc.taskcompletion; height:15px;"&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;div style="clear:both;"&gt;&lt;/div&gt;
+#roundedbottom()
+#end
+#if ($doc.type == "meeting")
+#roundedtop()
+* *$msg.get("meetingstart")* : $doc.meetingstart
+* *$msg.get("meetingend")* : $doc.meetingend
+* *$msg.get("meetinglocation")* : $doc.meetinglocation
+&lt;div style="width:300px;"&gt;
+#displayRsvps($doc)
+&lt;/div&gt;
+#roundedbottom()
+#end
+
+#set ($content = $obj.get("content"))
+#if ($content != "")
+#roundedtop()
+$content
+#roundedbottom()
+#end
+&lt;/div&gt;
+
+#set($showcomments = "yes")
+&lt;style&gt;
+#xwikidata #commentscontent {
+  border-bottom:0px;
+}
+&lt;/style&gt;
+
+#else
+## ----------------------------------------------------------------------------
+## EDIT
+## ----------------------------------------------------------------------------
+#roundedtitletop($msg.get("editplogelement"))
+##if ($doc.display("type", "view") == "")
+#if ($request.type != "")
+  ## ------------
+  ## creation
+  ## ------------
+  #set ($type = $request.type)
+  &lt;input type="hidden" name="ChronoClasses.ProjectArticleClass_0_type" id="ChronoClasses.ProjectArticleClass_0_type" value="$type" /&gt;
+  &lt;input type="hidden" name="comment" id="comment" value="createt${type}" /&gt;
+#else
+  ## ------------
+  ## edition
+  ## ------------
+  #set ($type = $doc.display("type", "view"))
+  &lt;input type="hidden" name="comment" id="comment" value="edit${type}" /&gt;
+#end
+&lt;table id="projectlogarticle_edit" style="margin: 0 -5px;"&gt;
+## &lt;tr&gt;
+## &lt;td align="right"&gt;*$msg.get("plogarticletype") :*&lt;/td&gt;
+## &lt;td colspan="3"&gt;$doc.display("type", "edit")&lt;/td&gt;
+## &lt;/tr&gt;
+&lt;tr&gt;&lt;td width="80" align="right"&gt;&amp;nbsp;&lt;/td&gt;&lt;td colspan="3"&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="right"&gt;*$msg.get("plogarticletitle") :*&lt;/td&gt;
+&lt;td colspan="3"&gt;&lt;input type="text" value="$!doc.title" name="title" id="xwikidoctitleinput"/&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td align="right"&gt;*$msg.get("plogarticlecontent") :*&lt;/td&gt; 
+&lt;td colspan="3"&gt;$doc.display("content", "edit")&lt;/td&gt;
+&lt;/tr&gt;
+#set($ptype = $type)
+&lt;tr id="task_edit" class="#if($ptype != "task")hidden#end"&gt;
+&lt;td align="right"&gt;*$msg.get("taskassignee") :*&lt;/td&gt;
+&lt;td&gt;$doc.display("taskassignee", "edit")&lt;/td&gt;
+&lt;td align="right"&gt;*$msg.get("taskduedate") :*&lt;/td&gt;
+&lt;td&gt;$doc.display("taskduedate", "edit")
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr id="task_completion_edit" class="#if($ptype != "task")hidden#end"&gt;
+&lt;td align="right"&gt;*$msg.get("taskcompletion") :*&lt;/td&gt;
+&lt;td&gt;$doc.display("taskcompletion", "edit")&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr id="meeting_dates_edit" class="#if($ptype != "meeting")hidden#end"&gt;
+&lt;td align="right"&gt;*$msg.get("date") :*&lt;/td&gt;
+## ------------------------------------------------------------------------------------------------------------------------------------------
+{pre}
+&lt;style&gt;
+.date_displayer {
+  border: solid 1px #CCC;
+  $style
+  padding-left:1px;
+  padding-right:16px;
+  background:url($xwiki.getSkinFile("calendar.png")) center right no-repeat;
+}
+&lt;/style&gt;
+&lt;script type="text/javascript"&gt;
+function syncInputs() {
+  var rstart = $('ChronoClasses.ProjectArticleClass_0_meetingstart');
+  var rend = $('ChronoClasses.ProjectArticleClass_0_meetingend');
+  var dinput = $('meetingday');
+  var shinput = $('starthour');
+  var ehinput = $('endhour');
+  
+  rstart.value = dinput.value + ' ' + shinput.value;
+  rend.value = dinput.value + ' ' + ehinput.value;
+  
+  changeMeetingsSelect();
+}
+function changeMeetingsSelect() {
+  var shoutput = "";
+  var ehoutput = "";
+  var selected = "";
+  
+  var shinput = $('starthour');  
+  var sht = shinput.value.split(':');
+  var shh = parseFloat(sht[0]);
+  var shm = parseFloat(sht[1]);
+  
+  var ehinput = $('endhour');
+  var eht = ehinput.value.split(':');
+  var ehh = parseFloat(eht[0]);
+  var ehm = parseFloat(eht[1]);
+  
+  var hourlist = ["08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"];
+  var minlist = ["00", "15", "30", "45"];
+  
+  for (var i = 0; hourlist[i]; i++) {
+    for (var j = 0; minlist[j]; j++) {
+      if (ehh &gt;= parseFloat(hourlist[i])) {
+        if (ehh == parseFloat(hourlist[i]) &amp;&amp; ehm &lt;= parseFloat(hourlist[i])) {
+          // same hour but min lower or equal
+        } else {
+          if (shh == parseFloat(hourlist[i]) &amp;&amp; shm == parseFloat(minlist[j])) {
+            selected = "selected";
+          } else {
+            selected = "";
+          }
+          shoutput += "&lt;option "+ selected + "&gt;" + hourlist[i] + ":" + minlist[j] + "&lt;/option&gt;";
+        }
+      }
+    }  
+  }
+  shinput.innerHTML = shoutput;
+  
+  for (var i = 0; hourlist[i]; i++) {
+    for (var j = 0; minlist[j]; j++) {      
+      if (parseFloat(hourlist[i]) &gt;= shh) {
+        if (parseFloat(hourlist[i]) == shh &amp;&amp; parseFloat(minlist[j]) &lt;= shm) {
+          // same hour but min higher or equal
+        } else {
+          if (ehh == parseFloat(hourlist[i]) &amp;&amp; ehm == parseFloat(minlist[j])) {
+            selected = "selected";
+          } else {
+            selected = "";
+          }
+          ehoutput += "&lt;option "+ selected + "&gt;" + hourlist[i] + ":" + minlist[j] + "&lt;/option&gt;";
+        }
+      }
+    }  
+  }
+  ehinput.innerHTML = ehoutput;
+}
+&lt;/script&gt;
+{/pre}
+##          init
+## ------------------------
+#set ($svalue = $doc.getValue("meetingstart"))
+##if($xwiki.chronopolys.isDate($svalue)==false)
+#if($doc.isNew())
+  #set($svalue=$xwiki.getCurrentDate())
+  $!svalue.setHours(8)
+  $!svalue.setMinutes(0)
+#end
+#if($svalue.getHours() &lt; 8 || $svalue.getHours() &gt; 23)
+  $!svalue.setHours(8)
+#end
+#if($svalue.getMinutes() != 0 || $svalue.getMinutes() != 15 || $svalue.getMinutes() != 30 || $svalue.getMinutes() != 45)
+  $!svalue.setMinutes(0)
+#end
+#set($srvalue=$xwiki.formatDate($svalue,"dd/MM/yyyy HH:mm"))
+#set($sfvalue=$xwiki.formatDate($svalue,"dd/MM/yyyy"))
+#set($sfhour =$xwiki.formatDate($svalue,"HH:mm"))
+#set ($evalue = $doc.getValue("meetingend"))
+#if($doc.isNew())
+  #set($evalue=$xwiki.getCurrentDate())
+  $!evalue.setHours(18)
+  $!evalue.setMinutes(0)
+#end
+#if($evalue.getMinutes() != 0 || $evalue.getMinutes() != 15 || $evalue.getMinutes() != 30 || $evalue.getMinutes() != 45)
+  $!evalue.setMinutes(0)
+#end
+#if($evalue.getHours() &lt; 8 || $evalue.getHours() &gt; 23)
+  $!evalue.setHours(18)
+#end
+#set($ervalue=$xwiki.formatDate($evalue,"dd/MM/yyyy HH:mm"))
+#set($sevalue = $xwiki.formatDate($evalue,"dd/MM/yyyy"))
+#set($sehour = $xwiki.formatDate($evalue,"HH:mm"))
+##       display date
+## ------------------------
+&lt;td&gt;
+&lt;nobr&gt;&lt;span id="display_meetingday" class="date_displayer"&gt;$sfvalue&lt;/span&gt;&lt;/nobr&gt;
+&lt;input id="meetingday" type="hidden" value="$sfvalue" name="meetingday" onchange="syncInputs()" /&gt;
+&lt;input id="ChronoClasses.ProjectArticleClass_0_meetingstart" type="hidden" value="$srvalue" name="ChronoClasses.ProjectArticleClass_0_meetingstart"/&gt;
+&lt;input id="ChronoClasses.ProjectArticleClass_0_meetingend" type="hidden" value="$ervalue" name="ChronoClasses.ProjectArticleClass_0_meetingend"/&gt;
+&lt;/td&gt;
+##       display hours
+## ------------------------
+#macro(meetinghours $type $hourval) &lt;select id="${type}hour" onchange="syncInputs()"&gt; #set ($hourlist = ["08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" ]) #set ($minlist = ["00", "15", "30", "45"]) #foreach ($hour in $hourlist)   #foreach ($min in $minlist)    #if ($hourval == "${hour}:${min}")#set($selected="selected")#else#set ($selected="")#end&lt;option $selected&gt;${hour}:${min}&lt;/option&gt; #end #end &lt;/select&gt;
+#end
+&lt;td align="right"&gt;*$msg.get("meetinghours") :*&lt;/td&gt;
+&lt;td&gt;
+&lt;table&gt;
+&lt;tr&gt;&lt;td&gt;$msg.get("meetingstart")&amp;nbsp;&amp;nbsp;&lt;/td&gt;&lt;td&gt;#meetinghours("start" $sfhour)&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td&gt;$msg.get("meetingend")&amp;nbsp;&amp;nbsp;&lt;/td&gt;&lt;td&gt;#meetinghours("end" $sehour)&lt;/td&gt;&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/td&gt;
+##          calendar
+## ------------------------
+{pre}
+&lt;script type="text/javascript"&gt;
+Calendar.setup(
+  {
+    date           : new Date($svalue.getTime()),
+    inputField     : "meetingday",
+    displayArea    : "display_meetingday",    
+    daFormat       : "%d/%m/%Y",
+    ifFormat       : "%d/%m/%Y"
+  }
+);
+changeMeetingsSelect();
+&lt;/script&gt;
+{/pre}
+## ------------------------------------------------------------------------------------------------------------------------------------------
+&lt;/tr&gt;
+&lt;tr id="meeting_location_edit" class="#if($ptype != "meeting")hidden#end"&gt;
+&lt;td align="right"&gt;*$msg.get("meetinglocation") :*&lt;/td&gt;
+&lt;td&gt;$doc.display("meetinglocation", "edit")&lt;/td&gt;
+&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr id="meeting_rsvp_edit" class="#if($ptype != "meeting")hidden#end"&gt;
+&lt;td align="right"&gt;*$msg.get("meetingguests") :*&lt;/td&gt;
+&lt;td colspan="3"&gt;&lt;div id="rsvp"&gt;&lt;/div&gt;&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+#roundedbottom()
+{pre}
+&lt;script type="text/javascript"&gt;
+Event.observe(window, 'load', loadRsvp, false);
+&lt;/script&gt;
+{/pre}
+#end</content>
+</xwikidoc>
