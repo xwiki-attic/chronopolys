@@ -4,7 +4,7 @@
 .grid {
  margin: 2px 0px 5px;
  border-collapse: collapse;
- width: 90%;
+ width: 100%;
 }
 
 .grid th {
