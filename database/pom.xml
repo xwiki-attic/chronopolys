@@ -1,0 +1,138 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.avane.xwiki.products</groupId>
+    <artifactId>xwiki-product-chronopolys-parent</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <artifactId>xwiki-product-chronopolys-database</artifactId>
+  <name>XWiki Products - Chronopolys - Database - Parent POM</name>
+  <packaging>pom</packaging>
+  <description>XWiki Products - Chronopolys - Database - Parent POM</description>
+  <dependencies>
+    <dependency>
+      <groupId>com.avane.xwiki.products</groupId>
+      <artifactId>xwiki-product-chronopolys-wiki-administrator</artifactId>
+      <version>${version}</version>
+      <type>xar</type>
+    </dependency>
+  </dependencies>
+  <build>
+    <pluginManagement>
+      <plugins>
+        <!-- Step 1: Copy and filter the Hibernate config file which will be used by the packager
+       plugin -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-remote-resources-plugin</artifactId>
+          <executions>
+            <execution>
+              <goals>
+                <goal>process</goal>
+              </goals>
+            </execution>
+          </executions>
+          <configuration>
+            <properties>
+              <xwikiCfgVirtual>1</xwikiCfgVirtual>
+            </properties>
+            <resourceBundles>
+              <resourceBundle>com.xpn.xwiki.platform:xwiki-configuration-resources:${platform.tools.version}</resourceBundle>
+            </resourceBundles>
+          </configuration>
+        </plugin>
+        <!-- Step 2: Expand the XAR file -->
+        <plugin>
+          <groupId>com.xpn.xwiki.platform</groupId>
+          <artifactId>xwiki-build-xar-plugin</artifactId>
+          <version>${platform.tools.version}</version>
+          <configuration>
+            <groupId>com.avane.xwiki.products</groupId>
+            <artifactId>xwiki-product-chronopolys-wiki-administrator</artifactId>
+            <outputDirectory>${project.build.directory}/xar</outputDirectory>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>prepare-package</phase>
+              <goals>
+                <goal>unxar</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <!-- Step 3: Import the XAR content into the Database -->
+        <plugin>
+          <groupId>com.xpn.xwiki.platform</groupId>
+          <artifactId>xwiki-packager</artifactId>
+          <version>${platform.tools.version}</version>
+          <configuration>
+            <sourceDirectory>${project.build.directory}/xar</sourceDirectory>
+            <hibernateConfig>${project.build.directory}/maven-shared-archive-resources/hibernate.cfg.xml</hibernateConfig>
+          </configuration>
+          <dependencies>
+            <dependency>
+              <groupId>${xwiki.db.jdbc.groupId}</groupId>
+              <artifactId>${xwiki.db.jdbc.artifactId}</artifactId>
+              <version>${xwiki.db.jdbc.version}</version>
+            </dependency>
+          </dependencies>
+          <executions>
+            <execution>
+              <phase>prepare-package</phase>
+              <goals>
+                <goal>import</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+        <!-- Step 4: Zip the generated database (for embedded databases only) -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <configuration>
+            <descriptors>
+              <descriptor>${basedir}/src/assemble/database.xml</descriptor>
+            </descriptors>
+          </configuration>
+          <executions>
+            <execution>
+              <phase>package</phase>
+              <goals>
+                <goal>single</goal>
+              </goals>
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+  </build>
+  <profiles>
+    <profile>
+      <id>hsqldb</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <modules>
+        <module>hsqldb</module>
+      </modules>
+    </profile>
+    <!-- profile>
+      <id>derby</id>
+      <modules>
+        <module>derby</module>
+      </modules>
+    </profile -->
+    <!-- profile>
+      <id>pgsql</id>
+      <modules>
+        <module>pgsql</module>
+      </modules>
+    </profile -->
+    <!-- profile>
+      <id>mysql</id>
+      <modules>
+        <module>mysql</module>
+      </modules>
+    </profile -->
+  </profiles>
+</project>
