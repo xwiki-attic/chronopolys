@@ -2,7 +2,7 @@
 
 <!--
  *
- * Copyright 2006-2007, XpertNet SARL, and individual contributors as indicated
+ * Copyright 2006-2007, AVANE sarl, and individual contributors as indicated
  * by the contributors.txt.
  *
  * This is free software; you can redistribute it and/or modify it
@@ -26,25 +26,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>com.chronopolys</groupId>
-    <artifactId>chronopolys-parent</artifactId>
+    <groupId>com.avane.xwiki.products</groupId>
+    <artifactId>xwiki-product-chronopolys-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
-  <groupId>com.chronopolys</groupId>
-  <artifactId>chronopolys-plugins</artifactId>
+  <groupId>com.avane.xwiki.products</groupId>
+  <artifactId>xwiki-product-chronopolys-plugins</artifactId>
   <packaging>pom</packaging>
   <name>XWiki Products - Chronopolys - Plugins - Parent POM</name>
-  <description>XWiki Products - Chronopolys - Plugins - Parent POM</description>
-  <dependencies>
-    <!--dependency>
-      <groupId>com.xpn.xwiki.platform</groupId>
-      <artifactId>xwiki-core</artifactId>
-      <version>1.1-SNAPSHOT</version>
-    </dependency-->
-  </dependencies>
+  <description>XWiki Products - Chronopolys - Plugins - Parent POM</description>  
   <modules>
-    <module>mailsender</module>
-    <module>notification</module>
     <module>chronopolys</module>
   </modules>
 </project>
