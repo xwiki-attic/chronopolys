@@ -53,7 +53,7 @@
 <tags/>
 </property>
 </object>
-<object>
+<!-- object>
 <class>
 <name>XWiki.XWikiServerClass</name>
 <customClass></customClass>
@@ -172,6 +172,6 @@
 <property>
 <server>www.chronopolys.org</server>
 </property>
-</object>
+</object -->
 <content>
 </content></xwikidoc>
