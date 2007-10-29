@@ -49,7 +49,7 @@
       <version>${platform.plugin.chronopolys.version}</version>
     </dependency>
     <dependency>
-      <groupId>com.xpn.xwiki.products</groupId>
+      <groupId>com.xpn.xwiki.platform.plugins</groupId>
       <artifactId>xwiki-plugin-scheduler</artifactId>
       <version>${platform.plugin.scheduler.version}</version>
     </dependency>
