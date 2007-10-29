@@ -28,14 +28,23 @@
   <parent>
     <groupId>com.xpn.xwiki.platform</groupId>
     <artifactId>xwiki</artifactId>
-    <version>1-SNAPSHOT</version>
+    <version>6-SNAPSHOT</version>
   </parent>
-  <groupId>com.chronopolys</groupId>
-  <artifactId>chronopolys-parent</artifactId>
+  <groupId>com.avane.xwiki.products</groupId>
+  <artifactId>xwiki-product-chronopolys-parent</artifactId>
   <packaging>pom</packaging>
   <name>XWiki Products - Chronopolys - Parent POM</name>
   <version>1.0-SNAPSHOT</version>
-  <description>XWiki Products - Chronopolys - Parent POM</description>
+  <description>XWiki Products - Chronopolys - Parent POM</description>  
+  <properties>
+    <!-- Versions of XWiki dependencies used in Chronopolys modules -->
+    <platform.tools.version>1.7-SNAPSHOT</platform.tools.version>
+    <platform.core.version>1.1-SNAPSHOT</platform.core.version>
+    <platform.web.version>1.1-SNAPSHOT</platform.web.version>
+    <platform.panels.version>1.1-SNAPSHOT</platform.panels.version>
+    <platform.plugin.mailsender.version>1.0-SNAPSHOT</platform.plugin.mailsender.version>
+    <platform.plugin.chronopolys.version>1.0-SNAPSHOT</platform.plugin.chronopolys.version>
+  </properties>
   <build>
     <plugins>
       <plugin>
@@ -60,10 +69,12 @@
       </extension>
     </extensions>
   </build>
-  <modules>
+  <modules>    
     <module>plugins</module>
-    <module>web</module>
+    <module>web</module>    
     <module>wikis</module>
+    <module>database</module>
+    <module>distribution</module>
   </modules>
   <!-- Note: Even though this repository is defined in the com.xpn.xwiki.platform:xwiki module we
        still need to define it here because if com.xpn.xwiki.platform:xwiki is not in the local
@@ -91,7 +102,7 @@
     </dependency>
   </dependencies>
 
-  <profiles>
+  <!-- profiles>
     <profile>
       <activation>
         <activeByDefault>true</activeByDefault>
@@ -111,5 +122,5 @@
         <xwiki.db.hbm.feeds>feeds.hbm.xml</xwiki.db.hbm.feeds>
       </properties>
     </profile>
-  </profiles>
+  </profiles -->
 </project>
