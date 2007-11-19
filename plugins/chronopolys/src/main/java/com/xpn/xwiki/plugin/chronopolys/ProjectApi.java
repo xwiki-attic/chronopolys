@@ -22,10 +22,11 @@ package com.xpn.xwiki.plugin.chronopolys;
 
 import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.XWikiException;
+import com.xpn.xwiki.api.Document;
 import com.xpn.xwiki.doc.XWikiDocument;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProjectApi
 {
@@ -104,10 +105,10 @@ public class ProjectApi
         return project.getNotifications().getMembersToNotifyForPlog(plogdoc, context);
     }
 
-    public List getSubscribers(String docname)
+    /* public List getSubscribers(String docname)
     {
         return project.getNotifications().getSubscribers(docname, context);
-    }
+    } */
 
     public void setProjectRights(int mode) throws XWikiException
     {
@@ -117,7 +118,7 @@ public class ProjectApi
     public void delete() throws XWikiException
     {
         project.delete(context);
-    }        
+    }
 
     public List getLastModifications(int limit, int start, XWikiContext context)
         throws XWikiException
@@ -125,29 +126,34 @@ public class ProjectApi
         return project.getLastModifications(limit, start, context);
     }
 
-    public List getLastModifications() throws XWikiException {
+    public List getLastModifications() throws XWikiException
+    {
         return project.getLastModifications(context);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Note
 
-    public float getNote() throws XWikiException {
-        return project.getNote(context);        
+    public float getNote() throws XWikiException
+    {
+        return project.getNote(context);
     }
 
-    public List getNotes() throws XWikiException {
+    public List getNotes() throws XWikiException
+    {
         return project.getNotes(context);
     }
 
-    public void addNote(String note) throws XWikiException {
+    public void addNote(String note) throws XWikiException
+    {
         project.addNote(note, context);
     }
 
-    public void resetNotes() throws XWikiException {
+    public void resetNotes() throws XWikiException
+    {
         project.resetNotes(context);
     }
-        
+
     /*
     public void hasGivenNote(String user) throws XWikiException {
         project.hasGivenNote(user, context);
@@ -200,7 +206,7 @@ public class ProjectApi
         return project.getMembers().getMembers(context);
     }
 
-    public List getNotificationsSubscribers() throws XWikiException
+    /* public List getNotificationsSubscribers() throws XWikiException
     {
         // restricted to project leader & creator
         if (getProjectLeader().equals(context.getUser()) ||
@@ -231,7 +237,7 @@ public class ProjectApi
     public void setUserNotifications(String user, String items) throws XWikiException
     {
         project.getNotifications().setUserNotifications(user, items, context);
-    }
+    } */
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     // Guest management    
@@ -256,11 +262,13 @@ public class ProjectApi
         return project.getGuests().getGuests(context);
     }
 
-    public boolean isPublic() throws XWikiException {
+    public boolean isPublic() throws XWikiException
+    {
         return project.getGuests().isPublic(context);
     }
 
-    public boolean setPublic(boolean makepublic) throws XWikiException {
+    public boolean setPublic(boolean makepublic) throws XWikiException
+    {
         return project.getGuests().setPublic(makepublic, context);
     }
 
@@ -305,4 +313,15 @@ public class ProjectApi
     /* public boolean removePhase(String name) throws XWikiException {
         return project.removePhase(name, context);
     } */
+
+    public void sendNotification(String user, Document doc, String template)
+    {
+        List rcpt = new ArrayList();
+        rcpt.add(user);
+        try {
+            project.getPlugin().getNotificationManager().sendNotification(rcpt, this,
+                doc, template, context);
+        } catch (XWikiException e) {
+        }
+    }
 }

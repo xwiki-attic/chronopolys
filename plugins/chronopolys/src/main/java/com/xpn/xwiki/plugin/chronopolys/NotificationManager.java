@@ -22,8 +22,14 @@ package com.xpn.xwiki.plugin.chronopolys;
 
 import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.XWikiException;
+import com.xpn.xwiki.api.Document;
 import com.xpn.xwiki.doc.XWikiDocument;
-import com.xpn.xwiki.notify.*;
+import com.xpn.xwiki.notify.DocChangeRule;
+import com.xpn.xwiki.notify.XWikiActionNotificationInterface;
+import com.xpn.xwiki.notify.XWikiActionRule;
+import com.xpn.xwiki.notify.XWikiDocChangeNotificationInterface;
+import com.xpn.xwiki.notify.XWikiNotificationInterface;
+import com.xpn.xwiki.notify.XWikiNotificationRule;
 import com.xpn.xwiki.plugin.mailsender.MailSenderPlugin;
 import com.xpn.xwiki.plugin.mailsender.MailSenderPluginApi;
 import com.xpn.xwiki.render.XWikiVelocityRenderer;
@@ -46,22 +52,16 @@ public class NotificationManager
     public static final String NOTIFICATION_SUFFIX = "NotificationEmail";
 
     public static final String NOTIFICATION_ACTIVE_PROJECT =
-        NOTIFICATION_SPACE + "." + "ProjectActivationNotificationEmail";
+        NOTIFICATION_SPACE + "." + "ProjectActivation" + NOTIFICATION_SUFFIX;
 
-    public static final String NOTIFICATION_PLOGTASK =
-        NOTIFICATION_SPACE + "." + "PlogTask" + NOTIFICATION_SUFFIX;
+    public static final String NOTIFICATION_TASK_ASSIGNMENT =
+        NOTIFICATION_SPACE + "." + "TaskAssignment" + NOTIFICATION_SUFFIX;
 
-    public static final String NOTIFICATION_PLOGMEETING =
-        NOTIFICATION_SPACE + "." + "PlogMeeting" + NOTIFICATION_SUFFIX;
+    public static final String NOTIFICATION_TASK_COMPLETION =
+        NOTIFICATION_SPACE + "." + "TaskCompletion" + NOTIFICATION_SUFFIX;
 
-    public static final String NOTIFICATION_PLOGPOST =
-        NOTIFICATION_SPACE + "." + "PlogPost" + NOTIFICATION_SUFFIX;
-
-    public static final String NOTIFICATION_WIKI =
-        NOTIFICATION_SPACE + "." + "Wiki" + NOTIFICATION_SUFFIX;
-
-    public static final String NOTIFICATION_MEMBER =
-        NOTIFICATION_SPACE + "." + "Member" + NOTIFICATION_SUFFIX;
+    public static final String NOTIFICATION_MEETING_INVITATION =
+        NOTIFICATION_SPACE + "." + "MeetingInvatation" + NOTIFICATION_SUFFIX;
 
     private ChronopolysPlugin plugin;
 
@@ -77,8 +77,8 @@ public class NotificationManager
 
     /**
      * @see com.xpn.xwiki.notify.XWikiDocChangeNotificationInterface#notify(com.xpn.xwiki.notify.XWikiNotificationRule,
-     *com.xpn.xwiki.doc.XWikiDocument,com.xpn.xwiki.doc.XWikiDocument,
-     *int,com.xpn.xwiki.XWikiContext)
+     *      com.xpn.xwiki.doc.XWikiDocument,com.xpn.xwiki.doc.XWikiDocument,
+     *      int,com.xpn.xwiki.XWikiContext)
      */
     public void notify(final XWikiNotificationRule rule, final XWikiDocument newdoc,
         final XWikiDocument olddoc, final int event, final XWikiContext context)
@@ -120,7 +120,6 @@ public class NotificationManager
                 ProjectApi project =
                     plugin.getProjectManager().getProject(newdoc.getSpace(), context);
                 if (project != null) {
-
                     if (Project.PROJECT_HOMEDOC.equals(newdoc.getName())) {
                         // This should work but olddoc and newdoc projects objects are always the same :/
                         /* if (!newdoc.getStringValue("status").equals(olddoc.getStringValue("status"))
@@ -132,52 +131,48 @@ public class NotificationManager
                         /* } */
                     }
 
+                    /* Flush projet's lastmodifications cache */
+                    if (plugin.getProjectManager().getProjectsCache() != null) {
+                        plugin.getProjectManager().getProjectsCache()
+                            .flushEntry(newdoc.getSpace() + "-lastmodifications");
+                    }
+
                     if (project.get("status").equals("1")) {
 
                         if (Project.PROJECT_HOMEDOC.equals(newdoc.getName())
                             && !newdoc.getStringValue("status")
                             .equals(olddoc.getStringValue("status")))
                         {
-                            //* Project status has changed *
+                            /* Project status has changed */
                             rcpt = project.getMembers();
                             if (newdoc.getStringValue("status").equals("1")) {
                                 /* Project just get active */
                                 mailTemplate = NOTIFICATION_ACTIVE_PROJECT;
                             }
-                        } else if (project.isWikiPage(newdoc.getName())) {
-                            /* Wiki */
-                            rcpt = project.getSubscribers("WIKI");
-                            mailTemplate = NOTIFICATION_WIKI;
                         } else if (project.isPlogPage(newdoc.getName())) {
                             /* PLOG */
                             if (project.isPlogTask(newdoc)) {
-                                /* Task */
-                                rcpt = project.getMembersToNotifyForPlog(newdoc);
-                                mailTemplate = NOTIFICATION_PLOGTASK;
-                            } else if (project.isPlogMeeting(newdoc)) {
-                                /* Meeting */
-                                rcpt = project.getMembersToNotifyForPlog(newdoc);
-                                mailTemplate = NOTIFICATION_PLOGMEETING;
-                                // TODO : filter
-                            } else {
-                                /* Post */
-                                rcpt = project.getSubscribers("PLOG");
-                                mailTemplate = NOTIFICATION_PLOGPOST;
+                                if (!newdoc.getStringValue("taskassignee")
+                                    .equals(olddoc.getStringValue("taskassignee")))
+                                {
+                                    /* New Assignee */
+                                    rcpt = new ArrayList();
+                                    rcpt.add(newdoc.getStringValue("taskassignee"));
+                                    mailTemplate = NOTIFICATION_TASK_ASSIGNMENT;
+                                } else if (newdoc.getStringValue("taskcompletion").equals("100%")) {
+                                    /* Completed task */
+                                    rcpt = new ArrayList();
+                                    rcpt.add(newdoc.getCreator());
+                                    mailTemplate = NOTIFICATION_TASK_COMPLETION;
+                                }
                             }
-                        } else {
-                            /* All the project default pages (ProjectMembers,ProjectDocuments,etc) */
-                            rcpt = project.getSubscribers(newdoc.getName());
-                            mailTemplate =
-                                NOTIFICATION_SPACE + "." + newdoc.getName() + NOTIFICATION_SUFFIX;
                         }
                         if (rcpt.size() > 0 && !mailTemplate.equals("")) {
                             if (!context.getWiki().exists(mailTemplate, context)) {
-                                // mLogger.info("Chronopolys notififications : mailTemplate <" + mailTemplate + "> does not exist");
-                                // mLogger.info("Chronopolys notififications : users : <" + rcpt.toString() + ">");
                                 return;
                             }
                             /* Send notifications */
-                            this.sendNotification(rcpt, project, newdoc, mailTemplate, context);
+                            this.sendNotification(rcpt, project, new Document(newdoc, context), mailTemplate, context);
                         }
                     }
                 }
@@ -189,7 +184,7 @@ public class NotificationManager
 
     /**
      * @see com.xpn.xwiki.notify.XWikiActionNotificationInterface#notify(com.xpn.xwiki.notify.XWikiNotificationRule,
-     *com.xpn.xwiki.doc.XWikiDocument,java.lang.String,com.xpn.xwiki.XWikiContext)
+     *      com.xpn.xwiki.doc.XWikiDocument,java.lang.String,com.xpn.xwiki.XWikiContext)
      */
     public void notify(final XWikiNotificationRule rule, final XWikiDocument doc,
         final String action,
@@ -213,23 +208,6 @@ public class NotificationManager
             } catch (XWikiException e) {
             }
         }
-        // New project document
-        // check if the project is active
-        if ("upload".equals(action)) {
-            try {
-                if (plugin.getProjectManager().isProject(doc.getSpace(), context)) {
-                    ProjectApi project =
-                        plugin.getProjectManager().getProject(doc.getSpace(), context);
-                    List rcpt = project.getSubscribers(doc.getName());
-                    String mailTemplate =
-                        NOTIFICATION_SPACE + "." + doc.getName() + NOTIFICATION_SUFFIX;
-                    if (rcpt.size() > 0 && !mailTemplate.equals("")) {
-                        this.sendNotification(rcpt, project, doc, mailTemplate, context);
-                    }
-                }
-            } catch (XWikiException e) {
-            }
-        }
     }
 
     /*
@@ -241,7 +219,7 @@ public class NotificationManager
      * @param mailTemplate wiki page to use as mail template
      * @param context request context
      */
-    public void sendNotification(List rcpt, ProjectApi project, XWikiDocument newdoc,
+    public void sendNotification(List rcpt, ProjectApi project, Document newdoc,
         String mailTemplate, XWikiContext context) throws XWikiException
     {
         MailSenderPluginApi emailService =
@@ -249,16 +227,15 @@ public class NotificationManager
         if (emailService == null) {
             return;
         }
-        /* prepare email velocity context */
+        /* prepare email velocity context */        
         VelocityContext vcontext = new VelocityContext();
         vcontext.put("xwiki", new com.xpn.xwiki.api.XWiki(context.getWiki(), context));
         vcontext.put("project", project);
         vcontext.put("projecturl", project.getURL());
-        vcontext.put("doc", newdoc);
+        vcontext.put("doc", newdoc);        
         vcontext
             .put("docurl", context.getWiki().getExternalURL(newdoc.getFullName(), "view", context));
-        vcontext.put("displaytitle", newdoc.getDisplayTitle(context));
-        vcontext.put("isNew", project.isPlogNew(newdoc));
+        vcontext.put("displaytitle", newdoc.getDisplayTitle());
         String rawHeader = context.getWiki()
             .getDocument("xwiki:ChronoTemplates.HTMLEmailHeader", context).getContent();
         String rawFooter = context.getWiki()
@@ -272,6 +249,7 @@ public class NotificationManager
             String user = (String) it.next();
             String email = plugin.getUserManager().getUserEmail(user, context);
             String language = plugin.getUserManager().getUserLanguage(user, context);
+            vcontext.put("username", context.getWiki().getLocalUserName(user, null, false, context));
             emailService.sendMessageFromTemplate(
                 plugin.getChronoPreference("notifications_sender", context),
                 email, null, null, language, mailTemplate, vcontext);

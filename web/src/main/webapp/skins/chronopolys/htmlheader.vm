@@ -10,12 +10,8 @@
 <title>
 #if(!$title)
   #set( $title = $!xwiki.getWebPreference("title"))
-
-  #if ( $title != "")
-    $xwiki.parseContent($title)
-  #else
-    Chronopolys - #if($isProject)$project.get("name")#else$!doc.web#end - $!msg.get($!doc.displayTitle)
-  #end
+  #if( $title != "")$xwiki.parseContent($title) -#else Chronopolys -#end
+  #if($isProject) $project.get("name") -#end $!msg.get($!doc.displayTitle)
 #else
   $title
 #end

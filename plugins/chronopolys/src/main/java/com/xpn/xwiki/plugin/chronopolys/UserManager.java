@@ -427,7 +427,7 @@ public class UserManager
             } catch (XWikiCacheNeedsRefreshException e) {
                 userdataCache.cancelUpdate(key);
                 String hql =
-                    "select doc.fullName from XWikiDocument doc, BaseObject obj, StringProperty prop, StringProperty list," +
+                    "select distinct doc.fullName from XWikiDocument doc, BaseObject obj, StringProperty prop, StringProperty list," +
                         " DateProperty tdate, StringProperty completion where doc.fullName=obj.name " +
                         "and obj.className='ChronoClasses.ProjectArticleClass' and obj.id=prop.id.id and obj.id=list.id.id " +
                         "and obj.id=tdate.id.id and obj.id=completion.id.id and prop.id.name='taskassignee' " +
@@ -480,7 +480,7 @@ public class UserManager
             } catch (XWikiCacheNeedsRefreshException e) {
                 userdataCache.cancelUpdate(key);
                 String hql =
-                    "select doc.fullName from XWikiDocument doc, BaseObject obj, BaseObject robj, StringProperty rprop, " +
+                    "select distinct doc.fullName from XWikiDocument doc, BaseObject obj, BaseObject robj, StringProperty rprop, " +
                         "StringProperty list, DateProperty mdate, StringProperty status where doc.fullName=obj.name " +
                         "and obj.className='ChronoClasses.ProjectArticleClass' and doc.fullName=robj.name " +
                         "and robj.className='ChronoClasses.ProjectArticleRsvpClass' and robj.id=rprop.id.id " +

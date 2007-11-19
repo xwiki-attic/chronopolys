@@ -178,7 +178,7 @@ public class Project
 
     public List getLastModifications(XWikiContext context) throws XWikiException
     {
-        String key = this.doc.getFullName() + "-lastmodifications";
+        String key = this.doc.getSpace() + "-lastmodifications";
         ArrayList<Modification> list = null;
         this.plugin.getProjectManager().initProjectsCache(context);
         XWikiCache projectCache = this.plugin.getProjectManager().getProjectsCache();

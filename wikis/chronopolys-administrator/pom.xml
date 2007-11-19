@@ -34,5 +34,13 @@
   <name>XWiki Products - Chronopolys - Wikis - Chronopolys Administrator</name>
   <packaging>xar</packaging>
   <description>XWiki Products - Chronopolys - Wikis - Chronopolys Administrator</description>
+  <dependencies>
+    <dependency>
+      <groupId>com.xpn.xwiki.platform.applications</groupId>
+      <artifactId>xwiki-application-scheduler</artifactId>
+      <version>${platform.plugin.scheduler.version}</version>
+      <type>xar</type>
+    </dependency>
+  </dependencies>
 </project>
         

@@ -53,6 +53,11 @@
       <artifactId>xwiki-plugin-scheduler</artifactId>
       <version>${platform.plugin.scheduler.version}</version>
     </dependency>
+    <dependency>
+      <groupId>com.xpn.xwiki.platform.plugins</groupId>
+      <artifactId>xwiki-plugin-watchlist</artifactId>
+      <version>${platform.plugin.watchlist.version}</version>
+    </dependency>    
   </dependencies>
   <build>
     <plugins>
@@ -83,8 +88,8 @@
             <resourceBundle>com.xpn.xwiki.platform:xwiki-configuration-resources:${platform.tools.version}</resourceBundle>
           </resourceBundles>
           <properties>
-            <xwikiCfgPlugins>xwiki.plugins=com.xpn.xwiki.monitor.api.MonitorPlugin,\
-                com.xpn.xwiki.plugin.calendar.CalendarPlugin,\
+            
+            <xwikiCfgPlugins>com.xpn.xwiki.plugin.calendar.CalendarPlugin,\
                 com.xpn.xwiki.plugin.feed.FeedPlugin,\
                 com.xpn.xwiki.plugin.ldap.LDAPPlugin,\
                 com.xpn.xwiki.plugin.mail.MailPlugin,\
@@ -94,8 +99,10 @@
                 com.xpn.xwiki.plugin.chronopolys.ChronopolysPlugin,\
                 com.xpn.xwiki.plugin.zipexplorer.ZipExplorerPlugin,\
                 com.xpn.xwiki.plugin.lucene.LucenePlugin,\
-                com.xpn.xwiki.plugin.scheduler.SchedulerPlugin,\                
-                com.xpn.xwiki.plugin.mailsender.MailSenderPlugin
+                com.xpn.xwiki.plugin.rightsmanager.RightsManagerPlugin,\
+                com.xpn.xwiki.plugin.scheduler.SchedulerPlugin,\
+                com.xpn.xwiki.plugin.mailsender.MailSenderPlugin,\
+                com.xpn.xwiki.plugin.watchlist.WatchListPlugin
             </xwikiCfgPlugins>
           </properties>
         </configuration>

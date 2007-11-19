@@ -165,7 +165,7 @@ public class ProjectMembers
         com.xpn.xwiki.api.Object obj = projectMembers.getObject("XWiki.XWikiGroups", nb);
         obj.set("member", name);
         /* get 'ProjectMembers' notification subscribers before the new member become one of them */
-        List rcpt = project.getNotifications().getSubscribers("ProjectMembers", context);
+        // List rcpt = project.getNotifications().getSubscribers("ProjectMembers", context);
         /* create members notifications' object */
         nb = projectMembers.createNewObject(ProjectNotifications.CLASS_NOTIFICATIONS);
         obj = projectMembers.getObject(ProjectNotifications.CLASS_NOTIFICATIONS, nb);
@@ -188,10 +188,10 @@ public class ProjectMembers
                     context.getWiki().getDocument(name, context),
                     ProjectNotifications.NOTIFICATION_PROJECT_INVITATION, context);
             /* notify subscribers */
-            project.getPlugin().getNotificationManager()
+            /* project.getPlugin().getNotificationManager()
                 .sendNotification(rcpt, new ProjectApi(project, context),
                     context.getWiki().getDocument(name, context),
-                    NotificationManager.NOTIFICATION_MEMBER, context);
+                    NotificationManager.NOTIFICATION_MEMBER, context); */
         }
 
         return true;
@@ -250,6 +250,13 @@ public class ProjectMembers
         }
 
         projectMembers.save("removemember|" + member);
+
+        List rcpt = new ArrayList();
+        rcpt.add(member);
+        project.getPlugin().getNotificationManager()
+                .sendNotification(rcpt, new ProjectApi(project, context),
+                    context.getWiki().getDocument(member, context),
+                    ProjectNotifications.NOTIFICATION_PROJECT_REVOCATION, context);
 
         // invalidate ChronopolysPlugin caches
         project.getPlugin().getProjectManager().flushProjectsCache();

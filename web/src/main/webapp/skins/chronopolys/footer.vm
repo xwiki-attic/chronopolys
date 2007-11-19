@@ -3,7 +3,8 @@
 <div id="powered"><a href="http://www.avane.com" target="_blank"><img src="$xwiki.getSkinFile("poweredbyavane.gif")" /></a></div>
 <div class="minwidth"></div>
   <div id="xwikidocinfo">
-<div class="minwidth"></div>#if ($tdoc)$msg.get("version") $tdoc.version $msg.get("lastmodifiedby") $xwiki.getLocalUserName($tdoc.author) $msg.get("lastmodifiedon") $!xwiki.formatDate($tdoc.date, "dd/MM/yyyy") $msg.get("at") $!xwiki.formatDate($tdoc.date, "HH:mm")
-#end</div>
+<div class="minwidth"></div>
+$msg.get("version") $xwiki.version
+##if ($tdoc)$msg.get("version") $tdoc.version $msg.get("lastmodifiedby") $xwiki.getLocalUserName($tdoc.author) $msg.get("lastmodifiedon") $!xwiki.formatDate($tdoc.date, "dd/MM/yyyy") $msg.get("at") $!xwiki.formatDate($tdoc.date, "HH:mm") #end</div>
 </div>
 #end

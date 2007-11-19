@@ -22,15 +22,14 @@ package com.xpn.xwiki.plugin.chronopolys;
 
 import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.XWikiException;
-import com.xpn.xwiki.api.*;
-import com.xpn.xwiki.api.Object;
-import com.xpn.xwiki.objects.BaseObject;
 import com.xpn.xwiki.doc.XWikiDocument;
+import com.xpn.xwiki.objects.BaseObject;
+import com.xpn.xwiki.plugin.diff.DiffPlugin;
 
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Vector;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
 
 public class ProjectNotifications
 {
@@ -43,6 +42,9 @@ public class ProjectNotifications
     public static final String NOTIFICATION_PROJECT_INVITATION =
         "xwiki:ChronoTemplates.ProjectInvitationNotificationEmail";
 
+    public static final String NOTIFICATION_PROJECT_REVOCATION =
+        "xwiki:ChronoTemplates.ProjectRevocationNotificationEmail";
+
     Project project;
 
     public ProjectNotifications(Project project)
@@ -50,7 +52,7 @@ public class ProjectNotifications
         this.project = project;
     }
 
-    public List getSubscribers(String docname, XWikiContext context)
+    /* public List getSubscribers(String docname, XWikiContext context)
     {
         ArrayList subsribers = new ArrayList();
         try {
@@ -76,7 +78,7 @@ public class ProjectNotifications
         }
 
         return subsribers;
-    }
+    } */
 
     public List getMembersToNotifyForPlog(XWikiDocument plogdoc, XWikiContext context)
         throws XWikiException
@@ -86,19 +88,22 @@ public class ProjectNotifications
             users.add(plogdoc.getStringValue("taskassignee").toString());
         }
         if (ProjectLog.PLOGMEETING.equals(plogdoc.getStringValue("type"))) {
-            Vector objs = plogdoc.getObjects(ProjectLog.CLASS_PROJECTARTICLERSVP);
+            /* Vector objs = plogdoc.getObjects(ProjectLog.CLASS_PROJECTARTICLERSVP);
             Iterator it = objs.iterator();
             while (it.hasNext()) {
                 BaseObject obj = (BaseObject) it.next();
                 if (obj != null) {
                     users.add(obj.displayView("member", context));
                 }
-            }
+            } */
+            // List diff = plogdoc.getObjectDiff(plogdoc.getPreviousVersion(), context);
+            // TODO : notify new guest
         }
+
         return users;
     }
 
-    public List getNotificationsSubscribers(XWikiContext context) throws XWikiException
+    /* public List getNotificationsSubscribers(XWikiContext context) throws XWikiException
     {
         XWikiDocument xProjectMembers = context.getWiki()
             .getDocument(project.getSpace() + "." + Project.PROJECT_MEMBERSDOC, context);
@@ -184,5 +189,5 @@ public class ProjectNotifications
 
         notifs.set("notifications", items);
         context.getWiki().saveDocument(xProjectMembers, context);
-    }
+    } */
 }

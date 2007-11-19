@@ -22,18 +22,18 @@ package com.xpn.xwiki.plugin.chronopolys;
 
 import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.XWikiException;
-import com.xpn.xwiki.objects.BaseObject;
 import com.xpn.xwiki.api.Object;
-import com.xpn.xwiki.plugin.PluginException;
-import com.xpn.xwiki.doc.XWikiDocument;
-import com.xpn.xwiki.web.XWikiMessageTool;
+import com.xpn.xwiki.cache.api.XWikiCache;
 import com.xpn.xwiki.cache.api.XWikiCacheNeedsRefreshException;
 import com.xpn.xwiki.cache.api.XWikiCacheService;
-import com.xpn.xwiki.cache.api.XWikiCache;
+import com.xpn.xwiki.doc.XWikiDocument;
+import com.xpn.xwiki.objects.BaseObject;
+import com.xpn.xwiki.plugin.PluginException;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 public class ProjectManager
 {
@@ -228,8 +228,9 @@ public class ProjectManager
                     plugin.getUserManager().isManager(context))
                 {
                     // admin & managers
+                    // the distinct + order here are not hsqldb not compliant
                     hql =
-                        "select doc.web from XWikiDocument doc, BaseObject as obj where obj.name=doc.fullName" +
+                        "select distinct doc.web from XWikiDocument doc, BaseObject as obj where obj.name=doc.fullName" +
                             " and doc.web != '" + TEMPLATE_DEFAULT_SPACE + "'" +
                             " and obj.className='" + Project.CLASS_PROJECT + "'";
                 } else {
@@ -252,7 +253,8 @@ public class ProjectManager
                         .getDocument(docName + "." + Project.PROJECT_HOMEDOC, context)
                         .getObject(Project.CLASS_PROJECT);
                     Object obj = new Object(bobj, context);
-                    list.add(obj);
+                    if (!list.contains(obj))
+                        list.add(obj);
                 }
                 projectsCache.putInCache(key, list);
             }
