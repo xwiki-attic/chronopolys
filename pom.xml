@@ -28,7 +28,7 @@
   <parent>
     <groupId>com.xpn.xwiki.platform</groupId>
     <artifactId>xwiki</artifactId>
-    <version>6-SNAPSHOT</version>
+    <version>7-SNAPSHOT</version>
   </parent>
   <groupId>com.avane.xwiki.products</groupId>
   <artifactId>xwiki-product-chronopolys-parent</artifactId>
@@ -42,9 +42,9 @@
     <platform.core.version>1.2-SNAPSHOT</platform.core.version>
     <platform.web.version>1.2-SNAPSHOT</platform.web.version>
     <platform.panels.version>1.2-SNAPSHOT</platform.panels.version>
-    <platform.plugin.mailsender.version>1.0-SNAPSHOT</platform.plugin.mailsender.version>
+    <platform.plugin.mailsender.version>1.1-SNAPSHOT</platform.plugin.mailsender.version>
     <platform.plugin.scheduler.version>1.1-SNAPSHOT</platform.plugin.scheduler.version>
-    <platform.plugin.watchlist.version>1.0-SNAPSHOT</platform.plugin.watchlist.version>
+    <platform.plugin.watchlist.version>1.1-SNAPSHOT</platform.plugin.watchlist.version>
     <platform.plugin.chronopolys.version>1.0-SNAPSHOT</platform.plugin.chronopolys.version>
   </properties>
   <build>
