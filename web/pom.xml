@@ -102,7 +102,7 @@
                 com.xpn.xwiki.plugin.rightsmanager.RightsManagerPlugin,\
                 com.xpn.xwiki.plugin.scheduler.SchedulerPlugin,\
                 com.xpn.xwiki.plugin.mailsender.MailSenderPlugin,\
-                com.xpn.xwiki.plugin.watchlist.WatchListPlugin
+                com.xpn.xwiki.plugin.watchlist.WatchListPlugin,\
             </xwikiCfgPlugins>
           </properties>
         </configuration>

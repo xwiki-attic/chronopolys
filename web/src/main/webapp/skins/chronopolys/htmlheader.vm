@@ -39,7 +39,7 @@
 #if ($isProject)
 <style type="text/css">@import url(/xwiki/calendar/skins/aqua/theme.css);</style>
 <script type="text/javascript" src="/xwiki/calendar/calendar.js"></script>
-<script type="text/javascript" src="/xwiki/calendar/lang/calendar-en.js"></script>
+<script type="text/javascript" src="/xwiki/calendar/lang/calendar-${xwiki.chronopolys.getMyLanguage()}.js"></script>
 <script type="text/javascript" src="/xwiki/calendar/calendar-setup.js"></script>
 #end
 <script type="text/javascript" src="$xwiki.getSkinFile("chronopolys.js")"></script>
@@ -56,6 +56,7 @@
   passwdupdated = "$msg.get("passwdupdated")";
   confirmdelphase = "$msg.get("confirmdelphase")";
   confirmcontainerdelete = "$msg.get("confirmcontainerdelete")";
+  confirmplogdelete = "$msg.get("confirmplogdelete")";
   #if ($isProject)
   currentContainer = "$project.get("container")";
   #end

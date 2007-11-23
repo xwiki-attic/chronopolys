@@ -217,10 +217,11 @@ Content
 }
 
 #editcolumn{
-  width: 100%;
+  width: 95%;
   float: left;
   overflow: hidden;
   padding-bottom: 20px;
+  padding-left: 16px;
 }
 
 #actionmenu{}
@@ -970,7 +971,7 @@ div.pagelayoutoptions td{
 }
 
 #xwikieditcontent{
-  border: 2px solid #3381CC;
+  border: 1px solid #666;
   padding: 3px 8px 3px 3px;
   overflow: auto;
 }

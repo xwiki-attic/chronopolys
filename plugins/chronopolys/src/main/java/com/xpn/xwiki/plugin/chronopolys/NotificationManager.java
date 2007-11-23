@@ -139,7 +139,7 @@ public class NotificationManager
 
                     if (project.get("status").equals("1")) {
 
-                        if (Project.PROJECT_HOMEDOC.equals(newdoc.getName())
+                        if (newdoc != null && olddoc != null && Project.PROJECT_HOMEDOC.equals(newdoc.getName())
                             && !newdoc.getStringValue("status")
                             .equals(olddoc.getStringValue("status")))
                         {
@@ -149,10 +149,10 @@ public class NotificationManager
                                 /* Project just get active */
                                 mailTemplate = NOTIFICATION_ACTIVE_PROJECT;
                             }
-                        } else if (project.isPlogPage(newdoc.getName())) {
+                        } else if (newdoc != null && project.isPlogPage(newdoc.getName())) {
                             /* PLOG */
                             if (project.isPlogTask(newdoc)) {
-                                if (!newdoc.getStringValue("taskassignee")
+                                if (olddoc != null && !newdoc.getStringValue("taskassignee")
                                     .equals(olddoc.getStringValue("taskassignee")))
                                 {
                                     /* New Assignee */

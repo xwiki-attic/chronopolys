@@ -111,11 +111,11 @@
         <module>pgsql</module>
       </modules>
     </profile -->
-    <!-- profile>
+    <profile>
       <id>mysql</id>
       <modules>
         <module>mysql</module>
       </modules>
-    </profile -->
+    </profile>
   </profiles>
 </project>

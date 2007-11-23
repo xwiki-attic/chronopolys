@@ -11,6 +11,7 @@ var passwdtooshort;
 var passwdupdated;
 var confirmdelphase;
 var confirmcontainerdelete;
+var confirmplogdelete;
 
 // ---------------- //
 // Dashboard modes  //
@@ -552,6 +553,22 @@ function passwdchange()
 // PLOG //
 // ---- //
 
+/* delete any type of plog article */
+function deletePlog(space, page) {
+    if (confirm(confirmplogdelete)) {
+        var surl = getXWikiURL(space, page, "delete", "confirm=1");
+        var myAjax = new Ajax.Request(
+                surl,
+        {
+            method: 'post',
+            onSuccess: function()
+            {
+                $('plog_' + space + '.' + page).parentNode.removeChild($($('plog_' + space + '.' + page)));
+            }
+        });
+    }
+}
+
 /* called on PLOG article type's change (message,event,task) */
 function changeProjectArticleType()
 {
@@ -576,6 +593,7 @@ function changeProjectArticleType()
 function addrsvp()
 {
     var user = $('rsvpmember').value;
+    setLoadingBg('rsvp', true);
     var id = 'rsvp';
     var surl = getXWikiURL("ChronoServices", "ProjectArticleRsvpDisplay", "view", "xpage=plain&page=" +
                                                                                   currentFullName +
@@ -585,13 +603,15 @@ function addrsvp()
             id,
             surl,
     {
-        method: 'get'
+        method: 'get',
+        onComplete: function() { setLoadingBg('rsvp', false); }
     });
 }
 
 /* delete an event's guest */
 function delrsvp(rsvpnb)
 {
+    setLoadingBg('rsvp', true);
     var id = 'rsvp';
     var surl = getXWikiURL("ChronoServices", "ProjectArticleRsvpDisplay", "view", "xpage=plain&page=" +
                                                                                   currentFullName +
@@ -601,13 +621,15 @@ function delrsvp(rsvpnb)
             id,
             surl,
     {
-        method: 'get'
+        method: 'get',
+        onComplete: function() { setLoadingBg('rsvp', false); }
     });
 }
 
 /* load the guest entries */
 function loadRsvp()
 {
+    setLoadingBg('rsvp', true);
     var id = 'rsvp';
     var surl = getXWikiURL("ChronoServices", "ProjectArticleRsvpDisplay", "view", "xpage=plain&page=" +
                                                                                   currentFullName);
@@ -615,7 +637,8 @@ function loadRsvp()
             id,
             surl,
     {
-        method: 'get'
+        method: 'get',
+        onComplete: function() { setLoadingBg('rsvp', false); }
     });
 }
 
@@ -1000,8 +1023,7 @@ function container_mouseover(id)
 function setLoadingBg(id, state)
 {
     if (state == true) {
-        $(id).style.background =
-        "url(/xwiki/skins/chronopolys/ajax-loader-bar.gif)) center no-repeat"
+        $(id).style.background = "url(/xwiki/skins/chronopolys/ajax-loader-bar.gif) center no-repeat";
         $(id).innerHTML = "";
     } else
     {

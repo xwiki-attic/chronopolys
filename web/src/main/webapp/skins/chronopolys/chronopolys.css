@@ -1,3 +1,9 @@
+#rsvp {
+    width: 220px;
+    height: 80px;
+    overflow: visible;
+}
+
 td.styleeditinput {
     float:left;
     width: 170px;
