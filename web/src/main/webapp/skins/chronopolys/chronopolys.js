@@ -12,97 +12,51 @@ var passwdupdated;
 var confirmdelphase;
 var confirmcontainerdelete;
 var confirmplogdelete;
+var confirmphasetomilestone;
 
 // ---------------- //
 // Dashboard modes  //
 // ---------------- //
 
+var currentMode = "timelinemode";
+var currentSecondaryMode = "";
+var elementsCache = null;
+var elementsAddCache = null;
+
+function toggleContainerAdd() {
+    if (elementsAddCache == null) {
+        elementsAddCache = document.getElementsByClassName('container_add', $('chronoapp'));
+    }
+    for (var i = 0; i < elementsAddCache.length; i++) {
+        toggleClass(elementsAddCache[i], 'hidden');
+    }
+    if (!eltHasClass(elementsAddCache[0], 'hidden')) {
+        currentSecondaryMode = 'add';
+    } else {
+        currentSecondaryMode = '';
+    }
+}
+
 function switchDashboardMode(mode)
 {
-    // hide all mode infos
-    var els = document.getElementsByClassName('mode', $('chronoapp'));
-    for (var i = 0; i < els.length; i++) {
-        if (eltHasClass(els[i], mode)) {
+    // retreive elements related to a mode
+    if (elementsCache == null) {
+        elementsCache = document.getElementsByClassName('mode', $('chronoapp'));
+    }
+    // save desired mode
+    currentMode = mode;
+    // modify visibility of the elements considering their modes
+    for (var i = 0; i < elementsCache.length; i++) {
+        if (eltHasClass(elementsCache[i], mode)) {
             // desired mode
-            if (eltHasClass(els[i], 'hidden')) {
-                rmClass(els[i], "hidden");
+            if (eltHasClass(elementsCache[i], 'hidden')) {
+                rmClass(elementsCache[i], "hidden");
             }
         } else
         {
             // other modes
-            if (!eltHasClass(els[i], 'hidden')) {
-                addClass(els[i], "hidden");
-            }
-        }
-    }
-}
-
-// ---------------- //
-// Phases calendars //
-// ---------------- //
-
-var phasesList = new Array();
-var regDatesList = new Array();
-var secsPerDay = 86400000;
-
-function calInitDates()
-{
-    regDatesList.clear();
-    var regDatesElts = document.getElementsByClassName('registereddate');
-    /* build the phases dates list */
-    for (var i = 0; i < regDatesElts.length; i++) {
-        var pushit = true
-        var phaseNb = regDatesElts[i].id.split("_")[1];
-        var phaseTypeId = 'ChronoClasses.ProjectPhaseClass_' + phaseNb + '_type';
-        if ($(phaseTypeId).value == '1') {
-            /* the current date is from a milestone */
-            if (regDatesElts[i].id.match(/start/)) {
-                /* set the end date in case of 'milestone' */
-                $(regDatesElts[i + 1].id).value = $(regDatesElts[i].id).value;
-            } else
-            {
-                /* don't push the milestone end in the list */
-                pushit = false;
-            }
-        }
-        if (pushit) {
-            /* push current date into the list */
-            var data = new Array();
-            data.push(regDatesElts[i].id);
-            var sdate = regDatesElts[i].value.split("/");
-            data.push(new Date(sdate[2], parseInt(sdate[1], 10) - 1, sdate[0]));
-            regDatesList.push(data);
-        }
-    }
-    /* display (or not) the "add phase here" button */
-    for (var i = 0; i < regDatesList.length - 1; i++) {
-        var evalit = true;
-        var phaseNb = regDatesList[i][0].split("_")[1];
-        /* display the addphase button if available */
-        var phaseTypeId = 'ChronoClasses.ProjectPhaseClass_' + phaseNb + '_type';
-        if ($(phaseTypeId).value == '1') {
-            if (!regDatesList[i][0].match(/start/))
-                evalit = false;
-        } else
-        {
-            if (!regDatesList[i][0].match(/end/))
-                evalit = false;
-        }
-        if (evalit) {
-            var phaseAddElId = 'phaseedition_' + phaseNb + '_addel';
-            var phaseAddTdId = 'phaseedition_' + phaseNb + '_addtd';
-            if (((regDatesList[i + 1][1] - regDatesList[i][1]) / secsPerDay) > 1) {
-                /* if the difference between Nend and N+1start > 1 day, display addphase button */
-                rmClass($(phaseAddElId), 'hidden');
-                new Effect.Highlight($(phaseAddTdId),
-                { startcolor:'#F8EA95',
-                    endcolor:'#EFEFEF',
-                    duration: 1
-                });
-            } else
-            {
-                /* else hide addphase button */
-                addClass($(phaseAddElId), 'hidden');
+            if (!eltHasClass(elementsCache[i], 'hidden')) {
+                addClass(elementsCache[i], "hidden");
             }
         }
     }
@@ -169,6 +123,7 @@ function isElementVisible(el)
 }
 
 var g_queue = new Array();
+var syncingTimelines = false;
 
 function process_queue()
 {
@@ -196,6 +151,7 @@ function check_queue_item_complete()
 }
 
 var metaTimelines = new Array();
+var origTimelines = new Array();
 
 function loadTimelines()
 {
@@ -229,24 +185,27 @@ function onTimelineVisibilityChange()
     loadTimelines();
 }
 
-Event.observe(window, 'load', onTimelineVisibilityChange, false);
+/* Event.observe(window, 'load', onTimelineVisibilityChange, false);
 Event.observe(window, 'resize', onTimelineVisibilityChange, false);
-Event.observe(window, 'scroll', onTimelineVisibilityChange, false);
+Event.observe(window, 'scroll', onTimelineVisibilityChange, false); */
 
 /* add a timeline loading function (and the associated div) to the global list */
-function createMetaTimeline(tlload, tldiv)
+function createMetaTimeline(tlload, tldiv, tlname)
 {
     var metaTimeline = {
         timeline: null,
-        loader: function()
-        {
-            this.timeline = tlload();
-        },
+        timelineName: tlname,
+        loader: function() { this.timeline = tlload(); },
         div: tldiv,
         loaded: false,
+        getOrigKey: function () { return this.timelineName },
         isLoaded: function()
         {
-            return this.timeline._isLoaded;
+            if (this.timeline != null) {
+                return this.timeline._isLoaded;
+            } else {
+                return false;
+            }
         },
         visible: false
     }
@@ -294,7 +253,7 @@ function reloadDashboard(options)
 
     /* update the dashboard */
     var id = 'chronocontainers';
-    var surl = getXWikiURL("ChronoServices", "ContainersDisplay", "view", "xpage=plain" + options);
+    var surl = getXWikiURL("ChronoServices", "ContainersDisplay", "view", "xpage=plain" + "&mode=" + currentMode + "&modes=" + currentSecondaryMode + options);
     var myAjax = new Ajax.Updater(
             id,
             surl,
@@ -305,6 +264,7 @@ function reloadDashboard(options)
         {
             /* reload dynamic timelines */
             reloadTimelines();
+            setLoadingBg('axis_all', false);
         }
     });
 }
@@ -353,8 +313,8 @@ function syncTimelineRoutine()
         /* set date on project timelines */
         for (i = 0; i < metaTimelines.length; i++) {
             if (metaTimelines[i].loaded) {
-                var tlb = metaTimelines[i].timeline.getBand(0);
-                var tid = metaTimelines[i].timeline._containerDiv.id;
+                var tlb = origTimelines[metaTimelines[i].getOrigKey()].getBand(0);
+                var tid = origTimelines[metaTimelines[i].getOrigKey()]._containerDiv.id;
                 tlb.setCenterVisibleDate(date);
                 if (tlb.getEventSource().getCount() > 0) {
                     var lbc = $(tid + '_left_img');
@@ -780,6 +740,77 @@ function projectdata_save()
     });
 }
 
+// ---------------- //
+// Phases calendars //
+// ---------------- //
+
+var phasesList = new Array();
+var regDatesList = new Array();
+var secsPerDay = 86400000;
+
+function calInitDates()
+{
+    regDatesList.clear();
+    var regDatesElts = document.getElementsByClassName('registereddate');
+    /* build the phases dates list */
+    for (var i = 0; i < regDatesElts.length; i++) {
+        var pushit = true
+        var phaseNb = regDatesElts[i].id.split("_")[1];
+        var phaseTypeId = 'ChronoClasses.ProjectPhaseClass_' + phaseNb + '_type';
+        if ($(phaseTypeId).value == '1') {
+            /* the current date is from a milestone */
+            if (regDatesElts[i].id.match(/start/)) {
+                /* set the end date in case of 'milestone' */
+                $(regDatesElts[i + 1].id).value = $(regDatesElts[i].id).value;
+            } else
+            {
+                /* don't push the milestone end in the list */
+                pushit = false;
+            }
+        }
+        if (pushit) {
+            /* push current date into the list */
+            var data = new Array();
+            data.push(regDatesElts[i].id);
+            var sdate = regDatesElts[i].value.split("/");
+            data.push(new Date(sdate[2], parseInt(sdate[1], 10) - 1, sdate[0]));
+            regDatesList.push(data);
+        }
+    }
+    /* display (or not) the "add phase here" button */
+    for (var i = 0; i < regDatesList.length - 1; i++) {
+        var evalit = true;
+        var phaseNb = regDatesList[i][0].split("_")[1];
+        /* display the addphase button if available */
+        var phaseTypeId = 'ChronoClasses.ProjectPhaseClass_' + phaseNb + '_type';
+        if ($(phaseTypeId).value == '1') {
+            if (!regDatesList[i][0].match(/start/))
+                evalit = false;
+        } else
+        {
+            if (!regDatesList[i][0].match(/end/))
+                evalit = false;
+        }
+        if (evalit) {
+            var phaseAddElId = 'phaseedition_' + phaseNb + '_addel';
+            var phaseAddTdId = 'phaseedition_' + phaseNb + '_addtd';
+            if (((regDatesList[i + 1][1] - regDatesList[i][1]) / secsPerDay) > 1) {
+                /* if the difference between Nend and N+1start > 1 day, display addphase button */
+                rmClass($(phaseAddElId), 'hidden');
+                new Effect.Highlight($(phaseAddTdId),
+                { startcolor:'#F8EA95',
+                    endcolor:'#EFEFEF',
+                    duration: 1
+                });
+            } else
+            {
+                /* else hide addphase button */
+                addClass($(phaseAddElId), 'hidden');
+            }
+        }
+    }
+}
+
 function projectphases_save()
 {
     var id = 'projectphases_view';
@@ -810,11 +841,19 @@ function registerPhase(id)
 
 function phaseTypeOnChange(phasenb)
 {
+    if (!confirm(confirmphasetomilestone)) {
+        $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_iscurrentphase').value = '0';
+        $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_type').selectedIndex = 0;
+        calInitDates();
+        return;
+    }
     var type = $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_type').value;
     if (type == "1") {
         addClass($('phaseedition_' + phasenb + '_start'), 'hidden');
         addClass($('phaseedition_' + phasenb + '_end'), 'hidden');
         addClass($('phaseedition_' + phasenb + '_endd'), 'hidden');
+        addClass($(phasenb + '_currentcontainer'), 'hidden');
+        $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_type').disabled = 'disabled';
         rmClass($('phaseedition_' + phasenb + '_mile'), 'hidden');
     } else
     {
@@ -863,7 +902,7 @@ function switchPhase(phaseid)
 function addphase(elderbrother, after)
 {
     var surl = getXWikiURL("ChronoServices", "ProjectDisplay", "view", "");
-    parameters = "xpage=plain&type=projectphases_add&";
+    var parameters = "xpage=plain&type=projectphases_add&";
     parameters += "puid=" + currentSpace + "&";
 
     var i;
@@ -886,11 +925,11 @@ function addphase(elderbrother, after)
         }
     }
 
-  // useless since XWIKI-1545
+    // useless since XWIKI-1545
     // var pdate1 = new Date(date1.getTime() + (secsPerDay + secsPerDay / 2));
     // var pdate2 = new Date(date2.getTime() - (secsPerDay + secsPerDay / 2));
-    var pdate1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDay() + 1);
-    var pdate2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDay() - 1);
+    var pdate1 = new Date(date1.getTime() + secsPerDay);
+    var pdate2 = new Date(date2.getTime() - secsPerDay);
     parameters += "start=" + pdate1.getTime() + "&";
     parameters += "end=" + pdate2.getTime();
 
@@ -1023,24 +1062,19 @@ function container_mouseover(id)
 function setLoadingBg(id, state)
 {
     if (state == true) {
-        $(id).style.background = "url(/xwiki/skins/chronopolys/ajax-loader-bar.gif) center no-repeat";
-        $(id).innerHTML = "";
+        var pos = Position.cumulativeOffset($(id)); // get el coords
+        var dim = Element.getDimensions(id);
+        $('loading').style.left = pos[0] + "px";
+        $('loading').style.top = pos[1] + "px";
+        $('loading').style.width = dim.width + "px";
+        $('loading').style.height = dim.height + "px";
     } else
     {
-        $(id).style.background = "";
+        $('loading').style.left = "0px";
+        $('loading').style.top = "0px";
+        $('loading').style.width = "0px";
+        $('loading').style.height = "0px";
     }
-}
-
-function container_create(type, parent, transport)
-{
-    var div = document.createElement("div");
-    div.id = transport.responseText;
-    div.className = type + "_container";
-    if (type == "axis")
-        $('axis_all').appendChild(div);
-    else
-        $(parent + '_containerchilds').appendChild(div);
-    container_refresh(div.id);
 }
 
 function container_add(type, parent)
@@ -1048,11 +1082,18 @@ function container_add(type, parent)
     var surl = getXWikiURL("ChronoServices", "ContainerDisplay", "view", "xpage=plain&action=add&type=" +
                                                                          type + "&parent=" +
                                                                          parent);
+    var containerdiv = parent;
+    if (containerdiv == '') {
+      containerdiv = 'axis_all';
+    }
+    setLoadingBg(containerdiv, true);
     var myAjax = new Ajax.Request(
             surl,
     {
         method: 'get',
-        onComplete: container_create.bind(this, type, parent)
+        onSuccess: function(transport) {
+            container_refresh_action(parent, '&modes=edit' + transport.responseText);
+        }
     });
 }
 
@@ -1068,8 +1109,8 @@ function container_save(id)
         var style = $(id + '_input_style').firstChild;
     if ($(id + '_input_desc').firstChild) // handle missing el
         desc = $(id + '_input_desc').firstChild;
-
-    setLoadingBg(id, true);
+    pid = container_get_parent_id(id);
+    setLoadingBg(pid, true);
     var surl = getXWikiURL("ProjectContainers", id, "save", "");
     var parameters = name.id + '=' + name.value + '&' + style.name + '=' + style.value + '&' +
                      desc.id + '=' + desc.value;
@@ -1080,44 +1121,52 @@ function container_save(id)
         postBody: parameters,
         onComplete: function()
         {
-            container_refresh(id);
+            container_refresh_action(pid, "");
         }
     });
 }
 
-function resize_container(el, start) {
-    if (start) {
-        el.style.height = "20px";
-    } else {
-        el.style.height = "";
+function container_refresh_action(id, params) {
+    /* top level folder */
+    if (id == '' || id == 'axis_all') {
+        reloadDashboard(params);
+        return;
     }
-}
 
-function container_refresh(id)
-{
-    //reloadDashboard("");
-    //resize_container(id, true);
-    $(id).style.height = '28px';
-    setLoadingBg(id, true);
-    var surl = getXWikiURL("ChronoServices", "ContainerDisplay", "view", "xpage=plain&pcuid=" + id + "&seed=" + Math.floor(Math.random()*10000));
+    /* do not post preferences to user profile, update running! */
+    isUpdatingContainers = true;
+
+    /* get the desired container */
+    var surl = getXWikiURL("ChronoServices", "ContainerDisplay", "view", "xpage=xpart&vm=plain.vm&pcuid=" + id + "&mode=" + currentMode + "&modes=" + currentSecondaryMode + "&seed=" + Math.floor(Math.random()*10000) + "&" + params);
     var myAjax = new Ajax.Updater (
       id,
       surl,
       {
-        method: 'post',
+        method: 'get',
         evalScripts: true,
         onComplete: function() {
           setLoadingBg(id, false);
           $(id).style.height = '';
-          updateContainersStates();
-          resize_container(id, false);
+          // re-enable the visibility preference save
+          isUpdatingContainers = false;
+          // flush the hiddenable elements cache
+          elementsCache = null;
         }
       });
 }
 
+function container_get_parent_id(id) {
+    var pid = $(id).parentNode.parentNode.parentNode.id;
+    if (pid == "chronoapp") {
+      pid = 'axis_all';
+    }
+    return pid;
+}
+
 function container_move(id, way)
 {
-    setLoadingBg(id, true);
+    var pid = container_get_parent_id(id);
+    setLoadingBg(pid, true);
     var surl = getXWikiURL("ChronoServices", "ContainerDisplay", "view", "xpage=plain&action=" +
                                                                          way + "&pcuid=" + id);
     var myAjax = new Ajax.Request(
@@ -1126,28 +1175,28 @@ function container_move(id, way)
         method: 'get',
         onComplete: function(transport)
         {
-            var uids = transport.responseText.split(' ');
-            var id1 = uids[0]
-            var id2 = uids[1]
-            $(id1).id = id2;
-            $(id2).id = id1;
-            container_refresh(id1);
-            container_refresh(id2);
+            container_refresh_action(pid);
         }
     });
 }
 
-function container_deleteaction(id)
+function container_delete_action(id)
 {
     var surl = getXWikiURL("ChronoServices", "ContainerDisplay", "view", "pcuid=" + id +
                                                                          "&action=delete");
+    var pid = container_get_parent_id(id);
+    setLoadingBg(pid, true);
     var myAjax = new Ajax.Request(
             surl,
     {
         method: 'get',
-        onComplete: function()
+        onSuccess: function()
         {
-            reloadDashboard('');
+            if (pid == "axis_all") {
+                reloadDashboard("");
+            } else {
+                container_refresh_action(pid, '');
+            }
         }
     });
 }
@@ -1160,7 +1209,7 @@ function container_infos(id)
 function container_delete(id)
 {
     if (confirm(confirmcontainerdelete)) {
-        container_deleteaction(id);
+        container_delete_action(id);
     }
 }
 
@@ -1176,6 +1225,11 @@ function blindup(id)
 
 var visibleContainers;
 var visibleEls = null;
+var updatingContainers = false;
+
+function isUpdatingContainers(state) {
+  updatingContainers = state;
+}
 
 function getContainersStates()
 {
@@ -1197,10 +1251,10 @@ function getContainersStates()
     return str;
 }
 
-function updateContainersStates()
+function saveContainersStates()
 {
     var newhc = getContainersStates();
-    if (newhc != visibleContainers) {
+    if (newhc != visibleContainers && !updatingContainers) {
         visibleContainers = newhc;
         var surl = getXWikiURL(userSpace, userName, "save", "");
         var parameters = 'XWiki.XWikiUsers_0_prefered_containers_state=' + visibleContainers;
@@ -1212,7 +1266,7 @@ function updateContainersStates()
         });
     }
     // recall the method every 10"
-    setTimeout("updateContainersStates()", 10000);
+    setTimeout("saveContainersStates()", 10000);
 }
 
 function initContainersStates(visibleContainers)
@@ -1232,7 +1286,7 @@ function initContainersStates(visibleContainers)
         }
     }
     // first update call 15" after loading
-    setTimeout("updateContainersStates()", 15000);
+    setTimeout("saveContainersStates()", 15000);
 }
 
 function processInfoBubble(id, uid)

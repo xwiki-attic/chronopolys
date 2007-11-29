@@ -22,14 +22,15 @@ package com.xpn.xwiki.plugin.chronopolys;
 
 import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.XWikiException;
-import com.xpn.xwiki.api.*;
+import com.xpn.xwiki.api.Document;
 import com.xpn.xwiki.api.Object;
-import com.xpn.xwiki.objects.BaseObject;
 import com.xpn.xwiki.doc.XWikiDocument;
+import com.xpn.xwiki.objects.BaseObject;
+import com.xpn.xwiki.plugin.watchlist.WatchListPlugin;
 
-import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Vector;
 
 public class ProjectMembers {
@@ -173,11 +174,13 @@ public class ProjectMembers {
         /* get 'ProjectMembers' notification subscribers before the new member become one of them */
         // List rcpt = project.getNotifications().getSubscribers("ProjectMembers", context);
         /* create members notifications' object */
-        nb = projectMembers.createNewObject(ProjectNotifications.CLASS_NOTIFICATIONS);
+        /* nb = projectMembers.createNewObject(ProjectNotifications.CLASS_NOTIFICATIONS);
         obj = projectMembers.getObject(ProjectNotifications.CLASS_NOTIFICATIONS, nb);
         obj.set("member", name);
         obj.set("notifications", ProjectNotifications.DEFAULT_PROJECT_NOTIFICATIONS);
-        projectMembers.save("addmember|" + name);
+        projectMembers.save("addmember|" + name); */
+        WatchListPlugin wlplugin = (WatchListPlugin)context.getWiki().getPlugin("watchlist", context);
+        wlplugin.addWatchedElement(context.getLocalUser(), project.getSpace(), true, context);
 
         // invalidate ChronopolysPlugin caches
         project.getPlugin().getProjectManager().flushProjectsCache();
