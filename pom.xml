@@ -38,12 +38,12 @@
   <description>XWiki Products - Chronopolys - Parent POM</description>  
   <properties>
     <!-- Versions of XWiki dependencies used in Chronopolys modules -->
-    <platform.tools.version>1.7-SNAPSHOT</platform.tools.version>
+    <platform.tools.version>1.8-SNAPSHOT</platform.tools.version>
     <platform.core.version>1.2-SNAPSHOT</platform.core.version>
     <platform.web.version>1.2-SNAPSHOT</platform.web.version>
     <platform.panels.version>1.2-SNAPSHOT</platform.panels.version>
     <platform.plugin.mailsender.version>1.1-SNAPSHOT</platform.plugin.mailsender.version>
-    <platform.plugin.scheduler.version>1.1-SNAPSHOT</platform.plugin.scheduler.version>
+    <platform.plugin.scheduler.version>1.2-SNAPSHOT</platform.plugin.scheduler.version>
     <platform.plugin.watchlist.version>1.1-SNAPSHOT</platform.plugin.watchlist.version>
     <platform.plugin.chronopolys.version>1.0-SNAPSHOT</platform.plugin.chronopolys.version>
   </properties>
