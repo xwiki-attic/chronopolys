@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>ChronoTemplates</web>
@@ -11,15 +11,16 @@
 <author>XWiki.Admin</author>
 <customClass></customClass>
 <contentAuthor>XWiki.jvdrean</contentAuthor>
-<creationDate>1185376917000</creationDate>
-<date>1186397077000</date>
-<contentUpdateDate>1186396921000</contentUpdateDate>
+<creationDate>1185373317000</creationDate>
+<date>1186393477000</date>
+<contentUpdateDate>1186393321000</contentUpdateDate>
 <version>1.9</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <object>
 <class>
 <name>XWiki.Mail</name>
@@ -94,7 +95,7 @@
 &lt;p style="border:solid 2px $xwiki.chronopolys.getProjectContainerStyle($container);padding:10px;"&gt;
 &lt;span style="font-size:18px;font-weight:bold;margin-top:-60px;"&gt;&lt;a href="$projecturl"&gt;$project.get("name")&lt;/a&gt;&lt;/span&gt;&lt;br/&gt;
 &lt;br/&gt;
-&lt;a href="$projecturl"&gt;Cliquez ici pour consulter les informations gÃ©nÃ©rales du projet (description, dates, etc)&lt;/a&gt;
+&lt;a href="$projecturl"&gt;Cliquez ici pour consulter les informations générales du projet (description, dates, etc)&lt;/a&gt;
 &lt;/p&gt;
 $htmlfooter</html>
 </property>
@@ -102,10 +103,10 @@ $htmlfooter</html>
 <language>fr</language>
 </property>
 <property>
-<subject>[Informations gÃ©nÃ©rales] Les informations gÃ©nÃ©rales concernant le projet $project.get("name") ont Ã©tÃ© modifiÃ©es</subject>
+<subject>[Informations générales] Les informations générales concernant le projet $project.get("name") ont été modifiées</subject>
 </property>
 <property>
-<text>Cliquez ici pour consulter les informations gÃ©nÃ©rales du projet (description, dates, etc) : $projecturl</text>
+<text>Cliquez ici pour consulter les informations générales du projet (description, dates, etc) : $projecturl</text>
 </property>
 </object>
 <object>

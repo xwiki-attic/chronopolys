@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>ChronoExport</web>
@@ -11,15 +11,16 @@
 <author>XWiki.Admin</author>
 <customClass></customClass>
 <contentAuthor>XWiki.jvdrean</contentAuthor>
-<creationDate>1186042036000</creationDate>
-<date>1186397074000</date>
-<contentUpdateDate>1186396918000</contentUpdateDate>
+<creationDate>1186038436000</creationDate>
+<date>1186393474000</date>
+<contentUpdateDate>1186393318000</contentUpdateDate>
 <version>1.5</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <object>
 <class>
 <name>XWiki.TagClass</name>

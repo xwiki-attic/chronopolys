@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>ChronoCode</web>
@@ -10,16 +10,17 @@
 <creator>XWiki.jvdrean</creator>
 <author>XWiki.Admin</author>
 <customClass></customClass>
-<contentAuthor>XWiki.jvdrean</contentAuthor>
-<creationDate>1175261309000</creationDate>
-<date>1186397074000</date>
-<contentUpdateDate>1186396918000</contentUpdateDate>
-<version>1.10</version>
+<contentAuthor>XWiki.Admin</contentAuthor>
+<creationDate>1175257709000</creationDate>
+<date>1195143280000</date>
+<contentUpdateDate>1195143280000</contentUpdateDate>
+<version>2.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <object>
 <class>
 <name>XWiki.TagClass</name>
@@ -53,12 +54,14 @@
 <tags/>
 </property>
 </object>
-<content>&lt;br/&gt;
+<content>{pre}
+&lt;br/&gt;
 &lt;style&gt;
 #orphansprojects .roundedcontent .project .name {
   width: 170px;
 }
 &lt;/style&gt;
+#set ($mode="qualitymode")
 #set($orphans = $xwiki.chronopolys.getProjectContainerProjects("OrphanActivity"))
 #if ($orphans.size() &gt; 0)
 &lt;div id="orphansprojects"&gt;
@@ -71,4 +74,5 @@
 #roundedbottom()
 &lt;/div&gt;
 #end
-</content></xwikidoc>
+{/pre}</content>
+</xwikidoc>

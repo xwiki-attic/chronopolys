@@ -7,4 +7,5 @@
 $msg.get("version") $xwiki.version
 ##if ($tdoc)$msg.get("version") $tdoc.version $msg.get("lastmodifiedby") $xwiki.getLocalUserName($tdoc.author) $msg.get("lastmodifiedon") $!xwiki.formatDate($tdoc.date, "dd/MM/yyyy") $msg.get("at") $!xwiki.formatDate($tdoc.date, "HH:mm") #end</div>
 </div>
+<div id="loading" style="z-index:9999;position:absolute;background: url(/xwiki/skins/chronopolys/bg40.png);"><div id="loading-animation" style="background: url(/xwiki/skins/chronopolys/ajax-loader-ball.gif) center no-repeat; position: relative; width: 100%;height:100%;"></div></div>
 #end

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>Panels</web>
@@ -6,20 +6,21 @@
 <language></language>
 <defaultLanguage>en</defaultLanguage>
 <translation>0</translation>
-<parent></parent>
+<parent>Panels.WebHome</parent>
 <creator>XWiki.Admin</creator>
 <author>XWiki.Admin</author>
 <customClass></customClass>
-<contentAuthor>XWiki.jvdrean</contentAuthor>
-<creationDate>1157375356000</creationDate>
-<date>1186397078000</date>
-<contentUpdateDate>1186396923000</contentUpdateDate>
-<version>1.127</version>
+<contentAuthor>XWiki.Admin</contentAuthor>
+<creationDate>1157371756000</creationDate>
+<date>1166173845000</date>
+<contentUpdateDate>1191488831000</contentUpdateDate>
+<version>1.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <object>
 <class>
 <name>XWiki.TagClass</name>
@@ -166,7 +167,7 @@ window.showRightColumn = $showRightPanels;
           #set($obj = $xwiki.getDocument($item).getObject("Panels.PanelClass"))
                 &lt;div class="panelitemc"&gt;
                   &lt;div class="label"&gt;$doc.display("name", $obj)&lt;/div&gt;
-                  &lt;div class="panelcontainer" onmouseover="if(!window.isDraggingPanel){ showtip(this, unescape('$xwiki.getURLEncoded($doc.display("description", $obj)).replace("+", "%20")'), 300); }"&gt;#if($panelsStatus.get($item) == "false")#displaypanel("$item")#else&lt;div class="panel"&gt;&lt;/div&gt;#end&lt;/div&gt;
+                  &lt;div class="panelcontainer" onmouseover="if(!window.isDraggingPanel){ showtip(this, unescape('$xwiki.getURLEncoded($doc.display("description", $obj)).replaceAll("[+]", "%20")'), 300); }"&gt;#if($panelsStatus.get($item) == "false")#displaypanel("$item")#else&lt;div class="panel"&gt;&lt;/div&gt;#end&lt;/div&gt;
                   &lt;div class="xwikibuttonlink"&gt;&lt;a href="$xwiki.getURL("$item", "inline")"&gt;$msg.get("edit")&lt;/a&gt; &lt;a href="$xwiki.getURL("$item", "delete")"&gt;$msg.get("delete")&lt;/a&gt;&lt;/div&gt;
                 &lt;/div&gt;
         #end
@@ -188,10 +189,10 @@ window.showRightColumn = $showRightPanels;
 Choose a page layout:
 
 #set($crtlayout = 0)
-#if($showLeftPanels == "1")
+#if($showLeftPanels and $showLeftPanels == "1")
 #set($crtlayout = $crtlayout + 1)
 #end
-#if($showRightPanels == "1")
+#if($showRightPanels and $showRightPanels == "1")
 #set($crtlayout = $crtlayout + 2)
 #end
 &lt;div class="pagelayoutoptions"&gt;
@@ -199,7 +200,7 @@ Choose a page layout:
 &lt;tr&gt;
 &lt;td&gt;
 &lt;div
-#if($crtlayout == 0)id="selectedoption"#end 
+#if($crtlayout == 0)id="selectedoption" #end 
 class="pagelayoutoption" onclick="changePreviewLayout(this, 0)"&gt;
 ##&lt;input type="radio" name="pagelayout" value="nosidecol" checked="cheched" /&gt;
 &lt;label&gt;No side column&lt;/label&gt;
@@ -210,7 +211,7 @@ class="pagelayoutoption" onclick="changePreviewLayout(this, 0)"&gt;
 &lt;/td&gt;
 &lt;td&gt;
 &lt;div 
-#if($crtlayout == 1)id="selectedoption"#end
+#if($crtlayout == 1)id="selectedoption" #end
 class="pagelayoutoption" onclick="changePreviewLayout(this, 1)"&gt;
 ##&lt;input type="radio" name="pagelayout" value="leftcol" "/&gt;
 &lt;label&gt;Left column&lt;/label&gt;
@@ -222,7 +223,7 @@ class="pagelayoutoption" onclick="changePreviewLayout(this, 1)"&gt;
 &lt;/td&gt;
 &lt;td&gt;
 &lt;div
-#if($crtlayout == 2)id="selectedoption"#end
+#if($crtlayout == 2)id="selectedoption" #end
 class="pagelayoutoption" onclick="changePreviewLayout(this, 2)"&gt;
 ##&lt;input type="radio" name="pagelayout" value="rightcol" /&gt;
 &lt;label&gt;Right column&lt;/label&gt;
@@ -234,7 +235,7 @@ class="pagelayoutoption" onclick="changePreviewLayout(this, 2)"&gt;
 &lt;/td&gt;
 &lt;td&gt;
 &lt;div 
-#if($crtlayout == 3)id="selectedoption"#end
+#if($crtlayout == 3)id="selectedoption" #end
 class="pagelayoutoption" onclick="changePreviewLayout(this, 3)"&gt;
 &lt;label&gt;Both columns&lt;/label&gt;
 &lt;div  id="bothcolumns" class="layoutmaquette"&gt;
@@ -258,7 +259,7 @@ class="pagelayoutoption" onclick="changePreviewLayout(this, 3)"&gt;
 &lt;/div&gt;
 #else
 #xwikimessageboxstart("Panel Editor" "")
-You need to be administrator of the Place to use the Home Page Editor
+You need to have administrative rights to use the Panel Wizard.
 #xwikimessageboxend()
 #end</content>
 </xwikidoc>

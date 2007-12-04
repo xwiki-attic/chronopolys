@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>ChronoTemplates</web>
@@ -10,16 +10,17 @@
 <creator>XWiki.jvdrean</creator>
 <author>XWiki.Admin</author>
 <customClass></customClass>
-<contentAuthor>XWiki.jvdrean</contentAuthor>
-<creationDate>1185207697000</creationDate>
-<date>1186397076000</date>
-<contentUpdateDate>1186396921000</contentUpdateDate>
-<version>1.5</version>
+<contentAuthor>XWiki.Admin</contentAuthor>
+<creationDate>1185204097000</creationDate>
+<date>1196101551000</date>
+<contentUpdateDate>1196101551000</contentUpdateDate>
+<version>9.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <object>
 <class>
 <name>XWiki.TagClass</name>
@@ -53,19 +54,18 @@
 <tags/>
 </property>
 </object>
-<content>
-&lt;html&gt; 
-&lt;body&gt;
+<content>&lt;html&gt; 
+&lt;body style="background-color:#B2B2B2;font-family:Arial,Helvetica,sans-serif;font-size:12px;"&gt;
 &lt;table border="0" cellpadding="0" cellspacing="0" width="100%" bgcolor="#FFFFFF" align="center"&gt;
 &lt;tr&gt;
 &lt;td&gt;
-&lt;table border="0" cellpadding="0" cellspacing="0" width="100%" height="120px"&gt;
+&lt;table border="0" cellpadding="0" cellspacing="0" width="100%" height="81px"&gt;
 &lt;tr width="100%" bgcolor="#b2b2b2"&gt;
 &lt;td height="11px" colspan="3"&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td width="80px"&gt;
-&lt;table width="80px" height="109px" border="0" cellpadding="0" cellspacing="0" background="$xwiki.chronopolys.getStaticSkinFile("header_left.gif")"&gt;
+&lt;table width="80px" height="70px" border="0" cellpadding="0" cellspacing="0" background="$xwiki.chronopolys.getStaticSkinFile("header_left.gif")"&gt;
 &lt;tr&gt;
 &lt;td valign="top"&gt;
 &lt;table border="0" cellpadding="0" cellspacing="0" width="100%"&gt;
@@ -77,16 +77,16 @@
 &lt;/table&gt;
 &lt;/td&gt;
 &lt;td width="100%"&gt;
-&lt;table width="100%" height="109px" border="0" cellpadding="0" cellspacing="0" background="$xwiki.chronopolys.getStaticSkinFile("header_mid.gif")"&gt;
+&lt;table width="100%" height="70px" border="0" cellpadding="0" cellspacing="0" background="$xwiki.chronopolys.getStaticSkinFile("header_mid.gif")"&gt;
 &lt;tr&gt;
 &lt;td&gt;
-&lt;img src="$xwiki.chronopolys.getStaticSkinFile("logochrono.gif")" height="70px" width="200px" /&gt;
+&lt;img src="$xwiki.chronopolys.getStaticSkinFile("logochrono.gif")" height="40px" width="131px" style="margin-top:30px;" /&gt;
 &lt;/td&gt;
 &lt;/tr&gt;
 &lt;/table&gt;
 &lt;/td&gt;
 &lt;td width="80px"&gt;
-&lt;table width="80px" height="109px" border="0" cellpadding="0" cellspacing="0" background="$xwiki.chronopolys.getStaticSkinFile("header_right.gif")"&gt;
+&lt;table width="80px" height="70px" border="0" cellpadding="0" cellspacing="0" background="$xwiki.chronopolys.getStaticSkinFile("header_right.gif")"&gt;
 &lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;
 &lt;/td&gt;
@@ -94,6 +94,6 @@
 &lt;/table&gt;
 &lt;table table border="0" cellpadding="0" cellspacing="0" width="100%"&gt;
 &lt;tr&gt;
-&lt;td width="15px" height="200px" background="$xwiki.chronopolys.getStaticSkinFile("gauche.gif")"&gt;&lt;img src="$xwiki.chronopolys.getStaticSkinFile("gauche.gif")" width="15px" /&gt;&lt;/td&gt;
+&lt;td width="15px" height="100px" background="$xwiki.chronopolys.getStaticSkinFile("gauche.gif")"&gt;&lt;img src="$xwiki.chronopolys.getStaticSkinFile("gauche.gif")" width="15px" /&gt;&lt;/td&gt;
 &lt;td width="100%" style="font-size:12px;padding-left:20px;padding-right:20px;"&gt;</content>
 </xwikidoc>

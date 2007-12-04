@@ -1,43 +1,19 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <package>
 <infos>
-<name>Backup</name>
-<description>on Fri Sep 14 11:12:59 CEST 2007 by XWiki.Admin</description>
+<name>My package</name>
+<description></description>
 <licence>LGPL</licence>
 <author>XWiki</author>
 <version>1.0.0</version>
-<backupPack>true</backupPack>
+<backupPack>false</backupPack>
 <preserveVersion>false</preserveVersion>
 </infos>
 <files>
 <file defaultAction="0" language="">ChronoAdmin.WebPreferences</file>
 <file defaultAction="0" language="">ChronoAdmin.ChronoPreferences</file>
 <file defaultAction="0" language="">ChronoAdmin.WebHome</file>
-<file defaultAction="0" language="">ChronoTemplates.ProjectGuestsTemplate</file>
-<file defaultAction="0" language="">ChronoTemplates.OrphanActivity</file>
-<file defaultAction="0" language="">ChronoTemplates.OrphanAxis</file>
-<file defaultAction="0" language="">ChronoTemplates.OrphanYard</file>
-<file defaultAction="0" language="">ChronoTemplates.ProjectPhasesTemplate</file>
-<file defaultAction="0" language="">ChronoTemplates.ProjectNoteTemplate</file>
-<file defaultAction="0" language="">ChronoTemplates.ProjectLeadersTemplate</file>
-<file defaultAction="0" language="">ChronoTemplates.ProjectDocumentsTemplate</file>
-<file defaultAction="0" language="">ChronoTemplates.ProjectWebPreferencesTemplate</file>
-<file defaultAction="0" language="">ChronoTemplates.ProjectTemplate</file>
-<file defaultAction="0" language="">ChronoTemplates.ProjectLogTemplate</file>
-<file defaultAction="0" language="">ChronoTemplates.ProjectArticleTemplate</file>
-<file defaultAction="0" language="">ChronoTemplates.ProjectMembersTemplate</file>
-<file defaultAction="0" language="">ChronoTemplates.ProjectWikiTemplate</file>
-<file defaultAction="0" language="">Panels.PanelClass</file>
-<file defaultAction="0" language="">Main.WebSearch</file>
-<file defaultAction="0" language="">Main.ProjectsZoom</file>
-<file defaultAction="0" language="">Main.WhatsNew</file>
-<file defaultAction="0" language="">Main.LuceneSearch</file>
-<file defaultAction="0" language="">Main.WebHome</file>
-<file defaultAction="0" language="">Main.SpaceIndex</file>
-<file defaultAction="0" language="">Main.Projects</file>
-<file defaultAction="0" language="">Main.WebPreferences</file>
-<file defaultAction="0" language="">Main.Users</file>
 <file defaultAction="0" language="">XWiki.XWikiRights</file>
 <file defaultAction="0" language="">XWiki.XWikiAdminGroup</file>
 <file defaultAction="0" language="">XWiki.XWikiGroupSheet</file>
@@ -58,22 +34,6 @@
 <file defaultAction="0" language="">XWiki.XWikiUserSheet</file>
 <file defaultAction="0" language="">XWiki.Admin</file>
 <file defaultAction="0" language="">XWiki.XWikiGroups</file>
-<file defaultAction="0" language="">ChronoServices.ProjectDisplay</file>
-<file defaultAction="0" language="">ChronoServices.ContainerDisplay</file>
-<file defaultAction="0" language="">ChronoServices.ProjectPhasesDatesXML</file>
-<file defaultAction="0" language="">ChronoServices.ProjectArticleRsvpDisplay</file>
-<file defaultAction="0" language="">ChronoServices.ContainersDisplay</file>
-<file defaultAction="0" language="">ProjectContainers.WebPreferences</file>
-<file defaultAction="0" language="">ProjectContainers.WebHome</file>
-<file defaultAction="0" language="">ChronoClasses.EmailSubscriptionsClass</file>
-<file defaultAction="0" language="">ChronoClasses.ProjectArticleRsvpClass</file>
-<file defaultAction="0" language="">ChronoClasses.ProjectContainerClass</file>
-<file defaultAction="0" language="">ChronoClasses.ProjectArticleClass</file>
-<file defaultAction="0" language="">ChronoClasses.ProjectNote</file>
-<file defaultAction="0" language="">ChronoClasses.ProjectPhaseClass</file>
-<file defaultAction="0" language="">ChronoClasses.ProjectClass</file>
-<file defaultAction="0" language="">ChronoClasses.NotificationsClass</file>
-<file defaultAction="0" language="">ChronoClasses.ProjectsZoomClass</file>
 <file defaultAction="0" language="">ChronoCode.ProjectMacros</file>
 <file defaultAction="0" language="">ChronoCode.ContainerMacros</file>
 <file defaultAction="0" language="">ChronoCode.CustomDisplayProjectMember</file>
@@ -91,6 +51,43 @@
 <file defaultAction="0" language="">ChronoCode.CustomDisplayProjectContainer</file>
 <file defaultAction="0" language="">ChronoCode.JSCode</file>
 <file defaultAction="0" language="">ChronoCode.CreateProject</file>
+<file defaultAction="0" language="">ChronoTemplates.ProjectGuestsTemplate</file>
+<file defaultAction="0" language="">ChronoTemplates.ProjectPhasesTemplate</file>
+<file defaultAction="0" language="">ChronoTemplates.ProjectNoteTemplate</file>
+<file defaultAction="0" language="">ChronoTemplates.ProjectLeadersTemplate</file>
+<file defaultAction="0" language="">ChronoTemplates.ProjectDocumentsTemplate</file>
+<file defaultAction="0" language="">ChronoTemplates.ProjectWebPreferencesTemplate</file>
+<file defaultAction="0" language="">ChronoTemplates.ProjectTemplate</file>
+<file defaultAction="0" language="">ChronoTemplates.ProjectLogTemplate</file>
+<file defaultAction="0" language="">ChronoTemplates.ProjectArticleTemplate</file>
+<file defaultAction="0" language="">ChronoTemplates.ProjectMembersTemplate</file>
+<file defaultAction="0" language="">ChronoTemplates.ProjectWikiTemplate</file>
+<file defaultAction="0" language="">Panels.PanelClass</file>
+<file defaultAction="0" language="">Main.WebSearch</file>
+<file defaultAction="0" language="">Main.ProjectsZoom</file>
+<file defaultAction="0" language="">Main.WhatsNew</file>
+<file defaultAction="0" language="">Main.LuceneSearch</file>
+<file defaultAction="0" language="">Main.WebHome</file>
+<file defaultAction="0" language="">Main.SpaceIndex</file>
+<file defaultAction="0" language="">Main.Projects</file>
+<file defaultAction="0" language="">Main.WebPreferences</file>
+<file defaultAction="0" language="">Main.Users</file>
+<file defaultAction="0" language="">ChronoServices.ProjectDisplay</file>
+<file defaultAction="0" language="">ChronoServices.ContainerDisplay</file>
+<file defaultAction="0" language="">ChronoServices.ProjectPhasesDatesXML</file>
+<file defaultAction="0" language="">ChronoServices.ProjectArticleRsvpDisplay</file>
+<file defaultAction="0" language="">ChronoServices.ContainersDisplay</file>
+<file defaultAction="0" language="">ChronoClasses.EmailSubscriptionsClass</file>
+<file defaultAction="0" language="">ChronoClasses.ProjectArticleRsvpClass</file>
+<file defaultAction="0" language="">ChronoClasses.ProjectContainerClass</file>
+<file defaultAction="0" language="">ChronoClasses.ProjectArticleClass</file>
+<file defaultAction="0" language="">ChronoClasses.ProjectNote</file>
+<file defaultAction="0" language="">ChronoClasses.ProjectPhaseClass</file>
+<file defaultAction="0" language="">ChronoClasses.ProjectClass</file>
+<file defaultAction="0" language="">ChronoClasses.NotificationsClass</file>
+<file defaultAction="0" language="">ChronoClasses.ProjectsZoomClass</file>
+<file defaultAction="0" language="">ProjectContainers.WebPreferences</file>
+<file defaultAction="0" language="">ProjectContainers.WebHome</file>
 <file defaultAction="0" language="">ChronoExport.SharpCharacter</file>
 <file defaultAction="0" language="">ChronoExport.PrepareWikiTemplate</file>
 <file defaultAction="0" language="">ChronoSheets.ProjectDocumentsSheet</file>

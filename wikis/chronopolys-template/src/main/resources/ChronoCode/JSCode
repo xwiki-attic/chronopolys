@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>ChronoCode</web>
@@ -11,15 +11,16 @@
 <author>XWiki.Admin</author>
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
-<creationDate>1170779514000</creationDate>
-<date>1189435672000</date>
-<contentUpdateDate>1189435672000</contentUpdateDate>
-<version>1.350</version>
+<creationDate>1170775914000</creationDate>
+<date>1190131796000</date>
+<contentUpdateDate>1190131796000</contentUpdateDate>
+<version>1.352</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <object>
 <class>
 <name>XWiki.TagClass</name>
@@ -133,6 +134,20 @@
 </object>
 <content>{pre}
 &lt;script type="text/javascript"&gt;
+
+var currentPage;
+var currentSpace;
+var currentFullName;
+var localUser;
+var userName;
+var userPage;
+var userSpace;
+var daySymbol;
+var passwdnotmatch;
+var passwdtooshort;
+var passwdupdated;
+var confirmdelphase;
+var confirmcontainerdelete;
 
 // ---------------- //
 // Dashboard modes  //
@@ -261,7 +276,7 @@ function drawTimelineArrows(tl) {
 /* save the timeline range in the user profile */
 function saveTimelineRange() {
   var range = $('timeline_range').value;
-  var surl = getXWikiURL("XWiki", "$context.user.replaceAll("xwiki:", "").replaceAll("XWiki.", "")", "save", "");
+  var surl = getXWikiURL("XWiki", userName, "save", "");
   var parameters = 'XWiki.XWikiUsers_0_prefered_timeline_view=' + range;
   parameters = parameters + '&amp;comment=savetimelinerange';
   var myAjax = new Ajax.Request (
@@ -407,7 +422,7 @@ function todayDiff(tdate, color) {
   /*if (res &lt; 0) {
     document.write('&lt;span class="error" style="background-color:white;"&gt;');
   }
-  document.write(res+"$msg.get("dday")");
+  document.write(res+daySymbol);
   if (res &lt; 0) {
     document.write('&lt;/span&gt;');
     //document.write('&lt;span class="error"&gt;'); (span mal ferme - flix)
@@ -418,7 +433,7 @@ function todayDiff(tdate, color) {
   } else {
     document.write('&lt;div class="errorcontent" style="background-color:'+color+'"&gt;');
   }
-  document.write(res+"$msg.get("dday")");
+  document.write(res+daySymbol);
   if (res &lt; 0) {
     document.write('&lt;/div&gt;&lt;/div&gt;');
     /*document.write('&lt;span class="error"&gt;'); (span mal ferme - flix)*/
@@ -464,14 +479,14 @@ function passwdchange() {
   var newpasswd1 = $('newpasswd1').value;
   var newpasswd2 = $('newpasswd2').value;
   if (newpasswd1 != newpasswd2) {
-    $('passwderror').innerHTML = "$msg.get("passwdnotmatch")";
+    $('passwderror').innerHTML = passwdnotmatch;
     return;
   }
   if (newpasswd1.length &lt; 4) {
-    $('passwderror').innerHTML = "$msg.get("passwdtooshort")";
+    $('passwderror').innerHTML = passwdtooshort;
     return;
   }
-  var surl = getXWikiURL("$doc.web", "$doc.name", "save", "");
+  var surl = getXWikiURL(currentSpace, currentPage, "save", "");
   var parameters = 'XWiki.XWikiUsers_0_password=' + newpasswd1;
   parameters = parameters + '&amp;comment=changepassword'
   var myAjax = new Ajax.Request (
@@ -481,8 +496,8 @@ function passwdchange() {
     postBody: parameters,
     onComplete: function() {
       Field.clear('newpasswd1', 'newpasswd2');
-      $('passwdsuccess').innerHTML = '$msg.get("passwdupdated")';
-      authuser('$doc.fullName', newpasswd1);
+      $('passwdsuccess').innerHTML = passwdupdated;
+      authuser(userPage, newpasswd1);
     }
   });  
 }
@@ -514,7 +529,7 @@ function changeProjectArticleType() {
 function addrsvp() {
   var user = $('rsvpmember').value;
   var id = 'rsvp';
-  var surl = getXWikiURL("ChronoServices", "ProjectArticleRsvpDisplay", "view", "xpage=plain&amp;page=${doc.fullName}&amp;action=guestadd&amp;member=" + user);
+  var surl = getXWikiURL("ChronoServices", "ProjectArticleRsvpDisplay", "view", "xpage=plain&amp;page=" + currentFullName + "&amp;action=guestadd&amp;member=" + user);
   var myAjax = new Ajax.Updater(
     id, 
     surl, 
@@ -526,7 +541,7 @@ function addrsvp() {
 /* delete an event's guest */
 function delrsvp(rsvpnb) {
   var id = 'rsvp';
-  var surl = getXWikiURL("ChronoServices", "ProjectArticleRsvpDisplay", "view", "xpage=plain&amp;page=${doc.fullName}&amp;action=guestdel&amp;rsvpnb=" + rsvpnb);
+  var surl = getXWikiURL("ChronoServices", "ProjectArticleRsvpDisplay", "view", "xpage=plain&amp;page=" + currentFullName + "&amp;action=guestdel&amp;rsvpnb=" + rsvpnb);
   var myAjax = new Ajax.Updater(
     id, 
     surl, 
@@ -538,7 +553,7 @@ function delrsvp(rsvpnb) {
 /* load the guest entries */
 function loadRsvp() {
   var id = 'rsvp';
-  var surl = getXWikiURL("ChronoServices", "ProjectArticleRsvpDisplay", "view", "xpage=plain&amp;page=${doc.fullName}");
+  var surl = getXWikiURL("ChronoServices", "ProjectArticleRsvpDisplay", "view", "xpage=plain&amp;page=" + currentFullName);
   var myAjax = new Ajax.Updater(
     id, 
     surl, 
@@ -565,7 +580,7 @@ function panel_edit(id) {
 }
 
 function panel_refresh(id) {
-  var surl = getXWikiURL("ChronoServices", "ProjectDisplay", "view", "xpage=plain&amp;puid=${doc.web}&amp;type=" + id);
+  var surl = getXWikiURL("ChronoServices", "ProjectDisplay", "view", "xpage=plain&amp;puid=" + currentSpace + "&amp;type=" + id);
   var myAjax = new Ajax.Updater(
     id, 
     surl, 
@@ -592,7 +607,7 @@ function panel_save(type) {
 function notifications_save() {
   var id = 'notifications_view';
   $('notifications_content_edit').style.visibility="hidden";
-  var surl = getXWikiURL("$doc.web", "$doc.name", "view", "");
+  var surl = getXWikiURL(currentSpace, currentPage, "view", "");
   parameters = Form.serialize($('notifications_form'));
 
   var myAjax = new Ajax.Request (
@@ -613,7 +628,7 @@ function projectdesc_save() {
   var id = 'description_view';
   $('description_content_edit').style.visibility="hidden";
   var desc = $('ChronoClasses.ProjectClass_0_desc');
-  var surl = getXWikiURL("$doc.web", "WebHome", "save", "");
+  var surl = getXWikiURL(currentSpace, "WebHome", "save", "");
   var parameters = desc.id + '=' + desc.value;
   parameters = parameters + '&amp;comment=editdescription';
 
@@ -637,14 +652,14 @@ function projectdata_save() {
   $('projectdata_content_edit').style.visibility="hidden";
   var name = $('ChronoClasses.ProjectClass_0_name');
   var container = $('ChronoClasses.ProjectClass_0_container');
-  if (container.value != "$doc.getValue('container')") {
+  if (container.value != currentContainer) {
     reload = true;
   }
   var codename = $('ChronoClasses.ProjectClass_0_codename');
   var status = $('ChronoClasses.ProjectClass_0_status');
   var start = $('ChronoClasses.ProjectClass_0_start');
   var end = $('ChronoClasses.ProjectClass_0_end');
-  var surl = getXWikiURL("$doc.web", "WebHome", "save", "");
+  var surl = getXWikiURL(currentSpace, "WebHome", "save", "");
   var parameters = name.id + '=' + name.value;
   parameters = parameters + '&amp;' + container.id + '=' + container.value;
   parameters = parameters + '&amp;' + codename.id + '=' + codename.value;
@@ -675,7 +690,7 @@ function projectdata_save() {
 function projectphases_save() {
   var id = 'projectphases_view';
   $('projectphases_content_edit').style.visibility="hidden";
-  var surl = getXWikiURL("$doc.web", "ProjectPhases", "save", "");
+  var surl = getXWikiURL(currentSpace, "ProjectPhases", "save", "");
   parameters = Form.serialize($('projectphases_form'));
   parameters = parameters + '&amp;comment=editphases';
   
@@ -748,7 +763,7 @@ function switchPhase(phaseid) {
 function addphase(elderbrother, after) {
   var surl = getXWikiURL("ChronoServices", "ProjectDisplay", "view", "");
   parameters = "xpage=plain&amp;type=projectphases_add&amp;";
-  parameters += "puid=${doc.web}&amp;";
+  parameters += "puid=" + currentSpace + "&amp;";
   
   var i;
   var date1 = new Date();
@@ -773,8 +788,8 @@ function addphase(elderbrother, after) {
   // useless since XWIKI-1545
   // var pdate1 = new Date(date1.getTime() + (secsPerDay + secsPerDay / 2));
   // var pdate2 = new Date(date2.getTime() - (secsPerDay + secsPerDay / 2));
-  var pdate1 = new Date(date1.getYear(), date1.getMonth(), date1.getDay() + 1);
-  var pdate2 = new Date(date2.getYear(), date2.getMonth(), date2.getDay() - 1);
+  var pdate1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDay() + 1);
+  var pdate2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDay() - 1);
   parameters += "start=" + pdate1.getTime() + "&amp;";
   parameters += "end=" + pdate2.getTime();
 
@@ -799,12 +814,12 @@ function addphase(elderbrother, after) {
 }
 
 function deletephase(phasenb) {
-  var ret = confirm('$msg.get("confirmdelphase")');
+  var ret = confirm(confirmdelphase);
   if (!ret) {
     return;
   }
   var id = 'projectphases_view';
-  var surl = getXWikiURL("$doc.web", "ProjectPhases", "objectremove", "");
+  var surl = getXWikiURL(currentSpace, "ProjectPhases", "objectremove", "");
   parameters = "classname=ChronoClasses.ProjectPhaseClass&amp;classid=" + phasenb;
   parameters = parameters + '&amp;comment=deletephase';
   var myAjax = new Ajax.Request (
@@ -891,7 +906,7 @@ function container_mouseover(id) {
 
 function setLoadingBg(id, state) {
   if (state == true) {
-    $(id).style.background = "url($xwiki.getSkinFile("ajax-loader-bar.gif")) center no-repeat"
+    $(id).style.background = "url(/xwiki/skins/chronopolys/ajax-loader-bar.gif")) center no-repeat"
     $(id).innerHTML = "";
   } else {
     $(id).style.background = "";
@@ -932,7 +947,7 @@ function container_save(id) {
     desc = $(id + '_input_desc').firstChild;
 
   //setLoadingBg(id, true);
-  var surl = getXWikiURL("$xwiki.chronopolys.getProjectContainerSpace()", id, "save", "");
+  var surl = getXWikiURL("ProjectContainers", id, "save", "");
   var parameters = name.id + '=' + name.value + '&amp;' + style.name + '=' + style.value +'&amp;' + desc.id + '=' + desc.value;
   var myAjax = new Ajax.Request (
     surl, 
@@ -999,7 +1014,7 @@ function container_infos(id) {
 }
 
 function container_delete(id) {
-  if (confirm("$msg.get("confirmcontainerdelete")")) {
+  if (confirm(confirmcontainerdelete)) {
     container_deleteaction(id);
   }
 }
@@ -1035,7 +1050,7 @@ function updateContainersStates() {
   var newhc = getContainersStates();
   if (newhc != hiddenContainers) {
     hiddenContainers = newhc;
-    var surl = getXWikiURL("$docuser.web", "$docuser.name", "save", "");
+    var surl = getXWikiURL(userSpace, userPage, "save", "");
     var parameters = 'XWiki.XWikiUsers_0_prefered_containers_state=' + hiddenContainers;
     var myAjax = new Ajax.Request (
       surl, 

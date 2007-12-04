@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>Utils</web>
@@ -11,15 +11,16 @@
 <author>XWiki.Admin</author>
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
-<creationDate>1188915744000</creationDate>
-<date>1189428723000</date>
-<contentUpdateDate>1189428723000</contentUpdateDate>
-<version>1.19</version>
+<creationDate>1188912144000</creationDate>
+<date>1195758432000</date>
+<contentUpdateDate>1195758432000</contentUpdateDate>
+<version>10.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <object>
 <class>
 <name>XWiki.TagClass</name>
@@ -53,7 +54,7 @@
 <tags/>
 </property>
 </object>
-<content>1 Update chronopolys projects from 1.0M3 to 1.0M4
+<content>1 Update chronopolys from 1.0M3 to 1.0
 
 #if ($request.confirm == "1")
   ## ProjectGuests
@@ -62,6 +63,21 @@
     1.1 $pr.get("name")
 
     #set ($prhome = $xwiki.getDocument($pr.name))
+    #set ($cpr = $xwiki.chronopolys.getProject($prhome.web))
+
+    #foreach($plog in $xwiki.chronopolys.getProject($prhome.web).getPlogPages())
+      #set ($pdoc = $xwiki.getDocument("${prhome.web}.${plog}"))
+      #set ($pobj = $pdoc.getObject("ChronoClasses.ProjectArticleClass"))
+      #if ($pdoc &amp;&amp; $pobj &amp;&amp; $pdoc.getTitle() == "")
+        #set ($ret = $pdoc.setTitle($pobj.display("title", "view")))
+        #set ($ret = $pdoc.save())
+        * $pdoc.fullName - $pdoc.title - migrated
+      #end
+    #end
+
+    #set ($ret = $cpr.resetProjectRights())
+    * rights reset
+    
     #set ($prprefs = $xwiki.getDocument("${prhome.space}.WebPreferences"))
     #set ($mrights = $prprefs.getObject("XWiki.XWikiGlobalRights", 1))
     #set ($gurights = $prprefs.getObject("XWiki.XWikiGlobalRights", 2))

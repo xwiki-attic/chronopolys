@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>Panels</web>
@@ -6,20 +6,21 @@
 <language></language>
 <defaultLanguage>en</defaultLanguage>
 <translation>0</translation>
-<parent></parent>
+<parent>XWiki.XWikiClasses</parent>
 <creator>XWiki.Admin</creator>
 <author>XWiki.Admin</author>
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
-<creationDate>1157301615000</creationDate>
-<date>1186397078000</date>
-<contentUpdateDate>1186392652000</contentUpdateDate>
-<version>1.7</version>
+<creationDate>1157298015000</creationDate>
+<date>1166173845000</date>
+<contentUpdateDate>1191488832000</contentUpdateDate>
+<version>1.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <class>
 <name>Panels.PanelClass</name>
 <customClass></customClass>

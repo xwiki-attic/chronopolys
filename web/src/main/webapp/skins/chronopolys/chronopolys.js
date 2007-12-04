@@ -751,7 +751,7 @@ var secsPerDay = 86400000;
 function calInitDates()
 {
     regDatesList.clear();
-    var regDatesElts = document.getElementsByClassName('registereddate');
+    var regDatesElts = document.getElementsByClassName('registereddate', $('projectphases_edit'));
     /* build the phases dates list */
     for (var i = 0; i < regDatesElts.length; i++) {
         var pushit = true
@@ -762,11 +762,12 @@ function calInitDates()
             if (regDatesElts[i].id.match(/start/)) {
                 /* set the end date in case of 'milestone' */
                 $(regDatesElts[i + 1].id).value = $(regDatesElts[i].id).value;
-            } else
-            {
-                /* don't push the milestone end in the list */
-                pushit = false;
             }
+            // } else
+            // {
+                /* don't push the milestone end in the list */
+               //  pushit = false;
+            // }
         }
         if (pushit) {
             /* push current date into the list */
@@ -783,14 +784,14 @@ function calInitDates()
         var phaseNb = regDatesList[i][0].split("_")[1];
         /* display the addphase button if available */
         var phaseTypeId = 'ChronoClasses.ProjectPhaseClass_' + phaseNb + '_type';
-        if ($(phaseTypeId).value == '1') {
-            if (!regDatesList[i][0].match(/start/))
-                evalit = false;
-        } else
-        {
+        // if ($(phaseTypeId).value == '1') {
+            // if (!regDatesList[i][0].match(/start/))
+               // evalit = false;
+        // } else
+        // {
             if (!regDatesList[i][0].match(/end/))
                 evalit = false;
-        }
+        // }
         if (evalit) {
             var phaseAddElId = 'phaseedition_' + phaseNb + '_addel';
             var phaseAddTdId = 'phaseedition_' + phaseNb + '_addtd';
@@ -809,10 +810,18 @@ function calInitDates()
             }
         }
     }
+
+    /* hide the "add phase" button of the last phase if any */
+    var phaseNb = regDatesList[regDatesList.length - 1][0].split("_")[1];
+    var phaseAddElId = 'phaseedition_' + phaseNb + '_addel';
+    if (!eltHasClass($(phaseAddElId), 'hidden')) {
+      addClass($(phaseAddElId), 'hidden');
+    }
 }
 
 function projectphases_save()
 {
+    setLoadingBg('projectphases_edit', true);
     var id = 'projectphases_view';
     $('projectphases_content_edit').style.visibility = "hidden";
     var surl = getXWikiURL(currentSpace, "ProjectPhases", "save", "");
@@ -828,8 +837,9 @@ function projectphases_save()
         {
             panel_refresh(id);
             toggleClass($('projectphases_edit'), 'hidden');
-            toggleClass($('projectphases_view'), 'hidden');
             $('projectphases_content_edit').style.visibility = "visible";
+            setLoadingBg('projectphases_edit', false);
+            toggleClass($('projectphases_view'), 'hidden');
         }
     });
 }
@@ -842,9 +852,7 @@ function registerPhase(id)
 function phaseTypeOnChange(phasenb)
 {
     if (!confirm(confirmphasetomilestone)) {
-        $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_iscurrentphase').value = '0';
         $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_type').selectedIndex = 0;
-        calInitDates();
         return;
     }
     var type = $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_type').value;
@@ -855,8 +863,12 @@ function phaseTypeOnChange(phasenb)
         addClass($(phasenb + '_currentcontainer'), 'hidden');
         $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_type').disabled = 'disabled';
         rmClass($('phaseedition_' + phasenb + '_mile'), 'hidden');
+        $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_iscurrentphase').value = '0';
+        $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_end').value = $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_start').value;
+        calInitDates();
     } else
     {
+        // useless since the way back is forbidden
         rmClass($('phaseedition_' + phasenb + '_start'), 'hidden');
         rmClass($('phaseedition_' + phasenb + '_end'), 'hidden');
         rmClass($('phaseedition_' + phasenb + '_endd'), 'hidden');
@@ -901,6 +913,7 @@ function switchPhase(phaseid)
 
 function addphase(elderbrother, after)
 {
+    setLoadingBg('projectphases_edit', true);
     var surl = getXWikiURL("ChronoServices", "ProjectDisplay", "view", "");
     var parameters = "xpage=plain&type=projectphases_add&";
     parameters += "puid=" + currentSpace + "&";
@@ -950,6 +963,7 @@ function addphase(elderbrother, after)
             calInitDates();
             /* update XObject number */
             $('ChronoClasses.ProjectPhaseClass_nb').value = regDatesList.length / 2;
+            setLoadingBg('projectphases_edit', false);
         }
     });
 }
@@ -960,6 +974,7 @@ function deletephase(phasenb)
     if (!ret) {
         return;
     }
+    setLoadingBg('projectphases_edit', true);
     var id = 'projectphases_view';
     var surl = getXWikiURL(currentSpace, "ProjectPhases", "objectremove", "");
     parameters = "classname=ChronoClasses.ProjectPhaseClass&classid=" + phasenb;
@@ -972,17 +987,19 @@ function deletephase(phasenb)
         onComplete: function()
         {
             /* remove phase from phaseList */
-            removeItemFromArray(phasesList, phasenb)
+            removeItemFromArray(phasesList, phasenb);
             /* update phases view */
             panel_refresh(id);
-            /* remove phase edition from DOM */
-            $('phaseedition_' + phasenb).parentNode.removeChild($('phaseedition_' + phasenb));
-            /* refresh phases dates list */
-            calInitDates();
             /* update XObject number */
             $('ChronoClasses.ProjectPhaseClass_nb').value = regDatesList.length / 2;
             $('phaseedition_' + phasenb + '_add').parentNode.removeChild($('phaseedition_' +
                                                                            phasenb + '_add'));
+            /* remove phase edition from DOM */
+            $('phaseedition_' + phasenb).parentNode.removeChild($('phaseedition_' + phasenb));
+            /* refresh phases dates list */
+            calInitDates();
+
+            setLoadingBg('projectphases_edit', false);
         }
     });
 }

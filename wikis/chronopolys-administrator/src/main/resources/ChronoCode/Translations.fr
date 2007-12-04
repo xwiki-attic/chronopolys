@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>ChronoCode</web>
@@ -11,15 +11,16 @@
 <author>XWiki.Admin</author>
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
-<creationDate>1185198102000</creationDate>
-<date>1189703395000</date>
-<contentUpdateDate>1189703395000</contentUpdateDate>
-<version>1.49</version>
+<creationDate>1185194502000</creationDate>
+<date>1196337314000</date>
+<contentUpdateDate>1196337314000</contentUpdateDate>
+<version>25.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <object>
 <class>
 <name>XWiki.TagClass</name>
@@ -131,87 +132,119 @@
 <users>XWiki.XWikiGuest,</users>
 </property>
 </object>
-<content>ProjectGuests=InvitÃ©s
+<content>confirmphasetomilestone=Le passage de cet élément en jalon est définitif mais vous gardez la possibilité de le supprimer, voulez-vous poursuivre ?
+plogarticles=Articles
+wikipages=Pages wiki
+meeting_yes=Sera présent
+meeting_no=Ne sera pas présent
+meeting_maybe=N'a pas répondu
+deletewikipage=Supprimer la page
+myfeeds=Mes flux
+lastmodifications=Dernières modifications
+mydeadlines=Prochaines échéances
+mynextdeadlineson=Mes prochaines échéances sur
+XWiki.WatchListClass_interval_0=Jamais
+XWiki.WatchListClass_interval_1=Toutes les heures
+XWiki.WatchListClass_interval_2=Tous les jours
+XWiki.WatchListClass_interval_3=Toutes les semaines
+XWiki.WatchListClass_interval_4=Tous les mois
+##
+backtoview=Retour à la visualisation
+confirmplogdelete=Etes-vous sûr de vouloir supprimer cet article du PLOG ?
+deleteplog=supprimer
+star1=Notez ce projet : 1
+star2=Notez ce projet : 2
+star3=Notez ce projet : 3
+star4=Notez ce projet : 4
+star5=Notez ce projet : 5
+attachmentof=Attaché à
+##
+notificationsubscribe=Revevoir des notifications pour ce projet
+notificationunsubscribe=Ne plus recevoir de notifications pour ce projet
+myloginis=Votre login
+chrononame=Nom de votre espace chronopolys
+##
+ProjectGuests=Invités
 ProjectNote=Note
 ## Zoom
-projectszoom=Sections spÃ©cifiques
-projectszoominfo=Vous pouvez ajouter des onglets Ã  chronopolys, ces onglets vous mÃ¨neront sur une page dÃ©taillant le contenu d'un axe
+projectszoom=Sections spécifiques
+projectszoominfo=Vous pouvez ajouter des onglets à chronopolys, ces onglets vous mèneront sur une page détaillant le contenu d'un axe
 tabname=Nom de l'onglet
 folder=Axe
 addprojectszoom=Ajouter cet onglet
 deleteprojectszoom=Supprimer cet onglet
 ## Quality
-qleader=Responsable
-qcodename=Code
+qleader=Responsable du groupe
+qmembers=Participants &amp; Invités
+qdocs=Documents &amp; Pages Wiki
+qplog=PLOG
+qphases=Phases &amp; Jalons
 qnote=Note
-qdocs=Documents
-qpages=Plog &amp; Wiki
-qmembers=Participants
-qlastmodificationdate=DerniÃ¨re modification
-qdesc=Description
+qlastmodificationdate=Dernière modification
 ## Dashboard modes
 timelineswitch=Consulter la vue temporelle des projets
-qualityswitch=Consulter la vue qualitÃ© des projets
+qualityswitch=Consulter la vue qualité des projets
 ## Notes
 projectnote=Note
 ## Guests
-noguest=Aucun invitÃ©
-projectguests=InvitÃ©s aux projet
-addguest=Ajouter un invitÃ©
-addtoguests=ajouter cet invitÃ©
+guests_management=Gestion des invités
+noguest=Aucun invité
+projectguests=Invités aux projet
+addguest=Ajouter un invité
+addtoguests=ajouter cet invité
 removethisguestfromgroup=Retirer l'invitation de cet utilisateur
-makethisprojectpublic=Rendre ce projet visible Ã  tous les utilisateurs de 
-unmakethisprojectpublic=Rendre ce projet privÃ©
+makethisprojectpublic=Rendre ce projet visible à tous les utilisateurs de 
+unmakethisprojectpublic=Rendre ce projet privé
 projectispublic=Ce projet est public
-projectispublicextended=Ce project est public. Il est accessible en lecture Ã  tous les utilisateurs de l'application. &lt;a href="?do=makeprivate"&gt;Cliquez-ici pour rendre ce projet privÃ© Ã  nouveau&lt;/a&gt;.
-guests=InvitÃ©s
+projectispublicextended=Ce project est public. Il est accessible en lecture à tous les utilisateurs de l'application. &lt;a href="?do=makeprivate"&gt;Cliquez-ici pour rendre ce projet privé à nouveau&lt;/a&gt;.
+guests=Invités
 ## Last modifications
-lastmodificationson=Liste des derniÃ¨res modifications sur
-lasteditedby=EditÃ© par 
+lastmodificationson=Liste des dernières modifications sur
+lasteditedby=Edité par 
 ## Project datas
-editprojectinfos=Edition des donnÃ©es projet
+editprojectinfos=Edition des données projet
 editprojectdescription=Edition de la description du projet
-edittask=Edition de la tÃ¢che
+edittask=Edition de la tâche
 editmeeting=Edition du rendez-vous
 ## Phases
-phaseadd=AjoÃ»t d'une phase
+phaseadd=Ajoût d'une phase
 core.comment.deleteObject=Suppression d'une phase
 ##
-5nextdeadlines=5 prochaines Ã©chÃ©ances
-5lastmodifications=5 derniÃ¨res modifications
+5nextdeadlines=5 prochaines échéances
+5lastmodifications=5 dernières modifications
 deadline0=Fin du projet le
 deadline1=Fin de la phase le
-deadline2=EchÃ©ance de la tÃ¢che le 
-deadline3=Rendez-vous fixÃ© au 
-WebHome=Infos gÃ©nÃ©rales
+deadline2=Echéance de la tâche le 
+deadline3=Rendez-vous fixé au 
+WebHome=Infos générales
 ProjectPhases=Phases
 ProjectMembers=Participants
 ProjectLeaders=Changement de chef de projet
 ProjectDocuments=Documents
 ##
-foldersaddmode=AjoÃ»t de dossiers
+foldersaddmode=Ajoût de dossiers
 removegroupmember=Retirer cet utilisateur
 groupmembers=Membres du groupe
 addmembertogroup=Ajout d'un utilisateur
 addtogroupmembers=Ajouter cet utilisateur au groupe
-forgottenpassword=Mot de passe oubliÃ© ?
-newpasswordhasbeensent=Votre nouveau mot de passe vous Ã  Ã©tÃ© envoyÃ© Ã  l'email :
+forgottenpassword=Mot de passe oublié ?
+newpasswordhasbeensent=Votre nouveau mot de passe vous à été envoyé à l'email :
 thisaccountdoesnotexists=Le compte utilisateur suivant n'existe pas : 
-generatenewpassword=GÃ©nÃ©ration d'un nouveau mot de passe
-generatepassword=GÃ©nÃ©rer un nouveau mot de passe
+generatenewpassword=Génération d'un nouveau mot de passe
+generatepassword=Générer un nouveau mot de passe
 loginforpassword=Votre identifiant Chronopolys (Login)
-seealltasks=Voir toutes mes tÃ¢ches
+seealltasks=Voir toutes mes tâches
 seeallmeetings=Voir tous mes rendez-vous
 seeallprojects=Voir tous mes projets
 onnb=sur
-confirmdelwikipage=Etes-vous sÃ»r de vouloir supprimer ce document ?
+confirmdelwikipage=Etes-vous sûr de vouloir supprimer ce document ?
 deletethiswikipage=Supprimer ce document
 noproject=Pas de projet
 project_leader=Chef de projet
 projectinfos=Informations
 smtp_server=Serveur SMTP
 viewwikipagehistory=Voir l'historique du document
-fr=FranÃ§ais
+fr=Français
 en=English
 ## Lists
 ChronoClasses.ProjectPhaseClass_type_0=Phase
@@ -219,55 +252,55 @@ ChronoClasses.ProjectPhaseClass_type_1=Jalon
 ChronoClasses.ProjectClass_status_0=Brouillon
 ChronoClasses.ProjectClass_status_1=Actif
 ChronoClasses.ProjectClass_status_2=Inactif
-ChronoClasses.ProjectClass_status_3=TerminÃ©
+ChronoClasses.ProjectClass_status_3=Terminé
 ChronoClasses.EmailSubscriptionsClass_schedulerName_daily=Une fois par jour
 ChronoClasses.EmailSubscriptionsClass_schedulerName_weekly=Toutes les semaines
 ChronoClasses.EmailSubscriptionsClass_schedulerName_often=Directes
 ChronoClasses.EmailSubscriptionsClass_schedulerName_hourly=Toutes les heures
 ## Lucene
 resultof=sur
-oneresult=Un rÃ©sultat
-previous_page=Page prÃ©cÃ©dente
+oneresult=Un résultat
+previous_page=Page précédente
 next_page=Page suivante
-results=RÃ©sultats
+results=Résultats
 resultpage=Page
 resultspace=Espace
-resultdate=DerniÃ¨re modification
+resultdate=Dernière modification
 resultlastauthor=Dernier auteur
 resultscore=Pertinence
-noresults=Votre recherche ne donne aucun rÃ©sultat
+noresults=Votre recherche ne donne aucun résultat
 ## misc (TODO : classify)
 chosenlanguage=Langue choisie
-unamedproject=Projet non nommÃ©
+unamedproject=Projet non nommé
 editplogelement=Edition du plog
 deleteproject=Supprimer le projet
-confirmdeleteproject2=La suppression entrainera la perte de toutes les donnÃ©es contenues dans ce projet, Ãªtes vous sÃ»r de vouloir continuer ?
-confirmdeleteproject=Supprimer dÃ©finitivement le projet
+confirmdeleteproject2=La suppression entrainera la perte de toutes les données contenues dans ce projet, êtes vous sûr de vouloir continuer ?
+confirmdeleteproject=Supprimer définitivement le projet
 deleteproject1=En tant qu'administrateur chronopolys vous pouvez
-deleteproject2=supprimer dÃ©finitivement ce projet
-projectdraftstatusinfo=Ce projet est actuellement Ã  l'Ã©tat de brouillon. Seuls son crÃ©ateur et son chef de projet ont l'autorisation de le consulter.
+deleteproject2=supprimer définitivement ce projet
+projectdraftstatusinfo=Ce projet est actuellement à l'état de brouillon. Seuls son créateur et son chef de projet ont l'autorisation de le consulter.
 changepassword=Modifier mon mot de passe
 subscribers=Inscrits
-notificationsinactive=Les notifications ne sont disponibles que pour les projets en activitÃ©.
+notificationsinactive=Les notifications ne sont disponibles que pour les projets en activité.
 notificationsfrequency=Notifications
-notificationsnosubscription=Vous n'Ãªtes abonnÃ© Ã  aucune notification projet
+notificationsnosubscription=Vous n'êtes abonné à aucune notification projet
 notificationsnbinfo1=Vous avez souscris aux notifications de 
-notificationsnbinfo2=projets actuellement en activitÃ©
+notificationsnbinfo2=projets actuellement en activité
 by=par
 ## Nofifications email
 hello=Bonjour
-modificationssincelastnotification=Les nouveautÃ©s suivantes sont apparues depuis votre derniÃ¨re notification
-modificationsinplog=NouveautÃ© dans le PLOG
-modificationsinwiki=NouveautÃ© dans le Wiki
-modificationsinphases=NouveautÃ© dans les phases du projet
-modificationsindocuments=NouveautÃ© dans le gestionnaire de documents
-modificationsininfos=Modification des informations gÃ©nÃ©rales du projet
-modificationdate=DerniÃ¨re modification
+modificationssincelastnotification=Les nouveautés suivantes sont apparues depuis votre dernière notification
+modificationsinplog=Nouveauté dans le PLOG
+modificationsinwiki=Nouveauté dans le Wiki
+modificationsinphases=Nouveauté dans les phases du projet
+modificationsindocuments=Nouveauté dans le gestionnaire de documents
+modificationsininfos=Modification des informations générales du projet
+modificationdate=Dernière modification
 ## Administration
 changelogo=Changer le logo
-chronotheme=ThÃ¨me
+chronotheme=Thème
 chrononotifications=Notifications
-chrononotificationsinfo=Configuration des notifications envoyÃ©es par chronopolys
+chrononotificationsinfo=Configuration des notifications envoyées par chronopolys
 notifications_sender=Expediteur
 notifications_subject=Sujet
 notifications_signature=Signature
@@ -275,11 +308,11 @@ server_name=Nom de domaine du serveur
 chronoadministration=Administration de Chronopolys
 administratorlist=Administrateurs
 administratorlistconf=Consulter ou modifier la liste des administrateurs
-administratorroleinfo=Les administrateurs peuvent effectuer la totalitÃ© des actions permises par chronopolys.
+administratorroleinfo=Les administrateurs peuvent effectuer la totalité des actions permises par chronopolys.
 managerlist=Manager
 managerlistconf=Consulter ou modifier la liste des managers
-managerroleinfo=Les managers peuvent consulter et modifier l'intÃ©gralitÃ© des projets prÃ©sents sur la plate-forme ainsi qu'ajouter et modifier des structures projets.
-chronooptions=Parametres gÃ©nÃ©raux
+managerroleinfo=Les managers peuvent consulter et modifier l'intégralité des projets présents sur la plate-forme ainsi qu'ajouter et modifier des structures projets.
+chronooptions=Parametres généraux
 chronoprojectoptions=Parametres projet
 chronoprojectoptionsinfo=Ces parametres permettent de personnaliser l'affichage des projets
 displayuserdirectorytab=Afficher l'annuaire des utilisateurs
@@ -291,7 +324,7 @@ displayprojectdocuments=Activer le gestionnaire de documents dans les espaces pr
 name=Nom
 notificationsenabledonlywhenprojectactive=Vous ne revevrez des notifications concernant ce projet qu'une fois que celui-ci aura pour statut Actif
 enablenotifications=Activer les notifications
-disablenotifications=DÃ©sactiver les notifications
+disablenotifications=Désactiver les notifications
 notifications=Notifications
 savenotificationsmodifications=Enregistrer les modifications
 savemodifications=Enregistrer les modifications
@@ -308,7 +341,7 @@ logout=Quitter
 myprofile=Mon profil
 ondate=le
 projectphases=Phases
-editprojectphases=Ã©diter les phases du projet
+editprojectphases=éditer les phases du projet
 backtoedit=Retourner a l'edition
 dday=j
 adduser=Ajouter un utilisateur
@@ -322,136 +355,136 @@ wrongpassword=Mauvais mot de passe
 Search=Recherche
 question_mark=?
 description=Description
-editdescription=Ã©diter la description du projet
+editdescription=éditer la description du projet
 cancel=Annuler
 save=Enregistrer
 datefrom=du
 dateto=au
-PostedBy=EnvoyÃ© par
-LastModifiedBy=ModifiÃ© par
-start=DÃ©but
+PostedBy=Envoyé par
+LastModifiedBy=Modifié par
+start=Début
 end=Fin
-projectedstart=DÃ©but prÃ©vu
-projectedend=Fin prÃ©vue
+projectedstart=Début prévu
+projectedend=Fin prévue
 title=Nom
 defaultphasename=Nom
 defaultphasedesc=Description
 deletethisphase=Supprimer cette phase
 confirmdelphase=Voulez-vous vraiment supprimer cette phase ?
-iscurrentphase=DÃ©finir cette phase comme Ã©tant la phase en cours actuellement
+iscurrentphase=Définir cette phase comme étant la phase en cours actuellement
 savephases=Enregistrer les modifications
 addphase=Ajouter une phase
 addphasehere=Ajouter une phase ici
-createproject=CrÃ©er un nouveau projet
-createprojectbutton=CrÃ©er le projet
+createproject=Créer un nouveau projet
+createprojectbutton=Créer le projet
 projectname=Nom du projet
-pleaseaddactivities=Pour classer vos projets vous devez d'abord leur crÃ©er des conteneurs (ActivitÃ©s)
+pleaseaddactivities=Pour classer vos projets vous devez d'abord leur créer des conteneurs (Activités)
 modify=modifier
 orphansprojects=Projets en attente de classement
 readmore=Lire la suite
 comments=Commentaire(s)
-attachments=PiÃ¨ce(s) jointe(s)
-createnewtask=crÃ©er une nouvelle tÃ¢che
-createnewpost=crÃ©er un nouveau message
-createnewmeeting=crÃ©er un nouveau rendez-vous
+attachments=Pièce(s) jointe(s)
+createnewtask=créer une nouvelle tâche
+createnewpost=créer un nouveau message
+createnewmeeting=créer un nouveau rendez-vous
 ## Users
 passwdnotmatch=Les 2 mots de passe ne correspondent pas
-passwdtooshort=Vous devez choisir un mot de passe de plus de 4 caractÃ¨res
-passwdupdated=Votre nouveau mot de passe a bien Ã©tÃ© enregistrÃ©
+passwdtooshort=Vous devez choisir un mot de passe de plus de 4 caractères
+passwdupdated=Votre nouveau mot de passe a bien été enregistré
 oldpasswd=Ancien mot de passe
 newpasswd1=Nouveau mot de passe
-newpasswd2=Nouveau mot de passe (rÃ©pÃ©tition)
+newpasswd2=Nouveau mot de passe (répétition)
 userprofilemodify=Personnaliser mon profil
 dept=Service
 role=Fonction
-workphone=TÃ©l.
+workphone=Tél.
 cellphone=Mob.
 fax=Fax
 email=Courriel
 personalinfos=Informations personnelles
 myprojects=Mes projets
-mytasks=Mes tÃ¢ches
+mytasks=Mes tâches
 mymeetings=Mes Rendez-Vous
 mypassword=Mot de passe
 ## Meetings
 meetinghours=Horaires
-meetingguests=InvitÃ©s
-meetingyes=sera prÃ©sent(e)
+meetingguests=Invités
+meetingyes=sera présent(e)
 meetingno=sera absent(e)
-meetingmaybe=n'a pas rÃ©pondu
-imeetingyes=je serais prÃ©sent(e)
+meetingmaybe=n'a pas répondu
+imeetingyes=je serais présent(e)
 imeetingno=je serais absent(e)
 imeetingmaybe=je ne sais pas
 ## Projects
-confirmprojectcontainerchange=Etes-vous sÃ»r de vouloir changer le conteneur de ce projet ?
-nomorewikiuserstoadd=Tous les membres de chronopolys participent dÃ©ja Ã  ce projet
+confirmprojectcontainerchange=Etes-vous sûr de vouloir changer le conteneur de ce projet ?
+nomorewikiuserstoadd=Tous les membres de chronopolys participent déja à ce projet
 projectcreator=Createur du projet
-changeactivity=Changer d'activitÃ©
-selectactivity=Choix d'une activitÃ©
+changeactivity=Changer d'activité
+selectactivity=Choix d'une activité
 classifyproject=Classer ce projet
 editmeeting=Editer le Rendez-Vous
-edittask=Editer la tÃ¢che
+edittask=Editer la tâche
 editpost=Editer le message
 deletemeeting=Supprimer le Rendez-Vous
-deletetask=Supprimer la tÃ¢che
+deletetask=Supprimer la tâche
 deletepost=Supprimer le message
 editwikipage=Editer la page wiki
 editprojectarticle=Editer l'article
 phasetype=Type
 addprojectdocument=Ajouter un document
-uploadthisprojectdocument=TÃ©lÃ©verser ce document
-choosefiletoupload=Choisissez le fichier Ã  tÃ©lÃ©verser 
+uploadthisprojectdocument=Téléverser ce document
+choosefiletoupload=Choisissez le fichier à téléverser 
 projects=projet(s)
 plogarticletype=Type
-taskduedate=EchÃ©ance
+taskduedate=Echéance
 taskassignee=Assignation
-taskcompletion=ComplÃ©tÃ©
-meetingstart=DÃ©but
+taskcompletion=Complété
+meetingstart=Début
 meetingend=Fin
 meetinglocation=Lieu
 plogarticletitle=Titre
 plogarticlecontent=Contenu
-gotoplog=AccÃ©der au Plog
+gotoplog=Accéder au Plog
 articledisplay=Afficher
 article_date=le
 article_author=par
 continuereading=lire la suite
-createplogarticle=CrÃ©er un nouvel article
-createplogarticlebutton=CrÃ©er l'article
+createplogarticle=Créer un nouvel article
+createplogarticlebutton=Créer l'article
 plogarticlename=Titre du nouvel article
 meeting=Rendez-Vous
 post=Message
-task=TÃ¢che
+task=Tâche
 plogsee=Voir
-allarticles=Tous les Ã©lÃ©ments
+allarticles=Tous les éléments
 seemeetings=les Rendez-Vous
 seeposts=les messages
-seetasks=les tÃ¢ches
+seetasks=les tâches
 noprojectdocuments=Aucun document
 noprojectphases=Aucune phase
 noprojectwikipage=Aucune page wiki
 addwikipage=Ajouter une page wiki
-createwikipage=CrÃ©er cette page
+createwikipage=Créer cette page
 seethememberprofile=Voir le profil de cet utilisateur
-download_member_vcard=TÃ©lÃ©charger le profil de ce membre au format vcard
+download_member_vcard=Télécharger le profil de ce membre au format vcard
 codename=Nom de code
 projectleader=Chef de projet
 changeprojectleader=Changer de chef de projet
 projectdirector=Origine du projet
 status=Etat
-backuped=SauvegardÃ©
-projected_start=DÃ©but prÃ©vu
-projected_end=Fin prÃ©vue
-projectdata=DonnÃ©es projet
-editprojectdata=Ã©diter les donnÃ©es du projet
+backuped=Sauvegardé
+projected_start=Début prévu
+projected_end=Fin prévue
+projectdata=Données projet
+editprojectdata=éditer les données du projet
 members=Participants
-editmembers=GÃ©rer les participants au projet
+editmembers=Gérer les participants au projet
 addmember=Ajouter un participant
 addtomembers=Ajouter aux participants
 documents=Documents
-editdocuments=gÃ©rer les documents du projet
+editdocuments=gérer les documents du projet
 wiki=Wiki
-editwiki=gÃ©rer les pages wiki du projet
+editwiki=gérer les pages wiki du projet
 phases=Phases
 description=Description
 plog=PLOG
@@ -460,10 +493,10 @@ wiki_management=Gestion du wiki
 member_management=Gestion des participants
 projectmembers=Participants au projet
 phase_management=Gestion des phases
-phone=TÃ©l.
-previous=prÃ©cÃ©dent
+phone=Tél.
+previous=précédent
 next=suivant
-previous_abr=prÃ©c.
+previous_abr=préc.
 next_abr=suiv.
 backtoproject=retour au projet
 ## Dashboard options
@@ -473,22 +506,28 @@ view1year=1 an
 view3months=3 mois
 view1month=1 mois
 ## Containers
-confirmcontainerdelete=Etes-vous sÃ»r de vouloir supprimer cet Ã©lÃ©ment ainsi que l'ensemble de ses sous-Ã©lÃ©ments ? Les projets ne seront pas supprimÃ©s.
+confirmcontainerdelete=Etes-vous sûr de vouloir supprimer cet élément ainsi que l'ensemble de ses sous-éléments ? Les projets ne seront pas supprimés.
 backtotoday=Aujourd'hui
 axis=Axe
 yard=Chantier
-activity=ActivitÃ©
+activity=Activité
 projectlist=Liste des projets
-confirm_container_delete=Etes-vous sÃ»r de vouloir supprimer le conteneur
-confirm_container_delete_warning=Cette action rendra orphelins tous les conteneurs associÃ©s.
+confirm_container_delete=Etes-vous sûr de vouloir supprimer le conteneur
+confirm_container_delete_warning=Cette action rendra orphelins tous les conteneurs associés.
 addaxis=Ajouter un axe
 addyard=Ajouter un chantier dans
-addactivity=Ajouter une activitÃ© dans
+addactivity=Ajouter une activité dans
 newaxis=Nouvel axe
 newyard=Nouveau chantier
-newactivity=Nouvelle activitÃ©
+newactivity=Nouvelle activité
 defaultcontainercolor=gainsboro
-defaultcontainerdesc=Description de l'Ã©lÃ©ment
+defaultcontainerdesc=Description de l'élément
 main_page=Page principale
-page_title=Titre de la page</content>
+page_title=Titre de la page
+## Tooltips
+moveup=Monter l'élément
+movedown=Descendre l'élément
+openclose=Dérouler / Masquer
+opencloseplog=Dérouler / Masquer les informations du plog
+infos=Voir les informations de l'élément</content>
 </xwikidoc>

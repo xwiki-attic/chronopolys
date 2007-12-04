@@ -58,7 +58,7 @@ public class NotificationManager
         NOTIFICATION_SPACE + "." + "TaskAssignment" + NOTIFICATION_SUFFIX;
 
     public static final String NOTIFICATION_TASK_COMPLETION =
-        NOTIFICATION_SPACE + "." + "TaskCompletion" + NOTIFICATION_SUFFIX;
+        NOTIFICATION_SPACE + "." + "TaskCompleted" + NOTIFICATION_SUFFIX;
 
     public static final String NOTIFICATION_MEETING_INVITATION =
         NOTIFICATION_SPACE + "." + "MeetingInvatation" + NOTIFICATION_SUFFIX;

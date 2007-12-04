@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>ChronoCode</web>
@@ -11,15 +11,16 @@
 <author>XWiki.Admin</author>
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
-<creationDate>1175261210000</creationDate>
-<date>1189613179000</date>
-<contentUpdateDate>1189613179000</contentUpdateDate>
-<version>1.53</version>
+<creationDate>1175257610000</creationDate>
+<date>1196275442000</date>
+<contentUpdateDate>1196275442000</contentUpdateDate>
+<version>30.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <object>
 <class>
 <name>XWiki.TagClass</name>
@@ -53,106 +54,81 @@
 <tags/>
 </property>
 </object>
-<content>#macro(displayContainerInfo $obj $uid $type)
-&lt;div id="${uid}_info" class="container_info ${type}_info hidden"&gt;
-  *$msg.get("description")*&lt;br&gt;
-  $obj.get("desc")
-&lt;/div&gt;
-#end
+<content>## --------------------------------------------------
+## Display container edition
+## --------------------------------------------------
 #macro(displayContainerEdit $obj $uid $type)
-&lt;div id="${uid}_edit" class="${type}_edit hidden"&gt;
+&lt;div id="${uid}_edit" class="${type}_edit #if(!$modes.contains("edit${uid}"))hidden#end"&gt;
 &lt;div class="edit-arrow"&gt;&lt;img src="$xwiki.getSkinFile('edit_arrow.gif')" alt="" /&gt;&lt;div&gt;&lt;/div&gt;&lt;/div&gt;
 #roundedbackgroundtop('#EEE')
   &lt;table class="action_table ${type}_action_table"&gt;
   &lt;tr&gt;
-    &lt;td&gt;Nom&lt;/td&gt;
-    &lt;td&gt;&lt;div id="${uid}_input_name"&gt;$obj.display("name", "edit")&lt;/div&gt;&lt;/td&gt;
+    &lt;td&gt;Nom&lt;/td&gt;&lt;td&gt;&lt;div id="${uid}_input_name"&gt;$obj.display("name", "editnopre")&lt;/div&gt;&lt;/td&gt;
     #if ($type == "axis")
-    &lt;td colspan="2" class="styleeditinput" width="170"&gt;&lt;span style="float:left;"&gt;Couleur :&lt;/span&gt;&lt;div id="${uid}_input_style" style="float:left;"&gt;$obj.display("style", "edit")&lt;/div&gt;&lt;/td&gt;
+    &lt;td colspan="2" class="styleeditinput"&gt;&lt;span class="fleft"&gt;Couleur :&lt;/span&gt;&lt;div id="${uid}_input_style"&gt;$obj.display("style", "editnopre")&lt;/div&gt;&lt;/td&gt;
     #else
-    &lt;td&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;/td&gt;
+    &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
     #end
   &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;Description&lt;/td&gt;
-    &lt;td colspan=3&gt;&lt;div id="${uid}_input_desc"&gt;$obj.display("desc", "edit")&lt;/div&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;span class="buttonwrapper" style="float: right; margin:0;"&gt;&lt;input type="button" onclick="toggleClass($('${uid}_edit'), 'hidden')" value="$msg.get("cancel")"/&gt;&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;span class="buttonwrapper" style="float: left; margin:0;"&gt;&lt;input type="button" onclick="container_save('${uid}')" value="$msg.get("save")"/&gt;&lt;/span&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;/td&gt;
-  &lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;Description&lt;/td&gt;&lt;td colspan=3&gt;&lt;div id="${uid}_input_desc"&gt;$obj.display("desc", "editnopre")&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;span class="buttonwrapper fright" style="margin:0;"&gt;&lt;input type="button" onclick="toggleClass($('${uid}_edit'), 'hidden')" value="$msg.get("cancel")"/&gt;&lt;/span&gt;&lt;/td&gt;
+      &lt;td&gt;&lt;span class="buttonwrapper fleft" style="margin:0;"&gt;&lt;input type="button" onclick="container_save('${uid}')" value="$msg.get("save")"/&gt;&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;  
   &lt;/table&gt;
 #roundedbackgroundbottom('#EEE')
   &lt;div class="clearall"&gt;&lt;/div&gt;
 &lt;/div&gt;
 #end
-#macro(displayContainerDelete $obj $uid $type)
-&lt;div id="${uid}_delete" class="${type}_delete hidden"&gt;
-  &lt;table class="acion_table ${type}_action_table"&gt;
-  &lt;tr&gt;
-    &lt;td&gt;&lt;/td&gt;
-    &lt;td colspan=2&gt;$msg.get("confirm_container_delete") $obj.get("name") $msg.get("question_mark")&lt;br/&gt;
-      $msg.get("confirm_container_delete_warning")&lt;/td&gt;
-    &lt;td&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;tr&gt;
-    &lt;td colspan=2&gt;&lt;span class="buttonwrapper" style="float: right;"&gt;&lt;input type="button" onclick="toggleClass($('${uid}_delete'), 'hidden')" value="$msg.get("cancel")"/&gt;&lt;/span&gt;&lt;/td&gt;
-    &lt;td colspan=2&gt;&lt;span class="buttonwrapper" style="float: left;"&gt;&lt;input type="button"  onclick="container_deleteaction('${uid}')" value="$msg.get("delete") $obj.get("name")"/&gt;&lt;/span&gt;&lt;/td&gt;
-  &lt;/tr&gt;
-  &lt;/table&gt;
-  &lt;div class="clearall"&gt;&lt;/div&gt;
-&lt;/div&gt;
-#end
+## --------------------------------------------------
+## Display container actions
+## --------------------------------------------------
 #macro(displayContainerActions $obj $uid $type)
 &lt;div id="${uid}_actions" class="actions hidden"&gt;
-  #if($debug) 
-    &lt;span class="debug"&gt;(ord:$obj.order)&lt;/span&gt; 
-  #end
+  #if($debug) &lt;span class="debug"&gt;(ord:$obj.order)&lt;/span&gt; #end
   #if ($hasEdit)
-  #if ($obj.order != "0")
-   &lt;img src="$xwiki.getSkinFile("arrow_up.png")" alt="" width="16" height="16" border="0" onclick="container_move('${uid}', 'moveup')" /&gt;
-  #else
-    &lt;span style="width:16px;"&gt;&lt;/span&gt;
+    #if ($obj.order != "0")
+      &lt;img class="sicon" src="$xwiki.getSkinFile("arrow_up.png")" alt="" onclick="container_move('${uid}', 'moveup')" title="$msg.get('moveup')" /&gt;
+    #else
+      &lt;span style="width:16px;"&gt;&lt;/span&gt;
+    #end
+    #if ($obj.order != $xwiki.chronopolys.getLastProjectContainerIndex($obj.get("parent")))
+      &lt;img class="sicon" src="$xwiki.getSkinFile("arrow_down.png")" alt="" onclick="container_move('${uid}', 'movedown')" title="$msg.get('movedown')" /&gt;
+    #else
+      &lt;span class="sicon"&gt;&lt;/span&gt;
+    #end
+    &lt;img class="sicon" src="$xwiki.getSkinFile("page_white_edit.png")" alt="edit" onclick="container_edit('${uid}', '$type')" title="$msg.get('edit')" /&gt;
+    #if ($isChronoAdmin)
+      &lt;img class="sicon" src="$xwiki.getSkinFile("bin.png")" alt="delete" onclick="container_delete('${uid}')" title="$msg.get('delete')" /&gt;
+    #end
   #end
-  #if ($obj.order != $xwiki.chronopolys.getLastProjectContainerIndex($obj.get("parent")))
-    &lt;img src="$xwiki.getSkinFile("arrow_down.png")" alt="" width="16" height="16" border="0" onclick="container_move('${uid}', 'movedown')" /&gt;
-  #else
-    &lt;span style="width:16px;"&gt;&lt;/span&gt;
-  #end
-  &lt;img src="$xwiki.getSkinFile("page_white_edit.png")" alt="edit" width="16" height="16" border="0" onclick="container_edit('${uid}', '$type')" /&gt;
-  #if ($isChronoAdmin)
-  &lt;img src="$xwiki.getSkinFile("bin.png")" alt="delete" width="16" height="16" border="0" onclick="container_delete('${uid}')" /&gt;
-  #end
-  #end
-  &lt;span id="${uid}_infos"&gt;&lt;img src="$xwiki.getSkinFile("information.png")" alt="infos" width="16" height="16" border="0" onclick="processInfoBubble('${uid}_infos', '$uid')" /&gt;&lt;/span&gt;
+  &lt;span id="${uid}_infos"&gt;&lt;img class="sicon" src="$xwiki.getSkinFile("information.png")" alt="infos" onclick="processInfoBubble('${uid}_infos', '$uid')" title="$msg.get('infos')" /&gt;&lt;/span&gt;
 &lt;/div&gt;
 #end
-#macro(displayContainerOpenClose $obj $uid $type)
-&lt;div id="${uid}_openClose" onclick="childs_visibility('${uid}_childs', '${type}')" class="openClose"&gt;
-&lt;div style="margin-left:5px;margin-right:5px;width:16px;"&gt;
-#set ($display = $xwiki.chronopolys.getProjectContainerProjectsNumber($uid) &gt; 0)
-#if ($display)
-  #if ($type != "activity")
-    &lt;img id="${uid}_openCloseImg" src="$xwiki.getSkinFile("close.gif")" alt="" border="0" /&gt;
-  #else
-    &lt;img id="${uid}_openCloseImg" src="$xwiki.getSkinFile("minus.gif")" alt="" border="0" /&gt;
+## --------------------------------------------------
+## Display open / close
+## --------------------------------------------------
+#macro(displayContainerOpenClose $obj $uid $type $opened)
+&lt;div id="${uid}_openClose" onclick="childs_visibility('${uid}_childs', '${type}')" class="openClose" title="$msg.get('openclose')" &gt;&lt;div class="opencloseiconcontainer"&gt;
+#if ($type != "activity")
+  #if ($opened) #set ($imgsrc = "close.gif") #else #set($imgsrc = "open.gif") #end
+  &lt;img id="${uid}_openCloseImg" src="$xwiki.getSkinFile($imgsrc)" alt="" border="0" /&gt;
+#else
+  #set ($display = $xwiki.chronopolys.getProjectContainerProjectsNumber($uid) &gt; 0)
+  #if ($display)
+    #if ($opened) #set ($imgsrc = "minus.gif") #else #set($imgsrc = "plus.gif") #end
+      &lt;img id="${uid}_openCloseImg" src="$xwiki.getSkinFile($imgsrc)" alt="" border="0" /&gt;
   #end
 #end
-&lt;/div&gt;
-&lt;/div&gt;
+&lt;/div&gt;&lt;/div&gt;
 #end
-## DISPLAY AXIS
+## --------------------------------------------------
+## Display axis
+## --------------------------------------------------
 #macro(displayAxis $item)
 &lt;div class="clearall"&gt;&lt;/div&gt;
-  ## displayuid
   #set($axisuid=$item.get("uid"))
   #displayAxisContent ($axisuid $item)
-  &lt;div id="${axisuid}_childs" class="hiddenable" style=""&gt;
-    &lt;div id="${axisuid}_containerchilds" style=""&gt;
-      ## displayuid
+  &lt;div id="${axisuid}_childs" class="hiddenable"&gt;
+    &lt;div id="${axisuid}_containerchilds"&gt;
       #set ($childs1 = $xwiki.chronopolys.getProjectContainerChilds($item.get("uid")))
       #foreach ($child1 in $childs1)
         #displayYard($child1)
@@ -160,7 +136,7 @@
     &lt;/div&gt;
     &lt;div class="clearall"&gt;&lt;/div&gt;
     #if ($hasEdit)
-    &lt;div id="" class="container_add addyard_container hidden" onclick="container_add('yard', '${axisuid}')"&gt;
+    &lt;div id="" class="container_add addyard_container #if(!$modes.contains("add"))hidden#end" onclick="container_add('yard', '${axisuid}')"&gt;
       &lt;a id="${axisuid}_add" class="addyard"&gt;$msg.get("addyard") "$item.get("name")"&lt;/a&gt;
     &lt;/div&gt;
     #end
@@ -168,32 +144,32 @@
 &lt;div id="hidden" class="hidden"&gt;&lt;/div&gt;
 &lt;div class="clearall"&gt;&lt;/div&gt;
 #end
-## DISPLAY AXIS CONTENT
+## --------------------------------------------------
+## Display axis content
+## --------------------------------------------------
 #macro (displayAxisContent $uid $obj)
 #set ($style = $xwiki.chronopolys.getProjectContainerStyle($uid))
 #set ($type = $obj.get("type"))
 &lt;div id="${uid}_content" class="axis" style="background-color:$style;" onmouseover="container_mouseover('${uid}');" onmouseout="container_mouseout('${uid}')"&gt;
-  &lt;div id="${uid}_name" class="name" onclick="childs_visibility('${uid}_childs', '${type}')"&gt;
-    $obj.get("name") 
-  &lt;/div&gt;
-  #displayContainerOpenClose($obj $uid "axis")
+  &lt;div id="${uid}_name" class="name" onclick="childs_visibility('${uid}_childs', '${type}')"&gt;$obj.get("name")&lt;/div&gt;
+  #displayContainerOpenClose($obj $uid "axis" true)
   #displayContainerActions($obj $uid "axis")
 &lt;/div&gt;
-#displayContainerInfo($obj $uid "axis")
+#if (!$hiddenModes.contains("editmode"))
 #displayContainerEdit($obj $uid "axis")
-#displayContainerDelete($obj $uid "axis")
 #end
-## DISPLAY YARD
+#end
+## --------------------------------------------------
+## Display yard
+## --------------------------------------------------
 #macro(displayYard $child1)
-## displayuid
 #set($yarduid=$child1.get("uid"))
 &lt;div id="$yarduid" class="yard_container"&gt;
   #displayYardContent($yarduid $child1)
-  &lt;div id="${yarduid}_childs" class="hiddenable" style=""&gt;
+  &lt;div id="${yarduid}_childs" class="hiddenable hidden"&gt;
     &lt;div id="${yarduid}_containerchilds"&gt;
       #set ($childs2 = $xwiki.chronopolys.getProjectContainerChilds($child1.get("uid")))
       #foreach ($child2 in $childs2)
-        ## displayuid
         #set($activityuid=$child2.get("uid"))
         #set($loop = $velocityCount + 1)
         #displayActivity ($child2 $loop)
@@ -201,7 +177,7 @@
     &lt;/div&gt;
     &lt;div class="clearall"&gt;&lt;/div&gt;
     #if ($hasEdit)
-    &lt;div id="" class="container_add addactivity_container hidden" onclick="container_add('activity', '${yarduid}')"&gt;
+    &lt;div id="" class="container_add addactivity_container #if(!$modes.contains("add"))hidden#end" onclick="container_add('activity', '${yarduid}')"&gt;
       &lt;a id="${yarduid}_add" class="addactivity"&gt;$msg.get("addactivity") "$child1.get("name")"&lt;/a&gt;
     &lt;/div&gt;
     #end
@@ -209,29 +185,30 @@
   &lt;div class="clearall"&gt;&lt;/div&gt;
 &lt;/div&gt;
 #end
-## DISPLAY YARD CONTENT
+## --------------------------------------------------
+## Display yard content
+## --------------------------------------------------
 #macro (displayYardContent $uid $obj)
 #set ($style = $xwiki.chronopolys.getProjectContainerStyle($uid))
 #set ($type = $obj.get("type"))
 &lt;div id="${uid}_content" class="yard" style="background-color:$style;" onmouseover="container_mouseover('${uid}');" onmouseout="container_mouseout('${uid}')"&gt;
-  &lt;div id="${uid}_name" class="name" onclick="childs_visibility('${uid}_childs', '${type}')"&gt;
-    $obj.get("name")
-  &lt;/div&gt;
-  &lt;div id="${uid}_projectsNumber" class="projectsNumber"&gt;$xwiki.chronopolys.getProjectContainerProjectsNumber($uid) $msg.get("projects")&lt;/div&gt;
-  #displayContainerOpenClose($obj $uid "yard")
+  &lt;div id="${uid}_name" class="name" onclick="childs_visibility('${uid}_childs', '${type}')"&gt;$obj.get("name")&lt;/div&gt;
+  &lt;div id="${uid}_projectsNumber" class="projectsNumber"&gt;$xwiki.chronopolys.getProjectContainerProjectsNumber($uid) $msg.get("$!{msgprefix}projects")&lt;/div&gt;
+  #displayContainerOpenClose($obj $uid "yard" false)
   #displayContainerActions($obj $uid "yard")
 &lt;/div&gt;
-#displayContainerInfo($obj $uid "yard")
+#if (!$hiddenModes.contains("editmode"))
 #displayContainerEdit($obj $uid "yard")
-#displayContainerDelete($obj $uid "yard")
 #end
-## DISPLAY ACTIVITY
+#end
+## --------------------------------------------------
+## Display activity
+## --------------------------------------------------
 #macro (displayActivity $obj $loop)
-## displayuid
 #set($uid=$obj.get("uid"))
 &lt;div id="$uid" class="activity_container"&gt;
   #displayActivityContent($uid $loop $obj)
-  &lt;div id="${uid}_childs" class="hiddenable" style=""&gt;
+  &lt;div id="${uid}_childs" class="hiddenable hidden"&gt;
     &lt;div id="${uid}_containerchilds"&gt;
       #set ($projects = "")
       #set ($projects = $xwiki.chronopolys.getProjectContainerProjects($uid))
@@ -245,7 +222,9 @@
   &lt;div class="clearall"&gt;&lt;/div&gt;
 &lt;/div&gt;
 #end
-## DISPLAY ACTIVITY CONTENT
+## --------------------------------------------------
+## Display activity content
+## --------------------------------------------------
 #macro (displayActivityContent $uid $loop $obj)
 #set ($type = $obj.get("type"))
 #set ($style = $xwiki.chronopolys.getProjectContainerStyle($uid))
@@ -256,32 +235,41 @@
 #end
 &lt;div id="${uid}_content" class="activity $num" style="background-color:$style;" onmouseover="container_mouseover('${uid}');" onmouseout="container_mouseout('${uid}')"&gt;
   &lt;div class="name" onclick="childs_visibility('${uid}_childs', '${type}')"&gt;$obj.get("name")&lt;/div&gt;
-  &lt;div class="projectsNumber"&gt;$xwiki.chronopolys.getProjectContainerProjectsNumber($uid) $msg.get("projects")&lt;/div&gt;
-  #displayContainerOpenClose($obj $uid "activity")
+  &lt;div class="projectsNumber"&gt;$xwiki.chronopolys.getProjectContainerProjectsNumber($uid) $msg.get("$!{msgprefix}projects")&lt;/div&gt;
+  #displayContainerOpenClose($obj $uid "activity" false)
   #displayContainerActions($obj $uid "activity")
   &lt;div class="clearall"&gt;&lt;/div&gt;
-#displayContainerInfo($obj $uid "activity")
+#if (!$hiddenModes.contains("editmode"))
 #displayContainerEdit($obj $uid "activity")
-#displayContainerDelete($obj $uid "activity")
+#end
 ## content div is closed in displayActivity
 #end
-## DISPLAY PROJET
+## --------------------------------------------------
+## Display project
+## --------------------------------------------------
 #macro (displayProject $project $displayContainerEdit $color)
-#if ($xwiki.hasAccessLevel("view", $context.user, $project.name))
+#if (!$hiddenModes)
+#set ($hiddenModes = [""])
+#end
+###if ($xwiki.hasAccessLevel("view", $context.user, $project.name))
+#set ($chrononame = $project.name.substring(0, $project.name.indexOf(".")))
+#set ($chronoproject = $xwiki.chronopolys.getProject($chrononame))
 &lt;div class="project"&gt;
-  #if (!$displayContainerEdit)
-  &lt;div class="projectdatas_container mode timelinemode #if($mode!="timelinemode")hidden#end"&gt;
-    #set ($chrononame = $xwiki.getDocument($project.name).getSpace())
-    #set ($chronoproject = $xwiki.chronopolys.getProject($chrononame))
+  #if (!$displayContainerEdit)  
+  #if (!$hiddenModes.contains("timelinemode"))
+  &lt;div class="projectdatas_container mode timelinemode #if($mode!="timelinemode")hidden#end"&gt;    
     #set ($cdate = $xwiki.getCurrentDate())
     #set ($year = $xwiki.parseInt($cdate.formatDate("yyyy")))
     #set ($month = $xwiki.parseInt($cdate.formatDate("MM")))
     #set ($day = $xwiki.parseInt($cdate.formatDate("dd")))
-    {pre}
-    &lt;script type="text/javascript"&gt;
-      ${chrononame}_onLoad = function() {
+    &lt;div id="${chrononame}_timeline_right" class="timeline_side fright"&gt;&lt;img src="$xwiki.getSkinFile("empty_rarrow.gif")" id="${chrononame}_timeline_right_img" alt="$color" /&gt;&lt;/div&gt;
+    &lt;div id="${chrononame}_timeline" class="timeline-default fright"&gt;&lt;/div&gt;
+    &lt;div id="${chrononame}_timeline_left" class="timeline_side fright"&gt;&lt;img src="$xwiki.getSkinFile("empty_larrow.gif")" id="${chrononame}_timeline_left_img" alt="$color" /&gt;&lt;/div&gt;
+    &lt;script type="text/javascript"&gt;         
+      ${chrononame}_onLoad = function(metaTimeline) {
+        // var d1 = new Date();
         var today = new Date();
-        var ${chrononame}_eventSource = new Timeline.DefaultEventSource();
+        var ${chrononame}_eventSource = new Timeline.DefaultEventSource();    
         var theme = Timeline.ClassicTheme.create();
         theme.event.label.width = 250; // px
         theme.event.bubble.width = 250;
@@ -299,54 +287,72 @@
             theme:          theme
           })
         ];
-        ${chrononame}_tl = Timeline.create(document.getElementById("${chrononame}_timeline"), ${chrononame}_bandInfos);
+        ${chrononame}_tl = Timeline.create(document.getElementById("${chrononame}_timeline"), ${chrononame}_bandInfos);                
+        // XMLHttp timeline loading method
         ${chrononame}_tl.loadXML("/xwiki/bin/view/ChronoServices/ProjectPhasesDatesXML?project=${chrononame}&amp;xpage=rdf", function(xml, url) { ${chrononame}_eventSource.loadXML(xml, url); drawTimelineArrows(${chrononame}_tl); });
-        var syncingTimelines = false;
-        
+        // JSON timeline loading method
+        // ${chrononame}_eventSource.loadJSON(${chrononame}_events, document.location.href);
+        drawTimelineArrows(${chrononame}_tl);        
         ${chrononame}_tl.getBand(0).addOnScrollListener(function(band) {
-            if (!syncingTimelines) {
-            syncingTimelines = true;
-            syncTimeline(band.getCenterVisibleDate());
-            syncingTimelines = false;
-        }
-        });
-        
+          syncDate = band.getCenterVisibleDate();
+        });        
         var tdiv = ${chrononame}_tl.getBand(0).createLayerDiv('99');
         tdiv.style.width = '1px';
         tdiv.style.height = '100%';
         tdiv.style.backgroundColor = '#32353F';
         tdiv.style.left = Math.round(${chrononame}_tl.getBand(0).dateToPixelOffset(new Date())) + 'px';
-        registerTimeline(${chrononame}_tl);
-      };
-      
-      registerTimelineLoad(${chrononame}_onLoad);
-      Event.observe(window, 'load', ${chrononame}_onLoad, false);
+        // registerTimeline(${chrononame}_tl);        
+        // timer
+        // var d2 = new Date();
+        // alert("onLoad ms : " + (d2 - d1));        
+        origTimelines['${chrononame}_tl'] = ${chrononame}_tl;
+        return origTimelines['${chrononame}_tl'];
+      };      
+      createMetaTimeline(${chrononame}_onLoad, $('${chrononame}_timeline'), '${chrononame}_tl');
+      // Event.observe(window, 'load', ${chrononame}_onLoad, false);
   &lt;/script&gt;
-  {/pre}
-&lt;div id="${chrononame}_timeline_right" style="float:right;height: 34px; width:10px;"&gt;&lt;img src="$xwiki.getSkinFile("empty_rarrow.gif")" id="${chrononame}_timeline_right_img" alt="$color" /&gt;&lt;/div&gt;
-&lt;div id="${chrononame}_timeline" class="timeline-default" style="float:right; height: 32px; width:400px; border: 1px solid #aaa;border-left:0;border-right:0;"&gt;&lt;/div&gt;
-&lt;div id="${chrononame}_timeline_left" style="float:right;height: 34px; width:10px;"&gt;&lt;img src="$xwiki.getSkinFile("empty_larrow.gif")" id="${chrononame}_timeline_left_img" alt="$color" /&gt;&lt;/div&gt;
   &lt;/div&gt;
-  {pre}
+  #end
+  #if (!$hiddenModes.contains("qualitymode"))
   &lt;div class="projectdatas_container mode qualitymode #if($mode!="qualitymode")hidden#end"&gt;
     &lt;table class="projectquality"&gt;&lt;tr&gt;
-      &lt;td&gt;#if ($chronoproject.get("desc").length() &gt; 50) &lt;a title="$chronoproject.get("desc")" style="cursor:default;"&gt;$chronoproject.get("desc").substring(0, 49) ...&lt;/a&gt;#else $chronoproject.get("desc") #end&lt;/td&gt;
-      &lt;td class="lborder" style="width:70px;"&gt;$xwiki.getLocalUserName($chronoproject.getProjectLeader())&lt;/td&gt;
-      &lt;td class="lborder" style="width:70px;"&gt;$chronoproject.get("codename")&lt;/td&gt;
+      &lt;td style="width:80px;"&gt;$xwiki.getLocalUserName($chronoproject.getProjectLeader())&lt;/td&gt;   
+      ## &lt;td class="lborder" style="width:65px;"&gt;$msg.get("ChronoClasses.ProjectClass_status_${chronoproject.get('status')}")
+## $!xwiki.formatDate($chronoproject.getLastModifications().get(0).getDate(), "dd/MM/yyyy")
+      ## &lt;/td&gt;
+      &lt;td class="lborder" style="width:80px;"&gt;
+          $chronoproject.getMembers().size() $msg.get("members")&lt;br/&gt;      
+          $chronoproject.getGuests().size() $msg.get("guests")
+      &lt;/td&gt;
+      &lt;td class="lborder" style="width:80px;"&gt;
+          $xwiki.getDocument("${chrononame}.ProjectDocuments").getAttachmentList().size() $msg.get("documents")
+      &lt;/td&gt;
+      &lt;td class="lborder" style="width:80px;"&gt;
+         $chronoproject.getPlogPages().size() $msg.get("plogarticles")&lt;br/&gt;
+         $chronoproject.getWikiPages().size() $msg.get("wikipages")
+      &lt;/td&gt;
+      &lt;td class="lborder" style="width:80px;"&gt;
+         #set ($plist = $chronoproject.getPhases())
+         #set ($pcount = 0)
+         #set ($mcount = 0)  
+         #foreach ($phase in $plist)
+           #if ($phase.getProperty("type").getValue() == 0)
+             #set ($pcount = $pcount + 1)
+           #else
+             #set ($mcount = $mcount + 1)
+          #end
+         #end
+         ${pcount} $msg.get("phases") &lt;br/&gt;
+         ${mcount} $msg.get("milestones")
+      &lt;/td&gt;
       &lt;td class="lborder" style="width:30px;"&gt;$chronoproject.getNote()&lt;/td&gt;
-      &lt;td class="lborder" style="width:65px;"&gt;$!xwiki.formatDate($chronoproject.getLastModifications().get(0).getDate(), "dd/MM/yyyy")&lt;/td&gt;
-      ## $chronoproject.getMembers().size() $msg.get("members")
-      ## $chronoproject.getGuests().size() $msg.get("guests")
-      ## $xwiki.getDocument("${chrononame}.ProjectDocuments").getAttachmentList().size() $msg.get("documents")
-      ## $chronoproject.getPlogPages().size() $msg.get("plogarticles")
-      ## $chronoproject.getWikiPages().size() $msg.get("wikipages")        
     &lt;/tr&gt;&lt;/table&gt;
   &lt;/div&gt;
-  {/pre}
+  #end
   #else
     #set($result = $xwiki.chronopolys.getProjectContainers("activity"))
     #if ($result.size() &gt; 0)
-      &lt;div style="float:right;padding-top:4px;padding-right:2px;width:420px;"&gt;&lt;form action="$xwiki.getURL($project.name, "saveandcontinue")"&gt;$project.display("container", "edit")&lt;div style="float:right;"&gt;&lt;span class="buttonwrapper"&gt;&lt;input type="submit" value="$msg.get("classifyproject")" /&gt;&lt;/span&gt;&lt;/div&gt;&lt;/form&gt;&lt;/div&gt;
+      &lt;div style="float:right;padding-top:4px;padding-right:2px;width:420px;"&gt;&lt;form action="$xwiki.getURL($project.name, "saveandcontinue")"&gt;$project.display("container", "editnopre")&lt;div style="float:right;"&gt;&lt;span class="buttonwrapper"&gt;&lt;input type="submit" value="$msg.get("classifyproject")" /&gt;&lt;/span&gt;&lt;/div&gt;&lt;/form&gt;&lt;/div&gt;
     #end
   #end
   &lt;div class="name"&gt;
@@ -355,10 +361,6 @@
   &lt;/div&gt;
   &lt;div class="clearall"&gt;&lt;/div&gt;
 &lt;/div&gt;
-#else
-&lt;script type="text/javascript"&gt;
-alert($project.name);
-&lt;/script&gt;
-#end
+##end 
 #end</content>
 </xwikidoc>

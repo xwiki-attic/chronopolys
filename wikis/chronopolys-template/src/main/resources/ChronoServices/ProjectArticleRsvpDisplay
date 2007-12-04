@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>ChronoServices</web>
@@ -10,16 +10,17 @@
 <creator>XWiki.jvdrean</creator>
 <author>XWiki.Admin</author>
 <customClass></customClass>
-<contentAuthor>XWiki.jvdrean</contentAuthor>
-<creationDate>1176801612000</creationDate>
-<date>1186397074000</date>
-<contentUpdateDate>1186396918000</contentUpdateDate>
-<version>1.8</version>
+<contentAuthor>XWiki.Admin</contentAuthor>
+<creationDate>1176798012000</creationDate>
+<date>1195230209000</date>
+<contentUpdateDate>1195230209000</contentUpdateDate>
+<version>5.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <object>
 <class>
 <name>XWiki.TagClass</name>
@@ -63,6 +64,7 @@
     $eventdoc.getDocument().setCreator($eventdoc.getAuthor())
   #end
   $eventdoc.save()
+  $xwiki.chronopolys.getProject($eventdoc.web).sendNotification($request.member, $eventdoc, "ChronoTemplates.MeetingInvitationNotificationEmail")
 #elseif($request.action=="guestdel")
   #set($rsvpobj=$eventdoc.getObject("ChronoClasses.ProjectArticleRsvpClass", $xwiki.parseInt($request.rsvpnb)))
   #set($resp=$eventdoc.removeObject($rsvpobj))

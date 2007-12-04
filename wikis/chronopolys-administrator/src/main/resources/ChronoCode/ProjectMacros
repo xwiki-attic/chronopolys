@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>ChronoCode</web>
@@ -11,15 +11,16 @@
 <author>XWiki.Admin</author>
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
-<creationDate>1172749409000</creationDate>
-<date>1189705858000</date>
-<contentUpdateDate>1189705858000</contentUpdateDate>
-<version>1.105</version>
+<creationDate>1172745809000</creationDate>
+<date>1196338089000</date>
+<contentUpdateDate>1196338089000</contentUpdateDate>
+<version>11.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <object>
 <class>
 <name>XWiki.TagClass</name>
@@ -119,7 +120,7 @@
     &lt;div class="chronopanel_header" style="background-color:${currentStyle};"&gt;
       &lt;div style="float:left;"&gt;$msg.get($title)&lt;/div&gt;
         &lt;div id="${title}_panel_actions" class="hidden" style="float:right;margin-right:10px;_margin-right:5px;"&gt;
-          #if ($isMember)
+          #if ($isMember || $isChronoAdmin || $isChronoManager)
           &lt;a href="$xwiki.getURL($page)" style="cursor:pointer;" title="$edittitle"&gt;
             &lt;img src="$xwiki.getSkinFile("task.png")" alt="$label" width="16" height="16" border="0" /&gt;
           &lt;/a&gt;
@@ -215,7 +216,11 @@
       &lt;tr&gt;
         &lt;td colspan="2"&gt;
           &lt;div style="float:left;"&gt;
-            $phase.display("type", "edit")
+            &lt;select size="1" name="ChronoClasses.ProjectPhaseClass_${phase.getNumber()}_type" id="ChronoClasses.ProjectPhaseClass_${phase.getNumber()}_type" #if($phase.getProperty("type").getValue()==1)disabled="disabled"#end&gt;
+              &lt;option value="0" #if($phase.getProperty("type").getValue()==0)selected="selected"#end&gt;$msg.get("ChronoClasses.ProjectPhaseClass_type_0")&lt;/option&gt;
+              &lt;option value="1" #if($phase.getProperty("type").getValue()==1)selected="selected"#end&gt;$msg.get("ChronoClasses.ProjectPhaseClass_type_1")&lt;/option&gt;
+            &lt;/select&gt;
+            ## $phase.display("type", "edit")
           &lt;/div&gt;
           $phase.display("iscurrentphase", "hidden")
           &lt;div style="width:16px;float:right;"&gt;
@@ -223,7 +228,7 @@
           &lt;/div&gt;
           &lt;div onclick="switchPhase('$phase.getNumber()')" title="$msg.get("iscurrentphase")" style="cursor:pointer;float:right;margin-right:4px;_margin-right:0px;background:url($xwiki.getSkinFile("lightbulb_off.png")) no-repeat right top;"&gt;
             #set ($iscurrent=$phasesDoc.getValue("iscurrentphase", $phase))
-            &lt;nobr&gt;
+            &lt;nobr id="${phase.getNumber()}_currentcontainer" class="#if($phase.getProperty("type").getValue()==1)hidden#end"&gt;
             &lt;span id="${phase.getNumber()}_iscurrent_text" class="#if($iscurrent != 1)hidden#end"&gt;$msg.get("active")&lt;/span&gt;
             &lt;span id="${phase.getNumber()}_notcurrent_text" class="#if($iscurrent != 0)hidden#end"&gt;$msg.get("inactive")&lt;/span&gt;
             &lt;img  width="16" height="16" id="${phase.getNumber()}_iscurrent" class="#if($iscurrent != 1)invisible#end" src="$xwiki.getSkinFile("lightbulb.png")" /&gt;
@@ -347,34 +352,20 @@
   &lt;/table&gt;
 #end
 #macro(displayProjectNotifications $project $action)
-  #if (!$prjobj)
-    #set ($prjobj = $xwiki.chronopolys.getProject($project.name.replaceAll('.WebHome', '')))
-  #end  
   #if ($doc.getValue("status")!="1")
     #info($msg.get("notificationsinactive"))
   #else
-    #set($subscribeupdate=$request.getParameter("subscribeupdate"))
-      #if($subscribeupdate)
-        #set ($subscribeid = $request.getParameter("subscribeid"))
-        #set ($subscribevalues = $request.getParameterValues("ChronoClasses.NotificationsClass_${subscribeid}_notifications"))
-        #set ($ret = $prjobj.setUserNotifications($context.user, $xwiki.chronopolys.arrayToString($subscribevalues, "|")))
-      #end
-    #set($notifs = $prjobj.getUserNotificationsObj())
-    #if ($action == "edit")
-&lt;input type="hidden" name="subscribeupdate" id="subscribeupdate" value="1" /&gt;
-&lt;input type="hidden" name="subscribeid" id="subscribeid" value="$notifs.getNumber()" /&gt;
-$notifs.display("notifications", "edit")
-    #else      
-      #set($rawList=$notifs.display("notifications", "view"))
-      #if ($rawList=="")
-        #info("nonotifications")
-      #else
-        #set($nList = $rawList.split(","))
-        #foreach ($nItem in $nList)
-          * $nItem
-        #end
-      #end
+    #if($request.getParameter("subscribe"))
+      #set ($ret = $xwiki.watchlist.addSpace($doc.web))
+    #elseif($request.getParameter("unsubscribe"))
+      #set ($ret = $xwiki.watchlist.removeSpace($doc.web))
+    #end    
+    #if(!$xwiki.watchlist.isWatchedSpace())
+      #set ($suffix="subscribe")
+    #else
+      #set ($suffix="unsubscribe")
     #end
+    &lt;a href="${doc.getURL("view", $suffix)}"&gt;$msg.get("notification${suffix}")&lt;/a&gt;
   #end
 #end
 #macro(packName $name $length)
@@ -402,7 +393,7 @@ $notifs.display("notifications", "edit")
   &lt;div style="float:left;"&gt;
     #set ($attachDate = $!xwiki.formatDate($attach.date, "dd/MM/yyyy"))
     #set ($title = "$fileName, #dynamicsize($attach.getFilesize()), $attach.version, $attachDate")
-    &lt;a href="$url" title="$title"&gt;#packName($xwiki.chronopolys.getListTool().get($file, 1), 20)&lt;/a&gt;
+    &lt;a href="$url" title="$title"&gt;#packName($xwiki.chronopolys.getListTool().get($file, 1), 16)&lt;/a&gt;
   &lt;/div&gt;
 &lt;div style="clear:both;border-top:1px solid #E6E6E6;margin:5px 0;"&gt;&lt;/div&gt;
 #end

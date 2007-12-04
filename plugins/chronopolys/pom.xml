@@ -45,6 +45,11 @@
       <artifactId>xwiki-plugin-mailsender</artifactId>
       <version>${platform.plugin.mailsender.version}</version>
     </dependency>   
+    <dependency>
+      <groupId>com.xpn.xwiki.platform.plugins</groupId>
+      <artifactId>xwiki-plugin-watchlist</artifactId>
+      <version>${platform.plugin.watchlist.version}</version>
+    </dependency>   
   </dependencies>
 </project>
         

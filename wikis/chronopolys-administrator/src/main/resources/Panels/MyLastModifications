@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>Panels</web>
@@ -11,15 +11,16 @@
 <author>XWiki.Admin</author>
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
-<creationDate>1188831835000</creationDate>
-<date>1188832379000</date>
-<contentUpdateDate>1188832379000</contentUpdateDate>
-<version>1.2</version>
+<creationDate>1188828235000</creationDate>
+<date>1195744458000</date>
+<contentUpdateDate>1195744458000</contentUpdateDate>
+<version>6.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <object>
 <class>
 <name>Panels.PanelClass</name>
@@ -97,10 +98,18 @@
 </property>
 <property>
 <content>&lt;div id="panellastmodifications"&gt;
-#panelheader("${msg.get('5lastmodifications')}")
+#set ($rssicon = $xwiki.getSkinFile("icons/black-rss-mini.png"))
+#set ($rssurl = $xwiki.getURL('ChronoRSS.LastModifications', 'view', 'xpage=rdf'))
+#set ($rsslink = "&lt;a href='${rssurl}&amp;${context.localUser}' target='_blank'&gt;&lt;img src='${rssicon}' style='height:14px;width:16px;' /&gt;&lt;/a&gt;")
+&lt;div class="panel expanded"&gt;
+&lt;div style="float:left;margin-left:5px;margin-top:5px;"&gt;
+$rsslink&lt;/div&gt;
+&lt;h5 class="xwikipaneltitle" onclick="togglePanelVisibility(this.parentNode);" style="padding-left:22px;padding-right:0px;"&gt; ${msg.get('5lastmodifications')}&lt;/h5&gt;
+&lt;div class="xwikipanelcontents"&gt;
 #includeMacros("ChronoCode.UserMacros")
 #displayMyLastModifications("#E6E6E6")
 #panelfooter()
+&lt;/div&gt;
 &lt;/div&gt;</content>
 </property>
 <property>

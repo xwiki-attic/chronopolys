@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>Panels</web>
@@ -6,26 +6,27 @@
 <language></language>
 <defaultLanguage>en</defaultLanguage>
 <translation>0</translation>
-<parent></parent>
+<parent>Panels.WebHome</parent>
 <creator>XWiki.Admin</creator>
 <author>XWiki.Admin</author>
 <customClass></customClass>
-<contentAuthor>XWiki.jvdrean</contentAuthor>
-<creationDate>1153995199000</creationDate>
-<date>1186397078000</date>
-<contentUpdateDate>1186396922000</contentUpdateDate>
-<version>1.33</version>
+<contentAuthor>XWiki.Admin</contentAuthor>
+<creationDate>1153991599000</creationDate>
+<date>1191488846000</date>
+<contentUpdateDate>1191488832000</contentUpdateDate>
+<version>1.2</version>
 <title>XWiki syntax help</title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <attachment>
 <filename>img.png</filename>
 <filesize>959</filesize>
 <author>XWiki.superadmin</author>
-<date>1184678720000</date>
-<version>1.7</version>
+<date>1191488846000</date>
+<version>1.4</version>
 <comment></comment>
 <content>iVBORw0KGgoAAAANSUhEUgAAADQAAAA0CAAAAADgE0Q3AAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfWBxcOEy+3/bdlAAADUElEQVRIx52WTW/cVBSG32tfezxJZiaT0EwnCkVKgVZI3cFAVYkFLEFCKoI/wz9Bgh/ApqqEWLQLFmUHAtJKqKIqMKhSJ50R+aCTTHzPey4L2/PVIru9C8u6Po/f83XtYzxefAUvwcACAMZPjrXc1gfJVm0VgPHA+HCQGmOMKcfQ6jYypeO/jQ1tWAGCng1sHRY4ehzYuBbUwzIojb1nOkmMBf5xNonW46iCUhoxPY3WLPBvEK826lFQAUq8xhawgNrE1muBqZJsFwVQWMAE8Vq0xIxv7a+rjhN38Z3Ezu3HQORgPO6G7VYSLjD9Gx92SJK8e//z15KFF3qJAgBmOZz+d5+ec8455+TSe18/mCw8NEAAPFvXGx9Z55yIiHPr79/suwq9d+fd0ImIc86JuFbrx5EvhwY7LndORCS9uPfo7HkNu7goQiWZXWhOn5wmpZB3M4JK6kTKleAKHVGSozAMKkCS6YiSSh4mjbiyUu4b03qjVpq98eMs3yLihCKj+lpUqvRzV0hRKkmlsjV8epaUKR2tO+co4kQoItJ1fx2Vutc9dCJ5F4mI7FPKO2JrNI+IjNrbjVLovP81s6aIk8HoaXc7KYXsZ40D5hhl8OjC5XNhKWQ2r0ym7k2423urgfLixu2sGZTKk/obVzq2AgRkZVKqnq502hZVoFcPEyU9VVVXl3vo//4aTVJIISmTqBaiktKBcapUVVXWrKkGfdNkjmhkjDcVoOGXJioYjf54uL1iyqDht7+3QdUsD/TRzb2Pdxc/lzAe9+xGM9/t//bLSQuFilIzsvN275VZaC6ag/o//MkVy4Iorqr0Pn7zg0tJsAyN7txn02R29My8o5+iCC/0crkCSm/3NyLmZizc0iIyVQAIbOdarxMUUP2r8wHpqXO+Kf0UmZ7BcOuLTbjIAsDDDQinxpr7VUQ2d2w5fLBZpHzsnV8MfuagLhx1OZjWSZpHupjnWUyLVdxJ84Y1uPa6kJSsRUmhZvdcZnD1kxyqAX6XuX1mKxSKyDNML/sVGo/RsN38CXv76mflVFX1y8jOVVwHXBgYj5NR1EqC732+FF7hvX/OTHd91ns4OV4tn3Gm+QsNjAcwUSSm2vBhYTIlAGk1xmQzinmZcfQ/40v+ffqYGLoAAAAASUVORK5CYII=</content>
 </attachment>
@@ -165,24 +166,26 @@ This paragraph is a new one.&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
     &lt;div id="xwikihelplistsContent" class="accordionTabContentBox"&gt;
 &lt;table&gt;
 &lt;tr&gt;&lt;th&gt;$msg.get("type")&lt;/th&gt;&lt;th&gt;$msg.get("toget")&lt;/th&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;tt&gt;
-{pre}
-* Level 1&lt;br/&gt;
-** Level 2&lt;br/&gt;
-*** Level 3&lt;br/&gt;
-** Level 2&lt;br/&gt;
-{/pre}&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;
+&lt;tr&gt;&lt;td&gt;
+{pre}&lt;div&gt;
+* &lt;tt&gt;Level 1&lt;/tt&gt;&lt;br/&gt;
+** &lt;tt&gt;Level 2&lt;/tt&gt;&lt;br/&gt;
+*** &lt;tt&gt;Level 3&lt;/tt&gt;&lt;br/&gt;
+** &lt;tt&gt;Level 2&lt;/tt&gt;&lt;br/&gt;
+&lt;/div&gt;
+{/pre}&lt;/td&gt;&lt;td&gt;
 * Level 1
 ** Level 2
 *** Level 3
 ** Level 2
 &lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;tt&gt;
-{pre}1. Item&lt;br/&gt;
-11.Subitem&lt;br/&gt;
-1. Item&lt;br/&gt;
-1*. Subitem
-{/pre}&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;
+&lt;tr&gt;&lt;td&gt;
+{pre}&lt;div&gt;&lt;tt&gt;1. Item&lt;/tt&gt;&lt;br/&gt;
+&lt;tt&gt;11.Subitem&lt;/tt&gt;&lt;br/&gt;
+&lt;tt&gt;1. Item&lt;/tt&gt;&lt;br/&gt;
+&lt;tt&gt;1*. Subitem&lt;/tt&gt;
+&lt;/div&gt;
+{/pre}&lt;/td&gt;&lt;td&gt;
 1. Item
 11. Subitem
 1. Item
@@ -196,7 +199,7 @@ This paragraph is a new one.&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
     &lt;div id="xwikihelptablesContent" class="accordionTabContentBox"&gt;
 &lt;table&gt;
 &lt;tr&gt;&lt;th&gt;$msg.get("type")&lt;/th&gt;&lt;th&gt;$msg.get("toget")&lt;/th&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;&lt;tt&gt;{pre}
+&lt;tr&gt;&lt;td&gt;{pre}&lt;div&gt;
 {table}&lt;br/&gt;
 Category | Sales (KE)&lt;br/&gt;
 Category 1 | 100&lt;br/&gt;
@@ -204,7 +207,7 @@ Category 2 | 50&lt;br/&gt;
 Category 3 | 50&lt;br/&gt;
 Total | =sum(B2:B4)&lt;br/&gt;
 {table}
-{/pre}&lt;/tt&gt;&lt;/td&gt;&lt;td&gt;
+&lt;/div&gt;{/pre}&lt;/td&gt;&lt;td&gt;
 {table}
 Category | Sales (KE)
 Category 1 | 100
@@ -272,7 +275,7 @@ http://www.xwiki.org&lt;br/&gt;
     &lt;/div&gt;
   &lt;/div&gt;
 &lt;/div&gt;
-&lt;div id="xwikihelpsyntax"&gt;$msg.get("helponsyntax") &lt;a href="http://www.xwiki.com/xwiki/bin/view/Doc/XWikiSyntax?xpage=plain" onclick="openHelp(); return false;"&gt;$msg.get("xwikisyntax")&lt;/a&gt;&lt;/div&gt;
+&lt;div id="xwikihelpsyntax"&gt;$msg.get("helponsyntax") &lt;a href="http://www.xwiki.org/xwiki/bin/view/UserGuide/XWikiSyntax?xpage=print" onclick="openHelp(); return false;"&gt;$msg.get("xwikisyntax")&lt;/a&gt;&lt;/div&gt;
 #panelfooter()
 &lt;/div&gt;
 &lt;script type="text/javascript"&gt;new Rico.Accordion( 'xwikisyntaxhelp', {panelHeight:'max'} );togglePanelVisibility((document.getElementById('xwikisyntaxhelppanel')).getElementsByTagName( 'div').item(0));&lt;/script&gt;</content>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>ChronoCode</web>
@@ -11,15 +11,16 @@
 <author>XWiki.Admin</author>
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
-<creationDate>1175263238000</creationDate>
-<date>1188832718000</date>
-<contentUpdateDate>1188832718000</contentUpdateDate>
-<version>1.120</version>
+<creationDate>1175259638000</creationDate>
+<date>1190032845000</date>
+<contentUpdateDate>1190032845000</contentUpdateDate>
+<version>1.125</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <object>
 <class>
 <name>XWiki.TagClass</name>
@@ -89,14 +90,18 @@
       &lt;td class="leftpanelcolumn" style="background-color:$xwiki.chronopolys.getProjectContainerStyle($pdoc.display("container", "view"));border-color:$border-color;"&gt;
       &lt;/td&gt;
       &lt;td style="padding-left:3px;"&gt;
-        &lt;a href="$xwiki.getURL($cdoc.fullName)" title="$cdate"&gt;$msg.get($item.getName()) ($pdoc.display("name", "view"))&lt;/a&gt;
+        &lt;a href="$xwiki.getURL($cdoc.fullName)" title="$cdate"&gt;&lt;span style="font-weight:bold;"&gt;$msg.get($item.getName())&lt;/span&gt; ($pdoc.display("name", "view"))&lt;/a&gt;
       &lt;/td&gt;
     &lt;/tr&gt;
   #end
 &lt;/table&gt;
 #end
-#macro(displayMyProjects $border-color)
-  #set($projects=$xwiki.chronopolys.getMyProjects(5, 0))
+#macro(displayMyProjects $border-color $nb)
+  #if ($nb == 0)
+    #set ($projects = $xwiki.chronopolys.getMyProjects($xwiki.chronopolys.getMyProjectsNb(), 0))
+  #else
+    #set ($projects = $xwiki.chronopolys.getMyProjects($nb, 0))
+  #end
   #if ($projects.size()&lt;1)
     ## TODO : msg
   #else
@@ -114,8 +119,12 @@
     &lt;/table&gt;
   #end
 #end
-#macro(displayMyTasks $border-color)
-  #set($tasks=$xwiki.chronopolys.getMyTasks(5, 0))
+#macro(displayMyTasks $border-color $nb)
+  #if ($nb == 0)
+    #set ($tasks = $xwiki.chronopolys.getMyTasks($xwiki.chronopolys.getMyTasksNb(), 0))
+  #else
+    #set ($tasks = $xwiki.chronopolys.getMyTasks($nb, 0))
+  #end
   #if ($tasks.size()&lt;1)
     ## TODO : msg
   #else
@@ -132,15 +141,19 @@
           &lt;/script&gt;
         &lt;/td&gt;
         &lt;td style="padding-left:3px;"&gt;
-          &lt;a href="$xwiki.getURL($task)" title="$tobj.display("taskcompletion", 'view')"&gt;$tobj.display("title", "view")&lt;/a&gt;
+          &lt;a href="$xwiki.getURL($task)" title="$tobj.display("taskcompletion", 'view')"&gt;$tdoc.displayTitle&lt;/a&gt;
         &lt;/td&gt;
         &lt;/tr&gt;
       #end
     &lt;/table&gt;
   #end
 #end
-#macro(displayMyMeetings $border-color)
-  #set($meetings=$xwiki.chronopolys.getMyMeetings(5,0))
+#macro(displayMyMeetings $border-color $nb)
+  #if ($nb == 0)
+    #set ($meetings = $xwiki.chronopolys.getMyMeetings($xwiki.chronopolys.getMyMeetingsNb(), 0))
+  #else
+    #set ($meetings = $xwiki.chronopolys.getMyMeetings($nb, 0))
+  #end
   #if ($meetings.size()&lt;1)
     ## TODO : msg
   #else
@@ -157,7 +170,7 @@
           &lt;/script&gt;
         &lt;/td&gt;
         &lt;td style="padding-left:3px;"&gt;
-          &lt;a href="$xwiki.getURL($meeting)"&gt;$mobj.display("title", "view")&lt;/a&gt;
+          &lt;a href="$xwiki.getURL($meeting)"&gt;$mdoc.displayTitle&lt;/a&gt;
         &lt;/td&gt;
         &lt;/tr&gt;
       #end

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>Main</web>
@@ -11,15 +11,16 @@
 <author>XWiki.Admin</author>
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
-<creationDate>1189595592000</creationDate>
-<date>1189607275000</date>
-<contentUpdateDate>1189607275000</contentUpdateDate>
-<version>1.28</version>
+<creationDate>1189591992000</creationDate>
+<date>1196361174000</date>
+<contentUpdateDate>1196361174000</contentUpdateDate>
+<version>3.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <object>
 <class>
 <name>XWiki.TagClass</name>
@@ -53,10 +54,11 @@
 <tags/>
 </property>
 </object>
-<content>#set ($folder = $xwiki.getDocument($request.folder))
+<content>#includeMacros("ChronoCode.ContainerMacros")
+{pre}
+#set ($folder = $xwiki.getDocument($request.folder))
 #set ($fpj = $xwiki.chronopolys.getProjectContainerProjects($folder.getName()))
 #set ($mode = "qualitymode")
-#includeMacros("ChronoCode.ContainerMacros")
 &lt;div id="chronocontainers"&gt;
   &lt;div id="axis_all"&gt;
     &lt;div id="$folder.name" class="axis_container"&gt;
@@ -88,5 +90,6 @@
 #end
 &lt;/table&gt;
 
-*#</content>
+*#
+{/pre}</content>
 </xwikidoc>

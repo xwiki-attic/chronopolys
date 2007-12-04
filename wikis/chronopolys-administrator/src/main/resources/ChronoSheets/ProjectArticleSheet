@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>ChronoSheets</web>
@@ -11,15 +11,16 @@
 <author>XWiki.Admin</author>
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
-<creationDate>1175079222000</creationDate>
-<date>1188893449000</date>
-<contentUpdateDate>1188893449000</contentUpdateDate>
-<version>1.79</version>
+<creationDate>1175075622000</creationDate>
+<date>1190219411000</date>
+<contentUpdateDate>1190219411000</contentUpdateDate>
+<version>1.80</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <object>
 <class>
 <name>XWiki.TagClass</name>
@@ -183,74 +184,6 @@ $content
   background:url($xwiki.getSkinFile("calendar.png")) center right no-repeat;
 }
 &lt;/style&gt;
-&lt;script type="text/javascript"&gt;
-function syncInputs() {
-  var rstart = $('ChronoClasses.ProjectArticleClass_0_meetingstart');
-  var rend = $('ChronoClasses.ProjectArticleClass_0_meetingend');
-  var dinput = $('meetingday');
-  var shinput = $('starthour');
-  var ehinput = $('endhour');
-  
-  rstart.value = dinput.value + ' ' + shinput.value;
-  rend.value = dinput.value + ' ' + ehinput.value;
-  
-  changeMeetingsSelect();
-}
-function changeMeetingsSelect() {
-  var shoutput = "";
-  var ehoutput = "";
-  var selected = "";
-  
-  var shinput = $('starthour');  
-  var sht = shinput.value.split(':');
-  var shh = parseFloat(sht[0]);
-  var shm = parseFloat(sht[1]);
-  
-  var ehinput = $('endhour');
-  var eht = ehinput.value.split(':');
-  var ehh = parseFloat(eht[0]);
-  var ehm = parseFloat(eht[1]);
-  
-  var hourlist = ["08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"];
-  var minlist = ["00", "15", "30", "45"];
-  
-  for (var i = 0; hourlist[i]; i++) {
-    for (var j = 0; minlist[j]; j++) {
-      if (ehh &gt;= parseFloat(hourlist[i])) {
-        if (ehh == parseFloat(hourlist[i]) &amp;&amp; ehm &lt;= parseFloat(hourlist[i])) {
-          // same hour but min lower or equal
-        } else {
-          if (shh == parseFloat(hourlist[i]) &amp;&amp; shm == parseFloat(minlist[j])) {
-            selected = "selected";
-          } else {
-            selected = "";
-          }
-          shoutput += "&lt;option "+ selected + "&gt;" + hourlist[i] + ":" + minlist[j] + "&lt;/option&gt;";
-        }
-      }
-    }  
-  }
-  shinput.innerHTML = shoutput;
-  
-  for (var i = 0; hourlist[i]; i++) {
-    for (var j = 0; minlist[j]; j++) {      
-      if (parseFloat(hourlist[i]) &gt;= shh) {
-        if (parseFloat(hourlist[i]) == shh &amp;&amp; parseFloat(minlist[j]) &lt;= shm) {
-          // same hour but min higher or equal
-        } else {
-          if (ehh == parseFloat(hourlist[i]) &amp;&amp; ehm == parseFloat(minlist[j])) {
-            selected = "selected";
-          } else {
-            selected = "";
-          }
-          ehoutput += "&lt;option "+ selected + "&gt;" + hourlist[i] + ":" + minlist[j] + "&lt;/option&gt;";
-        }
-      }
-    }  
-  }
-  ehinput.innerHTML = ehoutput;
-}
-&lt;/script&gt;
 {/pre}
 ##          init
 ## ------------------------
@@ -295,7 +228,7 @@ function changeMeetingsSelect() {
 &lt;/td&gt;
 ##       display hours
 ## ------------------------
-#macro(meetinghours $type $hourval) &lt;select id="${type}hour" onchange="syncInputs()"&gt; #set ($hourlist = ["08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" ]) #set ($minlist = ["00", "15", "30", "45"]) #foreach ($hour in $hourlist)   #foreach ($min in $minlist)    #if ($hourval == "${hour}:${min}")#set($selected="selected")#else#set ($selected="")#end&lt;option $selected&gt;${hour}:${min}&lt;/option&gt; #end #end &lt;/select&gt;
+#macro(meetinghours $type $hourval) &lt;div id="${type}hour_container"&gt;&lt;select id="${type}hour" onchange="syncInputs()"&gt; #set ($hourlist = ["08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23" ]) #set ($minlist = ["00", "15", "30", "45"]) #foreach ($hour in $hourlist)   #foreach ($min in $minlist)    #if ($hourval == "${hour}:${min}")#set($selected="selected")#else#set ($selected="")#end&lt;option $selected&gt;${hour}:${min}&lt;/option&gt; #end #end &lt;/select&gt;&lt;/div&gt;
 #end
 &lt;td align="right"&gt;*$msg.get("meetinghours") :*&lt;/td&gt;
 &lt;td&gt;
@@ -317,6 +250,81 @@ Calendar.setup(
     ifFormat       : "%d/%m/%Y"
   }
 );
+
+function syncInputs() {
+  var rstart = $('ChronoClasses.ProjectArticleClass_0_meetingstart');
+  var rend = $('ChronoClasses.ProjectArticleClass_0_meetingend');
+  var dinput = $('meetingday');
+  var shinput = $('starthour');
+  var ehinput = $('endhour');
+  
+  rstart.value = dinput.value + ' ' + shinput.value;
+  rend.value = dinput.value + ' ' + ehinput.value;
+  
+  changeMeetingsSelect();
+}
+
+function changeMeetingsSelect() {
+  var shoutput = "";
+  var ehoutput = "";
+  var selected = "";
+  
+  var shinput = $('starthour');  
+  var shdiv = $('starthour_container');  
+  var sht = shinput.options[shinput.selectedIndex].text.split(':');
+  var shh = parseFloat(sht[0]);
+  var shm = parseFloat(sht[1]);
+  
+  var ehinput = $('endhour');
+  var ehdiv = $('endhour_container');
+  var eht = ehinput.options[ehinput.selectedIndex].text.split(':');
+  var ehh = parseFloat(eht[0]);
+  var ehm = parseFloat(eht[1]);
+  
+  var hourlist = ["08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23"];
+  var minlist = ["00", "15", "30", "45"];
+  
+  shoutput += '&lt;select id="starthour" onchange="syncInputs()"&gt;';
+  for (var i = 0; i &lt; hourlist.length; i++) {
+    for (var j = 0; j &lt; minlist.length; j++) {
+      if (ehh &gt;= parseFloat(hourlist[i])) {
+        if (ehh == parseFloat(hourlist[i]) &amp;&amp; ehm &lt;= parseFloat(hourlist[i])) {
+          // same hour but min lower or equal
+        } else {
+          if (shh == parseFloat(hourlist[i]) &amp;&amp; shm == parseFloat(minlist[j])) {
+            selected = "selected";
+          } else {
+            selected = "";
+          }
+          shoutput += "&lt;option "+ selected + "&gt;" + hourlist[i] + ":" + minlist[j] + "&lt;/option&gt;";
+        }
+      }
+    }  
+  }
+  shoutput += "&lt;/select&gt;";
+  shdiv.innerHTML = shoutput;
+  
+  ehoutput += '&lt;select id="endhour" onchange="syncInputs()"&gt;';
+  for (var i = 0; i &lt; hourlist.length; i++) {
+    for (var j = 0;  j &lt; minlist.length; j++) {            
+      if (parseFloat(hourlist[i]) &gt;= shh) {
+        if (parseFloat(hourlist[i]) == shh &amp;&amp; parseFloat(minlist[j]) &lt;= shm) {
+          // same hour but min higher or equal
+        } else {
+          if (ehh == parseFloat(hourlist[i]) &amp;&amp; ehm == parseFloat(minlist[j])) {
+            selected = "selected";
+          } else {
+            selected = "";
+          }
+          ehoutput += "&lt;option "+ selected + "&gt;" + hourlist[i] + ":" + minlist[j] + "&lt;/option&gt;";
+        }
+      }
+    }  
+  }
+  ehoutput += "&lt;/select&gt;";
+  ehdiv.innerHTML = ehoutput;
+}
+
 changeMeetingsSelect();
 &lt;/script&gt;
 {/pre}

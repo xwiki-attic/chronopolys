@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>XWiki</web>
@@ -11,15 +11,16 @@
 <author>XWiki.Admin</author>
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
-<creationDate>1106311617000</creationDate>
-<date>1189520953000</date>
-<contentUpdateDate>1189520953000</contentUpdateDate>
-<version>1.32</version>
+<creationDate>1106308017000</creationDate>
+<date>1196364516000</date>
+<contentUpdateDate>1196364516000</contentUpdateDate>
+<version>18.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <class>
 <name>XWiki.XWikiPreferences</name>
 <customClass></customClass>
@@ -525,6 +526,15 @@
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </title>
+<upload_maxsize>
+<name>upload_maxsize</name>
+<number>59</number>
+<numberType>long</numberType>
+<prettyName>Maximum Upload Size</prettyName>
+<size>5</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+</upload_maxsize>
 <use_email_verification>
 <displayFormType>select</displayFormType>
 <displayType>yesno</displayType>
@@ -1419,6 +1429,15 @@
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </title>
+<upload_maxsize>
+<name>upload_maxsize</name>
+<number>59</number>
+<numberType>long</numberType>
+<prettyName>Maximum Upload Size</prettyName>
+<size>5</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
+</upload_maxsize>
 <use_email_verification>
 <displayFormType>select</displayFormType>
 <displayType>yesno</displayType>
@@ -1523,16 +1542,31 @@
 <editor>Text</editor>
 </property>
 <property>
-<invitation_email_content>Subject: [Chronopolys] Your password has been updated
+<invitation_email_content>#if ($xwiki.getXWikiPreference("default_language") != "fr")
+Subject: [$xwiki.getXWikiPreference("title")] Your password has been updated
+From: $xwiki.getXWikiPreference("admin_email")
 To: $email
 
-You can log into chronopolys, at http://www.chronopolys.net with the following credentials:
+You can login at http://${xwiki.getXWikiPreference("server_name")}/xwiki/ with the following credentials:
 
-Login   : $xwikiname
-Password: $password
+Login : $xwikiname
+Password : $password
 
 Once logged in, you can edit your profile and change your password through the following page:
-http://www.chronopolys.net/xwiki/bin/inline/XWiki/$xwikiname</invitation_email_content>
+http://${xwiki.getXWikiPreference("server_name")}/xwiki/bin/inline/XWiki/$xwikiname
+#else
+Subject: [$xwiki.getXWikiPreference("title")] Votre mot de passe a été mis à jour
+From: $xwiki.getXWikiPreference("admin_email")
+To: $email
+
+Vous pouvez accéder à cet espace en vous rendant à cette adresse http://${xwiki.getXWikiPreference("server_name")}/xwiki/ avec les identifiants suivants :
+
+Login : $xwikiname
+Mot de passe : $password
+
+Une fois identifié, vous pouvez éditer votre profil et changer votre mot de passe ainsi que les informations vous concernant en vous rendant à cette adresse :
+http://${xwiki.getXWikiPreference("server_name")}/xwiki/bin/inline/XWiki/$xwikiname
+#end</invitation_email_content>
 </property>
 <property>
 <language>en</language>
@@ -1614,10 +1648,10 @@ http://www.chronopolys.net/xwiki/bin/inline/XWiki/$xwikiname</invitation_email_c
 <renderXWikiVelocityRenderer></renderXWikiVelocityRenderer>
 </property>
 <property>
-<rightPanels>Panels.Search,Panels.New Project,Panels.MyDeadlines,Panels.MyLastModifications,Panels.My Projects,Panels.Navigation</rightPanels>
+<rightPanels>Panels.Search,Panels.New Project,Panels.MyDeadlines,Panels.MyLastModifications</rightPanels>
 </property>
 <property>
-<server_name>localhost:8080</server_name>
+<server_name>devopolys.org:8080</server_name>
 </property>
 <property>
 <showLeftPanels>0</showLeftPanels>
@@ -1626,10 +1660,10 @@ http://www.chronopolys.net/xwiki/bin/inline/XWiki/$xwikiname</invitation_email_c
 <showRightPanels>1</showRightPanels>
 </property>
 <property>
-<skin>ChronoCode.DefaultSkin</skin>
+<skin>ChronoCode.Skin01</skin>
 </property>
 <property>
-<smtp_server>192.168.0.210</smtp_server>
+<smtp_server>127.0.0.1</smtp_server>
 </property>
 <property>
 <stylesheet>style.css</stylesheet>
@@ -1641,24 +1675,41 @@ http://www.chronopolys.net/xwiki/bin/inline/XWiki/$xwikiname</invitation_email_c
 <tags></tags>
 </property>
 <property>
-<title></title>
+<title>Devopolys</title>
 </property>
 <property>
 <use_email_verification>1</use_email_verification>
 </property>
 <property>
-<validation_email_content>Subject: Welcome to Chronopolys
+<validation_email_content>#if ($xwiki.getXWikiPreference("default_language") != "fr")
+Subject: [$xwiki.getXWikiPreference("title")] Your account has been created
+From: $xwiki.getXWikiPreference("admin_email")
 To: $email
 
-Welcome to Chronopolys! 
-Your account is now active. 
-You can log into chronopolys, at http://www.chronopolys.net with the following credentials:
+Welcome to $xwiki.getXWikiPreference("title")! 
 
-Login   : $xwikiname
-Password: $password
+You can login at http://${xwiki.getXWikiPreference("server_name")}/xwiki/ with the following credentials:
+
+Login : $xwikiname
+Password : $password
 
 Once logged in, you can edit your profile and change your password through the following page:
-http://www.chronopolys.net/xwiki/bin/inline/XWiki/$xwikiname</validation_email_content>
+http://${xwiki.getXWikiPreference("server_name")}/xwiki/bin/inline/XWiki/$xwikiname
+#else
+Subject: [$xwiki.getXWikiPreference("title")] Votre compte a été créé
+From: $xwiki.getXWikiPreference("admin_email")
+To: $email
+
+Bienvenue sur $xwiki.getXWikiPreference("title")! 
+
+Vous pouvez accéder à cet espace en vous rendant à cette adresse http://${xwiki.getXWikiPreference("server_name")}/xwiki/ avec les identifiants suivants :
+
+Login : $xwikiname
+Mot de passe : $password
+
+Une fois identifié, vous pouvez éditer votre profil et changer votre mot de passe ainsi que les informations vous concernant en vous rendant à cette adresse :
+http://${xwiki.getXWikiPreference("server_name")}/xwiki/bin/inline/XWiki/$xwikiname
+#end</validation_email_content>
 </property>
 <property>
 <version></version>

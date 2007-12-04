@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>ChronoClasses</web>
@@ -11,15 +11,16 @@
 <author>XWiki.Admin</author>
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
-<creationDate>1157373714000</creationDate>
-<date>1189090963000</date>
-<contentUpdateDate>1189090963000</contentUpdateDate>
-<version>1.31</version>
+<creationDate>1157370114000</creationDate>
+<date>1196326958000</date>
+<contentUpdateDate>1196326958000</contentUpdateDate>
+<version>1.34</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
-<comment>Mise Ã  jour de propriÃ©tÃ© de classe</comment>
+<comment>Mise à jour de propriété de classe</comment>
+<minorEdit>true</minorEdit>
 <class>
 <name>ChronoClasses.ProjectPhaseClass</name>
 <customClass></customClass>
@@ -35,6 +36,7 @@
 <editor>Text</editor>
 <name>desc</name>
 <number>2</number>
+<picker></picker>
 <prettyName>Desc</prettyName>
 <rows>0</rows>
 <size>22</size>
@@ -77,6 +79,7 @@
 <customDisplay></customDisplay>
 <name>name</name>
 <number>1</number>
+<picker></picker>
 <prettyName>Name</prettyName>
 <size>22</size>
 <tooltip></tooltip>

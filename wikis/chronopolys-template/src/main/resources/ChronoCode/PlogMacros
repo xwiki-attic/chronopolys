@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>ChronoCode</web>
@@ -11,15 +11,16 @@
 <author>XWiki.Admin</author>
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
-<creationDate>1173452687000</creationDate>
-<date>1188811693000</date>
-<contentUpdateDate>1188811693000</contentUpdateDate>
-<version>1.37</version>
+<creationDate>1173449087000</creationDate>
+<date>1195658686000</date>
+<contentUpdateDate>1195658686000</contentUpdateDate>
+<version>5.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <object>
 <class>
 <name>XWiki.TagClass</name>
@@ -79,7 +80,7 @@
           #if($title == "")
             #set($title = "&amp;nbsp;")
           #end
-          &lt;div class="article $bentrydoc.type"&gt;
+          &lt;div id="plog_${bentrydoc.fullName}" class="article $bentrydoc.type"&gt;
 #roundedtop()
 #set($plogtype = "${bentrydoc.type}")
 #if($bentrydoc.taskcompletion == "100%" || $bentrydoc.meetingend.before($xwiki.getCurrentDate())) 
@@ -97,7 +98,7 @@
   #set($deployarticle = 'open')
   #set($deployactionarticle = 'closed')
 #end
-            &lt;span id="article_deploy_$velocityCount" class="article_deploy_${deployarticle}" onclick="javascript:toggleClass($('article_content_$velocityCount'), 'hidden');switchClass('article_deploy_$velocityCount');"&gt;&lt;/span&gt;
+            &lt;span id="article_deploy_$velocityCount" class="article_deploy_${deployarticle}" onclick="javascript:toggleClass($('article_content_$velocityCount'), 'hidden');switchClass('article_deploy_$velocityCount');" title="$msg.get('opencloseplog')" &gt;&lt;/span&gt;
             &lt;h1 class="article_title"&gt;$title&lt;/h1&gt;
             &lt;div id="article_content_$velocityCount" #if($deployarticle == 'closed') class="hidden" #end &gt;
             &lt;div class="article_content"&gt;
@@ -126,7 +127,7 @@
           &lt;/div&gt;
           &lt;div class="article_footer"&gt;
           #set($modifyln=$xwiki.getURL($bentrydoc.fullName, "inline"))
-             [$msg.get("readmore")&gt;${bentrydoc.fullName}] | &lt;a href="${modifyln}"&gt;$msg.get("modify")&lt;/a&gt; | {pre}$bentrydoc.attachmentList.size(){/pre} $msg.get("attachments") | {pre}$bentrydoc.getObjects("XWiki.XWikiComments").size(){/pre} $msg.get("comments")
+             [$msg.get("readmore")&gt;${bentrydoc.fullName}] | &lt;a href="${modifyln}"&gt;$msg.get("modify")&lt;/a&gt; #if($isProjectLeader||$isChronoAdmin)| &lt;a href="javascript:deletePlog('$bentrydoc.web', '$bentrydoc.name')"&gt;$msg.get("deleteplog")&lt;/a&gt;#end | {pre}$bentrydoc.attachmentList.size(){/pre} $msg.get("attachments") | {pre}$bentrydoc.getObjects("XWiki.XWikiComments").size(){/pre} $msg.get("comments")
           &lt;/div&gt;
 #roundedbottom()
           &lt;/div&gt;

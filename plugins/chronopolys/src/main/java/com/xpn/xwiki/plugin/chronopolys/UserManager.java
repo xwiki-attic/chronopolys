@@ -323,18 +323,18 @@ public class UserManager
                     XWikiDocument doc =
                         context.getWiki()
                             .getDocument(page + "." + Project.PROJECT_HOMEDOC, context);
-                    Date date = (Date) doc.newDocument(context).getValue("end");
+                    /* Date date = (Date) doc.newDocument(context).getValue("end");
                     if (date.after(today)) {
                         deadlines.add(new Deadline(doc.getFullName(),
                             doc.display("name", "view", context), DEADLINE_PROJECT, date));
-                    }
+                    } */
 
                     // Phases
                     List phases =
                         plugin.getProjectManager().getProject(doc.getSpace(), context).getPhases();
                     for (Iterator i = phases.iterator(); i.hasNext();) {
                         Object phase = (Object) i.next();
-                        date = (Date) phase.getProperty("end").getValue();
+                        Date date = (Date) phase.getProperty("end").getValue();
                         if (date.after(today)) {
                             deadlines.add(new Deadline(doc.getFullName(),
                                 phase.display("name", "view") + 

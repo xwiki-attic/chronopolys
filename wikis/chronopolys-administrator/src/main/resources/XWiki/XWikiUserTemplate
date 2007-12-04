@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>XWiki</web>
@@ -11,14 +11,15 @@
 <author>XWiki.Admin</author>
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
-<creationDate>1106311618000</creationDate>
-<date>1186397072000</date>
-<contentUpdateDate>1186397072000</contentUpdateDate>
-<version>1.12</version>
+<creationDate>1106308018000</creationDate>
+<date>1186393472000</date>
+<contentUpdateDate>1193388254000</contentUpdateDate>
+<version>1.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
+<minorEdit>false</minorEdit>
 <content>#includeForm("XWiki.XWikiUserSheet")</content>
 </xwikidoc>
