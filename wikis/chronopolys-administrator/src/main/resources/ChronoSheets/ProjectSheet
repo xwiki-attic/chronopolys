@@ -104,7 +104,9 @@
 ## ---------------------------------------------------------------
 ## NOTE
 #chronopanelheader($obj "projectnote" false "")
-  #displayNote($project)
+&lt;div id="projectnote" onmouseout="initstars($project.getNote());"&gt;
+#displayNote($project)
+&lt;/div&gt;
 #chronopanelfooter(false)
 ## ---------------------------------------------------------------
 ## PHASES
