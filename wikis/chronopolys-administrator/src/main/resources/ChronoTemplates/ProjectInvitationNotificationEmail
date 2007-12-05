@@ -12,9 +12,9 @@
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
 <creationDate>1185283406000</creationDate>
-<date>1196101841000</date>
-<contentUpdateDate>1196101841000</contentUpdateDate>
-<version>8.1</version>
+<date>1196762441000</date>
+<contentUpdateDate>1196762441000</contentUpdateDate>
+<version>10.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
@@ -98,20 +98,20 @@ $htmlheader
 &lt;br/&gt;
 &lt;table border="0" width="100%" style="font-size:12px;"&gt;
 &lt;tr&gt;
-&lt;td colspan="2"&gt;&lt;b&gt;&lt;i&gt;Your are invited to join the project &lt;a style="background-color:$style;" href="$projecturl"&gt;$project.get("name")&lt;/a&gt; (project lead : $xwiki.getLocalUserName($project.getProjectLeader(), false))&lt;/i&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;td colspan="2"&gt;&lt;b&gt;&lt;i&gt;Your are invited to join the group &lt;a style="background-color:$style;" href="$projecturl"&gt;$project.get("name")&lt;/a&gt; (group leader : $xwiki.getLocalUserName($project.getProjectLeader(), false))&lt;/i&gt;&lt;/b&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;Description&lt;/td&gt;&lt;td&gt;$project.get("desc")&lt;/td&gt;
 &lt;/tr&gt;
+## &lt;tr&gt;
+## &lt;td&gt;Start&lt;/td&gt;&lt;td&gt;$xwiki.formatDate($project.get("start"), $format)&lt;/td&gt;
+## &lt;/tr&gt;
+## &lt;tr&gt;
+## &lt;td&gt;End&lt;/td&gt;&lt;td&gt;$xwiki.formatDate($project.get("end"), $format)&lt;/td&gt;
+## &lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" style="border-bottom: solid 1px #CCC;"&gt;&lt;a href="$doc.getExternalURL()" style="font-weight:bold;"&gt;Go to the group dashboard&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;Start&lt;/td&gt;&lt;td&gt;$xwiki.formatDate($project.get("start"), $format)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;End&lt;/td&gt;&lt;td&gt;$xwiki.formatDate($project.get("end"), $format)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;&lt;td colspan="2" style="border-bottom: solid 1px #CCC;"&gt;&lt;a href="$doc.getExternalURL()" style="font-weight:bold;"&gt;Go to project dashboard&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td colspan="2"&gt;&lt;br/&gt;&lt;b&gt;&lt;i&gt;Project members :&lt;/i&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;td colspan="2"&gt;&lt;br/&gt;&lt;b&gt;&lt;i&gt;Group members :&lt;/i&gt;&lt;/b&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;td colspan="2"&gt;
   #set ($glist = $project.getMembers())
@@ -135,7 +135,7 @@ $htmlfooter</html>
 <language>en</language>
 </property>
 <property>
-<subject>[$xwiki.getXWikiPreference("title")] You are invited to join the project '$project.get("name")'</subject>
+<subject>[$xwiki.getXWikiPreference("title")] You are invited to join the groupe '$project.get("name")'</subject>
 </property>
 <property>
 <text></text>
@@ -218,20 +218,20 @@ $htmlheader
 &lt;br/&gt;
 &lt;table border="0" width="100%" style="font-size:12px;"&gt;
 &lt;tr&gt;
-&lt;td colspan="2"&gt;&lt;b&gt;&lt;i&gt;Vous êtes invité à participer au projet &lt;a style="background-color:$style;" href="$projecturl"&gt;$project.get("name")&lt;/a&gt; (responsable : $xwiki.getLocalUserName($project.getProjectLeader(), false))&lt;/i&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;td colspan="2"&gt;&lt;b&gt;&lt;i&gt;Vous êtes invité à participer au groupe &lt;a style="background-color:$style;" href="$projecturl"&gt;$project.get("name")&lt;/a&gt; (responsable : $xwiki.getLocalUserName($project.getProjectLeader(), false))&lt;/i&gt;&lt;/b&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;Description&lt;/td&gt;&lt;td&gt;$project.get("desc")&lt;/td&gt;
 &lt;/tr&gt;
+## &lt;tr&gt;
+## &lt;td&gt;Début du projet&lt;/td&gt;&lt;td&gt;$xwiki.formatDate($project.get("start"), $format)&lt;/td&gt;
+## &lt;/tr&gt;
+## &lt;tr&gt;
+## &lt;td&gt;Fin du projet&lt;/td&gt;&lt;td&gt;$xwiki.formatDate($project.get("end"), $format)&lt;/td&gt;
+## &lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" style="border-bottom: solid 1px #CCC;"&gt;&lt;a href="$doc.getExternalURL()" style="font-weight:bold;"&gt;Accéder à la page d'accueil du groupe&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;
-&lt;td&gt;Début du projet&lt;/td&gt;&lt;td&gt;$xwiki.formatDate($project.get("start"), $format)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Fin du projet&lt;/td&gt;&lt;td&gt;$xwiki.formatDate($project.get("end"), $format)&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;&lt;td colspan="2" style="border-bottom: solid 1px #CCC;"&gt;&lt;a href="$doc.getExternalURL()" style="font-weight:bold;"&gt;Accéder à la page d'accueil du projet&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td colspan="2"&gt;&lt;br/&gt;&lt;b&gt;&lt;i&gt;Membres du projet :&lt;/i&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;td colspan="2"&gt;&lt;br/&gt;&lt;b&gt;&lt;i&gt;Membres du groupe :&lt;/i&gt;&lt;/b&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;td colspan="2"&gt;
   #set ($glist = $project.getMembers())
@@ -255,7 +255,7 @@ $htmlfooter</html>
 <language>fr</language>
 </property>
 <property>
-<subject>[$xwiki.getXWikiPreference("title")] Vous êtes invité à participer au projet '$project.get("name")'</subject>
+<subject>[$xwiki.getXWikiPreference("title")] Vous êtes invité à participer au groupe '$project.get("name")'</subject>
 </property>
 <property>
 <text>Click here to go to that project space : $projecturl</text>
