@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes"?>
+<shortcuts>
+   <skipIfNotSupported/>
+   <programGroup defaultName="Chronopolys" location="applications"/>
+   <shortcut name="Start Chronopolys"
+       target="$INSTALL_PATH\start_xwiki.bat"
+       iconFile="$INSTALL_PATH\xe.ico"
+       iconIndex="0"
+       workingDirectory="$INSTALL_PATH"
+       description="Start Chronopolys"
+       initialState="normal"
+       programGroup="yes"
+       desktop="yes"
+       startMenu="no"/>
+  <shortcut name="Stop Chronopolys"
+      target="$INSTALL_PATH\stop_xwiki.bat"
+      iconFile="$INSTALL_PATH\xe.ico"
+      iconIndex="0"
+      workingDirectory="$INSTALL_PATH"
+      description="Stop Chronopolys"
+      initialState="normal"
+      programGroup="yes"
+      desktop="yes"
+      startMenu="no"/>
+  <shortcut name="My Chronopolys"
+      target="http://localhost:8080/xwiki/bin/view/Main/"
+      iconFile="$INSTALL_PATH\xe.ico"
+      iconIndex="0"
+      workingDirectory=""
+      description="Go to the local Chronopolys installation home page"
+      initialState="normal"
+      programGroup="yes"
+      desktop="no"
+      startMenu="no"/>
+  <shortcut name="Documentation"
+      target="http://chronopolys.xwiki.org"
+      iconFile="$INSTALL_PATH\xe.ico"
+      iconIndex="0"
+      workingDirectory=""
+      description="Chronopolys Documentation"
+      initialState="normal"
+      programGroup="yes"
+      desktop="no"
+      startMenu="no"/>
+  <shortcut name="Uninstall"
+      target="javaw"
+      iconFile="$INSTALL_PATH\xe.ico"
+      iconIndex="0"
+      commandLine="-jar &quot;$INSTALL_PATH\Uninstaller\uninstaller.jar&quot;"
+      description="Uninstall Chronopolys"
+      initialState="normal"
+      programGroup="yes"
+      desktop="no"
+      startMenu="no"/>
+</shortcuts>
