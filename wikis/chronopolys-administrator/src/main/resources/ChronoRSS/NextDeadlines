@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xwikidoc>
+<web>ChronoRSS</web>
+<name>NextDeadlines</name>
+<language></language>
+<defaultLanguage>fr</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>XWiki.Admin</creator>
+<author>XWiki.Admin</author>
+
+<customClass></customClass>
+<contentAuthor>XWiki.Admin</contentAuthor>
+<creationDate>1195740086000</creationDate>
+<date>1195746614000</date>
+<contentUpdateDate>1195746614000</contentUpdateDate>
+<version>13.1</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<minorEdit>false</minorEdit>
+
+<object>
+<class>
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<cache>0</cache>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+
+<name>tags</name>
+<number>1</number>
+<prettyName>Tags</prettyName>
+<relationalStorage>1</relationalStorage>
+<separator> </separator>
+<separators> ,|</separators>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+
+<values></values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>ChronoRSS.NextDeadlines</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<property>
+<tags/>
+</property>
+</object>
+<content>$xwiki.chronopolys.setLanguage($context.localUser)
+#set ($wlist = $xwiki.chronopolys.getMyNextDeadlines())
+#set ($baseurl =  "http://${request.serverName}")
+#set ($description = "$msg.get('mynextdeadlineson') ${request.serverName}")
+{pre}
+$context.setCacheDuration(0)
+&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:wiki="http://purl.org/rss/1.0/modules/wiki/" xmlns:html="http://www.w3.org/1999/xhtml"&gt;
+
+&lt;channel rdf:about="$baseurl"&gt;
+&lt;title&gt;
+$msg.get('mynextdeadlineson') $xwiki.getXWikiPreference("title")
+&lt;/title&gt;
+&lt;link&gt;$baseurl&lt;/link&gt;
+&lt;description&gt;
+#if($description)
+$description
+#else
+$request.serverName
+#end
+&lt;/description&gt;
+#set($logourl = $xwiki.getSkinFile($xwiki.getSkinPreference('logo', 'logo.png')))
+#set($port = "")
+#if(($request.scheme == "http") &amp;&amp; ($request.serverPort != 80))
+#set($port = ":${request.serverPort}")
+#elseif(($request.scheme == "https") &amp;&amp; ($request.serverPort != 443))
+#set($port = ":${request.serverPort}")
+#end
+#set($logourl = "${request.scheme}://${request.serverName}${port}$logourl")
+
+&lt;image rdf:resource="$logourl"/&gt;
+&lt;dc:language&gt;$doc.defaultLanguage&lt;/dc:language&gt;
+&lt;dc:rights&gt;$xwiki.getXMLEncoded($xwiki.webCopyright.replace('&lt;', '&lt;html:').replace('&lt;html:/', '&lt;/html:'))&lt;/dc:rights&gt;
+&lt;dc:publisher&gt;chronopolys&lt;/dc:publisher&gt;
+
+&lt;dc:creator&gt;chronopolys&lt;/dc:creator&gt;
+&lt;items&gt;
+&lt;rdf:Seq&gt;
+#foreach ($item in $wlist)
+#set ($currentdoc = $xwiki.getDocument($item.getPage()))
+&lt;rdf:li rdf:resource="$currentdoc.getExternalURL('view')" /&gt;
+#end
+&lt;/rdf:Seq&gt;
+&lt;/items&gt;
+&lt;/channel&gt;
+
+&lt;image rdf:about="$logourl"&gt;
+  &lt;title&gt;XWiki Logo&lt;/title&gt;
+  &lt;link&gt;${baseurl}&lt;/link&gt;
+  &lt;url&gt;$logourl&lt;/url&gt;
+
+&lt;/image&gt;
+#foreach ($item in $wlist)
+#set ($currentdoc = $xwiki.getDocument($item.getPage()))
+#set ($cdate = $xwiki.formatDate($item.getDate(), "dd/MM/yyyy"))
+#set ($pdoc = $xwiki.getDocument("${currentdoc.space}.WebHome"))
+#set ($url = $currentdoc.getExternalURL('view'))
+#if ($currentdoc.content.length() &lt; 255)
+#set ($length = $currentdoc.content.length())
+#else
+#set ($length = 255)
+#end
+&lt;item rdf:about="$url"&gt;
+&lt;title&gt;
+$item.getName() - $msg.get("deadline$item.getType()") $cdate
+&lt;/title&gt;
+&lt;link&gt;$url&lt;/link&gt;
+#set ($datamsg = $msg.get("deadline$item.getType()"))
+#set ($data = "$item.getName() - $datamsg $cdate")
+##&lt;summary type="text/plain" mode="escaped"&gt;$xwiki.getXMLEncoded($data)&lt;/summary&gt;
+
+##&lt;content type="text/html" mode="escaped" xml:base="$url"&gt;$xwiki.getXMLEncoded($data)&lt;/content&gt;
+#set($tz = $xwiki.formatDate($currentdoc.date, "Z"))
+#set($tz = "${tz.substring(0, 3)}:${tz.substring(3)}")
+&lt;dc:date&gt;$xwiki.formatDate($currentdoc.date, "yyyy-MM-dd")T$xwiki.formatDate($currentdoc.date, "hh:mm:ss")$tz&lt;/dc:date&gt;
+&lt;dc:creator&gt;$xwiki.getXMLEncoded($xwiki.getUserName($currentdoc.creator, false))&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;$xwiki.getXMLEncoded($xwiki.getUserName($currentdoc.author, false))&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+#end
+&lt;/rdf:RDF&gt;
+{/pre}</content>
+<renderedcontent>
+
+&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:wiki="http://purl.org/rss/1.0/modules/wiki/" xmlns:html="http://www.w3.org/1999/xhtml"&gt;
+&lt;channel rdf:about="http://devopolys.org"&gt;
+&lt;title&gt;
+My next deadlines on Chronopolys
+&lt;/title&gt;
+&lt;link&gt;http://devopolys.org&lt;/link&gt;
+&lt;description&gt;
+My next deadlines on devopolys.org
+
+&lt;/description&gt;
+&lt;image rdf:resource="http://devopolys.org:8080/xwiki/skins/chronopolys/logo.png"/&gt;
+&lt;dc:language&gt;fr&lt;/dc:language&gt;
+&lt;dc:rights&gt;Copyright 2004-2007 (c) XPertNet and Contributing Authors&lt;/dc:rights&gt;
+&lt;dc:publisher&gt;chronopolys&lt;/dc:publisher&gt;
+&lt;dc:creator&gt;chronopolys&lt;/dc:creator&gt;
+
+&lt;items&gt;
+&lt;rdf:Seq&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/Plog_43695808" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_10092438/" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_65695278/Plog_06710587" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_18623130/Plog_66190072" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_18623130/Plog_96631800" /&gt;
+
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_18623130/Plog_79539461" /&gt;
+&lt;/rdf:Seq&gt;
+&lt;/items&gt;
+&lt;/channel&gt;
+&lt;image rdf:about="http://devopolys.org:8080/xwiki/skins/chronopolys/logo.png"&gt;
+  &lt;title&gt;XWiki Logo&lt;/title&gt;
+  &lt;link&gt;http://devopolys.org&lt;/link&gt;
+
+  &lt;url&gt;http://devopolys.org:8080/xwiki/skins/chronopolys/logo.png&lt;/url&gt;
+&lt;/image&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/Plog_43695808"&gt;
+&lt;title&gt;
+Tache pour le 29 novembre - Task due the 30/11/2007
+&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_70443730/Plog_43695808&lt;/link&gt;
+
+&lt;dc:date&gt;2007-11-26T06:26:02+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/"&gt;
+&lt;title&gt;
+Name (Test général) - Phase's end 28/12/2007
+&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_81830771/&lt;/link&gt;
+&lt;dc:date&gt;2007-11-22T09:59:25+02:00&lt;/dc:date&gt;
+
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_10092438/"&gt;
+&lt;title&gt;
+Nom (creation2) - Phase's end 01/01/2008
+&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_10092438/&lt;/link&gt;
+&lt;dc:date&gt;2007-11-28T07:30:17+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/"&gt;
+&lt;title&gt;
+
+Nom (Specifications diverses) - Phase's end 03/01/2008
+&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_70443730/&lt;/link&gt;
+&lt;dc:date&gt;2007-11-26T05:20:22+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_65695278/Plog_06710587"&gt;
+&lt;title&gt;
+RMeeting 1 - Meeting the 19/09/2008
+
+&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_65695278/Plog_06710587&lt;/link&gt;
+&lt;dc:date&gt;2007-11-22T02:07:06+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_18623130/Plog_66190072"&gt;
+&lt;title&gt;
+Réunion projet hebdomadaire - Meeting the 23/09/2008
+&lt;/title&gt;
+
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_18623130/Plog_66190072&lt;/link&gt;
+&lt;dc:date&gt;2007-11-19T12:48:02+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_18623130/Plog_96631800"&gt;
+&lt;title&gt;
+STask 1 - Task due the 25/09/2008
+&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_18623130/Plog_96631800&lt;/link&gt;
+
+&lt;dc:date&gt;2007-09-18T07:19:07+03:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_18623130/Plog_79539461"&gt;
+&lt;title&gt;
+STask 1a - Task due the 30/09/2008
+&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_18623130/Plog_79539461&lt;/link&gt;
+&lt;dc:date&gt;2007-09-18T07:19:33+03:00&lt;/dc:date&gt;
+
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+
+&lt;/rdf:RDF&gt;
+</renderedcontent></xwikidoc>

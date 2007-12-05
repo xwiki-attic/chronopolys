@@ -1,0 +1,1370 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xwikidoc>
+<web>ChronoRSS</web>
+<name>LastModifications</name>
+<language></language>
+<defaultLanguage>fr</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>XWiki.Admin</creator>
+<author>XWiki.Admin</author>
+
+<customClass></customClass>
+<contentAuthor>XWiki.Admin</contentAuthor>
+<creationDate>1188831867000</creationDate>
+<date>1195746936000</date>
+<contentUpdateDate>1195746936000</contentUpdateDate>
+<version>10.1</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<minorEdit>false</minorEdit>
+
+<object>
+<class>
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<cache>0</cache>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+
+<name>tags</name>
+<number>1</number>
+<prettyName>Tags</prettyName>
+<relationalStorage>1</relationalStorage>
+<separator> </separator>
+<separators> ,|</separators>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+
+<values></values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>ChronoRSS.LastModifications</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<property>
+<tags/>
+</property>
+</object>
+<content>$xwiki.chronopolys.setLanguage($context.localUser)
+#if ($request.project)
+  #set ($project = $xwiki.chronopolys.getProject($request.project))
+  #set ($wlist = $project.getLastModifications())
+#else
+  #set ($wlist = $xwiki.chronopolys.getMyLastModifications())
+#end
+#set ($list = $xwiki.chronopolys.getNewList())
+#foreach ($witem in $wlist)
+#set ($ret = $list.add($xwiki.getDocument($witem.getPage())))
+#end
+#set ($baseurl =  "http://${request.serverName}")
+#set ($description = "$msg.get('lastmodificationson') ${request.serverName}")
+{pre}
+$context.setCacheDuration(0)
+&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:wiki="http://purl.org/rss/1.0/modules/wiki/" xmlns:html="http://www.w3.org/1999/xhtml"&gt;
+
+&lt;channel rdf:about="$baseurl"&gt;
+&lt;title&gt;
+#if($title)
+$title
+#elseif ($request.project)
+$project.get("name") ($request.serverName)
+#else
+$msg.get('lastmodificationson') $xwiki.getXWikiPreference("title")
+#end
+&lt;/title&gt;
+&lt;link&gt;$baseurl&lt;/link&gt;
+&lt;description&gt;
+#if($description)
+$description
+#else
+$request.serverName
+#end
+&lt;/description&gt;
+#set($logourl = $xwiki.getSkinFile($xwiki.getSkinPreference('logo', 'logo.png')))
+#set($port = "")
+#if(($request.scheme == "http") &amp;&amp; ($request.serverPort != 80))
+#set($port = ":${request.serverPort}")
+#elseif(($request.scheme == "https") &amp;&amp; ($request.serverPort != 443))
+#set($port = ":${request.serverPort}")
+#end
+#set($logourl = "${request.scheme}://${request.serverName}${port}$logourl")
+
+&lt;image rdf:resource="$logourl"/&gt;
+&lt;dc:language&gt;$doc.defaultLanguage&lt;/dc:language&gt;
+&lt;dc:rights&gt;$xwiki.getXMLEncoded($xwiki.webCopyright.replace('&lt;', '&lt;html:').replace('&lt;html:/', '&lt;/html:'))&lt;/dc:rights&gt;
+&lt;dc:publisher&gt;chronopolys&lt;/dc:publisher&gt;
+
+&lt;dc:creator&gt;chronopolys&lt;/dc:creator&gt;
+&lt;items&gt;
+&lt;rdf:Seq&gt;
+#foreach ($currentdoc in $list)
+&lt;rdf:li rdf:resource="$currentdoc.getExternalURL('view')" /&gt;
+#end
+&lt;/rdf:Seq&gt;
+&lt;/items&gt;
+&lt;/channel&gt;
+
+&lt;image rdf:about="$logourl"&gt;
+  &lt;title&gt;XWiki Logo&lt;/title&gt;
+  &lt;link&gt;${baseurl}&lt;/link&gt;
+  &lt;url&gt;$logourl&lt;/url&gt;
+
+&lt;/image&gt;
+#foreach ($currentdoc in $list)
+#set ($pdoc = $xwiki.getDocument("${currentdoc.space}.WebHome"))
+#set ($url = $currentdoc.getExternalURL('view'))
+#if ($currentdoc.content.length() &lt; 255)
+#set ($length = $currentdoc.content.length())
+#else
+#set ($length = 255)
+#end
+&lt;item rdf:about="$url"&gt;
+&lt;title&gt;$xwiki.getXMLEncoded("$msg.get($currentdoc.displayTitle) (${pdoc.display('name', 'view')})")&lt;/title&gt;
+&lt;link&gt;$url&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+##$msg.get($currentdoc.getComment())&lt;br/&gt;
+
+##&lt;br/&gt;
+$msg.get("lasteditedby") $xwiki.getUserName($currentdoc.author, false) - $xwiki.formatDate($currentdoc.date, "dd/MM/yyyy, HH:mm")]]&gt;
+&lt;/description&gt;
+#set($tz = $xwiki.formatDate($currentdoc.date, "Z"))
+#set($tz = "${tz.substring(0, 3)}:${tz.substring(3)}")
+&lt;dc:date&gt;$xwiki.formatDate($currentdoc.date, "yyyy-MM-dd")T$xwiki.formatDate($currentdoc.date, "hh:mm:ss")$tz&lt;/dc:date&gt;
+&lt;dc:creator&gt;$xwiki.getXMLEncoded($xwiki.getUserName($currentdoc.creator, false))&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;$xwiki.getXMLEncoded($xwiki.getUserName($currentdoc.author, false))&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+#end
+&lt;/rdf:RDF&gt;
+{/pre}</content>
+
+<renderedcontent>
+
+
+&lt;rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://purl.org/rss/1.0/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:wiki="http://purl.org/rss/1.0/modules/wiki/" xmlns:html="http://www.w3.org/1999/xhtml"&gt;
+&lt;channel rdf:about="http://devopolys.org"&gt;
+&lt;title&gt;
+Last modifications on  Chronopolys
+&lt;/title&gt;
+&lt;link&gt;http://devopolys.org&lt;/link&gt;
+&lt;description&gt;
+
+Last modifications on  devopolys.org
+&lt;/description&gt;
+&lt;image rdf:resource="http://devopolys.org:8080/xwiki/skins/chronopolys/logo.png"/&gt;
+&lt;dc:language&gt;fr&lt;/dc:language&gt;
+&lt;dc:rights&gt;Copyright 2004-2007 (c) XPertNet and Contributing Authors&lt;/dc:rights&gt;
+&lt;dc:publisher&gt;chronopolys&lt;/dc:publisher&gt;
+
+&lt;dc:creator&gt;chronopolys&lt;/dc:creator&gt;
+&lt;items&gt;
+&lt;rdf:Seq&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/ProjectPhases" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectPhases" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/Plog_39084263" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_10092438/ProjectPhases" /&gt;
+
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/ProjectPhases" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/ProjectNote" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectNote" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_65695278/ProjectPhases" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_07354197/ProjectPhases" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/Plog_16493182" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_83610131/" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_65695278/" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_95092959/" /&gt;
+
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_10092438/" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_07354197/ProjectNote" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_07354197/" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/note" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/Plog_43695808" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/ProjectGuests" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/ProjectLeaders" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/ProjectMembers" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/Test" /&gt;
+
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/ProjectDocuments" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_65695278/ProjectGuests" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_65695278/ProjectNote" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/my+wiki+page" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectLeaders" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_59797343/ProjectLeaders" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectMembers" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/ProjectLeaders" /&gt;
+
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_60129373/ProjectLeaders" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_83610131/ProjectLeaders" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_95092959/ProjectLeaders" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_10092438/ProjectMembers" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_10092438/ProjectLeaders" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_72964283/ProjectLeaders" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/Plog_38929585" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectGuests" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_59797343/ers" /&gt;
+
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectWiki" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_65695278/Plog_96082681" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_65695278/Plog_06710587" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/Plog_21615023" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/Plog_91338827" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/Plog_58660268" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/Plog_27900366" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_18623130/Plog_66190072" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_65695278/Plog_29170636" /&gt;
+
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_60129373/Titre+de+la+page" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_60129373/Plog_61021199" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_95092959/page_title" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_18623130/Plog_79539461" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_18623130/Plog_96631800" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_72964283/ProjectGuests" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_60129373/ProjectGuests" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/ProjectGuests" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_60129373/ProjectDocuments" /&gt;
+
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_95092959/ProjectGuests" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_60129373/Plog_08526768" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_72964283/ProjectLog" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectDocuments" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/Page+de+notification" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/Page+de+spec" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/ProjectDocuments" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/test+de+wiki" /&gt;
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/ProjectLog" /&gt;
+
+&lt;rdf:li rdf:resource="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectLog" /&gt;
+&lt;/rdf:Seq&gt;
+&lt;/items&gt;
+&lt;/channel&gt;
+&lt;image rdf:about="http://devopolys.org:8080/xwiki/skins/chronopolys/logo.png"&gt;
+  &lt;title&gt;XWiki Logo&lt;/title&gt;
+  &lt;link&gt;http://devopolys.org&lt;/link&gt;
+
+  &lt;url&gt;http://devopolys.org:8080/xwiki/skins/chronopolys/logo.png&lt;/url&gt;
+&lt;/image&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/ProjectPhases"&gt;
+&lt;title&gt;Planning (Test général)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_81830771/ProjectPhases&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 04/12/2007, 11:08]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-12-04T11:08:30+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectPhases"&gt;
+&lt;title&gt;Planning (Specifications du XEM)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectPhases&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 03/12/2007, 18:05]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-12-03T06:05:32+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/"&gt;
+&lt;title&gt;General info (Specifications du XEM)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_59725047/&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 03/12/2007, 17:00]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-12-03T05:00:26+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/Plog_39084263"&gt;
+&lt;title&gt;My meeting (Specifications du XEM)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_59725047/Plog_39084263&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 03/12/2007, 16:48]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-12-03T04:48:19+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_10092438/ProjectPhases"&gt;
+&lt;title&gt;Planning (creation2)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_10092438/ProjectPhases&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 03/12/2007, 16:08]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-12-03T04:08:20+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/ProjectPhases"&gt;
+&lt;title&gt;Planning (Specifications diverses)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_70443730/ProjectPhases&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 03/12/2007, 15:27]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-12-03T03:27:11+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/ProjectNote"&gt;
+&lt;title&gt;Vote (Specifications diverses)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_70443730/ProjectNote&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 29/11/2007, 17:31]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-29T05:31:47+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectNote"&gt;
+&lt;title&gt;Vote (Specifications du XEM)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectNote&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 29/11/2007, 14:13]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-29T02:13:14+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_65695278/ProjectPhases"&gt;
+&lt;title&gt;Planning (RH 1)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_65695278/ProjectPhases&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 29/11/2007, 11:36]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-29T11:36:46+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_07354197/ProjectPhases"&gt;
+&lt;title&gt;Planning (creation1)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_07354197/ProjectPhases&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 29/11/2007, 10:58]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-29T10:58:52+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/Plog_16493182"&gt;
+&lt;title&gt;Rendez-vous du 30 novembre (Specifications diverses)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_70443730/Plog_16493182&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 28/11/2007, 19:42]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-28T07:42:49+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_83610131/"&gt;
+&lt;title&gt;General info (RH 2)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_83610131/&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 28/11/2007, 19:31]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-28T07:31:19+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_65695278/"&gt;
+&lt;title&gt;General info (RH 1)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_65695278/&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 28/11/2007, 19:30]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-28T07:30:46+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_95092959/"&gt;
+&lt;title&gt;General info (creation3)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_95092959/&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 28/11/2007, 19:30]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-28T07:30:31+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_10092438/"&gt;
+&lt;title&gt;General info (creation2)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_10092438/&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 28/11/2007, 19:30]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-28T07:30:17+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_07354197/ProjectNote"&gt;
+&lt;title&gt;Vote (creation1)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_07354197/ProjectNote&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 28/11/2007, 16:38]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-28T04:38:42+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_07354197/"&gt;
+&lt;title&gt;General info (creation1)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_07354197/&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 28/11/2007, 16:30]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-28T04:30:47+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/note"&gt;
+&lt;title&gt;note (Specifications diverses)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_70443730/note&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 26/11/2007, 19:10]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-26T07:10:11+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/Plog_43695808"&gt;
+&lt;title&gt;Tache pour le 29 novembre (Specifications diverses)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_70443730/Plog_43695808&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 26/11/2007, 18:26]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-26T06:26:02+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/ProjectGuests"&gt;
+&lt;title&gt;Guests (Specifications diverses)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_70443730/ProjectGuests&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 26/11/2007, 18:06]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-26T06:06:44+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/ProjectLeaders"&gt;
+&lt;title&gt;Group leader has been changed (Specifications diverses)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_70443730/ProjectLeaders&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 26/11/2007, 18:06]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-26T06:06:08+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/ProjectMembers"&gt;
+&lt;title&gt;Members (Specifications diverses)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_70443730/ProjectMembers&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 26/11/2007, 18:05]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-26T06:05:59+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/Test"&gt;
+&lt;title&gt;Test (Specifications diverses)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_70443730/Test&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 26/11/2007, 18:04]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-26T06:04:37+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/"&gt;
+&lt;title&gt;General info (Specifications diverses)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_70443730/&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 26/11/2007, 17:20]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-26T05:20:22+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/ProjectDocuments"&gt;
+&lt;title&gt;Documents (Specifications diverses)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_70443730/ProjectDocuments&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 26/11/2007, 16:43]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-26T04:43:41+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_65695278/ProjectGuests"&gt;
+&lt;title&gt;Guests (RH 1)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_65695278/ProjectGuests&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 26/11/2007, 13:49]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-26T01:49:21+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_65695278/ProjectNote"&gt;
+&lt;title&gt;Vote (RH 1)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_65695278/ProjectNote&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 26/11/2007, 13:42]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-26T01:42:35+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_70443730/my+wiki+page"&gt;
+&lt;title&gt;my wiki page (Specifications diverses)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_70443730/my+wiki+page&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 26/11/2007, 13:39]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-26T01:39:32+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectLeaders"&gt;
+&lt;title&gt;Group leader has been changed (Specifications du XEM)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectLeaders&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 23/11/2007, 12:36]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-23T12:36:49+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_59797343/ProjectLeaders"&gt;
+&lt;title&gt;Group leader has been changed (Spécifications 1)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_59797343/ProjectLeaders&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 22/11/2007, 21:59]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-22T09:59:27+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectMembers"&gt;
+&lt;title&gt;Members (Specifications du XEM)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectMembers&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 22/11/2007, 21:59]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-22T09:59:26+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/ProjectLeaders"&gt;
+&lt;title&gt;Group leader has been changed (Test général)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_81830771/ProjectLeaders&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Demo Admin - 22/11/2007, 21:59]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-22T09:59:25+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Demo Admin&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_60129373/ProjectLeaders"&gt;
+&lt;title&gt;Group leader has been changed (Nepomuk)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_60129373/ProjectLeaders&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 22/11/2007, 21:59]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-22T09:59:24+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_83610131/ProjectLeaders"&gt;
+&lt;title&gt;Group leader has been changed (RH 2)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_83610131/ProjectLeaders&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 22/11/2007, 21:59]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-22T09:59:22+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_95092959/ProjectLeaders"&gt;
+&lt;title&gt;Group leader has been changed (creation3)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_95092959/ProjectLeaders&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 22/11/2007, 21:59]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-22T09:59:21+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_10092438/ProjectMembers"&gt;
+&lt;title&gt;Members (creation2)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_10092438/ProjectMembers&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 22/11/2007, 21:59]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-22T09:59:20+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_10092438/ProjectLeaders"&gt;
+&lt;title&gt;Group leader has been changed (creation2)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_10092438/ProjectLeaders&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 22/11/2007, 21:59]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-22T09:59:19+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_72964283/ProjectLeaders"&gt;
+&lt;title&gt;Group leader has been changed (Psew)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_72964283/ProjectLeaders&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 22/11/2007, 21:59]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-22T09:59:18+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/Plog_38929585"&gt;
+&lt;title&gt;Mon super événement !!! (Specifications du XEM)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_59725047/Plog_38929585&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 22/11/2007, 20:52]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-22T08:52:17+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectGuests"&gt;
+&lt;title&gt;Guests (Specifications du XEM)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectGuests&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Demo Demo - 22/11/2007, 20:36]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-22T08:36:26+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Demo Demo&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_59797343/ers"&gt;
+&lt;title&gt;ers (Spécifications 1)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_59797343/ers&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 22/11/2007, 19:27]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-22T07:27:14+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectWiki"&gt;
+&lt;title&gt;ProjectWiki (Specifications du XEM)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectWiki&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Demo Demo - 22/11/2007, 19:17]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-22T07:17:22+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Demo Demo&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_65695278/Plog_96082681"&gt;
+&lt;title&gt;RTask 1 (RH 1)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_65695278/Plog_96082681&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 22/11/2007, 15:25]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-22T03:25:36+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_65695278/Plog_06710587"&gt;
+&lt;title&gt;RMeeting 1 (RH 1)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_65695278/Plog_06710587&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 22/11/2007, 14:07]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-22T02:07:06+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/Plog_21615023"&gt;
+&lt;title&gt;GroGro (Specifications du XEM)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_59725047/Plog_21615023&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 22/11/2007, 11:13]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-22T11:13:38+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/Plog_91338827"&gt;
+&lt;title&gt;test de rdv (Test général)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_81830771/Plog_91338827&lt;/link&gt;
+
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 22/11/2007, 11:08]]&gt;
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-22T11:08:12+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/Plog_58660268"&gt;
+&lt;title&gt;test de phase avec notif activées (Test général)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_81830771/Plog_58660268&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 22/11/2007, 11:07]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-22T11:07:45+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Demo Admin&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/Plog_27900366"&gt;
+&lt;title&gt;test de message (Test général)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_81830771/Plog_27900366&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 21/11/2007, 18:03]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-21T06:03:38+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Demo Admin&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_18623130/Plog_66190072"&gt;
+&lt;title&gt;Réunion projet hebdomadaire (Spécifications 2)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_18623130/Plog_66190072&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 19/11/2007, 12:48]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-19T12:48:02+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_65695278/Plog_29170636"&gt;
+&lt;title&gt;RTask 1a (RH 1)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_65695278/Plog_29170636&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 16/11/2007, 19:55]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-16T07:55:02+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_60129373/Titre+de+la+page"&gt;
+&lt;title&gt;Titre de la page (Nepomuk)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_60129373/Titre+de+la+page&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 16/11/2007, 14:11]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-16T02:11:06+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_60129373/Plog_61021199"&gt;
+&lt;title&gt;Scéance pleinière (Nepomuk)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_60129373/Plog_61021199&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 06/11/2007, 16:37]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-11-06T04:37:41+02:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_95092959/page_title"&gt;
+&lt;title&gt;Page title (creation3)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_95092959/page_title&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 19/10/2007, 17:56]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-10-19T05:56:18+03:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_18623130/Plog_79539461"&gt;
+&lt;title&gt;STask 1a (Spécifications 2)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_18623130/Plog_79539461&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 18/09/2007, 19:19]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-09-18T07:19:33+03:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_18623130/Plog_96631800"&gt;
+&lt;title&gt;STask 1 (Spécifications 2)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_18623130/Plog_96631800&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 18/09/2007, 19:19]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-09-18T07:19:07+03:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_72964283/ProjectGuests"&gt;
+&lt;title&gt;Guests (Psew)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_72964283/ProjectGuests&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 13/09/2007, 19:17]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-09-13T07:17:47+03:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_60129373/ProjectGuests"&gt;
+&lt;title&gt;Guests (Nepomuk)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_60129373/ProjectGuests&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 13/09/2007, 18:03]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-09-13T06:03:59+03:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/ProjectGuests"&gt;
+&lt;title&gt;Guests (Test général)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_81830771/ProjectGuests&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 10/09/2007, 18:44]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-09-10T06:44:01+03:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Admin Chronopolys&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_60129373/ProjectDocuments"&gt;
+&lt;title&gt;Documents (Nepomuk)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_60129373/ProjectDocuments&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 05/09/2007, 23:47]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-09-05T11:47:59+03:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_95092959/ProjectGuests"&gt;
+&lt;title&gt;Guests (creation3)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_95092959/ProjectGuests&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Demo Test - 04/09/2007, 15:02]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-09-04T03:02:13+03:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Demo Test&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Demo Test&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_60129373/Plog_08526768"&gt;
+&lt;title&gt;toto (Nepomuk)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_60129373/Plog_08526768&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 03/09/2007, 11:37]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-09-03T11:37:08+03:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Demo Admin&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_72964283/ProjectLog"&gt;
+&lt;title&gt;ProjectLog (Psew)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_72964283/ProjectLog&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Admin Chronopolys - 06/08/2007, 12:44]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-08-06T12:44:36+03:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Admin Chronopolys&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectDocuments"&gt;
+&lt;title&gt;Documents (Specifications du XEM)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectDocuments&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Jean-Vincent Drean - 27/07/2007, 12:38]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-07-27T12:38:09+03:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Jean-Vincent Drean&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/Page+de+notification"&gt;
+&lt;title&gt;Page de notification (Specifications du XEM)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_59725047/Page+de+notification&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Jean-Vincent Drean - 27/07/2007, 10:26]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-07-27T10:26:46+03:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Jean-Vincent Drean&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/Page+de+spec"&gt;
+&lt;title&gt;Premier titre (Specifications du XEM)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_59725047/Page+de+spec&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Jean-Vincent Drean - 25/07/2007, 18:21]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-07-25T06:21:29+03:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Demo Admin&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Jean-Vincent Drean&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/ProjectDocuments"&gt;
+&lt;title&gt;Documents (Test général)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_81830771/ProjectDocuments&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Demo Admin - 28/06/2007, 17:58]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-06-28T05:58:01+03:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Demo Admin&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/test+de+wiki"&gt;
+&lt;title&gt;test de wiki (Test général)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_81830771/test+de+wiki&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Grégory GUENEAU - 27/06/2007, 17:25]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-06-27T05:25:24+03:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Grégory GUENEAU&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Grégory GUENEAU&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_81830771/ProjectLog"&gt;
+&lt;title&gt;ProjectLog (Test général)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_81830771/ProjectLog&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Jean-Vincent Drean - 27/06/2007, 16:51]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-06-27T04:51:24+03:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Jean-Vincent Drean&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;item rdf:about="http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectLog"&gt;
+&lt;title&gt;ProjectLog (Specifications du XEM)&lt;/title&gt;
+&lt;link&gt;http://devopolys.org:8080/xwiki/bin/view/Project_59725047/ProjectLog&lt;/link&gt;
+&lt;description&gt;&lt;![CDATA[
+Edited by Jean-Vincent Drean - 22/06/2007, 12:04]]&gt;
+
+&lt;/description&gt;
+&lt;dc:date&gt;2007-06-22T12:04:07+03:00&lt;/dc:date&gt;
+&lt;dc:creator&gt;Jean-Vincent Drean&lt;/dc:creator&gt;
+&lt;dc:contributor&gt;
+&lt;rdf:Description link=""&gt;
+&lt;rdf:value&gt;Jean-Vincent Drean&lt;/rdf:value&gt;
+
+&lt;/rdf:Description&gt;
+&lt;/dc:contributor&gt;
+&lt;/item&gt;
+&lt;/rdf:RDF&gt;
+</renderedcontent></xwikidoc>
