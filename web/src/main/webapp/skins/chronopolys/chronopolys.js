@@ -708,15 +708,15 @@ function projectdata_save()
     }
     var codename = $('ChronoClasses.ProjectClass_0_codename');
     var status = $('ChronoClasses.ProjectClass_0_status');
-    var start = $('ChronoClasses.ProjectClass_0_start');
-    var end = $('ChronoClasses.ProjectClass_0_end');
+    /* var start = $('ChronoClasses.ProjectClass_0_start');
+    var end = $('ChronoClasses.ProjectClass_0_end'); */
     var surl = getXWikiURL(currentSpace, "WebHome", "save", "");
     var parameters = name.id + '=' + name.value;
     parameters = parameters + '&' + container.id + '=' + container.value;
     parameters = parameters + '&' + codename.id + '=' + codename.value;
     parameters = parameters + '&' + status.id + '=' + status.value;
-    parameters = parameters + '&' + start.id + '=' + start.value;
-    parameters = parameters + '&' + end.id + '=' + end.value;
+    /* parameters = parameters + '&' + start.id + '=' + start.value;
+    parameters = parameters + '&' + end.id + '=' + end.value; */
     parameters = parameters + '&comment=editprojectinfos';
 
     var myAjax = new Ajax.Request(
