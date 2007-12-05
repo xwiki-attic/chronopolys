@@ -81,8 +81,7 @@ function getVisibleCoords()
         xoff = document.body.scrollLeft;
         wh = document.body.clientHeight;
         ww = document.body.clientWidth;
-    } else if (document.documentElement &&
-               ( document.documentElement.scrollLeft || document.documentElement.scrollTop ))
+    } else if (document.documentElement)
     {
         //IE6 standards compliant mode
         yoff = document.documentElement.scrollTop;
@@ -812,10 +811,13 @@ function calInitDates()
     }
 
     /* hide the "add phase" button of the last phase if any */
-    var phaseNb = regDatesList[regDatesList.length - 1][0].split("_")[1];
-    var phaseAddElId = 'phaseedition_' + phaseNb + '_addel';
-    if (!eltHasClass($(phaseAddElId), 'hidden')) {
-      addClass($(phaseAddElId), 'hidden');
+    if(regDatesList.length >= 1)
+    {
+        var phaseNb = regDatesList[regDatesList.length - 1][0].split("_")[1];
+        var phaseAddElId = 'phaseedition_' + phaseNb + '_addel';
+        if (!eltHasClass($(phaseAddElId), 'hidden')) {
+            addClass($(phaseAddElId), 'hidden');
+        }
     }
 }
 
@@ -1324,3 +1326,53 @@ function switchClass(id)
     else if (target.className == "article_deploy_open")
         target.className = "article_deploy_closed";
 }
+
+
+// function to delete a user from Administration
+function deleteUser(id, fullname)
+{
+    var userspace = fullname.substring(0, fullname.indexOf('.'));
+    var userpage = fullname.substring(fullname.indexOf('.') + 1);
+    
+    var url = getXWikiURL(userspace, userpage, "delete", "confirm=1");
+
+    new Ajax.Request(url, {
+        method: 'get',
+
+        onSuccess: function()
+        {
+            $(id).parentNode.removeChild($(id));
+        }
+    });
+}
+
+
+function addNote(note, docweb, docname) {
+      var id = 'projectnote';
+      var options = "&do=note&note=" + note;
+      var surl = getXWikiURL(docweb, docname, "view", "xpage=plain" + options);
+      var myAjax = new Ajax.Updater(
+        id,
+        surl,
+        {
+          method: 'get',
+          evalScripts: true
+        });
+    }
+
+function setdisplayednote(note) {
+      for (var i = 1; i <= 5; i++) {
+        var sobj = $('note-star-'+i);
+        if (i > note) {
+          if (!eltHasClass(sobj, "empty"))
+            addClass(sobj, "empty");
+        } else {
+          if (eltHasClass(sobj, "empty"))
+            rmClass(sobj, "empty");
+        }
+      }
+}
+
+ function initstars(initialnote) {
+      setdisplayednote(initialnote);
+ }

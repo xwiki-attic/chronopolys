@@ -3,10 +3,13 @@
 #if($xwiki.exists("XWiki.DocumentDoesNotExist"))
     $xwiki.includeForm("XWiki.DocumentDoesNotExist",false)
 #else
-#xwikimessageboxstart($msg.get("error") $msg.get("thistemplatedoesnotexist"))
+<div class="centered">
+<div id="centeredmedium">
+    #roundedmediumtitletop($msg.get("error"))
+      <p class="xwikimessage">$msg.get("thistemplatedoesnotexist")</p>
 $!exception
 #xwikimessageboxend()
 #end
 <div class="clearfloats"></div>
-</div>
+</div></div>
 #template("endpage.vm")

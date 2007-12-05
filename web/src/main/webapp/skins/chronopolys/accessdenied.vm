@@ -5,9 +5,13 @@
 #template("startpage.vm")
 <div class="main layoutsubsection">
 #if ($xwiki.isReadOnly())
-#xwikimessageboxstart($msg.get("error") $msg.get("readonly"))
+  <div id="centeredmedium">
+    #roundedmediumtitletop($msg.get("error"))
+      <p class="xwikimessage">$msg.get("readonly")</p>
 #else
-#xwikimessageboxstart($msg.get("error") $msg.get("notallowed"))
+<div class="centered">
+    #roundedmediumtitletop($msg.get("error"))
+      <p class="xwikimessage">$msg.get("notallowed")</p>
 #end
 $!exception
 #xwikimessageboxend()

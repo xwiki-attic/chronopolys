@@ -51,7 +51,7 @@
   #end
 #if ($project.isWikiPage($doc.name))
   <div id="wikipage">
-    <div class="rounded-title" style="background-color: $currentStyle"><img width="16" height="16" style="float:left; margin-right: 5px;" src="$xwiki.getSkinFile('page.png')"/><span style="float:left;"> $doc.getDisplayTitle()</span><span class="rounded-actions">
+    <div class="rounded-title" style="background-color:$currentStyle;"><img width="16" height="16" style="float:left; margin-right: 5px;" src="$xwiki.getSkinFile('page.png')"/><span style="float:left;"> $doc.getDisplayTitle()</span><span class="rounded-actions">
       <a id="editwikipage" href="$doc.getURL('edit')">$msg.get("editwikipage")</a>
       ##if($isXWikiAdmin || $isChronoManager || $isChronoAdmin || $context.user == $doc.creator)
       #if($xwiki.hasAccessLevel("delete", $doc.fullName))
