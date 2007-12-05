@@ -55,66 +55,19 @@
 </property>
 </object>
 <content>#macro(displayNote $project)
-&lt;div id="projectnote" onmouseout="initstars();"&gt;
-&lt;style type="text/css"&gt;
-.nstar {
-  display: block;
-  float: left;
-  padding-right: 5px;
-  height: 16px;
-  width: 16px;
-  cursor: pointer;
-  background: url($xwiki.getSkinFile('star.gif')) no-repeat;
-}
-.empty {
-  background: url($xwiki.getSkinFile('starempty.gif')) no-repeat;
-}
-&lt;/style&gt;
-  #foreach ($i in [1..5])
-    &lt;span onmouseover="setdisplayednote($i);"&gt;&lt;a title="$msg.get("star$i")" id="note-star-$i" class="nstar" onclick="addNote($i)"&gt;&lt;/a&gt;&lt;/span&gt;
-  #end
-  &lt;script type="text/javascript"&gt;
-    var initialnote = $project.getNote();
-
-    function addNote(note) {
-      var id = 'projectnote';
-      var options = "&amp;do=note&amp;note=" + note;
-      var surl = getXWikiURL("$doc.web", "$doc.name", "view", "xpage=plain" + options);
-      var myAjax = new Ajax.Updater(
-        id, 
-        surl, 
-        {
-          method: 'get',
-          evalScripts: true
-        });
-    }
-
-    function setdisplayednote(note) {
-      for (var i = 1; i &lt;= 5; i++) {
-        var sobj = $('note-star-'+i);
-        if (i &gt; note) {
-          if (!eltHasClass(sobj, "empty"))
-            addClass(sobj, "empty");
-        } else {
-          if (eltHasClass(sobj, "empty"))
-            rmClass(sobj, "empty");
-        }
-      }
-    }
-
-    function initstars() {
-      setdisplayednote(initialnote);
-    }
-
-    initstars();
-  &lt;/script&gt;
+#foreach ($i in [1..5])
+  &lt;span onmouseover="setdisplayednote($i);" onmouseout="setdisplayednote($project.getNote());"&gt;&lt;a title="$msg.get("star$i")" id="note-star-$i" class="nstar" onclick="addNote($i, '$doc.web', '$doc.name')"&gt;&lt;/a&gt;&lt;/span&gt;
+#end
 &lt;div style="float:right;text-align:center;font-size:10px;line-height:13px;"&gt;$project.getNote() / 5&lt;br/&gt;
+&lt;script type="text/javascript"&gt;
+   initstars($project.getNote());
+&lt;/script&gt;
 #set ($vnb = $project.getNotes().size())
 ($vnb #if($vnb &gt; 1)$msg.get("votes")#else$msg.get("vote")#end)
 &lt;/div&gt;
 &lt;div style="clear:both;"&gt;&lt;/div&gt;
-&lt;/div&gt;
 #end
+
 #macro(chronopanelheaderengine $project $title $page $label $edittitle)
   &lt;div class="chronopanel" id="${title}_panel" onmouseover="panel_mouseover('${title}_panel');" onmouseout="panel_mouseout('${title}_panel');"&gt;
     &lt;div class="chronopanel_header" style="background-color:${currentStyle};"&gt;
