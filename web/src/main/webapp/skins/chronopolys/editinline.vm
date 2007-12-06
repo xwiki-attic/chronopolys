@@ -8,6 +8,9 @@
 <div class="main layoutsubsection">
 #set($xredirect=$!request.getParameter("xredirect"))
 #set($xnotification=$!request.getParameter("xnotification"))
+#if ($isProject)
+  #template("projectheader.vm")
+#end
 <form id="inline" method="post" action="$doc.getURL("preview")">
 <div>
 <div class="hidden"><input type="hidden" name="xcontinue" value="$doc.getURL("inline")"/></div>
