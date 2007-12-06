@@ -33,6 +33,9 @@
 #end
 #if($editor == "wiki" || $editor == "wysiwyg")
 <form id="edit" method="post" action="$doc.getURL("preview")" >
+#if ($isProject)
+  #template("projectheader.vm")
+#end
 #end
 ##
 ## Content
