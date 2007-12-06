@@ -1,6 +1,6 @@
 #rsvp {
     width: 220px;
-    height: 80px;
+    height: 40px;
     overflow: visible;
 }
 
@@ -17,10 +17,13 @@ td.styleeditinput {
 
 #dashboard_masterinfos {
     float: right;
-    padding-bottom: 8px;
-    padding-right: 30px;
-    border: 1px solid #aaa;
     margin-right: 30px;
+    _margin-right: 4px !important;
+    padding-right: 30px;
+    _padding-right: 0px !important;
+    padding-bottom: 8px;
+    _padding-bottom: 0px !important;
+    border: 1px solid #aaa;
     width: 370px;
     height: 32px;
 }
@@ -244,12 +247,12 @@ panel .accordionTabTitleBar {
 
 /* IE6 */
 * html #xwikimaincontainerinner {
-    background-position: 1px 0px;
+    background-position: 0px 0px;
 }
 
 /* IE7 */
 html* #xwikimaincontainerinner {
-    background-position: 1px 0px;
+    background-position: 0px 0px;
 }
 
 #headerglobal {
@@ -346,6 +349,7 @@ html* #xwikimaincontainerinner {
     background-color: transparent;
     background: transparent url( bckgrnd_central.gif ) repeat-y;
     color: black;
+    margin-left:0px !important;
 }
 
 #headerspace a, #headerspace alink, #headerspace a:visited, #headerspace a:active {
@@ -654,11 +658,11 @@ html {
 }
 
 .rounded-title {
-    background: url( plog-bar.png ) no-repeat;
-    _position: relative;
-    _background-image: url( );
+     background: url( plog-bar.png ) no-repeat;
+    _background-image:url();
     _filter:
-    progid: DXImageTransform . Microsoft . AlphaImageLoader( src = '$xwiki.getSkinFile("plog-bar.png")', sizingMethod = 'scale' );
+progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/xwiki/bin/skin/ChronoCode/Skin01/plog%2Dbar.png', sizingMethod='scale');
+    _position: relative;
     height: 20px;
     padding: 4px 0 0 10px;
     margin: 0 -5px;
@@ -671,7 +675,7 @@ html {
     _position: relative;
     _background-image: url( );
     _filter:
-    progid: DXImageTransform . Microsoft . AlphaImageLoader( src = '$xwiki.getSkinFile("axis.png")', sizingMethod = 'scale' );
+progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/xwiki/bin/skin/ChronoCode/Skin01/axis.png', sizingMethod='scale');
     height: 20px;
     padding: 4px 0 0 10px;
     margin: 0 -5px;
@@ -695,7 +699,7 @@ html {
     background: transparent url( mail-attachment.png ) no-repeat;
     _background-image: url( );
     _filter:
-    progid: DXImageTransform . Microsoft . AlphaImageLoader( src = '$xwiki.getSkinFile("mail-attachment.png")', sizingMethod = 'scale' );
+    progid: DXImageTransform . Microsoft . AlphaImageLoader( src = '/xwiki/bin/skin/ChronoCode/Skin01/mail%2Dattachment.png', sizingMethod = 'scale' );
     padding: 0;
     height: 16px;
     width: 16px;
@@ -705,14 +709,14 @@ html {
     background: transparent url( comments.png ) no-repeat;
     _background-image: url( );
     _filter:
-    progid: DXImageTransform . Microsoft . AlphaImageLoader( src = '$xwiki.getSkinFile("comments.png")', sizingMethod = 'scale' );
+    progid: DXImageTransform . Microsoft . AlphaImageLoader( src = '/xwiki/bin/skin/ChronoCode/Skin01/comments.png', sizingMethod = 'scale' );
     padding: 0;
     height: 16px;
     width: 16px;
 }
 
 form#inline {
-    margin: 0 31px;
+  margin: 20px 36px 0pt 26px;
 }
 
 .article_content {
@@ -737,6 +741,10 @@ form#inline {
     width: 300px;
     float: left;
     margin-left: 10px;
+}
+
+.centered {
+  margin: 0px auto;
 }
 
 #loginForm .centered {
@@ -1021,4 +1029,54 @@ table.grid {
 #plogbar-edit {
     background: transparent url( page_white_edit.gif ) no-repeat;
     padding-left: 20px;
+}
+
+#edit #project_header {
+  margin: 20px 0 0 38px;
+}
+#edit .container_breadcrumb {
+  margin-left: 50px;
+}
+
+.deleteuser {
+   cursor: pointer;
+}
+
+.usersli {
+   list-style: circle outside;
+   color: #A8A8A8;
+}
+
+.nstar {
+  display: block;
+  float: left;
+  padding-right: 5px;
+  height: 16px;
+  width: 16px;
+  cursor: pointer;
+  background: url($xwiki.getSkinFile('star.gif')) no-repeat;
+}
+.empty {
+  background: url($xwiki.getSkinFile('starempty.gif')) no-repeat;
+}
+
+.hiddenable {
+  width: 100%;
+}
+
+
+#centeredmedium {
+  text-align: center !important;
+  margin:0px auto;
+  _width: 70%;
+  _position: relative !important;
+  _left: -10%;
+}
+
+#centeredmedium .rounded-medium-title {
+  margin-right:7px;
+}
+
+#centeredmedium .roundedcontent, #centeredmedium .rounded {
+  margin-right:12px;
 }
