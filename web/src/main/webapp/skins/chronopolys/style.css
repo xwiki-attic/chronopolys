@@ -15,6 +15,8 @@
 @import "rounded.css";
 @import "css/table/table.css";
 
+#xwikidocinfo { margin-top:10px; }
+
 #xwiki-form-notifications {
   display:block;
 }
@@ -75,14 +77,15 @@ html>/**/body {
 }
 #headerspace, #contentcontainer, #footerglobal {
   margin-left: 0 !important;
-  margin-left: 1px;
 }
 #projectlogarticle {
   _padding-left: 10px;
   _padding-right: 9px;
 }
 .activity_container{zoom: 1; _margin: 0;}
-.project { _width: 580px; }
+
+.project { _width: 100%; }
+
 #commentscontent, #attachmentscontent {
   _width: 760px;
 }
@@ -91,6 +94,7 @@ html>/**/body {
 }
 #attachments .roundedcontent {
   _overflow: hidden;
+  _width: 95.5%;
 }
 #body .buttonwrapper *, #body .buttonwrapper a, #body .buttonwrapper alink, #body .buttonwrapper a:visited, #body .buttonwrapper a:active {
   _overflow: visible;
@@ -98,6 +102,7 @@ html>/**/body {
 }
 .buttonwrapper {
   _margin-left: 2px;
+  text-align: center;
 }
 #body #mypassword_panel .buttonwrapper *, #body #mypassword_panel .buttonwrapper a, #body #mypassword_panel .buttonwrapper alink, #body #mypassword_panel .buttonwrapper a:visited, #body #mypassword_panel .buttonwrapper a:active {
   _width: auto;
