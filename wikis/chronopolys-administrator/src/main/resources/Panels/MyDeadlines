@@ -102,9 +102,10 @@
 #set ($rssurl = $xwiki.getURL('ChronoRSS.NextDeadlines', 'view', 'xpage=rdf'))
 #set ($rsslink = "&lt;a href='${rssurl}&amp;${context.localUser}' target='_blank'&gt;&lt;img src='${rssicon}' style='height:14px;width:16px;' /&gt;&lt;/a&gt;")
 &lt;div class="panel expanded"&gt;
-&lt;div style="float:left;margin-left:5px;margin-top:5px;"&gt;
+
+&lt;div style="float:left;margin-left:4px;_margin-left:3px;margin-top:5px;"&gt;
 $rsslink&lt;/div&gt;
-&lt;h5 class="xwikipaneltitle" onclick="togglePanelVisibility(this.parentNode);" style="background-image:none; padding-left: 2px !important;"&gt;${msg.get('5nextdeadlines')}&lt;/h5&gt;
+&lt;h5 class="xwikipaneltitle" onclick="togglePanelVisibility(this.parentNode);" style="background-image:none;padding-left:0px!important;padding-right:4px;"&gt;${msg.get('5nextdeadlines')}&lt;/h5&gt;
 &lt;div class="xwikipanelcontents"&gt;
 #includeMacros("ChronoCode.UserMacros")
 #displayMyDeadlines("#E6E6E6")
