@@ -249,6 +249,9 @@ function reloadDashboard(options)
     /* avoid all previous timeline datas */
     metaTimelines.clear();
     masterloader = null;
+    elementsAddCache = null;
+
+    setLoadingBg('axis_all', true);
 
     /* update the dashboard */
     var id = 'chronocontainers';
@@ -261,9 +264,9 @@ function reloadDashboard(options)
         evalScripts: true,
         onComplete: function()
         {
+            setLoadingBg('axis_all', false);
             /* reload dynamic timelines */
             reloadTimelines();
-            setLoadingBg('axis_all', false);
         }
     });
 }
@@ -1146,9 +1149,11 @@ function container_save(id)
 }
 
 function container_refresh_action(id, params) {
+    elementsAddCache = null;
+
     /* top level folder */
     if (id == '' || id == 'axis_all') {
-        reloadDashboard(params);
+        reloadDashboard(params);        
         return;
     }
 
@@ -1211,11 +1216,7 @@ function container_delete_action(id)
         method: 'get',
         onSuccess: function()
         {
-            if (pid == "axis_all") {
-                reloadDashboard("");
-            } else {
-                container_refresh_action(pid, '');
-            }
+            container_refresh_action(pid, '');
         }
     });
 }
