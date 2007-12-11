@@ -104,7 +104,8 @@ Calendar.setup = function (params) {
 
 	function onSelect(cal) {
 		var p = cal.params;
-		var update = (cal.dateClicked || p.electric);
+		// var update = (cal.dateClicked || p.electric);
+        var update = cal.dateDbClicked;
 		if (update && p.inputField) {
 			p.inputField.value = cal.date.print(p.ifFormat);
 			if (typeof p.inputField.onchange == "function")

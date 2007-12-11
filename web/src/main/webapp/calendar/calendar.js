@@ -56,6 +56,8 @@ Calendar = function (firstDayOfWeek, dateStr, onSelected, onClose) {
 	this.activeYear = null;
 	// Information
 	this.dateClicked = false;
+    this.dateDbClicked = false;
+
 
 	// one-time initializations
 	if (typeof Calendar._SDN == "undefined") {
@@ -588,6 +590,7 @@ Calendar.cellClick = function(el, ev) {
 			if (!closing) {
 				cal.currentDateEl = el;
 			}
+			else cal.dateDbClicked = true;
 		}
 		cal.date.setDateOnly(el.caldate);
 		date = cal.date;
@@ -915,6 +918,7 @@ Calendar.prototype.create = function (_par) {
 				date.setMonth(m);
 				date.setDate(d);
 				this.dateClicked = false;
+                this.dateDbClicked = false;
 				this.callHandler();
 			};
 		})();
