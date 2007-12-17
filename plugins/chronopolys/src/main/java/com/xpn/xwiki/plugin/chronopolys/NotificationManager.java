@@ -32,6 +32,7 @@ import com.xpn.xwiki.notify.XWikiNotificationInterface;
 import com.xpn.xwiki.notify.XWikiNotificationRule;
 import com.xpn.xwiki.plugin.mailsender.MailSenderPlugin;
 import com.xpn.xwiki.plugin.mailsender.MailSenderPluginApi;
+import com.xpn.xwiki.plugin.watchlist.WatchListPlugin;
 import com.xpn.xwiki.render.XWikiVelocityRenderer;
 import org.apache.velocity.VelocityContext;
 
@@ -148,6 +149,12 @@ public class NotificationManager
                             if (newdoc.getStringValue("status").equals("1")) {
                                 /* Project just get active */
                                 mailTemplate = NOTIFICATION_ACTIVE_PROJECT;
+                                /* Add project space to member's watchlist */
+                                WatchListPlugin wlplugin = (WatchListPlugin)context.getWiki().getPlugin("watchlist", context);
+                                Iterator it = rcpt.iterator();
+                                while (it.hasNext()) {
+                                    wlplugin.addWatchedElement((String)it.next(), project.getSpace(), true, context);
+                                }
                             }
                         } else if (newdoc != null && project.isPlogPage(newdoc.getName())) {
                             /* PLOG */

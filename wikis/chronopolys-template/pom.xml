@@ -34,5 +34,44 @@
   <name>XWiki Products - Chronopolys - Wikis - Chronopolys Template</name>
   <packaging>xar</packaging>
   <description>XWiki Products - Chronopolys - Wikis - Chronopolys Template</description>
+  <dependencies>
+    <dependency>
+     <groupId>com.avane.xwiki.products</groupId>
+     <artifactId>xwiki-product-chronopolys-wiki-administrator</artifactId>
+     <version>${platform.plugin.chronopolys.version}</version>
+     <type>xar</type>
+   </dependency>
+    <dependency>
+      <groupId>com.xpn.xwiki.platform.applications</groupId>
+      <artifactId>xwiki-application-scheduler</artifactId>
+      <version>${platform.plugin.scheduler.version}</version>
+      <type>xar</type>
+    </dependency>
+  </dependencies>
+  <build>
+    <resources>
+      <resource>
+        <directory>${project.build.directory}/classes</directory>
+        <excludes>
+          <exclude>**/Translations.fr</exclude>
+          <exclude>XWiki/Admin</exclude>
+          <exclude>XWiki/XWikiAdminGroup</exclude>
+          <exclude>XWiki/XWikiAllGroup</exclude>          
+          <exclude>XWiki/XWikiPreferences</exclude>          
+          <exclude>ChronoAdmin/AdminGroup</exclude>
+          <exclude>ChronoAdmin/ManagerGroup</exclude>
+          <exclude>ChronoAdmin/ChronoPreferences</exclude>
+          <exlude>MultiWiki/*</exlude>
+          <exlude>ChronoExport/AdministratorExport</exlude>
+          <exlude>ChronoExport/CommonList</exlude>
+          <exlude>ChronoExport/AdministratorFilter</exlude>
+          <exlude>ChronoExport/TemplateExport</exlude>
+          <exlude>ChronoExport/TemplateFilter</exlude>
+          <exlude>ChronoExport/WebHome</exlude>
+          <exlude>Panels/*</exlude>
+        </excludes>
+      </resource>
+    </resources>
+  </build>
 </project>
         

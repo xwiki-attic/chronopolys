@@ -1,0 +1,574 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<xwikidoc>
+<web>XWiki</web>
+<name>WatchListMessage</name>
+<language></language>
+<defaultLanguage></defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator></creator>
+<author>XWiki.Admin</author>
+<customClass></customClass>
+<contentAuthor>XWiki.Admin</contentAuthor>
+<creationDate>1196097284000</creationDate>
+<date>1196759974000</date>
+<contentUpdateDate>1196759974000</contentUpdateDate>
+<version>79.1</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment>Ajout d'objet</comment>
+<minorEdit>false</minorEdit>
+<object>
+<class>
+<name>XWiki.Mail</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<html>
+<contenttype>FullyRenderedText</contenttype>
+<customDisplay></customDisplay>
+<editor>---</editor>
+<name>html</name>
+<number>4</number>
+<prettyName>HTML</prettyName>
+<rows>30</rows>
+<size>80</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</html>
+<language>
+<customDisplay></customDisplay>
+<name>language</name>
+<number>2</number>
+<prettyName>Language</prettyName>
+<size>5</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</language>
+<subject>
+<customDisplay></customDisplay>
+<name>subject</name>
+<number>1</number>
+<prettyName>Subject</prettyName>
+<size>40</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</subject>
+<text>
+<contenttype>FullyRenderedText</contenttype>
+<customDisplay></customDisplay>
+<editor>---</editor>
+<name>text</name>
+<number>3</number>
+<prettyName>Text</prettyName>
+<rows>15</rows>
+<size>80</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</text>
+</class>
+<name>XWiki.WatchListMessage</name>
+<number>0</number>
+<className>XWiki.Mail</className>
+<property>
+<html>#includeInContextNoPre("xwiki:ChronoTemplates.HTMLEmailHeader")
+&lt;span style="font-family:Arial,Helvetica,sans-serif;font-weight:bold;"&gt;Hello $pseudo,&lt;/span&gt;&lt;br/&gt;
+&lt;span style="font-family:Arial,Helvetica,sans-serif;"&gt;&lt;i&gt;This message is sent by Chronopolys. Here#if($documents.size() &gt; 1) are the $documents.size() items that have#else is the item that has#end been created or updated since the last notification :&lt;/i&gt;&lt;span style="font-family:Arial,Helvetica,sans-serif;"&gt;&lt;br/&gt;
+&lt;br/&gt;
+&lt;table width="100%" style="font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:22px;" cellpadding="4px"&gt;
+&lt;tr style="background-color:#B2B2B2;font-weight:bold;padding:6px;color:#fff;"&gt;
+&lt;td style=""&gt;Name&lt;/td&gt;&lt;td&gt;Group&lt;/td&gt;&lt;td&gt;Modified by&lt;/td&gt;&lt;td&gt;Modified on&lt;/td&gt;
+&lt;/tr&gt;
+#foreach ($udocname in $documents)
+#set ($title = "")
+#set ($suffix = "")
+#set ($url = "")
+#set ($udoc = $xwiki.getDocument($udocname))
+#if ($velocityCount % 2 == 0)
+  #set ($color = "#F8F8F9")
+#else
+  #set ($color = "#FDF4F8")
+#end
+## Have to do it this way since we don't have access to $msg in a job's context
+#set ($upr = $xwiki.chronopolys.getProject($udoc.web))
+#set ($prdoc = $xwiki.getDocument("${udoc.web}.WebHome"))
+#set ($containerdoc = $xwiki.getDocument("ProjectContainers.$prdoc.getValue('container')"))
+#set($style=$xwiki.chronopolys.getProjectContainerStyle($prdoc.getValue('container')))
+## ----------------------------------------
+## WEBHOME
+## ----------------------------------------
+#if ($udoc.name == "WebHome")
+  #set ($title = "Modified general informations")
+  #set ($suffix = "&lt;br/&gt;$udoc.codename, activity : $containerdoc.getValue('name'), etc")
+  #set ($url = $prdoc.getExternalURL())
+## ----------------------------------------
+## MEMBERS
+## ----------------------------------------
+#elseif ($udoc.name == "ProjectMembers")
+  #set ($title = "Modified members")
+  #set ($mlist = $upr.getMembers())
+  #set ($suffix = "&lt;br/&gt;The group has now $mlist.size() members : ")
+  #set ($comma = "")
+  #set ($mcount = 0)
+  #foreach ($member in $mlist)        
+    #if ($mcount != 0)
+      #set ($comma = ",")
+    #end
+    #set ($suffix = "$!{suffix}$!{comma} $xwiki.getLocalUserName($member, false)")
+    #set ($mcount = $mcount + 1)
+  #end
+  #set ($url = $prdoc.getExternalURL())
+## ----------------------------------------
+## LEADER
+## ----------------------------------------
+#elseif ($udoc.name == "ProjectLeaders")
+  #set ($title = "Modified group manager")
+  #set ($suffix = "&lt;br/&gt;The group manager is now $xwiki.getLocalUserName($upr.getProjectLeader(), false)")
+  #set ($url = $prdoc.getExternalURL())
+## ----------------------------------------
+## GUESTS
+## ----------------------------------------
+#elseif ($udoc.name == "ProjectGuests")
+  #set ($title = "Modified guests")
+  #set ($url = $prdoc.getExternalURL())
+  #set ($suffix = "&lt;br/&gt;")
+  #if ($upr.isPublic())
+    #set ($suffix = "${suffix}The group is now public")
+  #else
+    #set ($glist = $upr.getGuests())
+    #if ($glist.size() &gt; 0)
+      #set ($suffix = "${suffix}The group has now $glist.size() guests : ")
+      #set ($gcount = 0)
+      #foreach ($guest in $glist)        
+        #if ($gcount != 0)
+          #set ($comma = ",")
+        #end
+        #set ($suffix = "$!{suffix}$!{comma} $xwiki.getLocalUserName($guest, false)")
+        #set ($gcount = $gcount + 1)
+      #end
+    #else
+      #set ($suffix = "The group is now private")
+    #end
+  #end
+## ----------------------------------------
+## PHASES
+## ----------------------------------------
+#elseif ($udoc.name == "ProjectPhases")
+  #set ($title = "Modified phases")
+  #set ($plist = $upr.getPhases())
+  #set ($pcount = 0)
+  #set ($mcount = 0)  
+  #foreach ($phase in $plist)
+    #if ($phase.getProperty("type").getValue() == 0)
+      #set ($pcount = $pcount + 1)
+    #else
+      #set ($mcount = $mcount + 1)
+    #end
+  #end
+  #set ($suffix = "&lt;br/&gt;The group has now ${pcount} phase(s) and ${mcount} milestone(s)")
+  #set ($url = $prdoc.getExternalURL())
+## ----------------------------------------
+## DOCUMENTS
+## ----------------------------------------
+#elseif ($udoc.name == "ProjectDocuments")
+  #set ($title = "Documents")
+  #set ($alist = $udoc.getAttachmentList())
+  #set ($suffix = "&lt;br/&gt;The group has now $alist.size() documents : ")
+  #set ($acount = 0)
+  #set ($comma = "")
+  #foreach ($attach in $alist)
+    #if ($account &gt; 0)
+      #set ($comma = ",")
+    #end
+    #set ($suffix = "${suffix}$!{comma} &lt;a href='${udoc.getAttachmentURL($attach.getFilename())}'&gt;$attach.getFilename()&lt;/a&gt; (${attach.getVersion()})")
+  #end
+  #set ($url = $udoc.getExternalURL())
+## ----------------------------------------
+## PREFERENCES
+## ----------------------------------------
+#elseif ($udoc.name == "WebPreferences")
+  #set ($title = "Group preferences")
+  #set ($url = $prdoc.getExternalURL())
+## ----------------------------------------
+## NOTE
+## ----------------------------------------
+#elseif ($udoc.name == "ProjectNote")
+  #set ($title = "Note")
+  #set ($suffix = "&lt;br/&gt;The note is now $upr.getNote() (${upr.getNotes().size()} voters)")
+  #set ($url = $prdoc.getExternalURL())
+## ----------------------------------------
+## PLOG
+## ----------------------------------------
+#elseif ($upr.isPlogPage($udoc.name))
+  #if ($udoc.version == "1.1")
+    #set ($prefix = "New ")
+  #else
+    #set ($prefix = "Modified ")
+  #end
+  #if ($udoc.type == "post")
+    #set ($title = "${prefix} message : $udoc.getDisplayTitle()")    
+    #set ($suffix = "&lt;br/&gt;Original creator :  $xwiki.getLocalUserName($udoc.getCreator(), false)")
+  #elseif ($udoc.type == "task")
+    #set ($title = "${prefix} task : $udoc.getDisplayTitle()")
+    #set ($suffix = "&lt;br/&gt;Assigned to ${xwiki.getLocalUserName($udoc.getValue('taskassignee'), false)}, $udoc.getValue('taskcompletion') completed (due date : ${xwiki.formatDate($udoc.getValue('taskduedate'), 'dd/MM/yyyy')})")
+  #elseif ($udoc.type == "meeting")
+    #set ($title = "${prefix} meeting : $udoc.getDisplayTitle()")
+    #set ($suffix = "&lt;br/&gt;On ${xwiki.formatDate($udoc.getValue('meetingstart'), 'dd/MM/yyyy')}, from ${xwiki.formatDate($udoc.getValue('meetingstart'), 'HH:mm')} to ${xwiki.formatDate($udoc.getValue('meetingend'), 'HH:mm')}, at ${udoc.meetinglocation}")
+  #end
+  #set ($url = $udoc.getExternalURL())
+## ----------------------------------------
+## WIKI
+## ----------------------------------------
+#elseif ($upr.isWikiPage($udoc.name))
+  #if ($udoc.version == "1.1")
+    #set ($prefix = "New ")
+  #else
+    #set ($prefix = "Modified ")
+  #end
+  #set ($title = "${prefix} wiki page : $udoc.getDisplayTitle()")
+  #set ($suffix = "&lt;br/&gt;Version $udoc.getVersion()")
+  #set ($url = $udoc.getExternalURL())
+## ----------------------------------------
+## DEFAULT (never called)
+## ----------------------------------------
+#else
+  #set ($title = $udoc.getDisplayTitle())
+  #set ($url = $udoc.getExternalURL())
+#end
+&lt;tr style="background-color:${color};"&gt;
+&lt;td&gt;&lt;a href="$url"&gt;$title&lt;/a&gt; $!suffix&lt;/td&gt;
+&lt;td&gt;&amp;nbsp;&amp;nbsp;&lt;span style="background:${style};"&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&amp;nbsp;&amp;nbsp;&lt;a href="$prdoc.getExternalURL()"&gt;$upr.get("name")&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;$xwiki.getLocalUserName($udoc.author, true)&lt;/td&gt;
+&lt;td&gt;$xwiki.formatDate($udoc.date)&lt;/td&gt;
+&lt;/tr&gt;
+#end
+&lt;/table&gt;
+#includeInContextNoPre("xwiki:ChronoTemplates.HTMLEmailFooter")</html>
+</property>
+<property>
+<language>en</language>
+</property>
+<property>
+<subject>[$xwiki.getXWikiPreference("title")] Updates, #set($format="dd/MM/yyyy")#if ($interval == 1)#set($format="${format} HH:mm")#end$xwiki.formatDate($xwiki.date, $format)</subject>
+</property>
+<property>
+<text></text>
+</property>
+</object>
+<object>
+<class>
+<name>XWiki.Mail</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<html>
+<contenttype>FullyRenderedText</contenttype>
+<customDisplay></customDisplay>
+<editor>---</editor>
+<name>html</name>
+<number>4</number>
+<prettyName>HTML</prettyName>
+<rows>30</rows>
+<size>80</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</html>
+<language>
+<customDisplay></customDisplay>
+<name>language</name>
+<number>2</number>
+<prettyName>Language</prettyName>
+<size>5</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</language>
+<subject>
+<customDisplay></customDisplay>
+<name>subject</name>
+<number>1</number>
+<prettyName>Subject</prettyName>
+<size>40</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</subject>
+<text>
+<contenttype>FullyRenderedText</contenttype>
+<customDisplay></customDisplay>
+<editor>---</editor>
+<name>text</name>
+<number>3</number>
+<prettyName>Text</prettyName>
+<rows>15</rows>
+<size>80</size>
+<tooltip></tooltip>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</text>
+</class>
+<name>XWiki.WatchListMessage</name>
+<number>1</number>
+<className>XWiki.Mail</className>
+<property>
+<html>#includeInContextNoPre("xwiki:ChronoTemplates.HTMLEmailHeader")
+&lt;span style="font-family:Arial,Helvetica,sans-serif;font-weight:bold;"&gt;Bonjour $pseudo,&lt;/span&gt;&lt;br/&gt;
+&lt;span style="font-family:Arial,Helvetica,sans-serif;"&gt;&lt;i&gt;Ce message vous est envoyé par Chronopolys. Voici #if($documents.size() &gt; 1) les $documents.size() éléments qui ont été créés ou mis à jour#else l'élément qui a été créé ou mis à jour#end depuis votre dernière notification :&lt;/i&gt;&lt;span style="font-family:Arial,Helvetica,sans-serif;"&gt;&lt;br/&gt;
+&lt;br/&gt;
+&lt;table width="100%" style="font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:22px;" cellpadding="4px"&gt;
+&lt;tr style="background-color:#B2B2B2;font-weight:bold;padding:6px;color:#fff;"&gt;
+&lt;td style=""&gt;Elément&lt;/td&gt;&lt;td&gt;Groupe&lt;/td&gt;&lt;td&gt;Modifié par&lt;/td&gt;&lt;td&gt;Modifié le&lt;/td&gt;
+&lt;/tr&gt;
+#foreach ($udocname in $documents)
+#set ($title = "")
+#set ($suffix = "")
+#set ($url = "")
+#set ($udoc = $xwiki.getDocument($udocname))
+#if ($velocityCount % 2 == 0)
+  #set ($color = "#F8F8F9")
+#else
+  #set ($color = "#FDF4F8")
+#end
+## Have to do it this way since we don't have access to $msg in a job's context
+#set ($upr = $xwiki.chronopolys.getProject($udoc.web))
+#set ($prdoc = $xwiki.getDocument("${udoc.web}.WebHome"))
+#set ($containerdoc = $xwiki.getDocument("ProjectContainers.$prdoc.getValue('container')"))
+#set($style=$xwiki.chronopolys.getProjectContainerStyle($prdoc.getValue('container')))
+## ----------------------------------------
+## WEBHOME
+## ----------------------------------------
+#if ($udoc.name == "WebHome")
+  #set ($title = "Modification des informations générales")
+  #set ($suffix = "&lt;br/&gt;$udoc.codename, activité : $containerdoc.getValue('name'), etc")
+  #set ($url = $prdoc.getExternalURL())
+## ----------------------------------------
+## MEMBERS
+## ----------------------------------------
+#elseif ($udoc.name == "ProjectMembers")
+  #set ($title = "Modification des participants")
+  #set ($mlist = $upr.getMembers())
+  #set ($suffix = "&lt;br/&gt;Le groupe a maintenant $mlist.size() participants : ")
+  #set ($comma = "")
+  #set ($mcount = 0)
+  #foreach ($member in $mlist)        
+    #if ($mcount != 0)
+      #set ($comma = ",")
+    #end
+    #set ($suffix = "$!{suffix}$!{comma} $xwiki.getLocalUserName($member, false)")
+    #set ($mcount = $mcount + 1)
+  #end
+  #set ($url = $prdoc.getExternalURL())
+## ----------------------------------------
+## LEADER
+## ----------------------------------------
+#elseif ($udoc.name == "ProjectLeaders")
+  #set ($title = "Modification du chef de groupe")
+  #set ($suffix = "&lt;br/&gt;Le chef de groupe est maintenant $xwiki.getLocalUserName($upr.getProjectLeader(), false)")
+  #set ($url = $prdoc.getExternalURL())
+## ----------------------------------------
+## GUESTS
+## ----------------------------------------
+#elseif ($udoc.name == "ProjectGuests")
+  #set ($title = "Modification des invités")
+  #set ($url = $prdoc.getExternalURL())
+  #set ($suffix = "&lt;br/&gt;")
+  #if ($upr.isPublic())
+    #set ($suffix = "${suffix}Le groupe est maintenant public")
+  #else
+    #set ($glist = $upr.getGuests())
+    #if ($glist.size() &gt; 0)
+      #set ($suffix = "${suffix}Le groupe a maintenant $glist.size() invités : ")
+      #set ($gcount = 0)
+      #foreach ($guest in $glist)        
+        #if ($gcount != 0)
+          #set ($comma = ",")
+        #end
+        #set ($suffix = "$!{suffix}$!{comma} $xwiki.getLocalUserName($guest, false)")
+        #set ($gcount = $gcount + 1)
+      #end
+    #else
+      #set ($suffix = "Le groupe est maintenant privé")
+    #end
+  #end
+## ----------------------------------------
+## PHASES
+## ----------------------------------------
+#elseif ($udoc.name == "ProjectPhases")
+  #set ($title = "Modification des phases")
+  #set ($plist = $upr.getPhases())
+  #set ($pcount = 0)
+  #set ($mcount = 0)  
+  #foreach ($phase in $plist)
+    #if ($phase.getProperty("type").getValue() == 0)
+      #set ($pcount = $pcount + 1)
+    #else
+      #set ($mcount = $mcount + 1)
+    #end
+  #end
+  #set ($suffix = "&lt;br/&gt;Le groupe a maintenant ${pcount} phase(s) et ${mcount} jalon(s)")
+  #set ($url = $prdoc.getExternalURL())
+## ----------------------------------------
+## DOCUMENTS
+## ----------------------------------------
+#elseif ($udoc.name == "ProjectDocuments")
+  #set ($title = "Modification des documents")
+  #set ($alist = $udoc.getAttachmentList())
+  #set ($suffix = "&lt;br/&gt;Le groupe a maintenant $alist.size() documents : ")
+  #set ($acount = 0)
+  #set ($comma = "")
+  #foreach ($attach in $alist)
+    #if ($account &gt; 0)
+      #set ($comma = ",")
+    #end
+    #set ($suffix = "${suffix}$!{comma} &lt;a href='${udoc.getAttachmentURL($attach.getFilename())}'&gt;$attach.getFilename()&lt;/a&gt; (${attach.getVersion()})")
+  #end
+  #set ($url = $udoc.getExternalURL())
+## ----------------------------------------
+## PREFERENCES
+## ----------------------------------------
+#elseif ($udoc.name == "WebPreferences")
+  #set ($title = "Modification des préférences")
+  #set ($url = $prdoc.getExternalURL())
+## ----------------------------------------
+## NOTE
+## ----------------------------------------
+#elseif ($udoc.name == "ProjectNote")
+  #set ($title = "Note")
+  #set ($suffix = "&lt;br/&gt;La note du groupe est maintenant $upr.getNote() (${upr.getNotes().size()} votants)")
+  #set ($url = $prdoc.getExternalURL())
+## ----------------------------------------
+## PLOG
+## ----------------------------------------
+#elseif ($upr.isPlogPage($udoc.name))
+  #if ($udoc.type == "post")
+    #if ($udoc.version == "1.1")
+      #set ($prefix = "Nouveau")
+    #else
+      #set ($prefix = "Modification du")
+    #end
+    #set ($title = "${prefix} message : $udoc.getDisplayTitle()")    
+    #set ($suffix = "&lt;br/&gt;Créateur original :  $xwiki.getLocalUserName($udoc.getCreator(), false)")
+  #elseif ($udoc.type == "task")
+    #if ($udoc.version == "1.1")
+      #set ($prefix = "Nouvelle")
+    #else
+      #set ($prefix = "Modification de la")
+    #end
+    #set ($title = "${prefix} task : $udoc.getDisplayTitle()")
+    #set ($suffix = "&lt;br/&gt;Confiée à  ${xwiki.getLocalUserName($udoc.getValue('taskassignee'), false)}, complétée à $udoc.getValue('taskcompletion') (échéance : ${xwiki.formatDate($udoc.getValue('taskduedate'), 'dd/MM/yyyy')})")
+  #elseif ($udoc.type == "meeting")
+    #if ($udoc.version == "1.1")
+      #set ($prefix = "Nouveau")
+    #else
+      #set ($prefix = "Modification du")
+    #end
+    #set ($title = "${prefix} rendez-vous : $udoc.getDisplayTitle()")
+    #set ($suffix = "&lt;br/&gt;Le ${xwiki.formatDate($udoc.getValue('meetingstart'), 'dd/MM/yyyy')}, de ${xwiki.formatDate($udoc.getValue('meetingstart'), 'HH:mm')} à ${xwiki.formatDate($udoc.getValue('meetingend'), 'HH:mm')}, à ${udoc.meetinglocation}")
+  #end
+  #set ($url = $udoc.getExternalURL())
+## ----------------------------------------
+## WIKI
+## ----------------------------------------
+#elseif ($upr.isWikiPage($udoc.name))
+  #if ($udoc.version == "1.1")
+    #set ($prefix = "Nouvelle ")
+  #else
+    #set ($prefix = "Modification de la")
+  #end
+  #set ($title = "${prefix} page wiki : $udoc.getDisplayTitle()")
+  #set ($suffix = "&lt;br/&gt;Version $udoc.getVersion()")
+  #set ($url = $udoc.getExternalURL())
+## ----------------------------------------
+## DEFAULT (never called)
+## ----------------------------------------
+#else
+  #set ($title = $udoc.getDisplayTitle())
+  #set ($url = $udoc.getExternalURL())
+#end
+&lt;tr style="background-color:${color};"&gt;
+&lt;td&gt;&lt;a href="$url"&gt;$title&lt;/a&gt; $!suffix&lt;/td&gt;
+&lt;td&gt;&amp;nbsp;&amp;nbsp;&lt;span style="background:${style};"&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/span&gt;&amp;nbsp;&amp;nbsp;&lt;a href="$prdoc.getExternalURL()"&gt;$upr.get("name")&lt;/a&gt;&lt;/td&gt;
+&lt;td&gt;$xwiki.getLocalUserName($udoc.author, true)&lt;/td&gt;
+&lt;td&gt;$xwiki.formatDate($udoc.date)&lt;/td&gt;
+&lt;/tr&gt;
+#end
+&lt;/table&gt;
+#includeInContextNoPre("xwiki:ChronoTemplates.HTMLEmailFooter")</html>
+</property>
+<property>
+<language>fr</language>
+</property>
+<property>
+<subject>[$xwiki.getXWikiPreference("title")] Nouveautés et mises à jour, #set($format="dd/MM/yyyy")#if ($interval == 1)#set($format="${format} HH:mm")#end$xwiki.formatDate($xwiki.date, $format)</subject>
+</property>
+<property>
+<text></text>
+</property>
+</object>
+<object>
+<class>
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<cache>0</cache>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+<name>tags</name>
+<number>1</number>
+<prettyName>Tags</prettyName>
+<relationalStorage>1</relationalStorage>
+<separator> </separator>
+<separators> ,|</separators>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<values></values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>XWiki.WatchListMessage</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<property>
+<tags/>
+</property>
+</object>
+<content>
+</content></xwikidoc>

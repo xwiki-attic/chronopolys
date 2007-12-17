@@ -372,11 +372,14 @@ public class Project
         String currentNotes = this.getRawNotes(context);
         XWikiDocument pr =
             context.getWiki().getDocument(doc.getSpace() + "." + PROJECT_NOTEDOC, context);
+        BaseObject bobj = pr.getObject(CLASS_NOTE);
+        if (bobj == null)
+            bobj = pr.newObject(CLASS_NOTE, context);
         if (!hasGivenNote(context)) {
-            pr.getObject(CLASS_NOTE).set("notes", currentNotes + user + "=" + note + "|", context);
+            bobj.set("notes", currentNotes + user + "=" + note + "|", context);
             pr.setComment("addednote|" + context.getLocalUser());
         } else {
-            pr.getObject(CLASS_NOTE).set("notes", currentNotes.replaceFirst(user + "=[0-5]", user + "=" + note),
+            bobj.set("notes", currentNotes.replaceFirst(user + "=[0-5]", user + "=" + note),
                 context);
             pr.setComment("modifiednote|" + context.getLocalUser());
         }

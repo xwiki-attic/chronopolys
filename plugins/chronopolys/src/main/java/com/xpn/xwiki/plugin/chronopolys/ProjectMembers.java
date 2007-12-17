@@ -50,97 +50,123 @@ public class ProjectMembers {
                 .newDocument(context);
     }
 
+    public int safeObjectCount(XWikiDocument odoc, String classname, XWikiContext context) {
+        int i = 0;
+        Vector objects = odoc.getObjects(classname);
+        if (objects != null) {
+            Iterator it = objects.iterator();
+            while (it.hasNext()) {
+                if (it.next() != null) {
+                    i++;
+                }
+            }            
+        }
+        return i;
+    }
+
+    public BaseObject safeGetObject(XWikiDocument odoc, String classname, int index, XWikiContext context)
+            throws XWikiException {
+        BaseObject bobj = odoc.getObject(classname, index);
+        if (bobj == null) {
+            int onb = safeObjectCount(odoc, classname, context);
+            for (int i = onb; i <= index; i++) {
+                bobj = odoc.newObject(classname, context);
+            }            
+        }
+        return bobj;
+    }
+
     public void setProjectRights(int mode, XWikiContext context) throws XWikiException {
         String space = project.getSpace();
         XWikiDocument prefs =
                 context.getWiki().getDocument(space + "." + "WebPreferences", context);
         /* first prefs global rights entry : project administrators */
-        BaseObject grights = prefs.getObject("XWiki.XWikiGlobalRights", 0);
-        grights.set("groups", "ChronoAdmin.AdminGroup,ChronoAdmin.ManagerGroup," + space + "."
-                + Project.PROJECT_LEADERSDOC, context);
-        grights.set("levels", "admin,view,edit,delete", context);
+        BaseObject grights = safeGetObject(prefs, "XWiki.XWikiGlobalRights", 0, context);
+        grights.setLargeStringValue("groups", "ChronoAdmin.AdminGroup,ChronoAdmin.ManagerGroup," + space + "."
+                + Project.PROJECT_LEADERSDOC);
+        grights.setStringValue("levels", "admin,view,edit,delete");
         grights.setIntValue("allow", 1);
         /* second prefs global rights entry : project members */
-        BaseObject lrights = prefs.getObject("XWiki.XWikiGlobalRights", 1);
-        lrights.set("groups", space + "." + Project.PROJECT_MEMBERSDOC, context);
-        lrights.set("levels", "view,edit", context);
+        BaseObject lrights = safeGetObject(prefs, "XWiki.XWikiGlobalRights", 1, context);
+        lrights.setLargeStringValue("groups", space + "." + Project.PROJECT_MEMBERSDOC);
+        lrights.setStringValue("levels", "view,edit");
         lrights.setIntValue("allow", 1);
         /* third prefs global rights entry : project guests */
-        BaseObject gurights = prefs.getObject("XWiki.XWikiGlobalRights", 2);
+        BaseObject gurights = safeGetObject(prefs, "XWiki.XWikiGlobalRights", 2, context);
         if (gurights == null) {
             gurights = prefs.newObject("XWiki.XWikiGlobalRights", context);
         }
-        gurights.set("groups", space + "." + Project.PROJECT_GUESTSDOC, context);
-        gurights.set("levels", "view", context);
+        gurights.setLargeStringValue("groups", space + "." + Project.PROJECT_GUESTSDOC);
+        gurights.setStringValue("levels", "view");
         gurights.setIntValue("allow", 1);
         context.getWiki().saveDocument(prefs, context);
         /* Note */
         XWikiDocument note =
                 context.getWiki().getDocument(space + "." + Project.PROJECT_NOTEDOC, context);
-        BaseObject nrights = note.getObject("XWiki.XWikiRights", 0);
+        BaseObject nrights = safeGetObject(note, "XWiki.XWikiRights", 0, context);
         if (nrights == null) {
             nrights = note.newObject("XWiki.XWikiRights", context);
         }
-        nrights.set("groups", space + "." + Project.PROJECT_GUESTSDOC + "," +
-                space + "." + Project.PROJECT_MEMBERSDOC, context);
-        nrights.set("levels", "edit", context);
+        nrights.setLargeStringValue("groups", space + "." + Project.PROJECT_GUESTSDOC + "," +
+                space + "." + Project.PROJECT_MEMBERSDOC);
+        nrights.setStringValue("levels", "edit");
         nrights.setIntValue("allow", 1);
         context.getWiki().saveDocument(note, context);
 
-        // TODO insert votes rights here
         /* first & second projetLeaders entry : project creator */
         XWikiDocument leaders =
                 context.getWiki().getDocument(space + "." + Project.PROJECT_LEADERSDOC, context);
-        BaseObject plrights = leaders.getObject("XWiki.XWikiGroups", 0);
+        BaseObject plrights = safeGetObject(leaders, "XWiki.XWikiGroups", 0, context);
         if (plrights.displayView("member", context).equals("")) {
-            plrights.set("member", context.getLocalUser(), context);
+            plrights.setLargeStringValue("member", context.getLocalUser());
         }
-        plrights = leaders.getObject("XWiki.XWikiGroups", 1);
+        plrights = safeGetObject(leaders, "XWiki.XWikiGroups", 1, context);
         if (plrights.displayView("member", context).equals("")) {
-            plrights.set("member", context.getLocalUser(), context);
+            plrights.setLargeStringValue("member", context.getLocalUser());
         }
         context.getWiki().saveDocument(leaders, context);
         /* projectHome rights entry : project administrators */
         XWikiDocument home = context.getWiki().getDocument(space + "." + "WebHome", context);
-        BaseObject prights = home.getObject("XWiki.XWikiRights", 0);
-        prights.set("groups", space + "." + Project.PROJECT_LEADERSDOC +
-                ",ChronoAdmin.AdminGroup,ChronoAdmin.ManagerGroup", context);
-        prights.set("levels", "edit,delete", context);
+        BaseObject prights = safeGetObject(home, "XWiki.XWikiRights", 0, context);
+        prights.setLargeStringValue("groups", space + "." + Project.PROJECT_LEADERSDOC +
+                ",ChronoAdmin.AdminGroup,ChronoAdmin.ManagerGroup");
+        prights.setStringValue("levels", "edit,delete");
         prights.setIntValue("allow", 1);
         context.getWiki().saveDocument(home, context);
         /* projectMembers rights entry : project administrators */
         XWikiDocument members =
                 context.getWiki().getDocument(space + "." + Project.PROJECT_MEMBERSDOC, context);
-        BaseObject mrights = members.getObject("XWiki.XWikiRights", 0);
-        mrights.set("groups", space + "." + Project.PROJECT_LEADERSDOC +
-                ",ChronoAdmin.AdminGroup,ChronoAdmin.ManagerGroup", context);
-        mrights.set("levels", "edit,delete", context);
+        BaseObject mrights = safeGetObject(members, "XWiki.XWikiRights", 0, context);
+        mrights.setLargeStringValue("groups", space + "." + Project.PROJECT_LEADERSDOC +
+                ",ChronoAdmin.AdminGroup,ChronoAdmin.ManagerGroup");
+        mrights.setStringValue("levels", "edit,delete");
         mrights.setIntValue("allow", 1);
         context.getWiki().saveDocument(members, context);
         /* projectPhases rights entry : project administrators */
         XWikiDocument phases =
                 context.getWiki().getDocument(space + "." + Project.PROJECT_PHASESDOC, context);
-        BaseObject phrights = phases.getObject("XWiki.XWikiRights", 0);
+        BaseObject phrights = safeGetObject(phases, "XWiki.XWikiRights", 0, context);
         if (phrights == null) {
             phrights = phases.newObject("XWiki.XWikiRights", context);
         }
-        phrights.set("groups", space + "." + Project.PROJECT_LEADERSDOC +
-                ",ChronoAdmin.AdminGroup,ChronoAdmin.ManagerGroup", context);
-        phrights.set("levels", "edit,delete", context);
-        phrights.setIntValue("allow", 1);
+        phrights.setLargeStringValue("groups", space + "." + Project.PROJECT_LEADERSDOC +
+                ",ChronoAdmin.AdminGroup,ChronoAdmin.ManagerGroup");
+        phrights.setStringValue("levels", "edit,delete");
+        phrights.setIntValue("allow", 1);        
         context.getWiki().saveDocument(phases, context);
     }
 
     public String getProjectCreator(XWikiContext context) throws XWikiException {
         XWikiDocument leadersDoc = context.getWiki()
                 .getDocument(project.getSpace() + "." + Project.PROJECT_LEADERSDOC, context);
-        return leadersDoc.getObject("XWiki.XWikiGroups", 1).displayView("member", context);
+        BaseObject lobj = safeGetObject(leadersDoc, "XWiki.XWikiGroups", 1, context);
+        return lobj.displayView("member", context);
     }
 
     public void setProjectCreator(String member, XWikiContext context) throws XWikiException {
         XWikiDocument leadersDoc = context.getWiki()
                 .getDocument(project.getSpace() + "." + Project.PROJECT_LEADERSDOC, context);
-        leadersDoc.getObject("XWiki.XWikiGroups", 1).set("member", member, context);
+        safeGetObject(leadersDoc, "XWiki.XWikiGroups", 1, context).set("member", member, context);
         leadersDoc.setComment("setprojectcreator|" + member);
         context.getWiki().saveDocument(leadersDoc, context);
     }
@@ -148,13 +174,14 @@ public class ProjectMembers {
     public String getProjectLeader(XWikiContext context) throws XWikiException {
         XWikiDocument leadersDoc = context.getWiki()
                 .getDocument(project.getSpace() + "." + Project.PROJECT_LEADERSDOC, context);
-        return leadersDoc.getObject("XWiki.XWikiGroups", 0).displayView("member", context);
+        BaseObject lobj = safeGetObject(leadersDoc, "XWiki.XWikiGroups", 0, context);
+        return lobj.displayView("member", context);
     }
 
     public void setProjectLeader(String member, XWikiContext context) throws XWikiException {
         XWikiDocument leadersDoc = context.getWiki()
                 .getDocument(project.getSpace() + "." + Project.PROJECT_LEADERSDOC, context);
-        leadersDoc.getObject("XWiki.XWikiGroups", 0).set("member", member, context);
+        safeGetObject(leadersDoc, "XWiki.XWikiGroups", 0, context).set("member", member, context);
         leadersDoc.setComment("setprojectleader|" + member);
         context.getWiki().saveDocument(leadersDoc, context);
     }
@@ -177,10 +204,8 @@ public class ProjectMembers {
         /* nb = projectMembers.createNewObject(ProjectNotifications.CLASS_NOTIFICATIONS);
         obj = projectMembers.getObject(ProjectNotifications.CLASS_NOTIFICATIONS, nb);
         obj.set("member", name);
-        obj.set("notifications", ProjectNotifications.DEFAULT_PROJECT_NOTIFICATIONS);
-        projectMembers.save("addmember|" + name); */
-        WatchListPlugin wlplugin = (WatchListPlugin)context.getWiki().getPlugin("watchlist", context);
-        wlplugin.addWatchedElement(context.getLocalUser(), project.getSpace(), true, context);
+        obj.set("notifications", ProjectNotifications.DEFAULT_PROJECT_NOTIFICATIONS); */
+        projectMembers.save("addmember|" + name);
 
         // invalidate ChronopolysPlugin caches
         project.getPlugin().getProjectManager().flushProjectsCache();
@@ -196,6 +221,9 @@ public class ProjectMembers {
                     .sendNotification(newmember, new ProjectApi(project, context),
                             new Document(context.getWiki().getDocument(name, context), context),
                             ProjectNotifications.NOTIFICATION_PROJECT_INVITATION, context);
+            /* Add project space to user's watchlist */
+            WatchListPlugin wlplugin = (WatchListPlugin)context.getWiki().getPlugin("watchlist", context);
+            wlplugin.addWatchedElement(name, project.getSpace(), true, context);
             /* notify subscribers */
             /* project.getPlugin().getNotificationManager()
                 .sendNotification(rcpt, new ProjectApi(project, context),

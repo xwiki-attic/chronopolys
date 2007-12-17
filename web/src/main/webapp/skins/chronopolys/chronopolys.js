@@ -768,7 +768,7 @@ function calInitDates()
             // } else
             // {
                 /* don't push the milestone end in the list */
-               //  pushit = false;
+                //pushit = false;
             // }
         }
         if (pushit) {
@@ -780,6 +780,7 @@ function calInitDates()
             regDatesList.push(data);
         }
     }
+
     /* display (or not) the "add phase here" button */
     for (var i = 0; i < regDatesList.length - 1; i++) {
         var evalit = true;
@@ -1153,7 +1154,7 @@ function container_refresh_action(id, params) {
 
     /* top level folder */
     if (id == '' || id == 'axis_all') {
-        reloadDashboard(params);        
+        reloadDashboard(params);
         return;
     }
 
@@ -1316,7 +1317,7 @@ function processInfoBubble(id, uid)
     coords.x = coords.x + 8;
     coords.y = coords.y + 2;
     var bubble = Timeline.Graphics.createBubbleForPoint(window.document, coords.x, coords.y, 300, 100);
-    bubble.content.innerHTML = $(uid + '_info').innerHTML;
+    bubble.content.innerHTML = $(uid + '_input_desc').firstChild.value;
 }
 
 function switchClass(id)
@@ -1332,19 +1333,18 @@ function switchClass(id)
 // function to delete a user from Administration
 function deleteUser(id, fullname)
 {
-    var userspace = fullname.substring(0, fullname.indexOf('.'));
-    var userpage = fullname.substring(fullname.indexOf('.') + 1);
-    
-    var url = getXWikiURL(userspace, userpage, "delete", "confirm=1");
-
-    new Ajax.Request(url, {
-        method: 'get',
-
-        onSuccess: function()
-        {
-            $(id).parentNode.removeChild($(id));
-        }
-    });
+    if(confirm(confirmdeleteuser)) {
+        var userspace = fullname.substring(0, fullname.indexOf('.'));
+        var userpage = fullname.substring(fullname.indexOf('.') + 1);
+        var url = getXWikiURL(userspace, userpage, "delete", "confirm=1");
+        new Ajax.Request(url, {
+            method: 'get',
+            onSuccess: function()
+            {
+                $(id).parentNode.removeChild($(id));
+            }
+        });
+    }
 }
 
 
@@ -1377,3 +1377,4 @@ function setdisplayednote(note) {
  function initstars(initialnote) {
       setdisplayednote(initialnote);
  }
+
