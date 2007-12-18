@@ -95,7 +95,7 @@ $doc.display("role", $obj)&lt;/td&gt;
 #roundedtitletop($msg.get("addmember")) 
 
 #set ($members = $xwiki.chronopolys.getProject($doc.web).getMembers())
-#set ($users=$xwiki.chronopolys.getXWikiUsers())
+#set ($users=$xwiki.rightsmanager.usersApi.getAllLocalUsersNames())
 #if ($members.size() &lt; $users.size())
 &lt;form name="addusertogroup" action="$doc.getURL("view")" method="post"&gt;
 &lt;input type="hidden" id="do" name="do" value="addmember" /&gt;
@@ -103,7 +103,8 @@ $doc.display("role", $obj)&lt;/td&gt;
 ## &lt;input type="hidden" id="xredirect" name="xredirect" value="$redirect" /&gt;
 $msg.get("user") : 
 &lt;select id="member" name="member"&gt;
-#foreach ($user in $xwiki.chronopolys.getXWikiUsers())
+ ####foreach ($user in $xwiki.chronopolys.getXWikiUsers())
+ #foreach($user in $users)
   #if (!$members.contains($user))
     &lt;option value="$user"&gt;#displayUserFullName($user)&lt;/option&gt;
   #end
