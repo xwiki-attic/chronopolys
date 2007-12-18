@@ -79,14 +79,14 @@
 #if ($xwiki.hasAccessLevel("edit"))
 #roundedtitletop($msg.get("addmembertogroup")) 
 
-#set ($users=$xwiki.chronopolys.getXWikiUsers())
+#set ($users=$xwiki.rightsmanager.getUsersApi().getAllLocalUsersNames())
 #if ($members.size() &lt; $users.size())
 &lt;form name="addusertogroup" action="$doc.getURL("objectadd")" method="post"&gt;
 &lt;input type="hidden" id="classname" name="classname" value="XWiki.XWikiGroups" /&gt;
 &lt;input type="hidden" id="xredirect" name="xredirect" value="$doc.getURL()" /&gt;
 $msg.get("user") : 
 &lt;select id="XWiki.XWikiGroups_member" name="XWiki.XWikiGroups_member"&gt;
-#foreach ($user in $xwiki.chronopolys.getXWikiUsers())
+#foreach ($user in $users)
   #if (!$members.contains($user) &amp;&amp; $user != "XWiki.Admin")
     &lt;option value="$user"&gt;#displayUserFullName($user)&lt;/option&gt;
   #end
