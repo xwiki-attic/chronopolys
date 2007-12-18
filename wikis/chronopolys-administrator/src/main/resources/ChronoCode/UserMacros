@@ -105,6 +105,14 @@
   #if ($projects.size()&lt;1)
     ## TODO : msg
   #else
+  ## order projects alphabetically
+  #set($projs = $xwiki.arrayList)
+  #foreach($project in $projects)
+    #set ($pobj=$xwiki.getDocument("${project}.WebHome").getObject("ChronoClasses.ProjectClass"))
+    #set ($pname=$pobj.display("name", "view"))
+    #set ($discard=$projs.add($pname))
+  #end
+  #set($projs=$xwiki.sort($projs))
     &lt;table width="162px"&gt;
       #foreach($project in $projects)
         #set ($pobj=$xwiki.getDocument("${project}.WebHome").getObject("ChronoClasses.ProjectClass"))
@@ -112,7 +120,8 @@
         &lt;td class="leftpanelcolumn" style="background-color:$xwiki.chronopolys.getProjectContainerStyle($pobj.display("container", "view"));border-color:$border-color;"&gt;
         &lt;/td&gt;
         &lt;td style="padding-left:3px;"&gt;
-          [$pobj.display("name", "view")&gt;${project}.WebHome]
+           #set($vc=$velocityCount - 1)
+          [$projs.get($vc)&gt;${project}.WebHome]
         &lt;/td&gt;
         &lt;/tr&gt;
       #end
