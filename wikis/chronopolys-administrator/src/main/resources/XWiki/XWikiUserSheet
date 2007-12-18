@@ -58,6 +58,7 @@
 #set ($rssicon = $xwiki.getSkinFile("icons/black-rss-mini.png"))
 #if ($context.action=="view"&amp;&amp;$context.user==$doc.fullName)
 
+
 &lt;div id="project_header" style="background-color:#ddd;margin: 0 0 0 -18px;font-weight:bold;color:#D1278B;"&gt;
 &lt;span style="float:left;text-transform:uppercase;"&gt;$msg.get('myprofile')&lt;/span&gt;
 &lt;span class="rounded-actions"&gt;
@@ -72,70 +73,84 @@
       &lt;table width="100%"&gt;
         &lt;tr&gt;
         &lt;td&gt;$msg.get("firstname")&lt;/td&gt;
+
         &lt;td&gt;$doc.display("first_name")&lt;/td&gt;
         &lt;/tr&gt;
         &lt;tr&gt;
         &lt;td&gt;$msg.get("lastname")&lt;/td&gt;
         &lt;td&gt;$doc.display("last_name")&lt;/td&gt;
+
         &lt;/tr&gt;
         &lt;tr&gt;
         &lt;td&gt;$msg.get("dept")&lt;/td&gt;
         &lt;td&gt;$doc.display("dept")&lt;/td&gt;
         &lt;/tr&gt;
+
         &lt;tr&gt;
         &lt;td&gt;$msg.get("role")&lt;/td&gt;
         &lt;td&gt;$doc.display("role")&lt;/td&gt;
         &lt;/tr&gt;
         &lt;tr&gt;
+
         &lt;td&gt;$msg.get("workphone")&lt;/td&gt;
         &lt;td&gt;$doc.display("workphone")&lt;/td&gt;
         &lt;/tr&gt;
         &lt;tr&gt;
         &lt;td&gt;$msg.get("cellphone")&lt;/td&gt;
+
         &lt;td&gt;$doc.display("cellphone")&lt;/td&gt;
         &lt;/tr&gt;
         &lt;tr&gt;
         &lt;td&gt;$msg.get("fax")&lt;/td&gt;
         &lt;td&gt;$doc.display("fax")&lt;/td&gt;
+
         &lt;/tr&gt;
         &lt;tr&gt;
         &lt;td&gt;$msg.get("email")&lt;/td&gt;
         &lt;td&gt;$doc.display("email")&lt;/td&gt;
         &lt;/tr&gt;
+
         &lt;tr&gt;&lt;td style="width:80px;"&gt;&amp;nbsp;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;
       &lt;/table&gt;
     #chronopanelfooter()
     #if ($context.action == "inline"&amp;&amp;($context.user==$doc.fullName||$isChronoAdmin))
       #chronopanelheader("mypassword")
         &lt;table width="100%"&gt;
+
         &lt;tr&gt;
         &lt;td&gt;$msg.get("myloginis")&lt;/td&gt;
         &lt;td&gt;$doc.name&lt;/td&gt;
         &lt;/tr&gt;
         &lt;tr&gt;
+
         &lt;td&gt;$msg.get("newpasswd1")&lt;/td&gt;
         &lt;td&gt;&lt;input type="password" id="newpasswd1" /&gt;&lt;/td&gt;
         &lt;/tr&gt;
         &lt;tr&gt;
         &lt;td&gt;$msg.get("newpasswd2")&lt;/td&gt;
+
         &lt;td&gt;&lt;input type="password" id="newpasswd2" /&gt;&lt;/td&gt;
         &lt;/tr&gt;
         &lt;tr&gt;
         &lt;td colspan="2"&gt;&lt;span class="buttonwrapper" style="clear:right;"&gt;
         &lt;a onclick="passwdchange()"&gt;$msg.get("changepassword")&lt;/a&gt;
+
         &lt;/span&gt;
         &lt;div id="passwderror" style="font-weight:bold;color:red;display:block;clear:both;"&gt;&lt;/div&gt;
         &lt;div id="passwdsuccess" style="font-weight:bold;color:green;display:block;clear:both;"&gt;&lt;/div&gt;
         &lt;/td&gt;&lt;/tr&gt; 
         &lt;/table&gt;
+
       #chronopanelfooter()
     #end
   &lt;/div&gt;
   &lt;div id="projectcol_2"&gt;
+    #if ($context.user==$doc.fullName)
       #chronopanelheader("preferences")
         &lt;table width="100%"&gt;
           #if ($context.user==$doc.fullName &amp;&amp; $xwiki.chronopolys.getChronoPreference("multilingual") == 1)
           &lt;tr&gt;
+
             &lt;td&gt;$msg.get("chosenlanguage")&lt;/td&gt;
             &lt;td&gt;
               #set ($lang = $doc.display("chronolanguage"))
@@ -146,6 +161,7 @@
               #end
             &lt;/td&gt;
           &lt;/tr&gt;
+
           #end
           &lt;tr&gt;
             &lt;td&gt;$msg.get("notifications")&lt;/td&gt;
@@ -153,8 +169,10 @@
               $doc.display("interval")
             &lt;/td&gt;
           &lt;/tr&gt;
+
         &lt;/table&gt;
       #chronopanelfooter()
+    #end
 
     #if ($context.action == "view"&amp;&amp;$context.user==$doc.fullName)
       #chronopanelheader("myprojects")
@@ -167,12 +185,13 @@
       #chronopanelheader("myfeeds")
         &lt;table width="100%"&gt;
           &lt;tr&gt;
-            &lt;td&gt;&lt;img src='${rssicon}' style='height:14px;width:16px;' /&gt;&lt;/td&gt;
+
             &lt;td&gt;
               #set ($rssurl = $xwiki.getURL('ChronoRSS.NextDeadlines', 'view', 'xpage=rdf'))              
-              &lt;a href='${rssurl}&amp;${context.localUser}' target='_blank'&gt;$msg.get("mydeadlines")&lt;/a&gt;&lt;br/&gt;
+              &lt;img src='${rssicon}' style='height:14px;width:16px;vertical-align:middle;'/&gt;&lt;a href='${rssurl}&amp;${context.localUser}' target='_blank'&gt;$msg.get("mydeadlines")&lt;/a&gt;&lt;br/&gt;
               #set ($rssurl = $xwiki.getURL('ChronoRSS.LastModifications', 'view', 'xpage=rdf'))              
-              &lt;a href='${rssurl}&amp;${context.localUser}' target='_blank'&gt;$msg.get("lastmodifications")&lt;/a&gt;
+              &lt;img src='${rssicon}' style='height:14px;width:16px;vertical-align:middle;'/&gt;&lt;a href='${rssurl}&amp;${context.localUser}' target='_blank'&gt;$msg.get("lastmodifications")&lt;/a&gt;
+
             &lt;/td&gt;
           &lt;/tr&gt;
         &lt;/table&gt;
@@ -190,5 +209,6 @@
     #end
   &lt;/div&gt;
   &lt;div class="clearall"&gt;&lt;/div&gt;
+
 &lt;/div&gt;</content>
 </xwikidoc>
