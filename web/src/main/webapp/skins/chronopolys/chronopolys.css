@@ -1080,3 +1080,9 @@ table.grid {
 #centeredmedium .roundedcontent, #centeredmedium .rounded {
   margin-right:12px;
 }
+
+.centeredcustom {
+  width:610px; 
+  margin:0px auto;
+  text-align:center;
+}
