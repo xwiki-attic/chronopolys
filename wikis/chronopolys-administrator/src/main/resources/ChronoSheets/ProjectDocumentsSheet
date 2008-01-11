@@ -165,7 +165,7 @@ ${Msz}Mb
           &lt;span class="version"&gt;&lt;a href="$doc.getAttachmentURL("${attach.filename}", "viewattachrev")" title="$msg.get("viewattachmenthistory")"&gt;$attach.version&lt;/a&gt;&lt;/span&gt;
           &lt;div class="meta"&gt;
           &lt;span class="publisher"&gt;$msg.get("PostedBy"): &lt;span&gt;$xwiki.getLocalUserName($attach.author)&lt;/span&gt;&lt;/span&gt;
-          &lt;span class="date"&gt;$msg.get("on") $!xwiki.formatDate($attach.date, "dd/MM/yyyy")&lt;/span&gt;
+          &lt;span class="date"&gt;$msg.get("on") #if($context.language=="en") $!xwiki.formatDate($attach.date, "MM/dd/yyyy") #else $!xwiki.formatDate($attach.date, "dd/MM/yyyy") #end&lt;/span&gt;
           &lt;span class="size"&gt;(#dynamicsize($attach.filesize))&lt;/span&gt;
           &lt;/div&gt;
         &lt;/div&gt;
