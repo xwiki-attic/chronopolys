@@ -5,11 +5,11 @@
 #template("startpage.vm")
 <div class="main layoutsubsection">
 #if ($xwiki.isReadOnly())
-  <div id="centeredmedium">
+  <div id="centeredcustom">
     #roundedmediumtitletop($msg.get("error"))
       <p class="xwikimessage">$msg.get("readonly")</p>
 #else
-<div class="centered">
+<div class="centeredcustom">
     #roundedmediumtitletop($msg.get("error"))
       <p class="xwikimessage">$msg.get("notallowed")</p>
 #end
