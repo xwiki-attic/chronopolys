@@ -33,7 +33,7 @@ Timeline.XmlHttp._onReadyStateChange = function(xmlhttp, fError, fDone) {
                 }
             }
         } catch (e) {
-            Timeline.Debug.exception(e);
+            /*Timeline.Debug.exception(e);*/
         }
         break;
     }
@@ -89,7 +89,7 @@ Timeline.XmlHttp._createRequest = function() {
             
             return o;
         } catch (e) {
-            throw new Error("Failed to create an XMLHttpRequest object");
+            /*throw new Error("Failed to create an XMLHttpRequest object");*/
         }
     }
 };
@@ -128,6 +128,6 @@ Timeline.XmlHttp._forceXML = function(xmlhttp) {
     try {
         xmlhttp.overrideMimeType("text/xml");
     } catch (e) {
-        xmlhttp.setrequestheader("Content-Type", "text/xml");
+        /*xmlhttp.setrequestheader("Content-Type", "text/xml");*/
     }
 };

@@ -87,6 +87,6 @@
             }
         }
     } catch (e) {
-        alert(e);
+       /* alert(e); */
     }
 })();

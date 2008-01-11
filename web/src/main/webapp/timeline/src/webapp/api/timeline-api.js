@@ -239,6 +239,6 @@ Timeline.Platform = new Object();
         Timeline.Platform.serverLocale = defaultServerLocale;
         Timeline.Platform.clientLocale = defaultClientLocale;
     } catch (e) {
-        alert(e);
+        /* alert(e); */
     }
 })();

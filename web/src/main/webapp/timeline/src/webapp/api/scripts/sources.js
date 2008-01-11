@@ -239,7 +239,7 @@ Timeline.DefaultEventSource.prototype._fire = function(handlerName, args) {
             try {
                 listener[handlerName].apply(listener, args);
             } catch (e) {
-                Timeline.Debug.exception(e);
+                /*Timeline.Debug.exception(e);*/
             }
         }
     }
