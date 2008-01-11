@@ -66,10 +66,12 @@ $response.sendRedirect($doc.getURL())
 
 #set($redirect = $xwiki.getRequestURL())
 #set($projectMembers = $doc.getObjects("XWiki.XWikiGroups"))
+## sort by last name
+#sortobjsbylastname($projectMembers)   
 &lt;table width="400px" class="projetmembers"&gt;
 #foreach($obj in $projectMembers)
 &lt;tr class="underlined" style="height:25px;"&gt;
-#set ($memberpage=$doc.display("member", $obj))
+#set($memberpage=$doc.display("member", $obj))
 &lt;td&gt;$xwiki.getLocalUserName($memberpage)&lt;/td&gt;
 &lt;td&gt;
 #if ($memberpage == $projectLeader)
@@ -96,6 +98,8 @@ $doc.display("role", $obj)&lt;/td&gt;
 
 #set ($members = $xwiki.chronopolys.getProject($doc.web).getMembers())
 #set ($users=$xwiki.rightsmanager.usersApi.getAllLocalUsersNames())
+## sort by last name
+#sortdocnamesbylastname($users)
 #if ($members.size() &lt; $users.size())
 &lt;form name="addusertogroup" action="$doc.getURL("view")" method="post"&gt;
 &lt;input type="hidden" id="do" name="do" value="addmember" /&gt;
@@ -103,12 +107,12 @@ $doc.display("role", $obj)&lt;/td&gt;
 ## &lt;input type="hidden" id="xredirect" name="xredirect" value="$redirect" /&gt;
 $msg.get("user") : 
 &lt;select id="member" name="member"&gt;
- ####foreach ($user in $xwiki.chronopolys.getXWikiUsers())
  #foreach($user in $users)
-  #if (!$members.contains($user))
+    #if(!$members.contains($user)))
     &lt;option value="$user"&gt;#displayUserFullName($user)&lt;/option&gt;
-  #end
-#end
+
+    #end
+ #end
 &lt;/select&gt;
 &lt;a class="addlink" href="" onclick="document.addusertogroup.submit();return false;" title="$msg.get("addusertogroup")" style="cursor:pointer;"&gt;$msg.get("addtomembers")&lt;/a&gt;&lt;/td&gt;
 &lt;/a&gt;
@@ -128,8 +132,8 @@ $msg.get("nomorewikiuserstoadd")
 $msg.get("user") : 
 &lt;select id="XWiki.XWikiGroups_0_member" name="XWiki.XWikiGroups_0_member"&gt;
   #foreach($user in $projectMembers)
-    #set ($userName = $doc.display("member", $user))
-    #if ($userName != $projectLeader)
+    #set($userName = $doc.display("member", $user))
+    #if($userName != $projectLeader)
       &lt;option value="$userName"&gt;#displayUserFullName($userName)&lt;/option&gt;
     #end
   #end
