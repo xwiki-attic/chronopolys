@@ -73,6 +73,8 @@ $response.sendRedirect($doc.getURL())
 #if (!$project.isPublic())
 #set($redirect = $xwiki.getRequestURL())
 #set($projectGuests = $doc.getObjects("XWiki.XWikiGroups"))
+## sort by last name
+#sortobjsbylastname($projectGuests)  
 &lt;table width="400px" class="projetmembers"&gt;
 #if ($projectGuests.size()==0)
 $msg.get("noguest")
@@ -101,6 +103,8 @@ $msg.get("projectispublicextended")
 #set ($guests = $xwiki.chronopolys.getProject($doc.web).getGuests())
 #set ($members = $xwiki.chronopolys.getProject($doc.web).getMembers())
 #set ($users = $xwiki.rightsmanager.usersApi.getAllLocalUsersNames())
+## sort by last name
+#sortdocnamesbylastname($users) 
 #if ($guests.size() &lt; $users.size())
 &lt;table style="width:100%;"&gt;
 &lt;tr&gt;&lt;td&gt;
@@ -108,7 +112,7 @@ $msg.get("projectispublicextended")
 &lt;input type="hidden" id="do" name="do" value="addguest" /&gt;
 $msg.get("user") : 
 &lt;select id="guest" name="guest"&gt;
-#foreach ($user in $users)
+ #foreach($user in $users)
   #if (!$guests.contains($user) &amp;&amp; !$members.contains($user))
     &lt;option value="$user"&gt;#displayUserFullName($user)&lt;/option&gt;
   #end
