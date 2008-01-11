@@ -288,25 +288,7 @@ $doc.display("content", $obj)
 </span></div>
 #end
 
-###
-###    Message box
-###
-#macro(xwikimessageboxstart $title $message)
-    <div class="centered">
-    <fieldset class="xwikimessage">
-      <legend>$title</legend>
-      <p class="xwikimessage">$message</p>
-#end
-#macro(xwikimessageboxend)
-    </fieldset>
-    </div>
-#end
 
-#macro(xwikimessagebox $title $message $urlyes $urlno $msgyes $msgno)
-#xwikimessageboxstart($title $message)
-      <div class="buttons"><a href="$urlyes"><input type="button" class="button" value="$msgyes" onclick="location='$urlyes'; return false;"/></a><a href="$urlno"><input type="button" class="button" value="$msgno" onclick="location='$urlno'; return false;"/></a></div>
-#xwikimessageboxend()
-#end
 
 #macro(xwikimessageboxfield $fielddoc $fieldname $fieldtext $html)
 <div class="xmblabel">$fieldtext</div>
@@ -475,4 +457,54 @@ $doc.display("content", $obj)
 <b class="b1b"></b>
 </b>
 </div>
+#end
+        
+### capitalizes a string 
+#macro(capitalize $string)
+ #set($fl = $string.substring(0,1).toUpperCase()) ## make first letter uppercase
+ #set($nl = $string.substring(1)) 
+ #set($string = $fl + $nl)
+#end
+ 
+### sort by last name an array of objects representing users
+### the idea is to make a map with objects having lastnames as keys, sort the keys and retrieve the objects ordered
+#macro(sortobjsbylastname $objects)
+#set($temp = $xwiki.arrayList)
+#set($objmap = $xwiki.hashMap)
+#set($objkeys = $xwiki.arrayList)
+#foreach($obj in $objects)
+   #set($memberpage = $doc.display("member", $obj))
+   #set($localname = $xwiki.getLocalUserName($memberpage, false))
+   #set($indx = $localname.indexOf(" "))
+   #set($indx = $indx + 1)
+   #set($key = $localname.substring($indx))
+   #capitalize($key) ## the last name 
+   #set($discard = $objkeys.add($key))   
+   #set($discard = $objmap.put($key, $obj))
+#end
+#set($objkeys = $xwiki.sort($objkeys))  
+#foreach($k in $objkeys)
+   #set($discard = $temp.add($objmap.get($k)))
+#end
+## replace the array of objects with the sorted one
+#set($objects = $temp)
+#end
+        
+### sort by last name an array of document names representing users
+#macro(sortdocnamesbylastname $docnames)
+#set($temp = $xwiki.arrayList)
+#set($docnamesmap = $xwiki.hashMap)
+#set($docnameskeys = $xwiki.arrayList)
+#foreach($docname in $docnames)
+    #set($userdoc = $xwiki.getDocument($docname))
+    #set($key = $userdoc.get("last_name"))
+    #capitalize($key)
+    #set($discard = $docnameskeys.add($key))
+    #set($discard = $docnamesmap.put($key, $docname))
+#end
+#set($docnameskeys = $xwiki.sort($docnameskeys))
+#foreach($k in $docnameskeys)
+   #set($discard = $temp.add($docnamesmap.get($k)))
+#end
+#set($docnames = $temp)
 #end
