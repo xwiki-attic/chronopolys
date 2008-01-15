@@ -79,7 +79,7 @@
 #if ($xwiki.hasAccessLevel("edit"))
 #roundedtitletop($msg.get("addmembertogroup")) 
 
-#set ($users=$xwiki.rightsmanager.getUsersApi().getAllLocalUsersNames())
+#set ($users=$xwiki.rightsmanager.usersApi.getAllLocalUsersNames())
 #if ($members.size() &lt; $users.size())
 &lt;form name="addusertogroup" action="$doc.getURL("objectadd")" method="post"&gt;
 &lt;input type="hidden" id="classname" name="classname" value="XWiki.XWikiGroups" /&gt;
