@@ -508,3 +508,35 @@ $doc.display("content", $obj)
 #end
 #set($docnames = $temp)
 #end
+  
+### allow / deny allusers / allmanagers to add new users
+#macro(registration $allow $groupname)
+#if($allow == true)
+  #set($found = false)
+  #set($pdoc = $xwiki.getDocument("XWiki.XWikiPreferences"))
+  #foreach($obj in $pdoc.getObjects("XWiki.XWikiGlobalRights"))
+    #set($groups = "$obj.getProperty('groups').getValue()")
+    #set($levels = "$obj.getProperty('levels').getValue()")
+    #if($groups.matches("${groupname},?") && $levels.indexOf("register") >= 0) ## found the register right
+      #set($found = true)
+    #end
+  #end
+  #if($found == false)
+    #set($robj = $pdoc.newObject("XWiki.XWikiGlobalRights"))
+    #set($ret = $robj.set('levels', 'register'))
+    #set($ret = $robj.set('groups', $groupname))
+    #set($ret = $robj.set('allow', '1'))
+    #set($ret = $pdoc.save())
+  #end
+#else ## $allow is false
+  #set($pdoc = $xwiki.getDocument("XWiki.XWikiPreferences"))
+  #foreach($obj in $pdoc.getObjects("XWiki.XWikiGlobalRights"))
+    #set($groups = "$obj.getProperty('groups').getValue()")
+    #set($levels = "$obj.getProperty('levels').getValue()")
+    #if($groups.matches("${groupname},?") && $levels.indexOf("register") >= 0) ## found the register right
+      #set($ret = $pdoc.removeObject($obj))
+      #set($ret = $pdoc.save())
+    #end
+  #end
+#end
+#end
