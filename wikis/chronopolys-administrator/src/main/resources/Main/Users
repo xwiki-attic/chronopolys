@@ -56,7 +56,7 @@
 </object>
 <content>#includeMacros("ChronoCode.UserMacros")
 
-#if($isChronoAdmin||$isChronoManager)
+#if($xwiki.hasAccessLevel("register"))
 #includeInContext("ChronoCode.CreateUser")
 #end
 
