@@ -64,7 +64,7 @@
     $eventdoc.getDocument().setCreator($eventdoc.getAuthor())
   #end
   $eventdoc.save()
-  $xwiki.chronopolys.getProject($eventdoc.web).sendNotification($request.member, $eventdoc, "ChronoTemplates.MeetingInvitationNotificationEmail")
+  $xwiki.chronopolys.getProject($eventdoc.web).sendNotification($request.member, $eventdoc, "xwiki:ChronoTemplates.MeetingInvitationNotificationEmail")
 #elseif($request.action=="guestdel")
   #set($rsvpobj=$eventdoc.getObject("ChronoClasses.ProjectArticleRsvpClass", $xwiki.parseInt($request.rsvpnb)))
   #set($resp=$eventdoc.removeObject($rsvpobj))
