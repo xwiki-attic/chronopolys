@@ -28,7 +28,7 @@
   <parent>
     <groupId>com.xpn.xwiki.platform</groupId>
     <artifactId>xwiki</artifactId>
-    <version>7-SNAPSHOT</version>
+    <version>9-SNAPSHOT</version>
   </parent>
   <groupId>com.avane.xwiki.products</groupId>
   <artifactId>xwiki-product-chronopolys-parent</artifactId>
