@@ -9,18 +9,20 @@
 <parent></parent>
 <creator>XWiki.jvdrean</creator>
 <author>XWiki.Admin</author>
+
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
 <creationDate>1175588881000</creationDate>
-<date>1196346846000</date>
-<contentUpdateDate>1196346846000</contentUpdateDate>
-<version>44.1</version>
+<date>1200928514000</date>
+<contentUpdateDate>1200928514000</contentUpdateDate>
+<version>5.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
 <minorEdit>false</minorEdit>
+
 <object>
 <class>
 <name>XWiki.TagClass</name>
@@ -35,6 +37,7 @@
 <cache>0</cache>
 <displayType>input</displayType>
 <multiSelect>1</multiSelect>
+
 <name>tags</name>
 <number>1</number>
 <prettyName>Tags</prettyName>
@@ -43,6 +46,7 @@
 <separators> ,|</separators>
 <size>30</size>
 <unmodifiable>0</unmodifiable>
+
 <values></values>
 <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
 </tags>
@@ -63,6 +67,7 @@
 ## Master timeline initialization
 ## --------------------------------------------------
 &lt;script type="text/javascript"&gt;
+
   master_onLoad = function() {
   var today = new Date();
   var master_eventSource = new Timeline.DefaultEventSource();
@@ -150,10 +155,12 @@ masterloader = master_onLoad;
 &lt;div id="master_quality" class="mode qualitymode #if($mode!="qualitymode")hidden#end"&gt;
   &lt;table class="projectquality"&gt;&lt;tr&gt;
       &lt;td style="width:70px;"&gt;$msg.get("qleader")&lt;/td&gt;
+
       &lt;td class="lborder" style="width:70px;"&gt;$msg.get("qmembers")&lt;/td&gt;
       &lt;td class="lborder" style="width:80px;"&gt;$msg.get("qdocs")&lt;/td&gt;
       &lt;td class="lborder" style="width:80px;"&gt;$msg.get("qplog")&lt;/td&gt;
       &lt;td class="lborder" style="width:80px;"&gt;$msg.get("qphases")&lt;/td&gt;
+
       &lt;td class="lborder" style="width:30px;"&gt;$msg.get("qnote")&lt;/td&gt;
   &lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
@@ -163,11 +170,13 @@ masterloader = master_onLoad;
 ## --------------------------------------------------
 &lt;div id="dashboard_options"&gt;
 &lt;div class="mode timelinemode #if($mode!="timelinemode")hidden#end"&gt;
+
 &lt;select id="timeline_range" onchange="changeTimelineRange(this.value)"&gt;
 &lt;option value="1month" $!omsel&gt;$msg.get("view1month")&lt;/option&gt;
 &lt;option value="3months" $!tmsel&gt;$msg.get("view3months")&lt;/option&gt;
 &lt;option value="1year" $!oysel&gt;$msg.get("view1year")&lt;/option&gt;
 &lt;option value="3years" $!tysel&gt;$msg.get("view3years")&lt;/option&gt;
+
 &lt;/select&gt;&lt;br/&gt;
 &lt;a onclick="syncTimeline(new Date())" style="cursor:pointer;"&gt;$msg.get("backtotoday")&lt;/a&gt;
 &lt;/div&gt;
@@ -175,6 +184,7 @@ masterloader = master_onLoad;
 &lt;div id="dashboardmode" style="float:left;"&gt;
 &lt;div id="dashboardmode_l" style="background:url($xwiki.getSkinFile('dashboardmode_l.gif')) no-repeat;"&gt;&lt;/div&gt;
 &lt;div id="dashboardmode_c" style="background:url($xwiki.getSkinFile('dashboardmode_c.gif')) repeat-x;"&gt;
+
 &lt;img src="$xwiki.getSkinFile("calendar.gif")" title="$msg.get("timelineswitch")" onclick="switchDashboardMode('timelinemode');" style="cursor:pointer;" /&gt;
 &amp;nbsp;&lt;img src="$xwiki.getSkinFile("star_grey.gif")" title="$msg.get("qualityswitch")" onclick="switchDashboardMode('qualitymode');" style="cursor:pointer;" /&gt;
 &lt;/div&gt;
@@ -183,6 +193,7 @@ masterloader = master_onLoad;
 #if ($isChronoAdmin || $isChronoManager)
 &lt;div id="dashboardadd" style="float:left;"&gt;
 &lt;div id="dashboardadd_l" style="background:url($xwiki.getSkinFile('dashboardmode_l.gif')) no-repeat;"&gt;&lt;/div&gt;
+
 &lt;div id="dashboardadd_c" style="background:url($xwiki.getSkinFile('dashboardmode_c.gif')) repeat-x;"&gt;
 &lt;img src="$xwiki.getSkinFile("folder_add_grey.gif")" title="$msg.get("foldersaddmode")" onclick="toggleContainerAdd();" style="cursor:pointer;" /&gt;
 &lt;/div&gt;
@@ -194,6 +205,7 @@ masterloader = master_onLoad;
 ## --------------------------------------------------
 &lt;div class="clearall"&gt;&lt;/div&gt;
 &lt;div id="axis_all"&gt;
+
 &lt;div class="clearall"&gt;&lt;/div&gt;
 #foreach ($item in $list)
   #if ($item.getName() != "ProjectContainers.OrphanAxis")
@@ -204,6 +216,7 @@ masterloader = master_onLoad;
 #end
 &lt;/div&gt;
 &lt;div class="clearall"&gt;&lt;/div&gt;
+
 #if ($hasEdit)
 &lt;div id="" class="container_add addaxis_container #if(!$modes.contains("add"))hidden#end"&gt;
 &lt;a id="addaxis" onclick="container_add('axis', '')"&gt;$msg.get("addaxis")&lt;/a&gt;
@@ -211,7 +224,12 @@ masterloader = master_onLoad;
 &lt;div class="clearall"&gt;&lt;/div&gt;
 #end
 #includeInContextNoPre("ChronoCode.ContainerOrphans")
+#set ($results = $xwiki.searchDocuments(", BaseObject as obj, StringProperty as prop where doc.fullName=obj.name and obj.className='ChronoClasses.ProjectContainerClass' and obj.id=prop.id.id and prop.id.name='type' and prop.value='activity' and doc.creator='${xwiki.getUser()}'"))
+#if ($results.size() == 0)
+&lt;img src="$xwiki.getSkinFile("tips/Main.Projects.${context.language}.1.png")" /&gt;
+#end
 &lt;br/&gt;
+
 &lt;br/&gt;
 ## --------------------------------------------------
 ## Javascript routines startup

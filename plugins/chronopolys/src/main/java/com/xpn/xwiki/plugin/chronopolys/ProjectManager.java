@@ -171,6 +171,7 @@ public class ProjectManager {
         bobj.set("projected_end", "", context);
         bobj.set("start", "", context);
         bobj.set("end", "", context);
+        homeDoc.setCreator(context.getUser());
         context.getWiki().saveDocument(homeDoc, context);
         ProjectApi newProject = new ProjectApi(new Project(homeDoc, plugin, context), context);
         newProject.addMember(context.getLocalUser());

@@ -50,6 +50,13 @@
       <artifactId>xwiki-plugin-watchlist</artifactId>
       <version>${platform.plugin.watchlist.version}</version>
     </dependency>   
+    <!-- Some versions of Maven don't inherit provided dependencies. -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+      <version>2.4</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 </project>
         

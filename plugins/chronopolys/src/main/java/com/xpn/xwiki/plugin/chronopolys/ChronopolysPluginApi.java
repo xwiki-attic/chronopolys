@@ -136,6 +136,7 @@ public class ChronopolysPluginApi extends Api
     /* *********************************************************************************************
      *  User management
      */
+
     public List getXWikiUsers() throws XWikiException
     {
         return plugin.getUserManager().getXWikiUsers(context);
@@ -224,7 +225,7 @@ public class ChronopolysPluginApi extends Api
     public List getMyNextDeadlines(int limit) throws XWikiException
     {
         return plugin.getUserManager().getMyNextDeadlines(limit, context);
-    }
+    }   
 
     /* *********************************************************************************************
      *  Project management

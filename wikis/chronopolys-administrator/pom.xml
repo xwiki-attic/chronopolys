@@ -48,13 +48,6 @@
         <directory>${basedir}/src/main/resources</directory>
         <excludes>
           <exclude>**/Translations.fr</exclude>
-          <exclude>XWiki/Admin</exclude>
-          <exclude>XWiki/XWikiAllGroup</exclude>          
-          <exclude>XWiki/XWikiPreferences</exclude>
-          <exclude>ChronoAdmin/AdminGroup</exclude>
-          <exclude>ChronoAdmin/ManagerGroup</exclude>
-          <exclude>ChronoAdmin/ChronoPreferences</exclude>
-          <exclude>XWiki/XWikiAdminGroup</exclude>
         </excludes>
       </resource>
     </resources>

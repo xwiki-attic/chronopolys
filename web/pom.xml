@@ -87,8 +87,7 @@
           <resourceBundles>
             <resourceBundle>com.xpn.xwiki.platform:xwiki-configuration-resources:${platform.tools.version}</resourceBundle>
           </resourceBundles>
-          <properties>
-            
+          <properties>            
             <xwikiCfgPlugins>com.xpn.xwiki.plugin.calendar.CalendarPlugin,\
                 com.xpn.xwiki.plugin.feed.FeedPlugin,\
                 com.xpn.xwiki.plugin.ldap.LDAPPlugin,\
@@ -104,7 +103,10 @@
                 com.xpn.xwiki.plugin.mailsender.MailSenderPlugin,\
                 com.xpn.xwiki.plugin.watchlist.WatchListPlugin,\
             </xwikiCfgPlugins>
-          </properties>
+            <xwikiCfgDefaultSkin>chronopolys</xwikiCfgDefaultSkin>
+            <xwikiCfgDefaultBaseSkin>chronopolys</xwikiCfgDefaultBaseSkin>
+            <xwikiCfgEncoding>UTF-8</xwikiCfgEncoding>
+          </properties>          
         </configuration>
       </plugin>
       <plugin>

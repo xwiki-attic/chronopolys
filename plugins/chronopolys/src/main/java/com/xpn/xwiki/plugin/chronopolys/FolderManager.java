@@ -123,6 +123,7 @@ public class FolderManager
         obj.set("desc", desc, context);
         obj.set("parent", parent, context);
         containerDoc.setParent(parent);
+        containerDoc.setCreator(context.getUser());
         if (type == null || type.equals("")) {
             obj.set("type", FOLDERS_ROOT, context);
         } else {
