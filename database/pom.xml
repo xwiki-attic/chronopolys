@@ -117,18 +117,6 @@
       </modules>
     </profile>
     <!-- profile>
-      <id>derby</id>
-      <modules>
-        <module>derby</module>
-      </modules>
-    </profile -->
-    <!-- profile>
-      <id>pgsql</id>
-      <modules>
-        <module>pgsql</module>
-      </modules>
-    </profile -->
-    <!-- profile>
       <id>mysql</id>
       <modules>
         <module>mysql</module>

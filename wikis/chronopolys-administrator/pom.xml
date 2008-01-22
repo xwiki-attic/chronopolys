@@ -47,7 +47,7 @@
       <resource>
         <directory>${basedir}/src/main/resources</directory>
         <excludes>
-          <exclude>**/Translations.fr</exclude>
+          <exclude>**/Translations.fr</exclude>          
         </excludes>
       </resource>
     </resources>
