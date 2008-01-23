@@ -37,7 +37,7 @@
           <td>&ndash;</td>
 #else
           <td>$xwiki.getLocalUserName($newdoc.author)</td>
-          <td>$xwiki.formatDate($newdoc.date, "dd/MM/yyyy hh:mm")</td>
+          <td>#if($context.language == "en") $xwiki.formatDate($newdoc.date, "MM/dd/yyyy hh:mm") #else $xwiki.formatDate($newdoc.date, "dd/MM/yyyy hh:mm") #end</td>
 #end
 #if($hasedit || $hasadmin)
           <td class="xwikibuttonlink"><a href="$tdoc.getURL("rollback","rev=$nextversion$lang")" onclick="if (confirm('$msg.get("readytorollback") $nextversion')){this.href += '&amp;confirm=1'; return true;} return false;">$msg.get("rollback")</a></td>
