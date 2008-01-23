@@ -1086,3 +1086,7 @@ table.grid {
   margin:0px auto;
   text-align:center;
 }
+
+#printcontainer #projectcontainer {
+  margin: 0px auto !important;
+}
