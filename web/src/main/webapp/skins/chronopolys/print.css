@@ -1,6 +1,70 @@
-#body{
+#body {
   background-color: #FFF !important;
+  background-image: none !important;
+  width: auto !important;
+  float: none !important;
+  border: none !important;
+  margin: 0px auto !important;
+  padding: 0% !important;
+  overflow: visible !important;
+  visibility: visible !important; 
 }
 .edit_section{
+  display: none;
+}
+
+.axis, .yard, .chronopanel_header, #orphansprojects .rounded-medium-title {
+  border: 1px solid #A9B6C3 !important;
+}
+
+.activity {
+  border: 1px solid gainsboro;
+}
+
+.rounded {
+  display: none;
+}
+
+.roundedcontent {
+  border-bottom: 1px solid #A9B6C3;
+  border-top: 1px solid #A9B6C3;
+}
+
+#plog_view .roundedcontent {
+  border: 1px solid #A9B6C3 !important;
+  margin-bottom: 10px;
+}
+
+#powered {
+  margin-right: 60px;
+  padding: 0px;
+}
+
+
+
+#projectcol_1, #projectcol_2, #projectcol_3  {
+  float: none !important;
+  width: 400px !important;
+}
+
+#projectnote_view {
+  width: 200px;
+  margin-left: 0px !important;
+}
+
+
+a.nstar {
+  display: list-item !important;
+  list-style-position: inside;
+  list-style-image: url($xwiki.getSkinFile('star.gif')) !important;
+}
+
+a.nstar.empty , a[class="nstar empty"] {
+  display: list-item !important;
+  list-style-position: inside;
+  list-style-image: url($xwiki.getSkinFile('starempty.gif')) !important;
+}
+
+.timelinemode {
   display: none;
 }
