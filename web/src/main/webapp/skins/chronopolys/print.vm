@@ -10,7 +10,7 @@
 #set($logo = $!prefdoc.getAttachment("logo"))
 #if(!$logo)
 #set($logourl = $xwiki.getSkinFile("logo.png"))
-      <img src="$logourl" alt="XWiki logo" style="width: 215px;height: 74px;"/>
+      <img src="$logourl" alt="XWiki logo" style="width:215px;height:74px;"/>
 #else
 #set($logourl = $prefdoc.getAttachmentURL($logo.filename, "download"))
       <img src="$logourl" alt="XWiki logo"/>
@@ -18,8 +18,12 @@
     </a>
   </div>
 </div>
-<div id="printcontainer" style="overflow: visible; border: none; padding: 10px; text-align: justify;">
+<div id="printcontainer" style="overflow: visible; border: none; padding: 10px; text-align: justify; float: none !important;">
+<div></div>
 #template("contentview.vm")
 <div class="clearfloats"></div>
 </div>## printcontainer
+<div id="footerglobal" class="layoutsection">
+<div id="powered"><a href="http://www.avane.com" target="_blank"><img src="$xwiki.getSkinFile("poweredbyavane.gif")" /></a></div>
+</div>
 #template("htmlfooter.vm")
