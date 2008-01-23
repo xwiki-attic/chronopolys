@@ -41,7 +41,6 @@
 }
 
 
-
 #projectcol_1, #projectcol_2, #projectcol_3  {
   float: none !important;
   width: 400px !important;
@@ -63,8 +62,4 @@ a.nstar.empty , a[class="nstar empty"] {
   display: list-item !important;
   list-style-position: inside;
   list-style-image: url($xwiki.getSkinFile('starempty.gif')) !important;
-}
-
-.timelinemode {
-  display: none;
 }
