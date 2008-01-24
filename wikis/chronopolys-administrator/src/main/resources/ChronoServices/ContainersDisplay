@@ -224,7 +224,7 @@ masterloader = master_onLoad;
 &lt;div class="clearall"&gt;&lt;/div&gt;
 #end
 #includeInContextNoPre("ChronoCode.ContainerOrphans")
-#set ($results = $xwiki.searchDocuments(", BaseObject as obj, StringProperty as prop where doc.fullName=obj.name and obj.className='ChronoClasses.ProjectContainerClass' and obj.id=prop.id.id and prop.id.name='type' and prop.value='activity' and doc.creator='${xwiki.getUser()}'"))
+#set ($results = $xwiki.searchDocuments(", BaseObject as obj, StringProperty as prop where doc.fullName=obj.name and obj.className='ChronoClasses.ProjectContainerClass' and obj.id=prop.id.id and prop.id.name='type' and prop.value='activity' and doc.creator='${context.getUser()}'"))
 #if ($results.size() == 0)
 &lt;img src="$xwiki.getSkinFile("tips/Main.Projects.${context.language}.1.png")" /&gt;
 #end

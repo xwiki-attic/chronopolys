@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <xwikidoc>
 <web>XWiki</web>
@@ -9,18 +9,20 @@
 <parent>XWiki.WebHome</parent>
 <creator>XWiki.Admin</creator>
 <author>XWiki.Admin</author>
+
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
 <creationDate>1106308017000</creationDate>
-<date>1196783993000</date>
-<contentUpdateDate>1196783993000</contentUpdateDate>
-<version>22.1</version>
+<date>1201190108000</date>
+<contentUpdateDate>1201190108000</contentUpdateDate>
+<version>4.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
 <minorEdit>false</minorEdit>
+
 <class>
 <name>XWiki.XWikiPreferences</name>
 <customClass></customClass>
@@ -34,6 +36,7 @@
 <name>ad_clientid</name>
 <number>25</number>
 <prettyName>Advertisement Client ID</prettyName>
+
 <size>60</size>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
@@ -44,6 +47,7 @@
 <prettyName>Admin eMail</prettyName>
 <size>30</size>
 <unmodifiable>0</unmodifiable>
+
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </admin_email>
 <auth_active_check>
@@ -54,6 +58,7 @@
 <prettyName>Authentication Active Check</prettyName>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+
 </auth_active_check>
 <authenticate_edit>
 <displayFormType>select</displayFormType>
@@ -64,6 +69,7 @@
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
 </authenticate_edit>
+
 <authenticate_view>
 <displayFormType>select</displayFormType>
 <displayType>yesno</displayType>
@@ -74,6 +80,7 @@
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
 </authenticate_view>
 <backlinks>
+
 <displayFormType>select</displayFormType>
 <displayType>yesno</displayType>
 <name>backlinks</name>
@@ -84,6 +91,7 @@
 </backlinks>
 <chronodisplaydocuments>
 <displayFormType>select</displayFormType>
+
 <name>chronodisplaydocuments</name>
 <number>56</number>
 <prettyName>chronodisplaydocuments</prettyName>
@@ -94,6 +102,7 @@
 <displayFormType>select</displayFormType>
 <name>chronodisplayphases</name>
 <number>54</number>
+
 <prettyName>chronodisplayphases</prettyName>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
@@ -104,6 +113,7 @@
 <number>55</number>
 <prettyName>chronodisplaywiki</prettyName>
 <unmodifiable>0</unmodifiable>
+
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
 </chronodisplaywiki>
 <chronodomain>
@@ -114,6 +124,7 @@
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </chronodomain>
+
 <comment_anonymous>
 <cache>0</cache>
 <displayType>select</displayType>
@@ -123,6 +134,7 @@
 <prettyName>Anonymous</prettyName>
 <relationalStorage>0</relationalStorage>
 <separator> </separator>
+
 <separators> ,|</separators>
 <size>1</size>
 <unmodifiable>0</unmodifiable>
@@ -132,6 +144,7 @@
 <comment_registered>
 <cache>0</cache>
 <displayType>select</displayType>
+
 <multiSelect>0</multiSelect>
 <name>comment_registered</name>
 <number>40</number>
@@ -140,6 +153,7 @@
 <separator> </separator>
 <separators> ,|</separators>
 <size>1</size>
+
 <unmodifiable>0</unmodifiable>
 <values>---|Image|Text</values>
 <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
@@ -150,6 +164,7 @@
 <prettyName>Confirmation eMail Content</prettyName>
 <rows>10</rows>
 <size>72</size>
+
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </confirmation_email_content>
@@ -160,6 +175,7 @@
 <size>1</size>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+
 </convertmail>
 <default_language>
 <name>default_language</name>
@@ -171,6 +187,7 @@
 </default_language>
 <documentBundles>
 <name>documentBundles</name>
+
 <number>52</number>
 <prettyName>Internationalization Document Bundles</prettyName>
 <size>60</size>
@@ -181,6 +198,7 @@
 <cache>0</cache>
 <displayType>select</displayType>
 <multiSelect>0</multiSelect>
+
 <name>edit_anonymous</name>
 <number>37</number>
 <prettyName>Anonymous</prettyName>
@@ -189,6 +207,7 @@
 <separators> ,|</separators>
 <size>1</size>
 <unmodifiable>0</unmodifiable>
+
 <values>---|Image|Text</values>
 <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
 </edit_anonymous>
@@ -199,6 +218,7 @@
 <name>edit_registered</name>
 <number>38</number>
 <prettyName>Registered</prettyName>
+
 <relationalStorage>0</relationalStorage>
 <separator> </separator>
 <separators> ,|</separators>
@@ -208,6 +228,7 @@
 <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
 </edit_registered>
 <editbox_height>
+
 <name>editbox_height</name>
 <number>24</number>
 <prettyName>Editbox Height</prettyName>
@@ -218,6 +239,7 @@
 <editbox_width>
 <name>editbox_width</name>
 <number>23</number>
+
 <prettyName>Editbox Width</prettyName>
 <size>5</size>
 <unmodifiable>0</unmodifiable>
@@ -228,6 +250,7 @@
 <displayType>select</displayType>
 <multiSelect>0</multiSelect>
 <name>editor</name>
+
 <number>23</number>
 <prettyName>Default Editor</prettyName>
 <relationalStorage>0</relationalStorage>
@@ -236,6 +259,7 @@
 <size>1</size>
 <unmodifiable>0</unmodifiable>
 <values>Text|Wysiwyg</values>
+
 <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
 </editor>
 <invitation_email_content>
@@ -246,6 +270,7 @@
 <size>72</size>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+
 </invitation_email_content>
 <language>
 <name>language</name>
@@ -257,6 +282,7 @@
 </language>
 <languages>
 <name>languages</name>
+
 <number>49</number>
 <prettyName>Supported languages</prettyName>
 <size>30</size>
@@ -267,6 +293,7 @@
 <name>leftPanels</name>
 <number>44</number>
 <prettyName>Panels displayed on the left</prettyName>
+
 <size>60</size>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
@@ -277,6 +304,7 @@
 <prettyName>Macros for Groovy</prettyName>
 <size>60</size>
 <unmodifiable>0</unmodifiable>
+
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </macros_groovy>
 <macros_languages>
@@ -287,6 +315,7 @@
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </macros_languages>
+
 <macros_mapping>
 <name>macros_mapping</name>
 <number>30</number>
@@ -297,6 +326,7 @@
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </macros_mapping>
 <macros_velocity>
+
 <name>macros_velocity</name>
 <number>27</number>
 <prettyName>Macros for Velocity</prettyName>
@@ -307,6 +337,7 @@
 <macros_wiki>
 <name>macros_wiki</name>
 <number>32</number>
+
 <prettyName>Macros for the Wiki Parser</prettyName>
 <size>60</size>
 <unmodifiable>0</unmodifiable>
@@ -317,6 +348,7 @@
 <number>29</number>
 <prettyName>Macros for new Wiki Parser</prettyName>
 <size>60</size>
+
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </macros_wiki2>
@@ -327,6 +359,7 @@
 <rows>8</rows>
 <size>60</size>
 <unmodifiable>0</unmodifiable>
+
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </menu>
 <meta>
@@ -337,6 +370,7 @@
 <size>40</size>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+
 </meta>
 <multilingual>
 <displayFormType>select</displayFormType>
@@ -347,6 +381,7 @@
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
 </multilingual>
+
 <notification_pages>
 <name>notification_pages</name>
 <number>33</number>
@@ -357,6 +392,7 @@
 </notification_pages>
 <pageWidth>
 <cache>0</cache>
+
 <displayType>select</displayType>
 <multiSelect>0</multiSelect>
 <name>pageWidth</name>
@@ -365,6 +401,7 @@
 <relationalStorage>0</relationalStorage>
 <separator> </separator>
 <separators> ,|</separators>
+
 <size>1</size>
 <unmodifiable>0</unmodifiable>
 <values>default|640|800|1024|1280|1600</values>
@@ -375,6 +412,7 @@
 <number>58</number>
 <prettyName>Parent Space</prettyName>
 <size>30</size>
+
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </parent>
@@ -385,6 +423,7 @@
 <size>40</size>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+
 </plugins>
 <registration_anonymous>
 <cache>0</cache>
@@ -395,6 +434,7 @@
 <prettyName>Anonymous</prettyName>
 <relationalStorage>0</relationalStorage>
 <separator> </separator>
+
 <separators> ,|</separators>
 <size>1</size>
 <unmodifiable>0</unmodifiable>
@@ -404,6 +444,7 @@
 <registration_registered>
 <cache>0</cache>
 <displayType>select</displayType>
+
 <multiSelect>0</multiSelect>
 <name>registration_registered</name>
 <number>36</number>
@@ -412,6 +453,7 @@
 <separator> </separator>
 <separators> ,|</separators>
 <size>1</size>
+
 <unmodifiable>0</unmodifiable>
 <values>---|Image|Text</values>
 <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
@@ -422,6 +464,7 @@
 <name>renderXWikiGroovyRenderer</name>
 <number>42</number>
 <prettyName>Render Groovy code</prettyName>
+
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
 </renderXWikiGroovyRenderer>
@@ -432,6 +475,7 @@
 <number>43</number>
 <prettyName>Render Wiki syntax</prettyName>
 <unmodifiable>0</unmodifiable>
+
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
 </renderXWikiRadeoxRenderer>
 <renderXWikiVelocityRenderer>
@@ -442,6 +486,7 @@
 <prettyName>Render velocity code</prettyName>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+
 </renderXWikiVelocityRenderer>
 <rightPanels>
 <name>rightPanels</name>
@@ -453,6 +498,7 @@
 </rightPanels>
 <server_name>
 <name>server_name</name>
+
 <number>57</number>
 <prettyName>server_name</prettyName>
 <size>30</size>
@@ -463,6 +509,7 @@
 <displayFormType>select</displayFormType>
 <displayType>yesno</displayType>
 <name>showLeftPanels</name>
+
 <number>46</number>
 <prettyName>Display the left panel column</prettyName>
 <unmodifiable>0</unmodifiable>
@@ -473,6 +520,7 @@
 <displayType>yesno</displayType>
 <name>showRightPanels</name>
 <number>47</number>
+
 <prettyName>Display the right panel column</prettyName>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
@@ -483,6 +531,7 @@
 <prettyName>Skin</prettyName>
 <size>20</size>
 <unmodifiable>0</unmodifiable>
+
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </skin>
 <smtp_server>
@@ -493,6 +542,7 @@
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </smtp_server>
+
 <stylesheet>
 <name>stylesheet</name>
 <number>17</number>
@@ -503,6 +553,7 @@
 </stylesheet>
 <stylesheets>
 <name>stylesheets</name>
+
 <number>18</number>
 <prettyName>Stylesheets</prettyName>
 <size>30</size>
@@ -513,6 +564,7 @@
 <displayFormType>select</displayFormType>
 <displayType>yesno</displayType>
 <name>tags</name>
+
 <number>51</number>
 <prettyName>Activate the tagging</prettyName>
 <unmodifiable>0</unmodifiable>
@@ -523,6 +575,7 @@
 <number>10</number>
 <prettyName>Title</prettyName>
 <size>30</size>
+
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </title>
@@ -533,6 +586,7 @@
 <prettyName>Maximum Upload Size</prettyName>
 <size>5</size>
 <unmodifiable>0</unmodifiable>
+
 <classType>com.xpn.xwiki.objects.classes.NumberClass</classType>
 </upload_maxsize>
 <use_email_verification>
@@ -543,6 +597,7 @@
 <prettyName>Use eMail Verification</prettyName>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+
 </use_email_verification>
 <validation_email_content>
 <name>validation_email_content</name>
@@ -553,6 +608,7 @@
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </validation_email_content>
+
 <version>
 <name>version</name>
 <number>12</number>
@@ -563,6 +619,7 @@
 </version>
 <webbgcolor>
 <name>webbgcolor</name>
+
 <number>2</number>
 <prettyName>Web Background Color</prettyName>
 <size>10</size>
@@ -573,6 +630,7 @@
 <name>webcopyright</name>
 <number>5</number>
 <prettyName>Web Copyright</prettyName>
+
 <size>60</size>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
@@ -586,6 +644,7 @@
 <defaultViewSheet></defaultViewSheet>
 <defaultEditSheet></defaultEditSheet>
 <defaultWeb></defaultWeb>
+
 <nameField></nameField>
 <validationScript></validationScript>
 <tags>
@@ -596,6 +655,7 @@
 <number>1</number>
 <prettyName>Tags</prettyName>
 <relationalStorage>1</relationalStorage>
+
 <separator> </separator>
 <separators> ,|</separators>
 <size>30</size>
@@ -606,6 +666,7 @@
 </class>
 <name>XWiki.XWikiPreferences</name>
 <number>0</number>
+
 <className>XWiki.TagClass</className>
 <property>
 <tags/>
@@ -621,6 +682,7 @@
 <defaultWeb></defaultWeb>
 <nameField></nameField>
 <validationScript></validationScript>
+
 <allow>
 <defaultValue>1</defaultValue>
 <displayFormType>select</displayFormType>
@@ -630,6 +692,7 @@
 <prettyName>Allow/Deny</prettyName>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+
 </allow>
 <groups>
 <cache>0</cache>
@@ -640,6 +703,7 @@
 <prettyName>Groups</prettyName>
 <relationalStorage>0</relationalStorage>
 <separator> </separator>
+
 <size>5</size>
 <unmodifiable>0</unmodifiable>
 <usesList>1</usesList>
@@ -650,6 +714,7 @@
 <displayType>select</displayType>
 <multiSelect>1</multiSelect>
 <name>levels</name>
+
 <number>4</number>
 <prettyName>Levels</prettyName>
 <relationalStorage>0</relationalStorage>
@@ -660,6 +725,7 @@
 </levels>
 <users>
 <cache>0</cache>
+
 <displayType>select</displayType>
 <multiSelect>1</multiSelect>
 <name>users</name>
@@ -669,6 +735,7 @@
 <separator> </separator>
 <size>5</size>
 <unmodifiable>0</unmodifiable>
+
 <usesList>1</usesList>
 <classType>com.xpn.xwiki.objects.classes.UsersClass</classType>
 </users>
@@ -680,19 +747,21 @@
 <allow>1</allow>
 </property>
 <property>
+
 <groups>XWiki.XWikiAdminGroup,</groups>
 </property>
 <property>
-<levels>admin,edit</levels>
+<levels>admin</levels>
 </property>
 <property>
-<users>XWiki.jvdrean,XWiki.fhebert,XWiki.Admin</users>
+<users>XWiki.Admin</users>
 </property>
 </object>
 <object>
 <class>
 <name>XWiki.XWikiGlobalRights</name>
 <customClass></customClass>
+
 <customMapping></customMapping>
 <defaultViewSheet></defaultViewSheet>
 <defaultEditSheet></defaultEditSheet>
@@ -705,6 +774,7 @@
 <displayType>allow</displayType>
 <name>allow</name>
 <number>4</number>
+
 <prettyName>Allow/Deny</prettyName>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
@@ -715,6 +785,7 @@
 <multiSelect>1</multiSelect>
 <name>groups</name>
 <number>4</number>
+
 <prettyName>Groups</prettyName>
 <relationalStorage>0</relationalStorage>
 <separator> </separator>
@@ -725,6 +796,7 @@
 </groups>
 <levels>
 <cache>0</cache>
+
 <displayType>select</displayType>
 <multiSelect>1</multiSelect>
 <name>levels</name>
@@ -734,6 +806,7 @@
 <separator> </separator>
 <size>3</size>
 <unmodifiable>0</unmodifiable>
+
 <classType>com.xpn.xwiki.objects.classes.LevelsClass</classType>
 </levels>
 <users>
@@ -744,6 +817,7 @@
 <number>4</number>
 <prettyName>Users</prettyName>
 <relationalStorage>0</relationalStorage>
+
 <separator> </separator>
 <size>5</size>
 <unmodifiable>0</unmodifiable>
@@ -754,6 +828,7 @@
 <name>XWiki.XWikiPreferences</name>
 <number>1</number>
 <className>XWiki.XWikiGlobalRights</className>
+
 <property>
 <allow>1</allow>
 </property>
@@ -761,13 +836,14 @@
 <groups>XWiki.XWikiAllGroup,</groups>
 </property>
 <property>
-<levels>view,edit,comment,register</levels>
+<levels>view,edit,comment</levels>
 </property>
 <property>
 <users></users>
 </property>
 </object>
 <object>
+
 <class>
 <name>XWiki.XWikiGlobalRights</name>
 <customClass></customClass>
@@ -781,6 +857,7 @@
 <defaultValue>1</defaultValue>
 <displayFormType>select</displayFormType>
 <displayType>allow</displayType>
+
 <name>allow</name>
 <number>4</number>
 <prettyName>Allow/Deny</prettyName>
@@ -791,6 +868,7 @@
 <cache>0</cache>
 <displayType>select</displayType>
 <multiSelect>1</multiSelect>
+
 <name>groups</name>
 <number>4</number>
 <prettyName>Groups</prettyName>
@@ -800,6 +878,7 @@
 <unmodifiable>0</unmodifiable>
 <usesList>1</usesList>
 <classType>com.xpn.xwiki.objects.classes.GroupsClass</classType>
+
 </groups>
 <levels>
 <cache>0</cache>
@@ -810,6 +889,7 @@
 <prettyName>Levels</prettyName>
 <relationalStorage>0</relationalStorage>
 <separator> </separator>
+
 <size>3</size>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.LevelsClass</classType>
@@ -820,6 +900,7 @@
 <multiSelect>1</multiSelect>
 <name>users</name>
 <number>4</number>
+
 <prettyName>Users</prettyName>
 <relationalStorage>0</relationalStorage>
 <separator> </separator>
@@ -830,6 +911,7 @@
 </users>
 </class>
 <name>XWiki.XWikiPreferences</name>
+
 <number>2</number>
 <className>XWiki.XWikiGlobalRights</className>
 <property>
@@ -843,6 +925,7 @@
 </property>
 <property>
 <users>XWiki.XWikiGuest</users>
+
 </property>
 </object>
 <object>
@@ -858,6 +941,7 @@
 <allow>
 <defaultValue>1</defaultValue>
 <displayFormType>select</displayFormType>
+
 <displayType>allow</displayType>
 <name>allow</name>
 <number>4</number>
@@ -868,6 +952,7 @@
 <groups>
 <cache>0</cache>
 <displayType>select</displayType>
+
 <multiSelect>1</multiSelect>
 <name>groups</name>
 <number>4</number>
@@ -877,6 +962,7 @@
 <size>5</size>
 <unmodifiable>0</unmodifiable>
 <usesList>1</usesList>
+
 <classType>com.xpn.xwiki.objects.classes.GroupsClass</classType>
 </groups>
 <levels>
@@ -887,6 +973,7 @@
 <number>4</number>
 <prettyName>Levels</prettyName>
 <relationalStorage>0</relationalStorage>
+
 <separator> </separator>
 <size>3</size>
 <unmodifiable>0</unmodifiable>
@@ -897,6 +984,7 @@
 <displayType>select</displayType>
 <multiSelect>1</multiSelect>
 <name>users</name>
+
 <number>4</number>
 <prettyName>Users</prettyName>
 <relationalStorage>0</relationalStorage>
@@ -906,6 +994,7 @@
 <usesList>1</usesList>
 <classType>com.xpn.xwiki.objects.classes.UsersClass</classType>
 </users>
+
 </class>
 <name>XWiki.XWikiPreferences</name>
 <number>3</number>
@@ -914,10 +1003,11 @@
 <allow>1</allow>
 </property>
 <property>
-<groups></groups>
+<groups>ChronoAdmin.ManagerGroup,</groups>
 </property>
 <property>
-<levels></levels>
+<levels>register</levels>
+
 </property>
 <property>
 <users></users>
@@ -933,6 +1023,7 @@
 <defaultWeb></defaultWeb>
 <nameField></nameField>
 <validationScript></validationScript>
+
 <ad_clientid>
 <name>ad_clientid</name>
 <number>25</number>
@@ -943,6 +1034,7 @@
 </ad_clientid>
 <admin_email>
 <name>admin_email</name>
+
 <number>14</number>
 <prettyName>Admin eMail</prettyName>
 <size>30</size>
@@ -953,6 +1045,7 @@
 <displayFormType>select</displayFormType>
 <displayType>yesno</displayType>
 <name>auth_active_check</name>
+
 <number>31</number>
 <prettyName>Authentication Active Check</prettyName>
 <unmodifiable>0</unmodifiable>
@@ -963,6 +1056,7 @@
 <displayType>yesno</displayType>
 <name>authenticate_edit</name>
 <number>7</number>
+
 <prettyName>Authenticate On Edit</prettyName>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
@@ -973,6 +1067,7 @@
 <name>authenticate_view</name>
 <number>5</number>
 <prettyName>Authenticated View</prettyName>
+
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
 </authenticate_view>
@@ -983,6 +1078,7 @@
 <number>25</number>
 <prettyName>Backlinks</prettyName>
 <unmodifiable>0</unmodifiable>
+
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
 </backlinks>
 <chronodisplaydocuments>
@@ -993,6 +1089,7 @@
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
 </chronodisplaydocuments>
+
 <chronodisplayphases>
 <displayFormType>select</displayFormType>
 <name>chronodisplayphases</name>
@@ -1003,6 +1100,7 @@
 </chronodisplayphases>
 <chronodisplaywiki>
 <displayFormType>select</displayFormType>
+
 <name>chronodisplaywiki</name>
 <number>55</number>
 <prettyName>chronodisplaywiki</prettyName>
@@ -1013,6 +1111,7 @@
 <name>chronodomain</name>
 <number>53</number>
 <prettyName>chronodomain</prettyName>
+
 <size>30</size>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
@@ -1023,6 +1122,7 @@
 <multiSelect>0</multiSelect>
 <name>comment_anonymous</name>
 <number>39</number>
+
 <prettyName>Anonymous</prettyName>
 <relationalStorage>0</relationalStorage>
 <separator> </separator>
@@ -1031,6 +1131,7 @@
 <unmodifiable>0</unmodifiable>
 <values>---|Image|Text</values>
 <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+
 </comment_anonymous>
 <comment_registered>
 <cache>0</cache>
@@ -1041,6 +1142,7 @@
 <prettyName>Registered</prettyName>
 <relationalStorage>0</relationalStorage>
 <separator> </separator>
+
 <separators> ,|</separators>
 <size>1</size>
 <unmodifiable>0</unmodifiable>
@@ -1050,6 +1152,7 @@
 <confirmation_email_content>
 <name>confirmation_email_content</name>
 <number>16</number>
+
 <prettyName>Confirmation eMail Content</prettyName>
 <rows>10</rows>
 <size>72</size>
@@ -1060,6 +1163,7 @@
 <name>convertmail</name>
 <number>50</number>
 <prettyName>convert email type</prettyName>
+
 <size>1</size>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
@@ -1070,6 +1174,7 @@
 <prettyName>Default Language</prettyName>
 <size>5</size>
 <unmodifiable>0</unmodifiable>
+
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </default_language>
 <documentBundles>
@@ -1080,6 +1185,7 @@
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </documentBundles>
+
 <edit_anonymous>
 <cache>0</cache>
 <displayType>select</displayType>
@@ -1089,6 +1195,7 @@
 <prettyName>Anonymous</prettyName>
 <relationalStorage>0</relationalStorage>
 <separator> </separator>
+
 <separators> ,|</separators>
 <size>1</size>
 <unmodifiable>0</unmodifiable>
@@ -1098,6 +1205,7 @@
 <edit_registered>
 <cache>0</cache>
 <displayType>select</displayType>
+
 <multiSelect>0</multiSelect>
 <name>edit_registered</name>
 <number>38</number>
@@ -1106,6 +1214,7 @@
 <separator> </separator>
 <separators> ,|</separators>
 <size>1</size>
+
 <unmodifiable>0</unmodifiable>
 <values>---|Image|Text</values>
 <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
@@ -1116,6 +1225,7 @@
 <prettyName>Editbox Height</prettyName>
 <size>5</size>
 <unmodifiable>0</unmodifiable>
+
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </editbox_height>
 <editbox_width>
@@ -1126,6 +1236,7 @@
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </editbox_width>
+
 <editor>
 <cache>0</cache>
 <displayType>select</displayType>
@@ -1135,6 +1246,7 @@
 <prettyName>Default Editor</prettyName>
 <relationalStorage>0</relationalStorage>
 <separator> </separator>
+
 <separators> ,|</separators>
 <size>1</size>
 <unmodifiable>0</unmodifiable>
@@ -1144,6 +1256,7 @@
 <invitation_email_content>
 <name>invitation_email_content</name>
 <number>34</number>
+
 <prettyName>Invitation eMail Content</prettyName>
 <rows>10</rows>
 <size>72</size>
@@ -1154,6 +1267,7 @@
 <name>language</name>
 <number>1</number>
 <prettyName>Language</prettyName>
+
 <size>30</size>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
@@ -1164,6 +1278,7 @@
 <prettyName>Supported languages</prettyName>
 <size>30</size>
 <unmodifiable>0</unmodifiable>
+
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </languages>
 <leftPanels>
@@ -1174,6 +1289,7 @@
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </leftPanels>
+
 <macros_groovy>
 <name>macros_groovy</name>
 <number>28</number>
@@ -1184,6 +1300,7 @@
 </macros_groovy>
 <macros_languages>
 <name>macros_languages</name>
+
 <number>26</number>
 <prettyName>Macros Languages</prettyName>
 <size>60</size>
@@ -1194,6 +1311,7 @@
 <name>macros_mapping</name>
 <number>30</number>
 <prettyName>Macros Mapping</prettyName>
+
 <rows>15</rows>
 <size>60</size>
 <unmodifiable>0</unmodifiable>
@@ -1204,6 +1322,7 @@
 <number>27</number>
 <prettyName>Macros for Velocity</prettyName>
 <size>60</size>
+
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </macros_velocity>
@@ -1214,6 +1333,7 @@
 <size>60</size>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+
 </macros_wiki>
 <macros_wiki2>
 <name>macros_wiki2</name>
@@ -1225,6 +1345,7 @@
 </macros_wiki2>
 <menu>
 <name>menu</name>
+
 <number>8</number>
 <prettyName>Menu</prettyName>
 <rows>8</rows>
@@ -1235,6 +1356,7 @@
 <meta>
 <name>meta</name>
 <number>9</number>
+
 <prettyName>HTTP Meta Info</prettyName>
 <rows>5</rows>
 <size>40</size>
@@ -1245,6 +1367,7 @@
 <displayFormType>select</displayFormType>
 <displayType>yesno</displayType>
 <name>multilingual</name>
+
 <number>19</number>
 <prettyName>Multi-Lingual</prettyName>
 <unmodifiable>0</unmodifiable>
@@ -1255,6 +1378,7 @@
 <number>33</number>
 <prettyName>Notification Pages</prettyName>
 <size>60</size>
+
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </notification_pages>
@@ -1265,6 +1389,7 @@
 <name>pageWidth</name>
 <number>48</number>
 <prettyName>Preferred page width</prettyName>
+
 <relationalStorage>0</relationalStorage>
 <separator> </separator>
 <separators> ,|</separators>
@@ -1274,6 +1399,7 @@
 <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
 </pageWidth>
 <parent>
+
 <name>parent</name>
 <number>58</number>
 <prettyName>Parent Space</prettyName>
@@ -1284,6 +1410,7 @@
 <plugins>
 <name>plugins</name>
 <number>6</number>
+
 <prettyName>Plugins</prettyName>
 <size>40</size>
 <unmodifiable>0</unmodifiable>
@@ -1294,6 +1421,7 @@
 <displayType>select</displayType>
 <multiSelect>0</multiSelect>
 <name>registration_anonymous</name>
+
 <number>35</number>
 <prettyName>Anonymous</prettyName>
 <relationalStorage>0</relationalStorage>
@@ -1302,6 +1430,7 @@
 <size>1</size>
 <unmodifiable>0</unmodifiable>
 <values>---|Image|Text</values>
+
 <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
 </registration_anonymous>
 <registration_registered>
@@ -1312,6 +1441,7 @@
 <number>36</number>
 <prettyName>Registered</prettyName>
 <relationalStorage>0</relationalStorage>
+
 <separator> </separator>
 <separators> ,|</separators>
 <size>1</size>
@@ -1321,6 +1451,7 @@
 </registration_registered>
 <renderXWikiGroovyRenderer>
 <displayFormType>select</displayFormType>
+
 <displayType>yesno</displayType>
 <name>renderXWikiGroovyRenderer</name>
 <number>42</number>
@@ -1331,6 +1462,7 @@
 <renderXWikiRadeoxRenderer>
 <displayFormType>select</displayFormType>
 <displayType>yesno</displayType>
+
 <name>renderXWikiRadeoxRenderer</name>
 <number>43</number>
 <prettyName>Render Wiki syntax</prettyName>
@@ -1341,6 +1473,7 @@
 <displayFormType>select</displayFormType>
 <displayType>yesno</displayType>
 <name>renderXWikiVelocityRenderer</name>
+
 <number>41</number>
 <prettyName>Render velocity code</prettyName>
 <unmodifiable>0</unmodifiable>
@@ -1351,6 +1484,7 @@
 <number>45</number>
 <prettyName>Panels displayed on the right</prettyName>
 <size>60</size>
+
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </rightPanels>
@@ -1361,6 +1495,7 @@
 <size>30</size>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+
 </server_name>
 <showLeftPanels>
 <displayFormType>select</displayFormType>
@@ -1371,6 +1506,7 @@
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
 </showLeftPanels>
+
 <showRightPanels>
 <displayFormType>select</displayFormType>
 <displayType>yesno</displayType>
@@ -1381,6 +1517,7 @@
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
 </showRightPanels>
 <skin>
+
 <name>skin</name>
 <number>2</number>
 <prettyName>Skin</prettyName>
@@ -1391,6 +1528,7 @@
 <smtp_server>
 <name>smtp_server</name>
 <number>13</number>
+
 <prettyName>SMTP Server</prettyName>
 <size>30</size>
 <unmodifiable>0</unmodifiable>
@@ -1401,6 +1539,7 @@
 <number>17</number>
 <prettyName>Stylesheet</prettyName>
 <size>30</size>
+
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </stylesheet>
@@ -1411,6 +1550,7 @@
 <size>30</size>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+
 </stylesheets>
 <tags>
 <displayFormType>select</displayFormType>
@@ -1421,6 +1561,7 @@
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
 </tags>
+
 <title>
 <name>title</name>
 <number>10</number>
@@ -1431,6 +1572,7 @@
 </title>
 <upload_maxsize>
 <name>upload_maxsize</name>
+
 <number>59</number>
 <numberType>long</numberType>
 <prettyName>Maximum Upload Size</prettyName>
@@ -1441,6 +1583,7 @@
 <use_email_verification>
 <displayFormType>select</displayFormType>
 <displayType>yesno</displayType>
+
 <name>use_email_verification</name>
 <number>24</number>
 <prettyName>Use eMail Verification</prettyName>
@@ -1451,6 +1594,7 @@
 <name>validation_email_content</name>
 <number>15</number>
 <prettyName>Validation eMail Content</prettyName>
+
 <rows>10</rows>
 <size>72</size>
 <unmodifiable>0</unmodifiable>
@@ -1461,6 +1605,7 @@
 <number>12</number>
 <prettyName>Version</prettyName>
 <size>30</size>
+
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </version>
@@ -1471,6 +1616,7 @@
 <size>10</size>
 <unmodifiable>0</unmodifiable>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+
 </webbgcolor>
 <webcopyright>
 <name>webcopyright</name>
@@ -1482,6 +1628,7 @@
 </webcopyright>
 </class>
 <name>XWiki.XWikiPreferences</name>
+
 <number>0</number>
 <className>XWiki.XWikiPreferences</className>
 <property>
@@ -1491,7 +1638,11 @@
 <admin_email>Chronopolys &lt;no-reply@chronopolys.net&gt;</admin_email>
 </property>
 <property>
+<auth_active_check></auth_active_check>
+</property>
+<property>
 <authenticate_edit>0</authenticate_edit>
+
 </property>
 <property>
 <authenticate_view>0</authenticate_view>
@@ -1505,6 +1656,7 @@
 <property>
 <chronodisplaywiki>1</chronodisplaywiki>
 </property>
+
 <property>
 <chronodomain></chronodomain>
 </property>
@@ -1520,6 +1672,7 @@
 <property>
 <convertmail></convertmail>
 </property>
+
 <property>
 <default_language>en</default_language>
 </property>
@@ -1533,6 +1686,7 @@
 <edit_registered>---</edit_registered>
 </property>
 <property>
+
 <editbox_height></editbox_height>
 </property>
 <property>
@@ -1571,8 +1725,9 @@ http://${xwiki.getXWikiPreference("server_name")}/xwiki/bin/inline/XWiki/$xwikin
 <property>
 <language>en</language>
 </property>
+
 <property>
-<languages>fr,en</languages>
+<languages>en</languages>
 </property>
 <property>
 <leftPanels></leftPanels>
@@ -1587,6 +1742,7 @@ http://${xwiki.getXWikiPreference("server_name")}/xwiki/bin/inline/XWiki/$xwikin
 <macros_mapping></macros_mapping>
 </property>
 <property>
+
 <macros_velocity></macros_velocity>
 </property>
 <property>
@@ -1597,19 +1753,23 @@ http://${xwiki.getXWikiPreference("server_name")}/xwiki/bin/inline/XWiki/$xwikin
 </property>
 <property>
 <menu>&lt;a href="$xwiki.getURL("Main.WebHome","view")"&gt;Home&lt;/a&gt;&lt;span&gt; | &lt;/span&gt; 
+
 &lt;a href="$xwiki.getURL("Blog.WebHome","view")"&gt;Blog&lt;/a&gt;&lt;span&gt; | &lt;/span&gt; 
 &lt;a href="$xwiki.getURL("Main.WhatsNew","view")"&gt;What's new&lt;/a&gt;&lt;span&gt; | &lt;/span&gt; 
 &lt;a href="$xwiki.getURL("Main.WebSearch","view")"&gt;Search&lt;/a&gt;&lt;span&gt; | &lt;/span&gt; 
+
 #if($xwiki.hasAdminRights())
 &lt;a href="$xwiki.getURL("XWiki.WebHome","view")"&gt;Admin&lt;/a&gt;&lt;span&gt; | &lt;/span&gt; 
 #end
 &lt;a href="$xwiki.getURL("Doc.WebHome","view")"&gt;Doc&lt;/a&gt;&lt;span&gt; | &lt;/span&gt;
+
 &lt;a href="$xwiki.getURL("XWiki.RegisterNewUser","view")"&gt;Register&lt;/a&gt;&lt;span&gt; | &lt;/span&gt;
 </menu></property><property><meta>&lt;meta name="revisit-after" content="7 days" /&gt;
 &lt;meta name="description" content="XWiki for sharing information" /&gt;
 &lt;meta name="keywords" content="wiki" /&gt;
 &lt;meta name="distribution" content="GLOBAL" /&gt;
 &lt;meta name="rating" content="General" /&gt;
+
 &lt;meta name="author" content="" /&gt;
 &lt;meta http-equiv="reply-to" content="" /&gt;
 &lt;meta name="language" content="en" /&gt;
@@ -1620,6 +1780,7 @@ http://${xwiki.getXWikiPreference("server_name")}/xwiki/bin/inline/XWiki/$xwikin
 <property>
 <multilingual>0</multilingual>
 </property>
+
 <property>
 <notification_pages></notification_pages>
 </property>
@@ -1635,6 +1796,7 @@ http://${xwiki.getXWikiPreference("server_name")}/xwiki/bin/inline/XWiki/$xwikin
 <property>
 <registration_anonymous>---</registration_anonymous>
 </property>
+
 <property>
 <registration_registered>---</registration_registered>
 </property>
@@ -1650,8 +1812,9 @@ http://${xwiki.getXWikiPreference("server_name")}/xwiki/bin/inline/XWiki/$xwikin
 <property>
 <rightPanels>Panels.Search,Panels.New Project,Panels.MyDeadlines,Panels.MyLastModifications</rightPanels>
 </property>
+
 <property>
-<server_name>devopolys.org:8080</server_name>
+<server_name>localhost:8080</server_name>
 </property>
 <property>
 <showLeftPanels>0</showLeftPanels>
@@ -1660,9 +1823,10 @@ http://${xwiki.getXWikiPreference("server_name")}/xwiki/bin/inline/XWiki/$xwikin
 <showRightPanels>1</showRightPanels>
 </property>
 <property>
-<skin>chronopolys</skin>
+<skin>ChronoCode.Skin</skin>
 </property>
 <property>
+
 <smtp_server>127.0.0.1</smtp_server>
 </property>
 <property>
@@ -1675,7 +1839,8 @@ http://${xwiki.getXWikiPreference("server_name")}/xwiki/bin/inline/XWiki/$xwikin
 <tags></tags>
 </property>
 <property>
-<title>Devopolys</title>
+<title>Chronopolys</title>
+
 </property>
 <property>
 <use_email_verification>1</use_email_verification>
@@ -1719,6 +1884,7 @@ http://${xwiki.getXWikiPreference("server_name")}/xwiki/bin/inline/XWiki/$xwikin
 </property>
 <property>
 <webcopyright></webcopyright>
+
 </property>
 </object>
 <content>1 Preferences

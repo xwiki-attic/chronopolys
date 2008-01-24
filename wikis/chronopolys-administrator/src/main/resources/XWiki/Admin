@@ -696,7 +696,7 @@
 <fax></fax>
 </property>
 <property>
-<first_name>Admin</first_name>
+<first_name>XWiki</first_name>
 </property>
 <property>
 <imaccount></imaccount>
@@ -705,7 +705,7 @@
 <imtype>---</imtype>
 </property>
 <property>
-<last_name>Chronopolys</last_name>
+<last_name>Admin</last_name>
 </property>
 <property>
 <pageWidth>default</pageWidth>

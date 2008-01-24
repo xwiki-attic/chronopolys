@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <xwikidoc>
 <web>ChronoSheets</web>
@@ -8,13 +8,13 @@
 <translation>0</translation>
 <parent></parent>
 <creator>XWiki.Admin</creator>
-<author>XWiki.Admin</author>
+<author>XWiki.Administrator</author>
 
 <customClass></customClass>
-<contentAuthor>XWiki.Admin</contentAuthor>
+<contentAuthor>XWiki.Administrator</contentAuthor>
 <creationDate>1157374918000</creationDate>
-<date>1200994656000</date>
-<contentUpdateDate>1200994656000</contentUpdateDate>
+<date>1201010338000</date>
+<contentUpdateDate>1201010338000</contentUpdateDate>
 <version>4.1</version>
 <title></title>
 <template></template>
@@ -86,8 +86,8 @@
 &lt;div id="projectcontainer"&gt;
 ## ---------------------------------------------------------------
 ## HELP
-#set ($results = $xwiki.searchDocuments(", BaseObject as obj where doc.fullName=obj.name and obj.className='ChronoClasses.ProjectClass' and doc.creator='${xwiki.getUser()}'"))
-#if (($doc.getVersion() == "1.1" || $doc.getVersion() == "1.2") &amp;&amp; $results.size() == 1)
+#set ($results = $xwiki.searchDocuments(", BaseObject as obj where doc.fullName=obj.name and obj.className='ChronoClasses.ProjectClass' and doc.creator='${context.getUser()}'"))
+#if (($doc.getVersion() == "1.1" || $doc.getVersion() == "2.1" || $doc.getVersion() == "3.1") &amp;&amp; $results.size() == 1)
 &lt;img src="$xwiki.getSkinFile("tips/Project.WebHome.${context.language}.1.png")" style="margin-left:5px;margin-bottom:10px;" /&gt;
 #end
 &lt;div id="projectcol_1"&gt;
@@ -104,7 +104,6 @@
     &lt;div style="float:left;"&gt;
       #includeInContext("ChronoCode.CreatePlogArticle")
     &lt;/div&gt;
-
   #includeMacros("ChronoCode.PlogMacros")
   #plog("10" "0")
 #chronopanelfooter(false)
@@ -119,8 +118,8 @@
 ## NOTE
 #chronopanelheader($obj "projectnote" false "")
 &lt;div id="projectnote"&gt;
-
 #displayNote($project)
+
 &lt;/div&gt;
 #chronopanelfooter(false)
 ## ---------------------------------------------------------------
@@ -132,7 +131,6 @@
 #end
 &lt;/div&gt;
 &lt;div id="projectcol_3"&gt;
-
 ## ---------------------------------------------------------------
 ## MEMBERS
 #chronopanelheaderengine($obj "members" "${doc.web}.ProjectMembers" $msg.get("member_management") $msg.get('editmembers'))
@@ -154,37 +152,32 @@
     &lt;div style="float:left;padding-right:4px;"&gt;
       &lt;a href="$memberProfile.getURL("view")" title="$msg.get("seethememberprofile")"&gt;
         &lt;img src="$xwiki.getSkinFile("vcard.png")" width="16" height="16" /&gt;
-
       &lt;/a&gt;
+
     &lt;/div&gt;
     &lt;div style="float:left;width:150px;overflow:hidden;"&gt;
-
       &lt;a class="linknonedecoration" href="javascript:void(0);" onclick="javascript:toggleClass($('member$count'), 'hidden')"&gt;*$memberProfile.display("first_name", "view") $memberProfile.display("last_name", "view")* &lt;/a&gt;
       &lt;div id="member$count" #if ($member == $projectLeader) #else class="hidden" #end style="margin-bottom:5px;font-size:10px;line-height:12px;"&gt;
-
         #if ($member == $projectLeader) *$msg.get("projectleader")* &lt;br/&gt;#end 
         $msg.get("dept") : $memberProfile.display("dept", "view") &lt;br/&gt;
+
         $msg.get("workphone") : $memberProfile.display("workphone", "view") &lt;br/&gt;
-
         $msg.get("email") : &lt;a href="mailto:$memberProfile.display("email", "view")"&gt;$memberProfile.display("email", "view")&lt;/a&gt;
-
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div style="clear:both;border-top:1px solid #E6E6E6;margin:5px 0;"&gt;&lt;/div&gt;
+
 #end
   #* &lt;div class="panel_prevnext"&gt;
-
     &amp;nbsp;
   &lt;/div&gt;
-
   &lt;tr class="project_managers_tr"&gt;
   &lt;td&gt;
     &lt;a href="$xwiki.getURL("${doc.web}.ProjectMembers")" title=""&gt;
       &lt;img src="$xwiki.getSkinFile("arrow_right.png")" /&gt;
+
     &lt;/a&gt;
-
   &lt;/td&gt;
-
   &lt;td&gt;
     [$msg.get("member_management")&gt;ProjectMembers]
   &lt;/td&gt;
@@ -200,13 +193,12 @@
 #chronopanelheaderengine($obj "guests" "${doc.web}.ProjectGuests" $msg.get("guests_management") $msg.get('editguests'))
 #if ($project.isPublic())
   $msg.get("projectispublic")
-
 #else
 #set ($guests = $prjobj.getGuests())
 #set($count=0)
 #if ($guests.size() == 0)
-&lt;div&gt;$msg.get("noguest")&lt;/div&gt;
 
+&lt;div&gt;$msg.get("noguest")&lt;/div&gt;
 &lt;p class="paragraph"&gt;&lt;/p&gt;
 #end
 #foreach ($guest in $guests)
@@ -216,19 +208,20 @@
     &lt;a href="$guestProfile.getURL("view")" title="$msg.get("seethememberprofile")"&gt;
       &lt;img src="$xwiki.getSkinFile("vcard.png")" width="16" height="16" /&gt;
     &lt;/a&gt;
-  &lt;/div&gt;
 
+  &lt;/div&gt;
   &lt;div style="float:left;width:150px;overflow:hidden;"&gt;
     &lt;a class="linknonedecoration" href="javascript:void(0);" onclick="javascript:toggleClass($('guest$count'), 'hidden')"&gt;*$guestProfile.display("first_name", "view") $guestProfile.display("last_name", "view")* &lt;/a&gt;
     &lt;div id="guest$count" class="hidden" style="margin-bottom:5px;font-size:10px;line-height:12px;"&gt;  
       $msg.get("dept") : $guestProfile.display("dept", "view") &lt;br/&gt;
+
       $msg.get("workphone") : $guestProfile.display("workphone", "view") &lt;br/&gt;
 
       $msg.get("email") : &lt;a href="mailto:$guestProfile.display("email", "view")"&gt;$guestProfile.display("email", "view")&lt;/a&gt;
     &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div style="clear:both;border-top:1px solid #E6E6E6;margin:5px 0;"&gt;&lt;/div&gt;
 
+  &lt;div style="clear:both;border-top:1px solid #E6E6E6;margin:5px 0;"&gt;&lt;/div&gt;
 #end
 #end
 #chronopanelfooter(false)
@@ -239,7 +232,6 @@
 #set($files=$xwiki.search("select doc.fullName, attach.filename from XWikiAttachment attach, XWikiDocument doc where doc.id=attach.docId and doc.web='$doc.web' and doc.name='ProjectDocuments' order by attach.filename"))
     #if ($files.size() == 0)
       &lt;div&gt;$msg.get("noprojectdocuments")&lt;/div&gt;
-
     #end
 #foreach($file in $files)
   #displayFile($file)
@@ -251,7 +243,6 @@
 
   &lt;/tr&gt;
   &lt;tr class="project_managers_tr"&gt;
-
   &lt;td&gt;
     &lt;a href="$xwiki.getURL("${doc.web}.ProjectDocuments")" title=""&gt;
       &lt;img src="$xwiki.getSkinFile("arrow_right.png")" /&gt;
@@ -259,7 +250,6 @@
 
   &lt;/td&gt;
   &lt;td&gt;
-
     [$msg.get("document_management")&gt;ProjectDocuments]
   &lt;/td&gt;
   &lt;/tr&gt; *#
@@ -274,7 +264,6 @@
 
     &lt;a href="$xwiki.getURL($name, "view")"&gt;
       &lt;img src="$xwiki.getSkinFile("page.png")" width="16" height="16" /&gt;
-
     &lt;/a&gt;
   &lt;/div&gt;
   &lt;div style="float:left;"&gt;
@@ -286,7 +275,6 @@
 #set($wikipages=$prjobj.getWikiPages())
   #if ($wikipages.size() == 0)
     &lt;div&gt;$msg.get("noprojectwikipage")&lt;/div&gt;
-
   #end
   #foreach($page in $wikipages)
       #displayWikiPage($page)
@@ -298,7 +286,6 @@
 
   &lt;/tr&gt;
   &lt;tr class="project_managers_tr"&gt;
-
   &lt;td&gt;
     &lt;a href="$xwiki.getURL("${doc.web}.ProjectWiki")" title=""&gt;
       &lt;img src="$xwiki.getSkinFile("arrow_right.png")" /&gt;
@@ -306,7 +293,6 @@
 
   &lt;/td&gt;
   &lt;td&gt;
-
     [$msg.get("wiki_management")&gt;ProjectWiki]
   &lt;/td&gt;
   &lt;/tr&gt; *#
@@ -323,7 +309,6 @@
 &lt;/div&gt;
 &lt;div class="spacer"&gt;&lt;/div&gt;
 &lt;/div&gt;
-
 {pre}
 &lt;script type="text/javascript"&gt;
   /* init the registered dates list (phases calendars dependencies) */

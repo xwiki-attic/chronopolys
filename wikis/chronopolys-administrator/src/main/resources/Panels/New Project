@@ -120,7 +120,7 @@ onfocus="if(this.value=='$msg.get("projectname")') this.value=''" onblur="if(thi
   &lt;/div&gt;
 &lt;/form&gt;
 #panelfooter()
-#set ($results = $xwiki.searchDocuments(", BaseObject as obj where doc.fullName=obj.name and obj.className='ChronoClasses.ProjectClass' and doc.creator='${xwiki.getUser()}'"))
+#set ($results = $xwiki.searchDocuments(", BaseObject as obj where doc.fullName=obj.name and obj.className='ChronoClasses.ProjectClass' and doc.creator='${context.getUser()}'"))
 #if ($results.size() == 0)
 
 &lt;img src="$xwiki.getSkinFile("tips/Panels.NewProject.en.png")" style="margin-top:-25px;" /&gt;
