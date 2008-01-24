@@ -61,7 +61,7 @@
   width: 170px;
 }
 &lt;/style&gt;
-#set ($mode="qualitymode")
+##set ($mode="qualitymode")
 #set($orphans = $xwiki.chronopolys.getProjectContainerProjects("OrphanActivity"))
 #if ($orphans.size() &gt; 0)
 &lt;div id="orphansprojects"&gt;
