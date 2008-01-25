@@ -46,7 +46,7 @@
       <version>${platform.tools.version}</version>
     </dependency>
     <!-- Add the database JAR so that it's included in the expanded WAR since it's not included
-         by default in the XEM WAR. -->
+         by default in the Chronopolys WAR. -->
     <dependency>
       <groupId>${xwiki.db.jdbc.groupId}</groupId>
       <artifactId>${xwiki.db.jdbc.artifactId}</artifactId>
