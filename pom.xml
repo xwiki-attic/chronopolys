@@ -38,14 +38,13 @@
   <description>XWiki Products - Chronopolys - Parent POM</description>  
   <properties>
     <!-- Versions of XWiki dependencies used in Chronopolys modules -->
-    <platform.tools.version>1.8-SNAPSHOT</platform.tools.version>
+    <platform.tools.version>1.7</platform.tools.version>
     <platform.core.version>1.2</platform.core.version>
     <platform.web.version>1.2</platform.web.version>
     <platform.panels.version>1.2</platform.panels.version>
-    <platform.plugin.mailsender.version>1.1-SNAPSHOT</platform.plugin.mailsender.version>
-    <platform.plugin.scheduler.version>1.3-SNAPSHOT</platform.plugin.scheduler.version>
-    <platform.plugin.watchlist.version>1.2-SNAPSHOT</platform.plugin.watchlist.version>
-    <platform.plugin.chronopolys.version>1.0-SNAPSHOT</platform.plugin.chronopolys.version>
+    <platform.plugin.mailsender.version>1.0</platform.plugin.mailsender.version>
+    <platform.plugin.scheduler.version>1.2</platform.plugin.scheduler.version>
+    <platform.plugin.watchlist.version>1.1</platform.plugin.watchlist.version>    
   </properties>
   <build>
     <plugins>
@@ -60,14 +59,14 @@
       <plugin>
         <groupId>com.xpn.xwiki.platform</groupId>
         <artifactId>xwiki-build-xar-plugin</artifactId>
-        <version>1.1</version>
+        <version>${platform.tools.version}</version>
       </plugin>
     </plugins>
     <extensions>
       <extension>
         <groupId>com.xpn.xwiki.platform</groupId>
         <artifactId>xwiki-build-xar-handlers</artifactId>
-        <version>1.1</version>
+        <version>${platform.tools.version}</version>
       </extension>
     </extensions>
   </build>
@@ -78,51 +77,4 @@
     <module>database</module>
     <module>distribution</module>
   </modules>
-  <!-- Note: Even though this repository is defined in the com.xpn.xwiki.platform:xwiki module we
-       still need to define it here because if com.xpn.xwiki.platform:xwiki is not in the local
-       repository we want to fetch it from the remote repo to provide a seamless build experience
-  -->
-  <repositories>
-    <repository>
-      <id>xwiki</id>
-      <name>XWiki Maven2 Remote Repository</name>
-      <url>http://maven.xwiki.org</url>
-      <releases>
-        <enabled>true</enabled>
-      </releases>
-      <snapshots>
-        <enabled>true</enabled>
-      </snapshots>
-    </repository>
-  </repositories>
-
-  <!-- dependencies>
-    <dependency>
-      <groupId>com.xpn.xwiki.platform</groupId>
-      <artifactId>xwiki-core</artifactId>
-      <version>1.1-SNAPSHOT</version>
-    </dependency>
-  </dependencies -->
-
-  <!-- profiles>
-    <profile>
-      <activation>
-        <activeByDefault>true</activeByDefault>
-      </activation>
-      <id>mysql</id>
-      <properties>
-        <xwiki.db>mysql</xwiki.db>
-        <xwiki.db.jdbc.groupId>mysql</xwiki.db.jdbc.groupId>
-        <xwiki.db.jdbc.artifactId>mysql-connector-java</xwiki.db.jdbc.artifactId>
-        <xwiki.db.jdbc.version>5.0.4</xwiki.db.jdbc.version>
-        <xwiki.db.connection.url>jdbc:mysql://localhost/xwiki?useServerPrepStmts=false</xwiki.db.connection.url>
-        <xwiki.db.connection.username>xwiki</xwiki.db.connection.username>
-        <xwiki.db.connection.password>xwiki</xwiki.db.connection.password>
-        <xwiki.db.connection.driver_class>com.mysql.jdbc.Driver</xwiki.db.connection.driver_class>
-        <xwiki.db.dialect>org.hibernate.dialect.MySQLDialect</xwiki.db.dialect>
-        <xwiki.db.hbm.xwiki>xwiki.hbm.xml</xwiki.db.hbm.xwiki>
-        <xwiki.db.hbm.feeds>feeds.hbm.xml</xwiki.db.hbm.feeds>
-      </properties>
-    </profile>
-  </profiles -->
 </project>

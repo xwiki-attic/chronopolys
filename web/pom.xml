@@ -46,7 +46,7 @@
     <dependency>
       <groupId>com.avane.xwiki.products</groupId>
       <artifactId>xwiki-plugin-chronopolys</artifactId>
-      <version>${platform.plugin.chronopolys.version}</version>
+      <version>${pom.version}</version>
     </dependency>
     <dependency>
       <groupId>com.xpn.xwiki.platform.plugins</groupId>
