@@ -33,7 +33,7 @@
   <name>XWiki Products - Chronopolys - Installers - Parent POM</name>
   <packaging>pom</packaging>
   <description>XWiki Products - Chronopolys - Installers - Parent POM</description>
-  <modules>  
+  <modules>
     <module>generic</module>
     <module>windows</module>
   </modules>
