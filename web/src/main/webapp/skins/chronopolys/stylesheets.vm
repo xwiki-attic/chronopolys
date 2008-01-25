@@ -1,1 +1,2 @@
-<link href="$xwiki.getSkinFile("style.css", true)" rel="stylesheet" type="text/css"  />
+<link href="$xwiki.getSkinFile("style.css", true)" rel="stylesheet" type="text/css"  media="all" />
+<link href="$xwiki.getSkinFile("print.css", true)" rel="stylesheet"  type="text/css" media="print"  />
