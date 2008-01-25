@@ -33,7 +33,7 @@
   <artifactId>xwiki-product-chronopolys-parent</artifactId>
   <packaging>pom</packaging>
   <name>XWiki Products - Chronopolys - Parent POM</name>
-  <version>1.0-rc-1</version>
+  <version>1.0-SNAPSHOT</version>
   <description>XWiki Products - Chronopolys - Parent POM</description>  
   <properties>
     <!-- Versions of XWiki dependencies used in Chronopolys modules -->
