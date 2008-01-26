@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>ChronoCode</web>
@@ -10,30 +10,61 @@
 <creator>XWiki.Admin</creator>
 <author>XWiki.Admin</author>
 <customClass></customClass>
-
 <contentAuthor>XWiki.Admin</contentAuthor>
 <creationDate>1201189973000</creationDate>
-<date>1201191608000</date>
-<contentUpdateDate>1201191608000</contentUpdateDate>
-<version>1.2</version>
+<date>1201347986000</date>
+<contentUpdateDate>1201347986000</contentUpdateDate>
+<version>7.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment>Upload new image &lt;a href="/xwiki/bin/downloadrev/ChronoCode/Skin/logo.png?rev=1.1"&gt;logo.png&lt;/a&gt;</comment>
-
-<minorEdit>true</minorEdit>
+<minorEdit>false</minorEdit>
 <attachment>
 <filename>logo.png</filename>
-<filesize>7618</filesize>
+<filesize>7607</filesize>
 <author>XWiki.Admin</author>
-<date>1201191608000</date>
+<date>1201347986000</date>
 <version>1.1</version>
 <comment></comment>
+<content>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</content>
 </attachment>
 <object>
 <class>
-
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<cache>0</cache>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+<name>tags</name>
+<number>1</number>
+<prettyName>Tags</prettyName>
+<relationalStorage>1</relationalStorage>
+<separator> </separator>
+<separators> ,|</separators>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<values></values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>ChronoCode.Skin</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<property>
+<tags/>
+</property>
+</object>
+<object>
+<class>
 <name>XWiki.XWikiSkins</name>
 <customClass></customClass>
 <customMapping></customMapping>
@@ -47,7 +78,6 @@
 <customDisplay></customDisplay>
 <editor>---</editor>
 <name>attachments.vm</name>
-
 <number>18</number>
 <prettyName>attachments.vm</prettyName>
 <rows>15</rows>
@@ -59,7 +89,6 @@
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </attachments.vm>
 <attachmentsinline.vm>
-
 <contenttype>FullyRenderedText</contenttype>
 <customDisplay></customDisplay>
 <editor>---</editor>
@@ -70,7 +99,6 @@
 <size>80</size>
 <tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
-
 <validationMessage></validationMessage>
 <validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
@@ -83,7 +111,6 @@
 <size>30</size>
 <tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
-
 <validationMessage></validationMessage>
 <validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
@@ -95,7 +122,6 @@
 <name>chronopolys.css</name>
 <number>19</number>
 <prettyName>chronopolys.css</prettyName>
-
 <rows>15</rows>
 <size>80</size>
 <tooltip></tooltip>
@@ -108,7 +134,6 @@
 <contenttype>FullyRenderedText</contenttype>
 <customDisplay></customDisplay>
 <editor>---</editor>
-
 <name>chronopolys.js</name>
 <number>20</number>
 <prettyName>chronopolys.js</prettyName>
@@ -119,7 +144,6 @@
 <validationMessage></validationMessage>
 <validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-
 </chronopolys.js>
 <chronoproject.css>
 <contenttype>FullyRenderedText</contenttype>
@@ -130,7 +154,6 @@
 <prettyName>chronoproject.css</prettyName>
 <rows>15</rows>
 <size>80</size>
-
 <tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
 <validationMessage></validationMessage>
@@ -143,7 +166,6 @@
 <editor>---</editor>
 <name>chronoprojects.css</name>
 <number>14</number>
-
 <prettyName>chronoprojects.css</prettyName>
 <rows>15</rows>
 <size>80</size>
@@ -155,7 +177,6 @@
 </chronoprojects.css>
 <commentsinline.vm>
 <contenttype>FullyRenderedText</contenttype>
-
 <customDisplay></customDisplay>
 <editor>---</editor>
 <name>commentsinline.vm</name>
@@ -166,7 +187,6 @@
 <tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
 <validationMessage></validationMessage>
-
 <validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </commentsinline.vm>
@@ -178,7 +198,6 @@
 <number>9</number>
 <prettyName>Edit</prettyName>
 <rows>15</rows>
-
 <size>80</size>
 <tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
@@ -191,7 +210,6 @@
 <customDisplay></customDisplay>
 <editor>---</editor>
 <name>editinline.vm</name>
-
 <number>28</number>
 <prettyName>editinline.vm</prettyName>
 <rows>15</rows>
@@ -203,7 +221,6 @@
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </editinline.vm>
 <editpanels.vm>
-
 <contenttype>PureText</contenttype>
 <customDisplay></customDisplay>
 <editor>Text</editor>
@@ -214,7 +231,6 @@
 <size>80</size>
 <tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
-
 <validationMessage></validationMessage>
 <validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
@@ -226,7 +242,6 @@
 <name>footer.vm</name>
 <number>4</number>
 <prettyName>Footer</prettyName>
-
 <rows>15</rows>
 <size>80</size>
 <tooltip></tooltip>
@@ -239,7 +254,6 @@
 <contenttype>FullyRenderedText</contenttype>
 <customDisplay></customDisplay>
 <editor>---</editor>
-
 <name>fudocs.vm</name>
 <number>24</number>
 <prettyName>fudocs.vm</prettyName>
@@ -250,7 +264,6 @@
 <validationMessage></validationMessage>
 <validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-
 </fudocs.vm>
 <global.vm>
 <contenttype>FullyRenderedText</contenttype>
@@ -261,7 +274,6 @@
 <prettyName>global.vm</prettyName>
 <rows>15</rows>
 <size>80</size>
-
 <tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
 <validationMessage></validationMessage>
@@ -274,7 +286,6 @@
 <editor>---</editor>
 <name>header.vm</name>
 <number>3</number>
-
 <prettyName>Header</prettyName>
 <rows>15</rows>
 <size>80</size>
@@ -286,7 +297,6 @@
 </header.vm>
 <history.vm>
 <contenttype>FullyRenderedText</contenttype>
-
 <customDisplay></customDisplay>
 <editor>---</editor>
 <name>history.vm</name>
@@ -297,7 +307,6 @@
 <tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
 <validationMessage></validationMessage>
-
 <validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </history.vm>
@@ -309,7 +318,6 @@
 <number>16</number>
 <prettyName>htmlheader.vm</prettyName>
 <rows>15</rows>
-
 <size>80</size>
 <tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
@@ -322,7 +330,6 @@
 <name>logo</name>
 <number>11</number>
 <prettyName>Logo</prettyName>
-
 <size>30</size>
 <tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
@@ -335,7 +342,6 @@
 <customDisplay></customDisplay>
 <editor>---</editor>
 <name>macros.vm</name>
-
 <number>13</number>
 <prettyName>Macros</prettyName>
 <rows>15</rows>
@@ -347,7 +353,6 @@
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </macros.vm>
 <name>
-
 <customDisplay></customDisplay>
 <name>name</name>
 <number>1</number>
@@ -359,7 +364,6 @@
 <validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </name>
-
 <projectheader.vm>
 <contenttype>FullyRenderedText</contenttype>
 <customDisplay></customDisplay>
@@ -370,7 +374,6 @@
 <rows>15</rows>
 <size>80</size>
 <tooltip></tooltip>
-
 <unmodifiable>0</unmodifiable>
 <validationMessage></validationMessage>
 <validationRegExp></validationRegExp>
@@ -382,7 +385,6 @@
 <editor>---</editor>
 <name>rounded.css</name>
 <number>15</number>
-
 <prettyName>rounded.css</prettyName>
 <rows>15</rows>
 <size>80</size>
@@ -394,7 +396,6 @@
 </rounded.css>
 <space.vm>
 <contenttype>FullyRenderedText</contenttype>
-
 <customDisplay></customDisplay>
 <editor>---</editor>
 <name>space.vm</name>
@@ -405,7 +406,6 @@
 <tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
 <validationMessage></validationMessage>
-
 <validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </space.vm>
@@ -417,7 +417,6 @@
 <number>29</number>
 <prettyName>spare1.vm</prettyName>
 <rows>15</rows>
-
 <size>80</size>
 <tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
@@ -430,7 +429,6 @@
 <customDisplay></customDisplay>
 <editor>---</editor>
 <name>spare2.vm</name>
-
 <number>30</number>
 <prettyName>spare2.vm</prettyName>
 <rows>15</rows>
@@ -442,7 +440,6 @@
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </spare2.vm>
 <style.css>
-
 <contenttype>FullyRenderedText</contenttype>
 <customDisplay></customDisplay>
 <editor>---</editor>
@@ -453,7 +450,6 @@
 <size>80</size>
 <tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
-
 <validationMessage></validationMessage>
 <validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
@@ -465,7 +461,6 @@
 <name>stylesheets.vm</name>
 <number>22</number>
 <prettyName>stylesheets.vm</prettyName>
-
 <rows>15</rows>
 <size>80</size>
 <tooltip></tooltip>
@@ -478,7 +473,6 @@
 <contenttype>FullyRenderedText</contenttype>
 <customDisplay></customDisplay>
 <editor>---</editor>
-
 <name>view.vm</name>
 <number>5</number>
 <prettyName>View</prettyName>
@@ -489,7 +483,6 @@
 <validationMessage></validationMessage>
 <validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-
 </view.vm>
 <viewattachrev.vm>
 <contenttype>FullyRenderedText</contenttype>
@@ -500,7 +493,6 @@
 <prettyName>viewattachrev.vm</prettyName>
 <rows>15</rows>
 <size>80</size>
-
 <tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
 <validationMessage></validationMessage>
@@ -513,7 +505,6 @@
 <editor>---</editor>
 <name>viewheader.vm</name>
 <number>27</number>
-
 <prettyName>View Header</prettyName>
 <rows>15</rows>
 <size>80</size>
@@ -525,7 +516,6 @@
 </viewheader.vm>
 <xwiki.js>
 <contenttype>FullyRenderedText</contenttype>
-
 <customDisplay></customDisplay>
 <editor>---</editor>
 <name>xwiki.js</name>
@@ -536,7 +526,6 @@
 <tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
 <validationMessage></validationMessage>
-
 <validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </xwiki.js>
@@ -550,9 +539,8 @@
 <property>
 <attachmentsinline.vm></attachmentsinline.vm>
 </property>
-
 <property>
-<baseskin></baseskin>
+<baseskin>chronopolys</baseskin>
 </property>
 <property>
 <chronopolys.css></chronopolys.css>
@@ -568,7 +556,6 @@
 </property>
 <property>
 <commentsinline.vm></commentsinline.vm>
-
 </property>
 <property>
 <edit.vm></edit.vm>
@@ -586,7 +573,6 @@
 <fudocs.vm></fudocs.vm>
 </property>
 <property>
-
 <global.vm></global.vm>
 </property>
 <property>
@@ -604,7 +590,6 @@
 <property>
 <macros.vm></macros.vm>
 </property>
-
 <property>
 <name></name>
 </property>
@@ -622,7 +607,6 @@
 </property>
 <property>
 <spare2.vm></spare2.vm>
-
 </property>
 <property>
 <style.css></style.css>
@@ -640,10 +624,8 @@
 <viewheader.vm></viewheader.vm>
 </property>
 <property>
-
 <xwiki.js></xwiki.js>
 </property>
 </object>
 <content>
-</content>
-</xwikidoc>
+</content></xwikidoc>
