@@ -59,20 +59,52 @@ public class ProjectMembers {
                 if (it.next() != null) {
                     i++;
                 }
-            }            
+            }
         }
         return i;
     }
 
     public BaseObject safeGetObject(XWikiDocument odoc, String classname, int index, XWikiContext context)
             throws XWikiException {
-        BaseObject bobj = odoc.getObject(classname, index);
-        if (bobj == null) {
+
+        // TODO : remove dependencies on objects indexes
+
+        Vector objects = odoc.getObjects(classname);
+        List safeObjs = new ArrayList();
+        if (objects != null) {
+            Iterator it = objects.iterator();
+            while (it.hasNext()) {
+                BaseObject current = (BaseObject) it.next();
+                if (current != null) {
+                    safeObjs.add(current);
+                }
+            }
+        }
+
+        BaseObject bobj = null;
+
+        if (safeObjs.size() > index) {
+            bobj = (BaseObject) safeObjs.get(index);
+        } else {
             int onb = safeObjectCount(odoc, classname, context);
             for (int i = onb; i <= index; i++) {
-                bobj = odoc.newObject(classname, context);
-            }            
+                odoc.newObject(classname, context);
+            }
+            context.getWiki().saveDocument(odoc, context);
+
+            return safeGetObject(odoc, classname, index, context);
+            /* objects = odoc.getObjects(classname);
+            safeObjs = new ArrayList();
+            Iterator it = objects.iterator();
+            while (it.hasNext()) {
+                BaseObject current = (BaseObject) it.next();
+                if (current != null) {
+                    safeObjs.add(current);
+                }
+            }
+            bobj = (BaseObject) safeObjs.get(index); */
         }
+
         return bobj;
     }
 
@@ -152,7 +184,7 @@ public class ProjectMembers {
         phrights.setLargeStringValue("groups", space + "." + Project.PROJECT_LEADERSDOC +
                 ",ChronoAdmin.AdminGroup,ChronoAdmin.ManagerGroup");
         phrights.setStringValue("levels", "edit,delete");
-        phrights.setIntValue("allow", 1);        
+        phrights.setIntValue("allow", 1);
         context.getWiki().saveDocument(phases, context);
     }
 
@@ -222,7 +254,7 @@ public class ProjectMembers {
                             new Document(context.getWiki().getDocument(name, context), context),
                             ProjectNotifications.NOTIFICATION_PROJECT_INVITATION, context);
             /* Add project space to user's watchlist */
-            WatchListPlugin wlplugin = (WatchListPlugin)context.getWiki().getPlugin("watchlist", context);
+            WatchListPlugin wlplugin = (WatchListPlugin) context.getWiki().getPlugin("watchlist", context);
             wlplugin.addWatchedElement(name, project.getSpace(), true, context);
             /* notify subscribers */
             /* project.getPlugin().getNotificationManager()
