@@ -477,10 +477,16 @@ $doc.display("content", $obj)
    #set($localname = $xwiki.getLocalUserName($memberpage, false))
    #set($indx = $localname.indexOf(" "))
    #set($indx = $indx + 1)
-   #set($key = $localname.substring($indx))
-   #capitalize($key) ## the last name 
-   #set($discard = $objkeys.add($key))   
-   #set($discard = $objmap.put($key, $obj))
+   #if($localname.size() > $indx)
+     #set($key = $localname.substring($indx))
+     #capitalize($key) ## the last name 
+     #set($discard = $objkeys.add($key))   
+     #set($discard = $objmap.put($key, $obj))
+   #elseif($localname != "") ## the first name, if the last name is empty
+       #capitalize($localname)
+       #set($discard = $objkeys.add($localname))   
+       #set($discard = $objmap.put($localname, $obj))
+   #end
 #end
 #set($objkeys = $xwiki.sort($objkeys))  
 #foreach($k in $objkeys)
@@ -498,9 +504,14 @@ $doc.display("content", $obj)
 #foreach($docname in $docnames)
     #set($userdoc = $xwiki.getDocument($docname))
     #set($key = $userdoc.get("last_name"))
-    #capitalize($key)
-    #set($discard = $docnameskeys.add($key))
-    #set($discard = $docnamesmap.put($key, $docname))
+    #if($key == "")
+      #set($key = $userdoc.get("first_name"))
+    #end
+    #if($key != "") 
+      #capitalize($key)
+      #set($discard = $docnameskeys.add($key))
+      #set($discard = $docnamesmap.put($key, $docname))
+    #end
 #end
 #set($docnameskeys = $xwiki.sort($docnameskeys))
 #foreach($k in $docnameskeys)
