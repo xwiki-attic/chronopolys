@@ -52,6 +52,9 @@ public class ProjectManager {
     public static final String TEMPLATE_PROJECT_MEMBERS =
             TEMPLATE_DEFAULT_SPACE + "." + "ProjectMembersTemplate";
 
+    public static final String TEMPLATE_PROJECT_GUESTS =
+            TEMPLATE_DEFAULT_SPACE + "." + "ProjectMembersTemplate";
+
     public static final String TEMPLATE_PROJECT_LEADERS =
             TEMPLATE_DEFAULT_SPACE + "." + "ProjectLeadersTemplate";
 
@@ -151,6 +154,8 @@ public class ProjectManager {
                 space + "." + Project.PROJECT_DOCUMENTSDOC, context);
         context.getWiki().copyDocument(TEMPLATE_PROJECT_MEMBERS,
                 space + "." + Project.PROJECT_MEMBERSDOC, context);
+        context.getWiki().copyDocument(TEMPLATE_PROJECT_GUESTS,
+                space + "." + Project.PROJECT_GUESTSDOC, context);
         context.getWiki().copyDocument(TEMPLATE_PROJECT_LEADERS,
                 space + "." + Project.PROJECT_LEADERSDOC, context);
         context.getWiki().copyDocument(TEMPLATE_PROJECT_PHASES,
