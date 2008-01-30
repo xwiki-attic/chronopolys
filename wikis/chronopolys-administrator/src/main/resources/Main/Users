@@ -62,8 +62,9 @@
 
 #macro(usersAlpha $letter)
 #chronopanelheader("$letter")
-#set ($sql = ", BaseObject as obj, StringProperty as prop where obj.name=doc.fullName and obj.className='XWiki.XWikiUsers' and obj.id=prop.id.id and prop.id.name='last_name' and prop.value like '$letter%'")
+#set ($sql = ", BaseObject as obj, StringProperty as prop1, StringProperty as prop2 where obj.name=doc.fullName and obj.className='XWiki.XWikiUsers' and obj.id=prop1.id.id and obj.id=prop2.id.id and prop1.id.name='last_name' and prop2.id.name='first_name' and ((prop1.value = '' and prop2.value like '$letter%') or prop1.value like '$letter%')")
 &lt;ul&gt;
+
 #foreach ($item in $xwiki.searchDocuments($sql))
    &lt;li id="${letter}_${velocityCount}" class="usersli"&gt;$xwiki.getLocalUserName($item)&amp;nbsp;
 #if($context.user!=$item &amp;&amp; $isChronoAdmin)&lt;img  src="$xwiki.getSkinFile('bin.gif')" alt="$msg.get('deleteuser')" title="$msg.get('deleteuser')" class="deleteuser" onclick="deleteUser('${letter}_${velocityCount}','$item');" /&gt;#end&lt;/li&gt;
@@ -74,6 +75,7 @@
 
 &lt;div id="userscontainer"&gt;
 &lt;div class="userscol"&gt;
+
 #usersAlpha("A")
 #usersAlpha("B")
 #usersAlpha("C")
