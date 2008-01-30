@@ -136,6 +136,8 @@
 #chronopanelheaderengine($obj "members" "${doc.web}.ProjectMembers" $msg.get("member_management") $msg.get('editmembers'))
 #set ($members = $prjobj.getMembers())
 #set($count=0)
+### sort alphabetically
+#sortdocnamesbylastname($members)
 #foreach ($member in $members)
   #set($memberProfile = $xwiki.getDocument($member))
   #set($memberObjs = $doc.getObjects("XWiki.XWikiGroups"))
@@ -156,7 +158,7 @@
 
     &lt;/div&gt;
     &lt;div style="float:left;width:150px;overflow:hidden;"&gt;
-      &lt;a class="linknonedecoration" href="javascript:void(0);" onclick="javascript:toggleClass($('member$count'), 'hidden')"&gt;*$memberProfile.display("first_name", "view") $memberProfile.display("last_name", "view")* &lt;/a&gt;
+      &lt;a class="linknonedecoration" href="javascript:void(0);" onclick="javascript:toggleClass($('member$count'), 'hidden')"&gt;&lt;b&gt;$memberProfile.display("first_name", "view") $memberProfile.display("last_name", "view")&lt;/b&gt;&lt;/a&gt;
       &lt;div id="member$count" #if ($member == $projectLeader) #else class="hidden" #end style="margin-bottom:5px;font-size:10px;line-height:12px;"&gt;
         #if ($member == $projectLeader) *$msg.get("projectleader")* &lt;br/&gt;#end 
         $msg.get("dept") : $memberProfile.display("dept", "view") &lt;br/&gt;
@@ -201,6 +203,8 @@
 &lt;div&gt;$msg.get("noguest")&lt;/div&gt;
 &lt;p class="paragraph"&gt;&lt;/p&gt;
 #end
+### sort alphabetically
+#sortdocnamesbylastname($guests)
 #foreach ($guest in $guests)
   #set($guestProfile = $xwiki.getDocument($guest))  
   #set($count = $count + 1)  
@@ -211,17 +215,16 @@
 
   &lt;/div&gt;
   &lt;div style="float:left;width:150px;overflow:hidden;"&gt;
-    &lt;a class="linknonedecoration" href="javascript:void(0);" onclick="javascript:toggleClass($('guest$count'), 'hidden')"&gt;*$guestProfile.display("first_name", "view") $guestProfile.display("last_name", "view")* &lt;/a&gt;
+    &lt;a class="linknonedecoration" href="javascript:void(0);" onclick="javascript:toggleClass($('guest$count'), 'hidden')"&gt;&lt;b&gt;$guestProfile.display("first_name", "view") $guestProfile.display("last_name", "view")&lt;/b&gt;&lt;/a&gt;
     &lt;div id="guest$count" class="hidden" style="margin-bottom:5px;font-size:10px;line-height:12px;"&gt;  
       $msg.get("dept") : $guestProfile.display("dept", "view") &lt;br/&gt;
 
       $msg.get("workphone") : $guestProfile.display("workphone", "view") &lt;br/&gt;
-
       $msg.get("email") : &lt;a href="mailto:$guestProfile.display("email", "view")"&gt;$guestProfile.display("email", "view")&lt;/a&gt;
     &lt;/div&gt;
   &lt;/div&gt;
-
   &lt;div style="clear:both;border-top:1px solid #E6E6E6;margin:5px 0;"&gt;&lt;/div&gt;
+
 #end
 #end
 #chronopanelfooter(false)
