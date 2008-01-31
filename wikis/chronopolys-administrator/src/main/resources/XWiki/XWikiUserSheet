@@ -12,9 +12,9 @@
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
 <creationDate>1106308018000</creationDate>
-<date>1201769786000</date>
-<contentUpdateDate>1201769786000</contentUpdateDate>
-<version>3.1</version>
+<date>1201775024000</date>
+<contentUpdateDate>1201775024000</contentUpdateDate>
+<version>4.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
@@ -135,7 +135,7 @@
     #if ($context.user==$doc.fullName)
       #chronopanelheader("preferences")
         &lt;table width="100%"&gt;
-          #if ($context.user==$doc.fullName &amp;&amp; $xwiki.chronopolys.getChronoPreference("multilingual") == 1)
+          #if ($context.user==$doc.fullName &amp;&amp; $xwiki.chronopolys.getChronoPreference("multilingual") == 1 &amp;&amp; $xwiki.getDocument("ChronoCode.Translations").getTranslationList().size() &gt; 0 )
           &lt;tr&gt;
             &lt;td&gt;$msg.get("chosenlanguage")&lt;/td&gt;
             &lt;td&gt;
@@ -157,7 +157,6 @@
         &lt;/table&gt;
       #chronopanelfooter()
     #end
-
     #if ($context.action == "view"&amp;&amp;$context.user==$doc.fullName)
       #chronopanelheader("myprojects")
         #displayMyProjects("white" 0)
