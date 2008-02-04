@@ -63,11 +63,9 @@
   #if ($request.do == "delete")
     #roundedtitletop($msg.get("deleteproject"))
     &lt;div&gt;
-
     &lt;span class="buttonwrapper"&gt;&lt;a href="$doc.getURL("view")"&gt;$msg.get("cancel")&lt;/a&gt;&lt;/span&gt;
     &lt;span class="buttonwrapper"&gt;&lt;a href="" onclick="if (confirm('$msg.get("confirmdeleteproject2")')==false) { return false; } else { location='$doc.getURL("view", "do=confirmdelete")'; return false; }"&gt;$msg.get("confirmdeleteproject")&lt;/a&gt;&lt;/span&gt;
     &lt;div class="spacer"&gt;&lt;/div&gt;
-
     &lt;/div&gt;
     #roundedbottom()
   #elseif ($request.do == "confirmdelete")
@@ -100,7 +98,6 @@
 ## PLOG
 #chronopanelheader($obj "plog" false false)
   &lt;div class="roundedcontent" style="margin-top:-10px;padding:5px 10px 0 10px;"&gt;
-
     &lt;div style="float:left;"&gt;
       #includeInContext("ChronoCode.CreatePlogArticle")
     &lt;/div&gt;
@@ -119,7 +116,6 @@
 #chronopanelheader($obj "projectnote" false "")
 &lt;div id="projectnote"&gt;
 #displayNote($project)
-
 &lt;/div&gt;
 #chronopanelfooter(false)
 ## ---------------------------------------------------------------
@@ -155,7 +151,6 @@
       &lt;a href="$memberProfile.getURL("view")" title="$msg.get("seethememberprofile")"&gt;
         &lt;img src="$xwiki.getSkinFile("vcard.png")" width="16" height="16" /&gt;
       &lt;/a&gt;
-
     &lt;/div&gt;
     &lt;div style="float:left;width:150px;overflow:hidden;"&gt;
       &lt;a class="linknonedecoration" href="javascript:void(0);" onclick="javascript:toggleClass($('member$count'), 'hidden')"&gt;&lt;b&gt;$memberProfile.display("first_name", "view") $memberProfile.display("last_name", "view")&lt;/b&gt;&lt;/a&gt;
@@ -168,7 +163,6 @@
       &lt;/div&gt;
     &lt;/div&gt;
     &lt;div style="clear:both;border-top:1px solid #E6E6E6;margin:5px 0;"&gt;&lt;/div&gt;
-
 #end
   #* &lt;div class="panel_prevnext"&gt;
     &amp;nbsp;
@@ -177,7 +171,6 @@
   &lt;td&gt;
     &lt;a href="$xwiki.getURL("${doc.web}.ProjectMembers")" title=""&gt;
       &lt;img src="$xwiki.getSkinFile("arrow_right.png")" /&gt;
-
     &lt;/a&gt;
   &lt;/td&gt;
   &lt;td&gt;
@@ -199,7 +192,6 @@
 #set ($guests = $prjobj.getGuests())
 #set($count=0)
 #if ($guests.size() == 0)
-
 &lt;div&gt;$msg.get("noguest")&lt;/div&gt;
 &lt;p class="paragraph"&gt;&lt;/p&gt;
 #end
@@ -212,19 +204,16 @@
     &lt;a href="$guestProfile.getURL("view")" title="$msg.get("seethememberprofile")"&gt;
       &lt;img src="$xwiki.getSkinFile("vcard.png")" width="16" height="16" /&gt;
     &lt;/a&gt;
-
   &lt;/div&gt;
   &lt;div style="float:left;width:150px;overflow:hidden;"&gt;
     &lt;a class="linknonedecoration" href="javascript:void(0);" onclick="javascript:toggleClass($('guest$count'), 'hidden')"&gt;&lt;b&gt;$guestProfile.display("first_name", "view") $guestProfile.display("last_name", "view")&lt;/b&gt;&lt;/a&gt;
     &lt;div id="guest$count" class="hidden" style="margin-bottom:5px;font-size:10px;line-height:12px;"&gt;  
       $msg.get("dept") : $guestProfile.display("dept", "view") &lt;br/&gt;
-
       $msg.get("workphone") : $guestProfile.display("workphone", "view") &lt;br/&gt;
       $msg.get("email") : &lt;a href="mailto:$guestProfile.display("email", "view")"&gt;$guestProfile.display("email", "view")&lt;/a&gt;
     &lt;/div&gt;
   &lt;/div&gt;
   &lt;div style="clear:both;border-top:1px solid #E6E6E6;margin:5px 0;"&gt;&lt;/div&gt;
-
 #end
 #end
 #chronopanelfooter(false)
@@ -243,14 +232,12 @@
     &lt;td colspan="2" class="panel_prevnext"&gt;
       &amp;nbsp;
     &lt;/td&gt;
-
   &lt;/tr&gt;
   &lt;tr class="project_managers_tr"&gt;
   &lt;td&gt;
     &lt;a href="$xwiki.getURL("${doc.web}.ProjectDocuments")" title=""&gt;
       &lt;img src="$xwiki.getSkinFile("arrow_right.png")" /&gt;
     &lt;/a&gt;
-
   &lt;/td&gt;
   &lt;td&gt;
     [$msg.get("document_management")&gt;ProjectDocuments]
@@ -264,7 +251,6 @@
 #chronopanelheaderengine($obj "wiki" "${doc.web}.ProjectWiki" $msg.get("wiki_management") $msg.get("editwiki"))
 #macro(displayWikiPage $name)
   &lt;div style="float:left;width:20px;padding-right:4px;"&gt;
-
     &lt;a href="$xwiki.getURL($name, "view")"&gt;
       &lt;img src="$xwiki.getSkinFile("page.png")" width="16" height="16" /&gt;
     &lt;/a&gt;
@@ -272,7 +258,6 @@
   &lt;div style="float:left;"&gt;
     [$name]
   &lt;/div&gt;
-
 &lt;div style="clear:both;border-top:1px solid #E6E6E6;margin:5px 0;"&gt;&lt;/div&gt;
 #end
 #set($wikipages=$prjobj.getWikiPages())
@@ -286,14 +271,12 @@
     &lt;td colspan="2" class="panel_prevnext"&gt;
       &amp;nbsp;
     &lt;/td&gt;
-
   &lt;/tr&gt;
   &lt;tr class="project_managers_tr"&gt;
   &lt;td&gt;
     &lt;a href="$xwiki.getURL("${doc.web}.ProjectWiki")" title=""&gt;
       &lt;img src="$xwiki.getSkinFile("arrow_right.png")" /&gt;
     &lt;/a&gt;
-
   &lt;/td&gt;
   &lt;td&gt;
     [$msg.get("wiki_management")&gt;ProjectWiki]
@@ -308,7 +291,6 @@
   #displayProjectNotifications($obj "view")
 #chronopanelfooter(false)
 #end
-
 &lt;/div&gt;
 &lt;div class="spacer"&gt;&lt;/div&gt;
 &lt;/div&gt;
