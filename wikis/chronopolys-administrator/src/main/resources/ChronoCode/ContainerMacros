@@ -65,7 +65,7 @@
   &lt;tr&gt;
     &lt;td&gt;Nom&lt;/td&gt;&lt;td&gt;&lt;div id="${uid}_input_name"&gt;$obj.display("name", "editnopre")&lt;/div&gt;&lt;/td&gt;
     #if ($type == "axis")
-    &lt;td colspan="2" class="styleeditinput"&gt;&lt;span class="fleft"&gt;Couleur :&lt;/span&gt;&lt;div id="${uid}_input_style"&gt;$obj.display("style", "editnopre")&lt;/div&gt;&lt;/td&gt;
+    &lt;td colspan="2" class="styleeditinput"&gt;&lt;span class="fleft"&gt;$msg.get("color") :&lt;/span&gt;&lt;div id="${uid}_input_style"&gt;$obj.display("style", "editnopre")&lt;/div&gt;&lt;/td&gt;
     #else
     &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
     #end
