@@ -91,6 +91,7 @@ function pickColor(color) {
 		return;
 		}
 	ColorPicker_targetInput.value = color;
+  ColorPicker_targetInput.style.background = color;
 	}
 
 // This function is the easiest way to popup the window, select a color, and
