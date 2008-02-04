@@ -63,14 +63,14 @@
 #roundedbackgroundtop('#EEE')
   &lt;table class="action_table ${type}_action_table"&gt;
   &lt;tr&gt;
-    &lt;td&gt;Nom&lt;/td&gt;&lt;td&gt;&lt;div id="${uid}_input_name"&gt;$obj.display("name", "editnopre")&lt;/div&gt;&lt;/td&gt;
+    &lt;td&gt;$msg.get("name")&lt;/td&gt;&lt;td&gt;&lt;div id="${uid}_input_name"&gt;$obj.display("name", "editnopre")&lt;/div&gt;&lt;/td&gt;
     #if ($type == "axis")
-    &lt;td colspan="2" class="styleeditinput"&gt;&lt;span class="fleft"&gt;$msg.get("color") :&lt;/span&gt;&lt;div id="${uid}_input_style"&gt;$obj.display("style", "editnopre")&lt;/div&gt;&lt;/td&gt;
+    &lt;td colspan="2" class="styleeditinput"&gt;&lt;span class="fleft"&gt;$msg.get("color"): &lt;/span&gt;&lt;div id="${uid}_input_style"&gt;$obj.display("style", "editnopre")&lt;/div&gt;&lt;/td&gt;
     #else
     &lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;
     #end
   &lt;/tr&gt;
-  &lt;tr&gt;&lt;td&gt;Description&lt;/td&gt;&lt;td colspan=3&gt;&lt;div id="${uid}_input_desc"&gt;$obj.display("desc", "editnopre")&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;
+  &lt;tr&gt;&lt;td&gt;$msg.get("description")&lt;/td&gt;&lt;td colspan=3&gt;&lt;div id="${uid}_input_desc"&gt;$obj.display("desc", "editnopre")&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;
   &lt;tr&gt;&lt;td&gt;&lt;/td&gt;&lt;td&gt;&lt;span class="buttonwrapper fright" style="margin:0;"&gt;&lt;input type="button" onclick="toggleClass($('${uid}_edit'), 'hidden')" value="$msg.get("cancel")"/&gt;&lt;/span&gt;&lt;/td&gt;
       &lt;td&gt;&lt;span class="buttonwrapper fleft" style="margin:0;"&gt;&lt;input type="button" onclick="container_save('${uid}')" value="$msg.get("save")"/&gt;&lt;/span&gt;&lt;/td&gt;&lt;td&gt;&lt;/td&gt;&lt;/tr&gt;  
   &lt;/table&gt;
