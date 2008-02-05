@@ -182,7 +182,7 @@ if (window.attachEvent) window.attachEvent("onload", sfHover);
   #set ($ylist = "")
   #set ($ylist = $xwiki.chronopolys.getProjectContainerChilds($axispage))
   #if ($ylist.size() &gt; 0)
-    &lt;li&gt;&lt;a href="#" class="daddy"&gt;$xwiki.getXMLEncoded($axis.get("name"))&lt;/a&gt;
+    &lt;li&gt;&lt;a href="#" class="daddy"&gt;$xwiki.getXMLEncoded($msg.get($axis.get("name")))&lt;/a&gt;
       &lt;ul&gt;
         #foreach($yard in $xwiki.chronopolys.getProjectContainerChilds($axispage))        
           #set ($tmp = $yard.name)
@@ -191,14 +191,14 @@ if (window.attachEvent) window.attachEvent("onload", sfHover);
           #set ($alist = "")
           #set ($alist = $xwiki.chronopolys.getProjectContainerChilds($apage))
           #if ($alist.size() &gt; 0)
-            &lt;li&gt;&lt;a href="#" class="daddy"&gt;$xwiki.getXMLEncoded($yard.get("name"))&lt;/a&gt;
+            &lt;li&gt;&lt;a href="#" class="daddy"&gt;$xwiki.getXMLEncoded($msg.get($yard.get("name")))&lt;/a&gt;
               #if ($alist.size() &gt; 0)
                 &lt;ul&gt;
                   #foreach($activity in $alist)
                     #set ($tmp = $activity.name)
                     #set ($count = $tmp.indexOf(".") + 1)
                     #set ($apage = $tmp.substring($count))
-                    &lt;li&gt;&lt;a href="#" onclick="projectcontainerchange('$xwiki.getXMLEncoded($activity.get("name"))', '$apage', #if($value=="OrphanActivity")false#else true#end); return false;"&gt;$xwiki.getXMLEncoded($activity.get("name"))&lt;/a&gt;&lt;/li&gt;
+                    &lt;li&gt;&lt;a href="#" onclick="projectcontainerchange('$xwiki.getXMLEncoded($msg.get($activity.get("name")))', '$apage', #if($value=="OrphanActivity")false#else true#end); return false;"&gt;$xwiki.getXMLEncoded($msg.get($activity.get("name")))&lt;/a&gt;&lt;/li&gt;
                   #end
                 &lt;/ul&gt;
               #end
