@@ -147,7 +147,7 @@
 <desc></desc>
 </property>
 <property>
-<name>En attente de classement</name>
+<name>awaitingclassification</name>
 </property>
 <property>
 <order>9999</order>
