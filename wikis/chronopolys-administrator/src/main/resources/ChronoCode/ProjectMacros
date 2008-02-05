@@ -141,7 +141,7 @@
 &lt;tr class="underlined"&gt;&lt;td colspan="2"&gt;&lt;span class="projectdata_label"&gt;$msg.get("activity")&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td colspan="2"&gt;
 #set ($contname = $obj.display("container", "view"))
-&lt;span class="projectdata_value"&gt;#if($action=="edit") $obj.display("container", $action) #else $xwiki.getDocument("ProjectContainers.$contname").display("name", "view") #end&lt;/span&gt;
+&lt;span class="projectdata_value"&gt;#if($action=="edit") $msg.get($obj.display("container", $action)) #else $msg.get($xwiki.getDocument("ProjectContainers.$contname").display("name", "view")) #end&lt;/span&gt;
 &lt;/td&gt;&lt;/tr&gt;
 ## &lt;tr class="underlined"&gt;&lt;td colspan="2"&gt;&lt;span class="projectdata_label"&gt;$msg.get("codename")&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
 ## &lt;tr&gt;&lt;td colspan="2"&gt;&lt;span class="projectdata_value"&gt;$obj.display("codename", $action) &amp;nbsp;&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
