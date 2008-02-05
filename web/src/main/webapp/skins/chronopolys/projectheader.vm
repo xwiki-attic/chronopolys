@@ -30,4 +30,4 @@
 		##end
 	</span>
 </div>
-<div class="container_breadcrumb">$currentAxis.display("name", "view") > $currentYard.display("name", "view") > $currentActivity.display("name", "view")</div>
+<div class="container_breadcrumb">$msg.get($currentAxis.display("name", "view")) > $msg.get($currentYard.display("name", "view")) > $msg.get($currentActivity.display("name", "view"))</div>
