@@ -162,6 +162,7 @@ articledisplay=Afficher
 attachmentof=Attaché à
 attachments=Pièce(s) jointe(s)
 axis=Axe
+awaitingclassification=En attente de classement
 backtoedit=Retourner a l'edition
 backtoproject=retour à l'accueil du groupe
 backtotoday=Aujourd'hui
