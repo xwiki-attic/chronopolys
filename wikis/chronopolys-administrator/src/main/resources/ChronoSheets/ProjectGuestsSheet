@@ -69,7 +69,6 @@ $response.sendRedirect($doc.getURL())
 #end
 
 #roundedtitletop($msg.get("projectguests"))
-
 #if (!$project.isPublic())
 #set($redirect = $xwiki.getRequestURL())
 #set($projectGuests = $doc.getObjects("XWiki.XWikiGroups"))
@@ -98,14 +97,13 @@ $msg.get("projectispublicextended")
 
 
 #if ($xwiki.hasAccessLevel("edit") &amp;&amp; !$project.isPublic())
-#roundedtitletop($msg.get("addguest")) 
-
 #set ($guests = $xwiki.chronopolys.getProject($doc.web).getGuests())
 #set ($members = $xwiki.chronopolys.getProject($doc.web).getMembers())
 #set ($users = $xwiki.rightsmanager.usersApi.getAllLocalUsersNames())
 ## sort by last name
 #sortdocnamesbylastname($users) 
 #if ($guests.size() &lt; $users.size())
+#roundedtitletop($msg.get("addguest")) 
 &lt;table style="width:100%;"&gt;
 &lt;tr&gt;&lt;td&gt;
 &lt;form name="addguesttogroup" action="$doc.getURL("view")" method="post"&gt;
@@ -133,6 +131,5 @@ $msg.get("user") :
 $msg.get("nomorewikiuserstoadd")
 #roundedbottom()
 #end
-
-#end
-</content></xwikidoc>
+#end</content>
+</xwikidoc>
