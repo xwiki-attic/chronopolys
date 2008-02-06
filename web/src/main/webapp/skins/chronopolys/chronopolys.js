@@ -1115,7 +1115,8 @@ function container_add(type, parent)
     {
         method: 'get',
         onSuccess: function(transport) {
-            container_refresh_action(parent, '&modes=edit' + transport.responseText);
+            var params = '&modes=edit' + transport.responseText + '&type=' + type;
+            container_refresh_action(parent, params);      
         }
     });
 }
@@ -1144,7 +1145,8 @@ function container_save(id)
         postBody: parameters,
         onComplete: function()
         {
-            container_refresh_action(pid, "");
+            if($(id).className.indexOf("activity") != -1) container_refresh_action(pid, "type=activity");
+            else container_refresh_action(pid, "");
         }
     });
 }
@@ -1171,7 +1173,13 @@ function container_refresh_action(id, params) {
         evalScripts: true,
         onComplete: function() {
           setLoadingBg(id, false);
-          $(id).style.height = '';
+          if(params.indexOf('type=activity') >= 0) {
+            var childsid = id + "_childs";
+            childs_visibility(childsid, 'yard');
+          }
+          else  {
+            $(id).style.height = '';
+          }
           // re-enable the visibility preference save
           isUpdatingContainers = false;
           // flush the hiddenable elements cache
@@ -1217,7 +1225,8 @@ function container_delete_action(id)
         method: 'get',
         onSuccess: function()
         {
-            container_refresh_action(pid, '');
+            if($(id).className.indexOf("activity") != -1) container_refresh_action(pid, "type=activity");
+            else container_refresh_action(pid, "");
         }
     });
 }
