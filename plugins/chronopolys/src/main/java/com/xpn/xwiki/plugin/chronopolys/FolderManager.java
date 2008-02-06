@@ -226,12 +226,7 @@ public class FolderManager
                 if (bobj == null) {
                     throw new ChronopolysPluginException(
                         ChronopolysPluginException.ERROR_CONTAINER_DOESNOTEXIST,
-                        "This folder does not exist"
-                    );
-                }
-                if (bobj == null) {
-                    throw new ChronopolysPluginException(
-                        ChronopolysPluginException.ERROR_CONTAINER_ISNOTVALID, "Invalid folder"
+                        "This folder does not exist : " + FOLDERS_SPACE + "." + uid
                     );
                 }
                 folder = new Object(bobj, context);

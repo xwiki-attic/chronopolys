@@ -53,7 +53,7 @@ public class ProjectManager {
             TEMPLATE_DEFAULT_SPACE + "." + "ProjectMembersTemplate";
 
     public static final String TEMPLATE_PROJECT_GUESTS =
-            TEMPLATE_DEFAULT_SPACE + "." + "ProjectMembersTemplate";
+            TEMPLATE_DEFAULT_SPACE + "." + "ProjectGuestsTemplate";
 
     public static final String TEMPLATE_PROJECT_LEADERS =
             TEMPLATE_DEFAULT_SPACE + "." + "ProjectLeadersTemplate";
