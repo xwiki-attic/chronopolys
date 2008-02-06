@@ -92,15 +92,13 @@ $doc.display("role", $obj)&lt;/td&gt;
 &lt;/table&gt;
 #roundedbottom()
 
-
 #if ($xwiki.hasAccessLevel("edit"))
-#roundedtitletop($msg.get("addmember")) 
-
 #set ($members = $xwiki.chronopolys.getProject($doc.web).getMembers())
-#set ($users=$xwiki.rightsmanager.usersApi.getAllLocalUsersNames())
+#set ($users = $xwiki.rightsmanager.usersApi.getAllLocalUsersNames())
 ## sort by last name
 #sortdocnamesbylastname($users)
 #if ($members.size() &lt; $users.size())
+#roundedtitletop($msg.get("addmember")) 
 &lt;form name="addusertogroup" action="$doc.getURL("view")" method="post"&gt;
 &lt;input type="hidden" id="do" name="do" value="addmember" /&gt;
 ## &lt;input type="hidden" id="classname" name="classname" value="XWiki.XWikiGroups" /&gt;
@@ -110,7 +108,6 @@ $msg.get("user") :
  #foreach($user in $users)
     #if(!$members.contains($user)))
     &lt;option value="$user"&gt;#displayUserFullName($user)&lt;/option&gt;
-
     #end
  #end
 &lt;/select&gt;
@@ -123,7 +120,6 @@ $msg.get("user") :
 $msg.get("nomorewikiuserstoadd")
 #roundedbottom()
 #end
-
 
 #if ($projectMembers.size() &gt; 1)
 #roundedtitletop($msg.get("changeprojectleader"))
