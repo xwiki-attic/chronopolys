@@ -58,6 +58,7 @@
   confirmcontainerdelete = "$msg.get("confirmcontainerdelete")";
   confirmplogdelete = "$msg.get("confirmplogdelete")";
   confirmphasetomilestone = "$msg.get("confirmphasetomilestone")";
+  confirmdeleteuser = "$msg.get("confirmdeleteuser")";
   #if ($isProject)
   currentContainer = "$project.get("container")";
   #end
