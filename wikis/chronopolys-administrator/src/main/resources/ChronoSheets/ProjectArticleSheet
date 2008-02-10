@@ -59,6 +59,13 @@
 #set($creationDate = $xwiki.formatDate($bentrydoc.creationDate,"dd MMMM yyyy"))
 #if($context.action!="inline")
 ## ----------------------------------------------------------------------------
+## UPDATE TASK COMPLETION
+## ----------------------------------------------------------------------------
+#if($request.taskcompletion)
+$obj.set('taskcompletion', $request.taskcompletion)
+#set($discard = $doc.save)
+#end
+## ----------------------------------------------------------------------------
 ## VIEW
 ## ----------------------------------------------------------------------------
 #set($showattachments = "yes")
@@ -92,9 +99,11 @@
 
 #if ($doc.type == "task")
 #roundedtop()
-* *$msg.get("taskduedate")* : $doc.taskduedate
-* *$msg.get("taskassignee")* : $doc.taskassignee
-* *$msg.get("taskcompletion")* : $doc.taskcompletion &lt;span style="display:block; width:70%; border:1px solid #aaa; margin-left:5px;"&gt;&lt;span style="display:block; background:#ccc; width:$doc.taskcompletion; height:15px;"&gt;&lt;/span&gt;&lt;/span&gt;
+&lt;ul class="star"&gt;
+&lt;li&gt;&lt;strong&gt;$msg.get("taskduedate") : &lt;/strong&gt;&lt;span&gt;$doc.taskduedate&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;$msg.get("taskassignee") : &lt;/strong&gt;&lt;span&gt;$doc.taskassignee&lt;/span&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;$msg.get("taskcompletion") : &lt;/strong&gt;&lt;span id="task_completed_value"&gt;$doc.taskcompletion&lt;/span&gt;&lt;div id="slider_container"&gt;&lt;div id="slider_track"&gt;&lt;div id="task_completed" style="width:$doc.taskcompletion;" &gt;&lt;/div&gt;&lt;/div&gt;&lt;div id="slider" style="left:$doc.taskcompletion;"/&gt;&lt;img id="tc_loading" src="$xwiki.getSkinFile("ajax-loader.gif")" alt="Loading" style="left:$doc.taskcompletion;" /&gt;&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
 &lt;div style="clear:both;"&gt;&lt;/div&gt;
 #roundedbottom()
 #end
@@ -123,6 +132,12 @@ $content
   border-bottom:0px;
 }
 &lt;/style&gt;
+
+{pre}
+&lt;script type="text/javascript"&gt;
+var slider = new xwkSlider('slider_track', 'slider', 'task_completed_value', 'task_completed', 'tc_loading', '$doc.getURL()');
+&lt;/script&gt;
+{/pre}
 
 #else
 ## ----------------------------------------------------------------------------
