@@ -1387,3 +1387,126 @@ function setdisplayednote(note) {
       setdisplayednote(initialnote);
  }
 
+ //--------------------------//
+ // Slider                   //
+ //--------------------------//
+ 
+xwkSlider = Class.create();
+
+xwkSlider.prototype = {
+  initialize: function(trackNode, domNode, updateDispValue, updateDispColor, loadingElem, url, nrVal, maxVal)
+  {
+    this.domNode = $(domNode);
+    this.trackNode = $(trackNode); 
+    this.updateDispValue = $(updateDispValue);
+    this.updateDispColor = $(updateDispColor);
+    this.loadingElem = $(loadingElem);
+    this.url = url;
+    if(nrVal)
+      this.nrVal = nrVal;
+    else
+      this.nrVal = 10; // number of values to be displayed
+    if(maxVal)
+      this.maxVal = maxVal;
+    else
+      this.maxVal = 100;
+    this.step = this.maxVal / this.nrVal;
+    this.dist = this.trackNode.clientWidth;
+    this.start = this.trackNode.offsetLeft;
+    this.isDown = false;
+    
+    this.attachEventHandlers();
+  },
+  
+  attachEventHandlers: function()
+  {
+      Event.observe(this.domNode, 'mousedown', this.makeMouseDownHandler(this));
+      Event.observe(document, 'keydown', this.makeKeyDownHandler(this));
+      this.mouseUpHandler = this.makeMouseUpHandler(this);
+  },
+  
+  makeKeyDownHandler: function(self)
+  {
+    return function(ev) {
+      if (ev.keyCode) code = ev.keyCode;
+      else if (ev.which) code = ev.which;
+      if(code == 39) 
+      { // right key
+        var x = parseInt(self.updateDispValue.innerHTML);
+        x += self.step;
+        if(x > self.maxVal) x = self.maxVal;
+        var url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
+        url += "?taskcompletion=" + x + "%";
+        var pivot = self;
+        self.loadingElem.style.display = "block";
+        new Ajax.Request(url, {
+              method: 'get',
+              onSuccess: function(transport)
+              {
+               pivot.domNode.style.left = x + "%";
+               pivot.updateDispValue.innerHTML = pivot.updateDispColor.style.width = x + "%";
+               pivot.loadingElem.style.display = "none;";
+              }
+          });
+      }
+      else if(code == 37) 
+      { // left key
+           var x = parseInt(self.updateDispValue.innerHTML);
+           x -= self.step;
+           if(x > self.maxVal) x = self.maxVal;
+           var url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
+           url += "?taskcompletion=" + x + "%";
+           var pivot = self;
+           self.loadingElem.style.display = "block";
+           new Ajax.Request(url, {
+              method: 'get',
+              onSuccess: function(transport)
+              {
+               pivot.domNode.style.left = x + "%";
+               pivot.updateDispValue.innerHTML = pivot.updateDispColor.style.width = x + "%";
+               pivot.loadingElem.style.display = "none";
+              }
+          });
+      }
+    }
+  },
+  
+  makeMouseDownHandler: function(self)
+  {
+    return function(ev) {
+      self.isDown = true; 
+      Event.observe(document, 'mouseup', self.mouseUpHandler);
+    }
+  },
+  
+  makeMouseUpHandler: function(self) {
+    return function(ev) {
+      if(self.isDown) 
+      {
+        var x = ev.screenX - self.start;
+        var p = Math.round(x * self.nrVal / self.dist);
+        x = (p * self.dist) / self.nrVal;
+        var dp = (p * self.step) + "%";
+        var curr = self.updateDispValue.innerHTML;
+        if(x >= 0 && x <= self.dist && dp != curr) {
+          var url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
+          url += "?taskcompletion=" + dp;
+          var pivot = self;
+          self.loadingElem.style.display = "block";
+          new Ajax.Request(url, {
+              method: 'get',
+              onSuccess: function(transport)
+              {
+                pivot.domNode.style.left = x + "px";
+                pivot.updateDispValue.innerHTML = dp;    
+                if(pivot.updateDispColor) pivot.updateDispColor.style.width = dp;
+                pivot.loadingElem.style.display = "none";
+              }
+          });
+        }
+        Event.stopObserving(document, 'mouseup', self.mouseUpHandler);
+      }
+      self.isDown = false;
+    }
+  }
+}

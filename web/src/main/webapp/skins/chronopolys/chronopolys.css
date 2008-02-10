@@ -1090,3 +1090,41 @@ table.grid {
 #printcontainer #projectcontainer {
   margin: 0px auto !important;
 }
+
+#task_completed {
+  display:block; 
+  background-color:#ccc;
+  background-image: url($xwiki.getSkinFile("track.gif"));
+  height: 15px;
+}
+
+#slider_container {
+  display:block;
+  width:70%; 
+  height:20px;
+  margin-top:5px;  
+  text-align:center;
+}
+
+
+#slider_track {
+  width: 100%;
+  border:1px solid #aaa;
+}
+
+#slider {
+  position: relative;
+  width: 10px;
+  height: 21px;
+  top: -91% !important;
+  margin: 0px !important;
+  padding: 0px !important;
+  z-index: 9998;
+  background-image: url($xwiki.getSkinFile('slider.gif'));
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+#tc_loading {
+  display: none;
+}
