@@ -496,6 +496,7 @@ taskassignee=Assignation
 taskcompletion=Completed
 taskduedate=Due date
 task=Task
+task-complete=Task complete
 thisaccountdoesnotexists=This login does not exist : 
 timelineswitch=View the groups in timeline mode
 title=Name
