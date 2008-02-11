@@ -1387,109 +1387,136 @@ function setdisplayednote(note) {
       setdisplayednote(initialnote);
  }
 
- //--------------------------//
- // Slider                   //
- //--------------------------//
+ // find top, left positions cross-browser
+ function findPos(obj) {
+	var curleft = curtop = 0;
+	if (obj.offsetParent) {
+		do {
+			curleft += obj.offsetLeft;
+			curtop += obj.offsetTop;
+		} while (obj = obj.offsetParent);
+	}
+	return [curleft,curtop];
+}
+
+ /*---------------------------------------------------------------------------------//
+ // Slider                              
+    @param domNode The div that represents the slider
+    @param trackNode The div that represents the slider track
+    @param updCol The slider might have to update the color of the track
+    @param loading The div used to show ajax request in progress
+    @param updHandler The function used to update several elements when slider moves
+    @param url The url used for ajax request
+    @param nrVal Number of values the slider can display (ex. 10)
+    @param maxVal The maximum value the slider can display (ex. 100)
+ //---------------------------------------------------------------------------------*/
  
 xwkSlider = Class.create();
 
 xwkSlider.prototype = {
-  initialize: function(trackNode, domNode, updateDispValue, updateDispColor, loadingElem, url, nrVal, maxVal)
+  initialize: function(params)
   {
-    this.domNode = $(domNode);
-    this.trackNode = $(trackNode); 
-    this.updateDispValue = $(updateDispValue);
-    this.updateDispColor = $(updateDispColor);
-    this.loadingElem = $(loadingElem);
-    this.url = url;
-    if(nrVal)
-      this.nrVal = nrVal;
-    else
-      this.nrVal = 10; // number of values to be displayed
-    if(maxVal)
-      this.maxVal = maxVal;
-    else
-      this.maxVal = 100;
+    this.domNode = $(params.domNode);
+    this.trackNode = $(params.trackNode); 
+    this.updCol = ('updCol' in params ? $(params.updCol) : null);
+    this.loading = $(params.loading);
+    this.updHandler = ('updHandler' in params ? params.updHandler : function() { }  );
+    this.nrVal = ('nrVal' in params ? params.nrVal : 10); 
+    this.maxVal = ('maxVal' in params ? params.maxVal : 100); 
+    this.url = params.url;
+    
     this.step = this.maxVal / this.nrVal;
     this.dist = this.trackNode.clientWidth;
-    this.start = this.trackNode.offsetLeft;
-    this.isDown = false;
+    this.start = findPos(this.trackNode)[0];
+    
+    this.mouseDown = false;
+    this.keyDown = false;
+    this.temp = -1;
     
     this.attachEventHandlers();
   },
   
   attachEventHandlers: function()
   {
-      Event.observe(this.domNode, 'mousedown', this.makeMouseDownHandler(this));
-      Event.observe(document, 'keydown', this.makeKeyDownHandler(this));
       this.mouseUpHandler = this.makeMouseUpHandler(this);
       this.mouseMoveHandler = this.makeMouseMoveHandler(this);
+      this.keyUpHandler = this.makeKeyUpHandler(this);
+      
+      Event.observe(this.domNode, 'mousedown', this.makeMouseDownHandler(this));
+      Event.observe(document, 'keydown', this.makeKeyDownHandler(this));
   },
   
   makeKeyDownHandler: function(self)
   {
     return function(ev) {
+      var ev = (!ev) ? window.event : ev;
+      self.keyDown = true;
+      Event.observe(document, 'keyup', self.keyUpHandler);
+      
       if (ev.keyCode) code = ev.keyCode;
       else if (ev.which) code = ev.which;
       if(code == 39) // right arrow key
       { 
-        var temp = parseInt(self.domNode.style.left);
-        var dp = temp;
-        dp += self.step;
-        if(dp > self.maxVal) dp = self.maxVal;
-        self.domNode.style.left = dp + "%";
-        self.updateDispValue.innerHTML = self.updateDispColor.style.width = dp + "%";
+        self.tempdp = parseInt(self.domNode.style.left); // the percent at key down
+        self.dp = self.tempdp;
+        self.dp += self.step; // computing the new percent
+        if(self.dp > self.maxVal) self.dp = self.maxVal;
         
-        if(temp != dp) {
-          var url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
-          url += "?taskcompletion=" + dp + "%";
-          var pivot = self;
-          self.loadingElem.style.display = "block";
-          new Ajax.Request(url, {
-              method: 'get',
-              onSuccess: function(transport)  {
-                pivot.loadingElem.style.display = "none;";
-              },
-              onFailure: function(transport) {
-                pivot.domNode.style.left = temp + "%";
-                pivot.updateDispValue.innerHTML = pivot.updateDispColor.style.width = temp + "%";
-              }
-          });
-        }
+        self.domNode.style.left = self.dp + "%"; // updating in real time
+        if(self.updCol) self.updCol.style.width = self.dp + "%";
+        self.updHandler(self.dp, self.tempdp);
       }
       else if(code == 37) //left arrow key
       { 
-        var temp = parseInt(self.domNode.style.left);
-        var dp = temp;
-        dp -= self.step;
-        if(dp < 0) dp = 0;
-        self.domNode.style.left = dp + "%";
-        self.updateDispValue.innerHTML = self.updateDispColor.style.width = dp + "%";
+        self.tempdp = parseInt(self.domNode.style.left);
+        self.dp = self.tempdp;
+        self.dp -= self.step;
+        if(self.dp < 0) self.dp = 0;
         
-        if(temp != dp) {
+        self.domNode.style.left = self.dp + "%";
+        if(self.updCol) self.updCol.style.width = self.dp + "%";
+        self.updHandler(self.dp, self.tempdp);
+      }
+    }
+  },
+  
+  makeKeyUpHandler: function(self)
+  {
+    return function(ev) {
+      var ev = (!ev) ? window.event : ev;
+      if (ev.keyCode) code = ev.keyCode;
+      else if (ev.which) code = ev.which;
+      // verify if the percent to change is different than previous percent
+      // to avoid making ajax request for the same value
+      if((code == 37 || code == 39) && self.keyDown && self.temp != self.dp) {
           var url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
-          url += "?taskcompletion=" + dp + "%";
+          url += "?taskcompletion=" + self.dp + "%";
           var pivot = self;
-          self.loadingElem.style.display = "block";
+          self.loading.style.display = "block";
           new Ajax.Request(url, {
               method: 'get',
               onSuccess: function(transport)  {
-                pivot.loadingElem.style.display = "none;";
+                pivot.loading.style.display = "none";
+                pivot.temp = parseInt(pivot.domNode.style.left);
               },
               onFailure: function(transport) {
-                pivot.domNode.style.left = temp + "%";
-                pivot.updateDispValue.innerHTML = pivot.updateDispColor.style.width = temp + "%";
+                // restore the previous percent
+                pivot.domNode.style.left = pivot.tempdp + "%"; 
+                if(pivot.updCol) pivot.updCol.style.width = pivot.tempdp + "%";
+                pivot.updHandler(pivot.dp, pivot.tempdp);
               }
           });
-        }
       }
+      self.keyDown = false;
+      Event.stopObserving(document, 'keyup', self.keyUpHandler);
     }
   },
   
   makeMouseDownHandler: function(self)
   {
     return function(ev) {
-      self.isDown = true; 
+      var ev = (!ev) ? window.event : ev;
+      self.mouseDown = true; 
       self.tempdp = parseInt(self.domNode.style.left);
       Event.observe(document, 'mouseup', self.mouseUpHandler);
       Event.observe(document, 'mousemove', self.mouseMoveHandler);
@@ -1498,7 +1525,8 @@ xwkSlider.prototype = {
   
   makeMouseMoveHandler: function(self) {
     return function(ev) {
-      if(self.isDown) 
+      var ev = (!ev) ? window.event : ev;
+      if(self.mouseDown) 
       {
         self.x = ev.screenX - self.start;
         self.p = Math.round(self.x * self.nrVal / self.dist);
@@ -1508,39 +1536,54 @@ xwkSlider.prototype = {
           self.dp = 0;
         if(self.dp > self.maxVal) 
           self.dp = self.maxVal;
-
-         if(self.x >= 0 && self.x <= self.dist) {
-           self.domNode.style.left = self.dp + "%";
-           self.updateDispValue.innerHTML = self.dp + "%";    
-           self.updateDispColor.style.width = self.dp + "%";
-         }
+           
+        self.domNode.style.left = self.dp + "%";
+        if(self.updCol) self.updCol.style.width = self.dp + "%";
+        self.updHandler(self.dp, self.tempdp);
+        Event.stop(ev);
       }
     }
   },
   
   makeMouseUpHandler: function(self) {
     return function(ev) {
-      if(self.isDown && self.tempdp != self.dp) 
+      var ev = (!ev) ? window.event : ev;
+      if(self.mouseDown && self.tempdp != self.dp) 
       {
           var url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
           url += "?taskcompletion=" + self.dp + "%";
           var pivot = self;
-          self.loadingElem.style.display = "block";
+          self.loading.style.display = "block";
           new Ajax.Request(url, {
               method: 'get',
               onSuccess: function(transport) {
-                pivot.loadingElem.style.display = "none";
+                pivot.loading.style.display = "none";
               },
               onFailure: function(transport) {
                 pivot.domNode.style.left = pivot.tempdp + "%";
-                pivot.updateDispValue.innerHTML = pivot.tempdp + "%";    
-                pivot.updateDispColor.style.width = pivot.tempdp + "%";
+                if(pivot.updCol) pivot.updCol.style.width = pivot.tempdp + "%";
+                pivot.updHandler(pivot.dp, pivot.tempdp);
               }
           });
       Event.stopObserving(document, 'mouseup', self.mouseUpHandler);
       Event.stopObserving(document, 'mousemove', self.mouseMoveHandler);
-      }
-      self.isDown = false;
+     }
+      self.mouseDown = false;
+    }
+  }
+}
+
+function updTaskCompl(per, oldper) 
+{
+  if(per != oldper) {
+    $('task_completed_value').innerHTML = per + "%";
+    if(per == 100) {
+      $('plogheaderleft').innerHTML = $('plogtype').innerHTML = taskcomplete;
+      $('plogheaderimg').src = taskcompleteimg;
+    }
+    else if(oldper == 100) {
+      $('plogheaderleft').innerHTML = $('plogtype').innerHTML = task;
+      $('plogheaderimg').src = taskimg;
     }
   }
 }

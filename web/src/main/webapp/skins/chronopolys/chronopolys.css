@@ -1103,7 +1103,7 @@ table.grid {
   width:70%; 
   height:20px;
   margin-top:5px;  
-  text-align:center;
+  text-align:left;
 }
 
 
@@ -1117,6 +1117,7 @@ table.grid {
   width: 10px;
   height: 21px;
   top: -91% !important;
+  _top: -50% !important;
   margin: 0px !important;
   padding: 0px !important;
   z-index: 9998;

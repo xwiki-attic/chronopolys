@@ -59,6 +59,10 @@
   confirmplogdelete = "$msg.get("confirmplogdelete")";
   confirmphasetomilestone = "$msg.get("confirmphasetomilestone")";
   confirmdeleteuser = "$msg.get("confirmdeleteuser")";
+  task = "$msg.get("task") ";
+  taskcomplete = "$msg.get("task-complete") ";
+  taskimg = "$xwiki.getSkinFile("task-large.gif")";
+  taskcompleteimg = "$xwiki.getSkinFile("task-complete-large.gif")";
   #if ($isProject)
   currentContainer = "$project.get("container")";
   #end
