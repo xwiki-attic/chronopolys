@@ -1423,6 +1423,7 @@ xwkSlider.prototype = {
       Event.observe(this.domNode, 'mousedown', this.makeMouseDownHandler(this));
       Event.observe(document, 'keydown', this.makeKeyDownHandler(this));
       this.mouseUpHandler = this.makeMouseUpHandler(this);
+      this.mouseMoveHandler = this.makeMouseMoveHandler(this);
   },
   
   makeKeyDownHandler: function(self)
@@ -1430,43 +1431,57 @@ xwkSlider.prototype = {
     return function(ev) {
       if (ev.keyCode) code = ev.keyCode;
       else if (ev.which) code = ev.which;
-      if(code == 39) 
-      { // right key
-        var x = parseInt(self.updateDispValue.innerHTML);
-        x += self.step;
-        if(x > self.maxVal) x = self.maxVal;
-        var url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
-        url += "?taskcompletion=" + x + "%";
-        var pivot = self;
-        self.loadingElem.style.display = "block";
-        new Ajax.Request(url, {
+      if(code == 39) // right arrow key
+      { 
+        var temp = parseInt(self.domNode.style.left);
+        var dp = temp;
+        dp += self.step;
+        if(dp > self.maxVal) dp = self.maxVal;
+        self.domNode.style.left = dp + "%";
+        self.updateDispValue.innerHTML = self.updateDispColor.style.width = dp + "%";
+        
+        if(temp != dp) {
+          var url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
+          url += "?taskcompletion=" + dp + "%";
+          var pivot = self;
+          self.loadingElem.style.display = "block";
+          new Ajax.Request(url, {
               method: 'get',
-              onSuccess: function(transport)
-              {
-               pivot.domNode.style.left = x + "%";
-               pivot.updateDispValue.innerHTML = pivot.updateDispColor.style.width = x + "%";
-               pivot.loadingElem.style.display = "none;";
+              onSuccess: function(transport)  {
+                pivot.loadingElem.style.display = "none;";
+              },
+              onFailure: function(transport) {
+                pivot.domNode.style.left = temp + "%";
+                pivot.updateDispValue.innerHTML = pivot.updateDispColor.style.width = temp + "%";
               }
           });
+        }
       }
-      else if(code == 37) 
-      { // left key
-           var x = parseInt(self.updateDispValue.innerHTML);
-           x -= self.step;
-           if(x > self.maxVal) x = self.maxVal;
-           var url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
-           url += "?taskcompletion=" + x + "%";
-           var pivot = self;
-           self.loadingElem.style.display = "block";
-           new Ajax.Request(url, {
+      else if(code == 37) //left arrow key
+      { 
+        var temp = parseInt(self.domNode.style.left);
+        var dp = temp;
+        dp -= self.step;
+        if(dp < 0) dp = 0;
+        self.domNode.style.left = dp + "%";
+        self.updateDispValue.innerHTML = self.updateDispColor.style.width = dp + "%";
+        
+        if(temp != dp) {
+          var url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
+          url += "?taskcompletion=" + dp + "%";
+          var pivot = self;
+          self.loadingElem.style.display = "block";
+          new Ajax.Request(url, {
               method: 'get',
-              onSuccess: function(transport)
-              {
-               pivot.domNode.style.left = x + "%";
-               pivot.updateDispValue.innerHTML = pivot.updateDispColor.style.width = x + "%";
-               pivot.loadingElem.style.display = "none";
+              onSuccess: function(transport)  {
+                pivot.loadingElem.style.display = "none;";
+              },
+              onFailure: function(transport) {
+                pivot.domNode.style.left = temp + "%";
+                pivot.updateDispValue.innerHTML = pivot.updateDispColor.style.width = temp + "%";
               }
           });
+        }
       }
     }
   },
@@ -1475,36 +1490,55 @@ xwkSlider.prototype = {
   {
     return function(ev) {
       self.isDown = true; 
+      self.tempdp = parseInt(self.domNode.style.left);
       Event.observe(document, 'mouseup', self.mouseUpHandler);
+      Event.observe(document, 'mousemove', self.mouseMoveHandler);
+    }
+  },
+  
+  makeMouseMoveHandler: function(self) {
+    return function(ev) {
+      if(self.isDown) 
+      {
+        self.x = ev.screenX - self.start;
+        self.p = Math.round(self.x * self.nrVal / self.dist);
+        self.x = (self.p * self.dist) / self.nrVal; // pixels
+        self.dp = self.p * self.step; // percent
+        if(self.dp < 0) 
+          self.dp = 0;
+        if(self.dp > self.maxVal) 
+          self.dp = self.maxVal;
+
+         if(self.x >= 0 && self.x <= self.dist) {
+           self.domNode.style.left = self.dp + "%";
+           self.updateDispValue.innerHTML = self.dp + "%";    
+           self.updateDispColor.style.width = self.dp + "%";
+         }
+      }
     }
   },
   
   makeMouseUpHandler: function(self) {
     return function(ev) {
-      if(self.isDown) 
+      if(self.isDown && self.tempdp != self.dp) 
       {
-        var x = ev.screenX - self.start;
-        var p = Math.round(x * self.nrVal / self.dist);
-        x = (p * self.dist) / self.nrVal;
-        var dp = (p * self.step) + "%";
-        var curr = self.updateDispValue.innerHTML;
-        if(x >= 0 && x <= self.dist && dp != curr) {
           var url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
-          url += "?taskcompletion=" + dp;
+          url += "?taskcompletion=" + self.dp + "%";
           var pivot = self;
           self.loadingElem.style.display = "block";
           new Ajax.Request(url, {
               method: 'get',
-              onSuccess: function(transport)
-              {
-                pivot.domNode.style.left = x + "px";
-                pivot.updateDispValue.innerHTML = dp;    
-                if(pivot.updateDispColor) pivot.updateDispColor.style.width = dp;
+              onSuccess: function(transport) {
                 pivot.loadingElem.style.display = "none";
+              },
+              onFailure: function(transport) {
+                pivot.domNode.style.left = pivot.tempdp + "%";
+                pivot.updateDispValue.innerHTML = pivot.tempdp + "%";    
+                pivot.updateDispColor.style.width = pivot.tempdp + "%";
               }
           });
-        }
-        Event.stopObserving(document, 'mouseup', self.mouseUpHandler);
+      Event.stopObserving(document, 'mouseup', self.mouseUpHandler);
+      Event.stopObserving(document, 'mousemove', self.mouseMoveHandler);
       }
       self.isDown = false;
     }
