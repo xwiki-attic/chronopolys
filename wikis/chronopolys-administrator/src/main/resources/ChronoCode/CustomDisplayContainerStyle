@@ -60,11 +60,10 @@ $value
 #set ($dUid = $object.display("uid", "view"))
 &lt;input type="text" name="ChronoClasses.ProjectContainerClass_0_style" style="background:$value" id="ChronoClasses.ProjectContainerClass_0_style_${dUid}" size="7" disabled="disabled" value="$value" onchange="" /&gt;
 &lt;script type="text/javascript"&gt;
-  var cp_${dUid} = new ColorPicker("window");
+  var cp_${dUid} = new ColorPicker();
 &lt;/script&gt;
 &lt;a id="pick_${dUid}" name="pick_${dUid}" onclick="cp_${dUid}.select($('ChronoClasses.ProjectContainerClass_0_style_${dUid}'),'pick_${dUid}');return false;" href="#"&gt;&lt;img src="/xwiki/tiny_mce/themes/wikieditor/images/forecolor.gif" /&gt;&lt;/a&gt;
 #*
-
 OLD VERSION
 
 #macro(styleoption $label $value $ori)
@@ -73,7 +72,7 @@ OLD VERSION
 &lt;select id="ChronoClasses.ProjectContainerClass_0_style" size="1" name="ChronoClasses.ProjectContainerClass_0_style"&gt;
 #styleoption("Vert Clair" "lightgreen" $value)
 #styleoption("Bleu Clair" "lightblue" $value)
-#styleoption("Bleu Métal" "lightsteelblue" $value)
+#styleoption("Bleu M?tal" "lightsteelblue" $value)
 #styleoption("Orange" "orange" $value)
 #styleoption("Tomate" "tomato" $value)
 &lt;/select&gt;
