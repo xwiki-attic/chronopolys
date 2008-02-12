@@ -27,7 +27,7 @@ ${Msz}Mb
 #end
 #set($showactions = 0)
 #set($attachments = $doc.attachmentList)
-    <div id="attachmentscontent" class="xwikiintracontent">
+    <a name="attachref"></a><div id="attachmentscontent" class="xwikiintracontent">
     <div id="attw">
 #if($inline == true)
     <div class="rounded-title" style="background-color: #eee;margin-top:10px;color:#000;cursor:pointer;" onclick="toggleClass($('attachments'), 'hidden'); toggleClass($('attachmentscontent'), 'exp')">
@@ -90,3 +90,9 @@ document.getElementById("attachments").className = "hidden";
 </script>
 #end
 ## #end
+#if($request.open == "attach")
+<script type="text/javascript">
+$('attachmentscontent').className = "xwikiintracontent exp";
+$('attachments').className = "";
+</script>
+#end

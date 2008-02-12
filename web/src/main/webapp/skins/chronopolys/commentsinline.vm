@@ -8,11 +8,11 @@
 #else
 #set($comments = $doc.getComments(false))
 #end
-  <div id="commentscontent" class="xwikiintracontent">
-#if($inline == true)    <div class="rounded-title" style="background-color: #eee;color:#000;cursor:pointer;" onclick="toggleClass($('comments'), 'hidden'); toggleClass($('commentscontent'), 'exp')">
+<a name="commentsref"></a><div id="commentscontent" class="xwikiintracontent">
+#if($inline == true)<div class="rounded-title" style="background-color: #eee;color:#000;cursor:pointer;" onclick="toggleClass($('comments'), 'hidden'); toggleClass($('commentscontent'), 'exp')">
 <span class="commentsno"></span>
 $msg.get("comments") ($comments.size())</div>#end
-    <div id="comments">
+<div id="comments">
 <div class="roundedcontent">
 #if($comments.size()>0)
 #foreach($comment in $comments)
@@ -64,4 +64,11 @@ if(document.getElementById("commentform")) {
 document.getElementById("comments").className += " hidden";
 //-->
       </script>
+#end
+  
+#if($request.open == "comments")
+<script type="text/javascript">
+$('commentscontent').className = "xwikiintracontent exp";
+$('comments').className = "";
+</script>
 #end
