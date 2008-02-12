@@ -175,13 +175,13 @@ function ColorPicker() {
 		cp_contents += "<HTML><HEAD><TITLE>Select Color</TITLE></HEAD>";
 		cp_contents += "<BODY MARGINWIDTH=0 MARGINHEIGHT=0 LEFTMARGIN=0 TOPMARGIN=0><CENTER>";
 		}
-	cp_contents += "<TABLE BORDER=1 CELLSPACING=1 CELLPADDING=0 STYLE=\"z-index:99999;padding:0px;margin:0px;\">";
+	cp_contents += "<TABLE ID=\"colorPickerTable\" CELLSPACING=1 CELLPADDING=0 STYLE=\"z-index:99999;padding:0px;margin:0px;\">";
 	var use_highlight = (document.getElementById || document.all)?true:false;
 	for (var i=0; i<total; i++) {
 		if ((i % width) == 0) { cp_contents += "<TR>"; }
 		if (use_highlight) { var mo = 'onMouseOver="'+windowRef+'ColorPicker_highlightColor(\''+colors[i]+'\',window.document)"'; }
 		else { mo = ""; }
-		cp_contents += '<TD BGCOLOR="'+colors[i]+'"><FONT SIZE="-3"><A HREF="#" onClick="'+windowRef+'ColorPicker_pickColor(\''+colors[i]+'\','+windowRef+'window.popupWindowObjects['+cp.index+']);return false;" '+mo+' STYLE="text-decoration:none;">&nbsp;&nbsp;&nbsp;</A></FONT></TD>';
+		cp_contents += '<TD BGCOLOR="'+colors[i]+'"><A HREF="#" onClick="'+windowRef+'ColorPicker_pickColor(\''+colors[i]+'\','+windowRef+'window.popupWindowObjects['+cp.index+']);return false;" '+mo+' STYLE="text-decoration:none;">&nbsp;&nbsp;&nbsp;</A></TD>';
 		if ( ((i+1)>=total) || (((i+1) % width) == 0)) { 
 			cp_contents += "</TR>";
 			}
@@ -190,7 +190,7 @@ function ColorPicker() {
 	if (document.getElementById) {
 		var width1 = Math.floor(width/2);
 		var width2 = width = width1;
-		cp_contents += "<TR><TD COLSPAN='"+width1+"' BGCOLOR='#ffffff' ID='colorPickerSelectedColor'>&nbsp;</TD><TD COLSPAN='"+width2+"' ALIGN='CENTER' ID='colorPickerSelectedColorValue'>#FFFFFF</TD></TR>";
+		cp_contents += "<TR><TD COLSPAN='"+width1+"' ID='colorPickerSelectedColor'>&nbsp;</TD><TD COLSPAN='"+width2+"' ALIGN='CENTER' ID='colorPickerSelectedColorValue'>#FFFFFF</TD></TR>";
 		}
 	cp_contents += "</TABLE>";
 	if (windowMode) {

@@ -1,6 +1,7 @@
 #if($context.getMode()==0)
 </div>## xwikimaincontainerinner
 </div>## xwikimaincontainer
+<div id="colorPickerDiv" style="position:absolute;visibility:hidden;"> </div>
 </body>
 </html>
 #end

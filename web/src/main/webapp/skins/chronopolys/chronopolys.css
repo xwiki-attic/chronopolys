@@ -1091,6 +1091,22 @@ table.grid {
   margin: 0px auto !important;
 }
 
+#colorPickerDiv {
+  background: white;
+  border: 1px solid #ccc;
+  padding: 5px !important;
+}
+
+#colorPickerTable.td {
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+}
+
+#colorPickerSelectedColor {
+  border: 1px solid #ddd;
+  background: white;
+}
+
 #task_completed {
   display:block; 
   background-color:#ccc;
