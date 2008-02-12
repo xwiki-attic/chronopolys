@@ -127,8 +127,8 @@
           &lt;/div&gt;
           &lt;div class="article_footer"&gt;
           #set($modifyln=$xwiki.getURL($bentrydoc.fullName, "inline"))
-             [$msg.get("readmore")&gt;${bentrydoc.fullName}] | &lt;a href="${modifyln}"&gt;$msg.get("modify")&lt;/a&gt; #if($isProjectLeader||$isChronoAdmin)| &lt;a href="javascript:deletePlog('$bentrydoc.web', '$bentrydoc.name')"&gt;$msg.get("deleteplog")&lt;/a&gt;#end | {pre}$bentrydoc.attachmentList.size(){/pre} $msg.get("attachments") | {pre}$bentrydoc.getObjects("XWiki.XWikiComments").size(){/pre} $msg.get("comments")
-          &lt;/div&gt;
+             [$msg.get("readmore")&gt;${bentrydoc.fullName}] | &lt;a href="${modifyln}"&gt;$msg.get("modify")&lt;/a&gt; #if($isProjectLeader||$isChronoAdmin)| &lt;a href="javascript:deletePlog('$bentrydoc.web', '$bentrydoc.name')"&gt;$msg.get("deleteplog")&lt;/a&gt;#end | &lt;a href="$xwiki.getURL(${bentrydoc.fullName})?open=attach#attachref"&gt;{pre}$bentrydoc.attachmentList.size(){/pre} $msg.get("attachments")&lt;/a&gt; | &lt;a href="$xwiki.getURL(${bentrydoc.fullName})?open=comments#commentsref"&gt; {pre}$bentrydoc.getObjects("XWiki.XWikiComments").size(){/pre} $msg.get("comments")
+          &lt;/a&gt;&lt;/div&gt;
 #roundedbottom()
           &lt;/div&gt;
           ##if($counter==$inbitems)
