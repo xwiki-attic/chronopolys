@@ -24,6 +24,11 @@
       <groupId>com.xpn.xwiki.platform.plugins</groupId>
       <artifactId>xwiki-plugin-watchlist</artifactId>
       <version>${platform.plugin.watchlist.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.subethamail</groupId>
+      <artifactId>subethasmtp-smtp</artifactId>
+      <version>${subethamail.smtp.version}</version>
     </dependency>   
     <!-- Some versions of Maven don't inherit provided dependencies. -->
     <dependency>

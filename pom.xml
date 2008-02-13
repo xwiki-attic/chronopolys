@@ -13,13 +13,18 @@
   <description>XWiki Products - Chronopolys - Parent POM</description>  
   <properties>
     <!-- Versions of XWiki dependencies used in Chronopolys modules -->
-    <platform.tools.version>1.7</platform.tools.version>
-    <platform.core.version>1.2</platform.core.version>
-    <platform.web.version>1.2</platform.web.version>
-    <platform.panels.version>1.2</platform.panels.version>
+    <platform.tool.xar-handler.version>1.8</platform.tool.xar-handler.version>
+    <platform.tool.xar-plugin.version>1.8</platform.tool.xar-plugin.version>
+    <platform.tool.configuration.version>1.8</platform.tool.configuration.version>
+    <platform.tool.packager.version>1.8</platform.tool.packager.version>
+    <platform.tool.jetty.version>1.8</platform.tool.jetty.version>
+    <platform.core.version>1.2.2</platform.core.version>
+    <platform.web.version>1.2.2</platform.web.version>
+    <platform.panels.version>1.2.2</platform.panels.version>
     <platform.plugin.mailsender.version>1.0</platform.plugin.mailsender.version>
     <platform.plugin.scheduler.version>1.2</platform.plugin.scheduler.version>
     <platform.plugin.watchlist.version>1.1</platform.plugin.watchlist.version>    
+    <subethamail.smtp.version>1.2</subethamail.smtp.version>
   </properties>
   <build>
     <plugins>
@@ -32,16 +37,16 @@
         </configuration>
       </plugin>
       <plugin>
-        <groupId>com.xpn.xwiki.platform</groupId>
-        <artifactId>xwiki-build-xar-plugin</artifactId>
-        <version>${platform.tools.version}</version>
+        <groupId>com.xpn.xwiki.platform.tools</groupId>
+        <artifactId>xwiki-xar-plugin</artifactId>
+        <version>${platform.tool.xar-plugin.version}</version>
       </plugin>
     </plugins>
     <extensions>
       <extension>
-        <groupId>com.xpn.xwiki.platform</groupId>
-        <artifactId>xwiki-build-xar-handlers</artifactId>
-        <version>${platform.tools.version}</version>
+        <groupId>com.xpn.xwiki.platform.tools</groupId>
+        <artifactId>xwiki-xar-handlers</artifactId>
+        <version>${platform.tool.xar-handler.version}</version>
       </extension>
     </extensions>
   </build>

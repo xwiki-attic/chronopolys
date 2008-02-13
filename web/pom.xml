@@ -67,7 +67,7 @@
         </executions>
         <configuration>
           <resourceBundles>
-            <resourceBundle>com.xpn.xwiki.platform:xwiki-configuration-resources:${platform.tools.version}</resourceBundle>
+            <resourceBundle>com.xpn.xwiki.platform.tools:xwiki-configuration-resources:${platform.tool.configuration.version}</resourceBundle>
           </resourceBundles>
           <properties>            
             <xwikiCfgPlugins>com.xpn.xwiki.plugin.calendar.CalendarPlugin,\
@@ -88,6 +88,7 @@
             <xwikiCfgDefaultSkin>chronopolys</xwikiCfgDefaultSkin>
             <xwikiCfgDefaultBaseSkin>chronopolys</xwikiCfgDefaultBaseSkin>
             <xwikiCfgEncoding>UTF-8</xwikiCfgEncoding>
+            <xwikiCfgAdditionalProperties>chronopolys.smtp.local=1</xwikiCfgAdditionalProperties>
           </properties>          
         </configuration>
       </plugin>

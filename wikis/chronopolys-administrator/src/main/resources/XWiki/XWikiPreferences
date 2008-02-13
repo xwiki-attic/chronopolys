@@ -1681,7 +1681,7 @@ http://${xwiki.getXWikiPreference("server_name")}/xwiki/bin/inline/XWiki/$xwikin
 <tags></tags>
 </property>
 <property>
-<title>Chronopolyso</title>
+<title>Chronopolys</title>
 </property>
 <property>
 <upload_maxsize></upload_maxsize>

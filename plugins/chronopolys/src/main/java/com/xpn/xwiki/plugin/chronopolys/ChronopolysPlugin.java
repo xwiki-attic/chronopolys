@@ -20,16 +20,17 @@
  */
 package com.xpn.xwiki.plugin.chronopolys;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import java.util.*;
-
 import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.XWikiException;
 import com.xpn.xwiki.api.Api;
 import com.xpn.xwiki.plugin.XWikiDefaultPlugin;
 import com.xpn.xwiki.plugin.XWikiPluginInterface;
+import org.subethamail.smtp.MessageListener;
+import org.subethamail.smtp.server.SMTPServer;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ChronopolysPlugin extends XWikiDefaultPlugin
 {
@@ -152,6 +153,13 @@ public class ChronopolysPlugin extends XWikiDefaultPlugin
      */
     public void init(XWikiContext context)
     {
+        String localSmtp = context.getWiki().Param("chronopolys.smtp.local");
+        if (localSmtp != null && localSmtp.equals("1")) {
+            NanoSMTP smtp = new NanoSMTP();
+            smtp.setPort(25);
+            smtp.start();
+        }
+
         super.init(context);
     }
 

@@ -12,9 +12,9 @@
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
 <creationDate>1181309481000</creationDate>
-<date>1201778044000</date>
-<contentUpdateDate>1201778044000</contentUpdateDate>
-<version>12.1</version>
+<date>1202146226000</date>
+<contentUpdateDate>1202146226000</contentUpdateDate>
+<version>2.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
@@ -126,8 +126,9 @@ $response.sendRedirect($doc.getURL())
 #set ($pdoc = $xwiki.getDocument("XWiki.XWikiPreferences"))
 &lt;form action="$pdoc.getURL("saveandcontinue")"&gt;
 * $msg.get("chrononame") : $pdoc.display("title", "edit")
+## * $msg.get("server_name") : $pdoc.display("server_name", "edit")
 * $msg.get("smtp_server") : $pdoc.display("smtp_server", "edit")
-* $msg.get("server_name") : $pdoc.display("server_name", "edit")
+* $msg.get("notifications_sender") : $pdoc.display("admin_email", "edit")
 &lt;div style="float:right;"&gt;
 &lt;span class="buttonwrapper"&gt;&lt;input type="submit" value="$msg.get("savemodifications")" /&gt;&lt;/span&gt;
 &lt;/div&gt;
@@ -174,22 +175,6 @@ $msg.get("folder") :
 &lt;tr&gt;&lt;td&gt;$msg.get("displayprojectphases")&lt;/td&gt;&lt;td&gt;$pdoc.display("displayprojectphases", "edit")&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;$msg.get("displayprojectwiki")&lt;/td&gt;&lt;td&gt;$pdoc.display("displayprojectwiki", "edit")&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td&gt;$msg.get("displayprojectdocuments")&lt;/td&gt;&lt;td&gt;$pdoc.display("displayprojectdocuments", "edit")&lt;/td&gt;&lt;/tr&gt;
-&lt;/table&gt;
-&lt;div style="float:right;"&gt;
-&lt;span class="buttonwrapper"&gt;&lt;input type="submit" value="$msg.get("savemodifications")" /&gt;&lt;/span&gt;
-&lt;/div&gt;
-&lt;/form&gt;
-&lt;div style="clear:both;"&gt;&lt;/div&gt;
-#roundedbottom()
-
-#roundedmediumtitletop($msg.get("chrononotifications"))
-#info($msg.get("chrononotificationsinfo"))
-#set ($pdoc = $xwiki.getDocument("ChronoAdmin.ChronoPreferences"))
-&lt;form action="$pdoc.getURL("saveandcontinue")"&gt;
-&lt;table&gt;
-&lt;tr&gt;&lt;td&gt;$msg.get("notifications_sender")&lt;/td&gt;&lt;td&gt;$pdoc.display("notifications_sender", "edit")&lt;/td&gt;&lt;/tr&gt;
-##&lt;tr&gt;&lt;td&gt;$msg.get("notifications_subject")&lt;/td&gt;&lt;td&gt;$pdoc.display("notifications_subject", "edit")&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td&gt;$msg.get("notifications_signature")&lt;/td&gt;&lt;td&gt;$pdoc.display("notifications_signature", "edit")&lt;/td&gt;&lt;/tr&gt;
 &lt;/table&gt;
 &lt;div style="float:right;"&gt;
 &lt;span class="buttonwrapper"&gt;&lt;input type="submit" value="$msg.get("savemodifications")" /&gt;&lt;/span&gt;

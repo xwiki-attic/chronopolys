@@ -37,15 +37,15 @@
               <xwikiCfgVirtual>1</xwikiCfgVirtual>
             </properties>
             <resourceBundles>
-              <resourceBundle>com.xpn.xwiki.platform:xwiki-configuration-resources:${platform.tools.version}</resourceBundle>
+              <resourceBundle>com.xpn.xwiki.platform.tools:xwiki-configuration-resources:${platform.tool.configuration.version}</resourceBundle>
             </resourceBundles>
           </configuration>
         </plugin>
         <!-- Step 2: Expand the XAR file -->
         <plugin>
-          <groupId>com.xpn.xwiki.platform</groupId>
-          <artifactId>xwiki-build-xar-plugin</artifactId>
-          <version>${platform.tools.version}</version>
+          <groupId>com.xpn.xwiki.platform.tools</groupId>
+          <artifactId>xwiki-xar-plugin</artifactId>
+          <version>${platform.tool.xar-plugin.version}</version>
           <configuration>
             <groupId>com.avane.xwiki.products</groupId>
             <artifactId>xwiki-product-chronopolys-wiki-administrator</artifactId>
@@ -62,9 +62,9 @@
         </plugin>
         <!-- Step 3: Import the XAR content into the Database -->
         <plugin>
-          <groupId>com.xpn.xwiki.platform</groupId>
-          <artifactId>xwiki-packager</artifactId>
-          <version>${platform.tools.version}</version>
+          <groupId>com.xpn.xwiki.platform.tools</groupId>
+          <artifactId>xwiki-packager-plugin</artifactId>
+          <version>${platform.tool.packager.version}</version>
           <configuration>
             <sourceDirectory>${project.build.directory}/xar</sourceDirectory>
             <hibernateConfig>${project.build.directory}/maven-shared-archive-resources/hibernate.cfg.xml</hibernateConfig>
