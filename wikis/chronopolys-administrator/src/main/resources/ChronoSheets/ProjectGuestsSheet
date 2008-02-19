@@ -57,7 +57,7 @@
 <content>#if ($request.do=="addguest")
 #set ($ret = $project.addGuest($request.guest))
 $response.sendRedirect($doc.getURL())
-#elseif ($request.do=="removeGuest")
+#elseif ($request.do=="removeguest")
 #set ($ret = $project.removeGuest($request.guest))
 $response.sendRedirect($doc.getURL())
 #elseif ($request.do=="makepublic")
