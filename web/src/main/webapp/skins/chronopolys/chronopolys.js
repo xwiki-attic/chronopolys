@@ -1403,11 +1403,11 @@ function setdisplayednote(note) {
  // Slider                              
     @param domNode The div that represents the slider
     @param trackNode The div that represents the slider track
+    @param slideNo The number use to distinguish from multiple sliders on the same page
     @param updCol The slider might have to update the color of the track
     @param loading The div used to show ajax request in progress
     @param updHandler The function used to update several elements when slider moves
     @param url The url used for ajax request
-    @param nrVal Number of values the slider can display (ex. 10)
     @param maxVal The maximum value the slider can display (ex. 100)
  //---------------------------------------------------------------------------------*/
  
@@ -1418,17 +1418,15 @@ xwkSlider.prototype = {
   {
     this.domNode = $(params.domNode);
     this.trackNode = $(params.trackNode); 
+    this.slideNo = ('slideNo' in params ? params.slideNo : 0);
     this.updCol = ('updCol' in params ? $(params.updCol) : null);
     this.loading = $(params.loading);
     this.updHandler = ('updHandler' in params ? params.updHandler : function() { }  );
-    this.nrVal = ('nrVal' in params ? params.nrVal : 10); 
+    this.step = ('step' in params ? params.step : 10); 
     this.maxVal = ('maxVal' in params ? params.maxVal : 100); 
     this.url = params.url;
-    
-    this.step = this.maxVal / this.nrVal;
-    this.dist = this.trackNode.clientWidth;
-    this.start = findPos(this.trackNode)[0];
-    
+    this.dist = ('width' in params ? params.width : this.trackNode.clientWidth); // QUICKFIX: there is a problem with width and position of a div
+    this.start = ('start' in params ? params.start : findPos(this.trackNode)[0]); // that has display: none (is 0, no matter the style) so it should be passed as param.
     this.mouseDown = false;
     this.keyDown = false;
     this.temp = -1;
@@ -1443,12 +1441,17 @@ xwkSlider.prototype = {
       this.keyUpHandler = this.makeKeyUpHandler(this);
       
       Event.observe(this.domNode, 'mousedown', this.makeMouseDownHandler(this));
+      Event.observe(this.trackNode, 'mouseover', this.makeMouseOverHandler(this));
+      Event.observe(this.trackNode, 'mouseout', this.makeMouseOutHandler(this));
+      Event.observe(this.domNode, 'mouseover', this.makeMouseOverHandler(this));
+      Event.observe(this.domNode, 'mouseout', this.makeMouseOutHandler(this));
       Event.observe(document, 'keydown', this.makeKeyDownHandler(this));
   },
-  
+ 
   makeKeyDownHandler: function(self)
   {
     return function(ev) {
+      if(window.activeSlider != self) return;
       var ev = (!ev) ? window.event : ev;
       self.keyDown = true;
       Event.observe(document, 'keyup', self.keyUpHandler);
@@ -1464,7 +1467,7 @@ xwkSlider.prototype = {
         
         self.domNode.style.left = self.dp + "%"; // updating in real time
         if(self.updCol) self.updCol.style.width = self.dp + "%";
-        self.updHandler(self.dp, self.tempdp);
+        self.updHandler(self.slideNo, self.dp, self.tempdp);
       }
       else if(code == 37) //left arrow key
       { 
@@ -1475,7 +1478,7 @@ xwkSlider.prototype = {
         
         self.domNode.style.left = self.dp + "%";
         if(self.updCol) self.updCol.style.width = self.dp + "%";
-        self.updHandler(self.dp, self.tempdp);
+        self.updHandler(self.slideNo, self.dp, self.tempdp);
       }
     }
   },
@@ -1489,7 +1492,9 @@ xwkSlider.prototype = {
       // verify if the percent to change is different than previous percent
       // to avoid making ajax request for the same value
       if((code == 37 || code == 39) && self.keyDown && self.temp != self.dp) {
-          var url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
+          var url = self.url;
+          if(url.indexOf("?taskcompletion") > 0) 
+            url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
           url += "?taskcompletion=" + self.dp + "%";
           var pivot = self;
           self.loading.style.display = "block";
@@ -1503,12 +1508,26 @@ xwkSlider.prototype = {
                 // restore the previous percent
                 pivot.domNode.style.left = pivot.tempdp + "%"; 
                 if(pivot.updCol) pivot.updCol.style.width = pivot.tempdp + "%";
-                pivot.updHandler(pivot.dp, pivot.tempdp);
+                pivot.updHandler(pivot.slideNo, pivot.dp, pivot.tempdp);
               }
           });
       }
       self.keyDown = false;
       Event.stopObserving(document, 'keyup', self.keyUpHandler);
+    }
+  },
+  
+  makeMouseOverHandler: function(self)
+  {
+    return function(ev) {
+      window.activeSlider = self;
+    }
+  },
+  
+  makeMouseOutHandler: function(self)
+  {
+    return function(ev) {
+      window.activeSlider = null;
     }
   },
   
@@ -1529,8 +1548,8 @@ xwkSlider.prototype = {
       if(self.mouseDown) 
       {
         self.x = ev.screenX - self.start;
-        self.p = Math.round(self.x * self.nrVal / self.dist);
-        self.x = (self.p * self.dist) / self.nrVal; // pixels
+        self.p = Math.round(self.x * self.step / self.dist);
+        self.x = (self.p * self.dist) / self.step; // pixels
         self.dp = self.p * self.step; // percent
         if(self.dp < 0) 
           self.dp = 0;
@@ -1539,7 +1558,7 @@ xwkSlider.prototype = {
            
         self.domNode.style.left = self.dp + "%";
         if(self.updCol) self.updCol.style.width = self.dp + "%";
-        self.updHandler(self.dp, self.tempdp);
+        self.updHandler(self.slideNo, self.dp, self.tempdp);
         Event.stop(ev);
       }
     }
@@ -1549,8 +1568,10 @@ xwkSlider.prototype = {
     return function(ev) {
       var ev = (!ev) ? window.event : ev;
       if(self.mouseDown && self.tempdp != self.dp) 
-      {
-          var url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
+      { 
+          var url = self.url;
+          if(url.indexOf("?taskcompletion") > 0) 
+            url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
           url += "?taskcompletion=" + self.dp + "%";
           var pivot = self;
           self.loading.style.display = "block";
@@ -1562,7 +1583,7 @@ xwkSlider.prototype = {
               onFailure: function(transport) {
                 pivot.domNode.style.left = pivot.tempdp + "%";
                 if(pivot.updCol) pivot.updCol.style.width = pivot.tempdp + "%";
-                pivot.updHandler(pivot.dp, pivot.tempdp);
+                pivot.updHandler(pivot.slideNo, pivot.dp, pivot.tempdp);
               }
           });
       Event.stopObserving(document, 'mouseup', self.mouseUpHandler);
@@ -1573,17 +1594,43 @@ xwkSlider.prototype = {
   }
 }
 
-function updTaskCompl(per, oldper) 
+function updTaskCompl(no, per, oldper) 
 {
+  var id1 =  id2 = id3 = id4 = "";
+  if(no == 0)
+  {
+    id1 = 'task_completed_value';
+    id2 = 'plogheaderleft';
+    id3 = 'plogtype';
+    id4 = 'plogheaderimg';
+  }
+ else
+ {
+   id1 = 'task_completed_value_' + no;
+   id2 = 'plogheaderleft_' + no;
+   id3 = 'plogtype_' + no;
+   id4 = 'plogheaderimg_' + no;
+ }
   if(per != oldper) {
-    $('task_completed_value').innerHTML = per + "%";
+    if($(id1)) 
+      $(id1).innerHTML = per + "%";
     if(per == 100) {
-      $('plogheaderleft').innerHTML = $('plogtype').innerHTML = taskcomplete;
-      $('plogheaderimg').src = taskcompleteimg;
+      if($(id2))
+        $(id2).innerHTML = taskcomplete;
+      if($(id3))
+        $(id3).innerHTML = taskcomplete;
+      if($(id4))
+        $(id4).src = taskcompleteimg;
     }
     else if(oldper == 100) {
-      $('plogheaderleft').innerHTML = $('plogtype').innerHTML = task;
-      $('plogheaderimg').src = taskimg;
+      if($(id2))
+        $(id2).innerHTML = task;
+      if($(id3))
+        $(id3).innerHTML = task;
+      if($(id4))
+        $(id4).src = taskimg;
     }
   }
 }
+
+

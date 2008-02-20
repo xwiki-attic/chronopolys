@@ -1064,6 +1064,10 @@ table.grid {
   width: 100%;
 }
 
+.invisible {
+  display: block;
+  visibility: hidden;
+}
 
 #centeredmedium {
   text-align: center !important;
@@ -1107,14 +1111,14 @@ table.grid {
   background: white;
 }
 
-#task_completed {
+.task_completed {
   display:block; 
   background-color:#ccc;
   background-image: url($xwiki.getSkinFile("track.gif"));
   height: 15px;
 }
 
-#slider_container {
+.slider_container {
   display:block;
   width:70%; 
   height:20px;
@@ -1123,12 +1127,12 @@ table.grid {
 }
 
 
-#slider_track {
+.slider_track {
   width: 100%;
   border:1px solid #aaa;
 }
 
-#slider {
+.slider {
   position: relative;
   width: 10px;
   height: 21px;
@@ -1142,6 +1146,6 @@ table.grid {
   cursor: pointer;
 }
 
-#tc_loading {
+.tc_loading {
   display: none;
 }
