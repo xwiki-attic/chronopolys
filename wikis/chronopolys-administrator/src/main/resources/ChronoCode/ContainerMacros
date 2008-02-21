@@ -322,7 +322,8 @@
       ## &lt;/td&gt;
       &lt;td class="lborder" style="width:70px;"&gt;
           $chronoproject.getMembers().size() $msg.get("qmember")&lt;br/&gt;     
-          $chronoproject.getGuests().size() $msg.get("qguest")
+          #if($chronoproject.isPublic())$msg.get("publicproject")#else$chronoproject.getGuests().size() $msg.get("qguest")#end
+
       &lt;/td&gt;
       &lt;td class="lborder" style="width:80px;"&gt;
           $xwiki.getDocument("${chrononame}.ProjectDocuments").getAttachmentList().size() $msg.get("qdoc")&lt;br/&gt;

@@ -443,6 +443,7 @@ projects=group(s)
 projectstab=groups
 projectszoom=Custom dashboards
 projectszoominfo=You can add new dashboard to chronopolys, they will be accessible from a new tab and will show the projects tree of a theme
+publicproject=Public Group
 qdocs=Documents
 qdoc=Document(s)
 qlastmodificationdate=Last modification
