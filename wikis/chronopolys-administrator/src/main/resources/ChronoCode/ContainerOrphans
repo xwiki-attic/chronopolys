@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="ISO-8859-1"?>
 
 <xwikidoc>
 <web>ChronoCode</web>
@@ -58,7 +58,7 @@
 &lt;br/&gt;
 &lt;style&gt;
 #orphansprojects .roundedcontent .project .name {
-  width: 170px;
+  width: 142px;
 }
 &lt;/style&gt;
 ##set ($mode="qualitymode")
@@ -66,11 +66,13 @@
 #if ($orphans.size() &gt; 0)
 &lt;div id="orphansprojects"&gt;
 #roundedmediumtitletop($msg.get("orphansprojects"))
+  &lt;div style="width:595px;"&gt;
   #set ($projects = "")
   #set ($projects = $orphans)
   #foreach ($project in $projects)
     #displayProject($project false "gainsboro")
   #end
+  &lt;/div&gt;
 #roundedbottom()
 &lt;/div&gt;
 #end

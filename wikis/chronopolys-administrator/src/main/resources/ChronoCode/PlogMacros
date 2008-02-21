@@ -157,13 +157,15 @@
           ##end
       #end
    #end
+   #if($slideNo &gt; 0)
    {pre}
    &lt;script type="text/javascript"&gt;
-   #foreach($i in [1..$slideNo])
+    #foreach($i in [1..$slideNo])
      #set($j = $i - 1)
-    var slider_$i = new xwkSlider({domNode:'slider_$i', trackNode:'slider_track_$i', slideNo: $i, updCol:'task_completed_$i', loading:'tc_loading_$i', width: 180, start: 328, url:'$xwiki.getURL($docNames.get($j))', updHandler:updTaskCompl});
-   #end
+     var slider_$i = new xwkSlider({domNode:'slider_$i', trackNode:'slider_track_$i', slideNo: $i, updCol:'task_completed_$i', loading:'tc_loading_$i', width: 180, start: 328, url:'$xwiki.getURL($docNames.get($j))', updHandler:updTaskCompl});
+    #end
    &lt;/script&gt;
    {/pre}
+   #end   
 #end</content>
 </xwikidoc>

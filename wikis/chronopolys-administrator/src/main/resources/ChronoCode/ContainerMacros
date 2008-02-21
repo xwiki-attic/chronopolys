@@ -316,20 +316,17 @@
   #if (!$hiddenModes.contains("qualitymode"))
   &lt;div class="projectdatas_container mode qualitymode #if($mode!="qualitymode")hidden#end"&gt;
     &lt;table class="projectquality"&gt;&lt;tr&gt;
-      &lt;td style="width:80px;"&gt;$xwiki.getLocalUserName($chronoproject.getProjectLeader())&lt;/td&gt;   
+      &lt;td style="width:70px;text-align:center;"&gt;$xwiki.getLocalUserName($chronoproject.getProjectLeader())&lt;/td&gt;   
       ## &lt;td class="lborder" style="width:65px;"&gt;$msg.get("ChronoClasses.ProjectClass_status_${chronoproject.get('status')}")
 ## $!xwiki.formatDate($chronoproject.getLastModifications().get(0).getDate(), "dd/MM/yyyy")
       ## &lt;/td&gt;
-      &lt;td class="lborder" style="width:80px;"&gt;
-          $chronoproject.getMembers().size() $msg.get("members")&lt;br/&gt;      
-          $chronoproject.getGuests().size() $msg.get("guests")
+      &lt;td class="lborder" style="width:70px;"&gt;
+          $chronoproject.getMembers().size() $msg.get("qmember")&lt;br/&gt;     
+          $chronoproject.getGuests().size() $msg.get("qguest")
       &lt;/td&gt;
       &lt;td class="lborder" style="width:80px;"&gt;
-          $xwiki.getDocument("${chrononame}.ProjectDocuments").getAttachmentList().size() $msg.get("documents")
-      &lt;/td&gt;
-      &lt;td class="lborder" style="width:80px;"&gt;
-         $chronoproject.getPlogPages().size() $msg.get("plogarticles")&lt;br/&gt;
-         $chronoproject.getWikiPages().size() $msg.get("wikipages")
+          $xwiki.getDocument("${chrononame}.ProjectDocuments").getAttachmentList().size() $msg.get("qdoc")&lt;br/&gt;
+          $chronoproject.getWikiPages().size() $msg.get("wikipages")
       &lt;/td&gt;
       &lt;td class="lborder" style="width:80px;"&gt;
          #set ($plist = $chronoproject.getPhases())
@@ -345,7 +342,10 @@
          ${pcount} $msg.get("phases") &lt;br/&gt;
          ${mcount} $msg.get("milestones")
       &lt;/td&gt;
-      &lt;td class="lborder" style="width:30px;"&gt;$chronoproject.getNote()&lt;/td&gt;
+      ##&lt;td class="lborder" style="width:30px;"&gt;$chronoproject.getNote()&lt;/td&gt;
+      #set($d = $chronoproject.getLastModifications().get(0).getDate())
+      &lt;td class="lborder" style="width:70px;"&gt;#if($context.language=="en")$!xwiki.formatDate($d, "MM/dd/yyyy HH:mm")
+      #else $!xwiki.formatDate($d, "dd/MM/yyyy HH:mm")#end&lt;/td&gt;
     &lt;/tr&gt;&lt;/table&gt;
   &lt;/div&gt;
   #end
