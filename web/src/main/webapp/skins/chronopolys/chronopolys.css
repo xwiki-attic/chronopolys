@@ -69,6 +69,10 @@ td.styleeditinput {
     overflow: hidden;
 }
 
+.projectquality .wikilink {
+  padding-left: 10px;
+}
+
 .projectquality .lborder {
     border-left: solid 1px #B2B2B2;
     text-align: center;

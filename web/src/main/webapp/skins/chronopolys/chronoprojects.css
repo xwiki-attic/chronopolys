@@ -189,12 +189,16 @@ progid:DXImageTransform.Microsoft.AlphaImageLoader(src='$xwiki.getSkinFile("yard
 .project .name {
   width: 142px;
   color:#32353F;
-  float:right;
+  display: inline;
   padding:6px 0px 0px 0px;
   font-weight:bold;
-  line-height: 14px;
+  line-height:14px;
   height: 32px;
   overflow: hidden;
+}
+
+.name a{
+  margin-left: 10px;
 }
 
 .activity .projectsNumber {
@@ -236,7 +240,7 @@ progid:DXImageTransform.Microsoft.AlphaImageLoader(src='$xwiki.getSkinFile("a240
   padding-top:4px;
   padding-right:2px;
   float:right;
-  width: 428px;
+  width: 420px;
 }
 
 .timeline {
