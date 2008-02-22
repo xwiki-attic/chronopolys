@@ -98,7 +98,7 @@ $doc.display("role", $obj)&lt;/td&gt;
 ## sort by last name
 #sortdocnamesbylastname($users)
 #set($users_size = $users.size() - 1) ## because of XWiki.Admin
-#if ($members.size() &lt; $users_size)
+#if ($members.size() &lt;= $users_size)
 #roundedtitletop($msg.get("addmember")) 
 &lt;form name="addusertogroup" action="$doc.getURL("view")" method="post"&gt;
 &lt;input type="hidden" id="do" name="do" value="addmember" /&gt;
