@@ -86,6 +86,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
@@ -1535,8 +1536,30 @@ public class XWiki implements XWikiDocChangeNotificationInterface, XWikiInterfac
 
             // Try to get it from URL
             if (context.getRequest() != null) {
-                skin = context.getRequest().getParameter("skin");
+              skin = context.getRequest().getParameter("skin");
+                
+              // If no skin found look in the request attributes
+              if ((skin == null) || (skin.equals(""))) {
+                  skin = (String)context.getRequest().getAttribute("skin");
+                  
+                // if no skin found look into the session
+                if ((skin == null) || (skin.equals(""))) {
+                    final HttpSession session = context.getRequest().getSession(false);
+                    if( session !=null) {
+                     skin = (String)session.getAttribute("skin");
+                    }
+                }
+              }else{
+                    // If a skin was found as parameter set it on the session
+                    final HttpSession session = context.getRequest().getSession(false);
+                    if( session !=null) {
+                     session.setAttribute("skin",skin);
+                    }
+              }
+
             }
+            
+
 
             if ((skin == null) || (skin.equals(""))) {
                 skin = getUserPreference("skin", context);
@@ -5328,7 +5351,7 @@ public class XWiki implements XWikiDocChangeNotificationInterface, XWikiInterfac
 
     public String clearName(String name, XWikiContext context)
     {
-        return clearName(name, true, false, context);
+        return clearName(name, true, true, context);
     }
 
     public String clearName(String name, boolean stripDots, boolean ascii, XWikiContext context)
