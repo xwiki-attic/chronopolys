@@ -221,7 +221,8 @@ public class FolderManager
                 folder = (Object) foldersCache.getFromCache(key);
             } catch (XWikiCacheNeedsRefreshException e) {
                 foldersCache.cancelUpdate(key);
-                XWikiDocument containerDoc = context.getWiki().getDocument(FOLDERS_SPACE + "." + uid, context);
+                XWikiDocument containerDoc =
+                    context.getWiki().getDocument(FOLDERS_SPACE + "." + uid, context);
                 BaseObject bobj = containerDoc.getObject(CLASS_FOLDER);
                 if (bobj == null) {
                     throw new ChronopolysPluginException(
@@ -608,17 +609,17 @@ public class FolderManager
             } catch (XWikiCacheNeedsRefreshException e) {
                 foldersCache.cancelUpdate(key);
                 try {
-                if (FOLDERS_ROOT.equals(container.display("type", "view"))) {
-                    style = container.display("style", "view").toString();
-                } else {
-                    Object parent = getProjectContainer(
-                        container.display("parent", "view").toString(), context);
-                    while (!FOLDERS_ROOT.equals(parent.display("type", "view").toString())) {
-                        parent = getProjectContainer(
-                            parent.display("parent", "view").toString(), context);
+                    if (FOLDERS_ROOT.equals(container.display("type", "view"))) {
+                        style = container.display("style", "view").toString();
+                    } else {
+                        Object parent = getProjectContainer(
+                            container.display("parent", "view").toString(), context);
+                        while (!FOLDERS_ROOT.equals(parent.display("type", "view").toString())) {
+                            parent = getProjectContainer(
+                                parent.display("parent", "view").toString(), context);
+                        }
+                        style = parent.display("style", "view").toString();
                     }
-                    style = parent.display("style", "view").toString();
-                }
                 } catch (Exception ex) {
                     style = "gainsboro";
                 }

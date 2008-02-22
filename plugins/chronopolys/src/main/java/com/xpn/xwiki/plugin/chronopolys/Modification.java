@@ -18,7 +18,6 @@
  *
  * @author jvdrean
  */
-
 package com.xpn.xwiki.plugin.chronopolys;
 
 import java.util.Date;
@@ -26,67 +25,65 @@ import java.text.SimpleDateFormat;
 
 public class Modification implements Comparable
 {
-        public String page;
+    public String page;
 
-        public String name;
+    public String name;
 
-        public String comment;
+    public String comment;
 
-        public Date date;
+    public Date date;
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd, HH:mm");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd, HH:mm");
 
-        /*
-         * Constructor
-         */
-        public Modification(String page, String name, String comment, Date date, String projectName)
-        {
-            this.page = page;
-            this.name = name;
-            this.comment = comment;
-            this.date = date;
-        }       
+    /*
+    * Constructor
+    */
+    public Modification(String page, String name, String comment, Date date, String projectName)
+    {
+        this.page = page;
+        this.name = name;
+        this.comment = comment;
+        this.date = date;
+    }
 
-        /*
-         * Compare modifications (desc order)
-         */
-        public int compareTo(java.lang.Object modification)
-        {
-            Modification d2 = (Modification) modification;
-            return d2.date.compareTo(this.date);
-        }
+    /*
+    * Compare modifications (desc order)
+    */
+    public int compareTo(java.lang.Object modification)
+    {
+        Modification d2 = (Modification) modification;
+        return d2.date.compareTo(this.date);
+    }
 
-        /*
-         * Return modification page
-         */
-        public String getPage()
-        {
-            return this.page;
-        }
+    /*
+    * Return modification page
+    */
+    public String getPage()
+    {
+        return this.page;
+    }
 
-        /*
-         * Return modification name
-         */
-        public String getName()
-        {
-            return this.name;
-        }
+    /*
+    * Return modification name
+    */
+    public String getName()
+    {
+        return this.name;
+    }
 
+    /*
+    * Return modification comment
+    */
+    public String getComment()
+    {
+        return this.comment;
+    }
 
-        /*
-         * Return modification comment
-         */
-        public String getComment()
-        {
-            return this.comment;
-        }
-
-        /*
-         * Return modification date
-         */
-        public Date getDate()
-        {
-            return this.date;
-        }
-
+    /*
+    * Return modification date
+    */
+    public Date getDate()
+    {
+        return this.date;
+    }
 }

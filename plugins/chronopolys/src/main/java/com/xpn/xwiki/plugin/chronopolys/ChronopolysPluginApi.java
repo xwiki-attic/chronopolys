@@ -54,19 +54,23 @@ public class ChronopolysPluginApi extends Api
         return plugin.getVersion();
     }
 
-    public int getDEADLINE_PHASE() {
+    public int getDEADLINE_PHASE()
+    {
         return UserManager.DEADLINE_PHASE;
     }
 
-    public int getDEADLINE_PROJECT() {
+    public int getDEADLINE_PROJECT()
+    {
         return UserManager.DEADLINE_PROJECT;
     }
 
-    public int getDEADLINE_TASK() {
+    public int getDEADLINE_TASK()
+    {
         return UserManager.DEADLINE_TASK;
     }
 
-    public int getDEADLINE_MEETING() {
+    public int getDEADLINE_MEETING()
+    {
         return UserManager.DEADLINE_MEETING;
     }
 
@@ -94,7 +98,7 @@ public class ChronopolysPluginApi extends Api
         return plugin.getChronoPreference(optname, context);
     }
 
-   /* *********************************************************************************************
+    /* *********************************************************************************************
     *  Utils
     */
 
@@ -225,11 +229,11 @@ public class ChronopolysPluginApi extends Api
     public List getMyNextDeadlines(int limit) throws XWikiException
     {
         return plugin.getUserManager().getMyNextDeadlines(limit, context);
-    }   
+    }
 
     /* *********************************************************************************************
-     *  Project management
-     */
+    *  Project management
+    */
 
     public boolean isProject(String uid) throws XWikiException
     {

@@ -324,8 +324,9 @@ public class ProjectApi
         } catch (XWikiException e) {
         }
     }
-    
-    public void resetProjectRights() throws XWikiException {
+
+    public void resetProjectRights() throws XWikiException
+    {
         project.getMembers().setProjectRights(0, context);
     }
 }

@@ -204,7 +204,7 @@ public class Project
                 projectCache.putInCache(key, list);
             }
         }
-        
+
         return list;
     }
 
@@ -325,7 +325,8 @@ public class Project
 
     public String getRawNotes(XWikiContext context) throws XWikiException
     {
-        XWikiDocument noteDoc = context.getWiki().getDocument(doc.getSpace() + "." + PROJECT_NOTEDOC, context);
+        XWikiDocument noteDoc =
+            context.getWiki().getDocument(doc.getSpace() + "." + PROJECT_NOTEDOC, context);
         if (!noteDoc.isNew()) {
             String stringNotes = (String) noteDoc.display("notes", context);
             return stringNotes;
@@ -373,8 +374,9 @@ public class Project
         XWikiDocument pr =
             context.getWiki().getDocument(doc.getSpace() + "." + PROJECT_NOTEDOC, context);
         BaseObject bobj = pr.getObject(CLASS_NOTE);
-        if (bobj == null)
+        if (bobj == null) {
             bobj = pr.newObject(CLASS_NOTE, context);
+        }
         if (!hasGivenNote(context)) {
             bobj.set("notes", currentNotes + user + "=" + note + "|", context);
             pr.setComment("addednote|" + context.getLocalUser());

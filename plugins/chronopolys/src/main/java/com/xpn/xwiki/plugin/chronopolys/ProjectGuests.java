@@ -45,7 +45,8 @@ public class ProjectGuests
         this.project = project;
     }
 
-    public Document getGuestDoc(XWikiContext context) throws XWikiException {
+    public Document getGuestDoc(XWikiContext context) throws XWikiException
+    {
         return context.getWiki()
             .getDocument(project.getSpace(), Project.PROJECT_GUESTSDOC, context)
             .newDocument(context);
@@ -105,7 +106,7 @@ public class ProjectGuests
             if (obj.get("member").equals(guest)) {
                 projectGuests.removeObject(obj);
             }
-        }        
+        }
         projectGuests.save("removemember|" + context.getWiki().getLocalUserName(guest, context));
 
         // invalidate ChronopolysPlugin caches
@@ -114,11 +115,13 @@ public class ProjectGuests
         return true;
     }
 
-    public boolean isPublic(XWikiContext context) throws XWikiException {
+    public boolean isPublic(XWikiContext context) throws XWikiException
+    {
         return isGuest(XWIKIALLGROUP, context);
     }
 
-    public boolean setPublic(boolean makepublic, XWikiContext context) throws XWikiException {
+    public boolean setPublic(boolean makepublic, XWikiContext context) throws XWikiException
+    {
         if (makepublic) {
             if (this.isPublic(context)) {
                 return false;

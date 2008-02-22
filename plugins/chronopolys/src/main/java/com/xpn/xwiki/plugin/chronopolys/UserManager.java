@@ -30,7 +30,8 @@ import com.xpn.xwiki.api.Object;
 
 import java.util.*;
 
-public class UserManager {
+public class UserManager
+{
     // Deadline types
     public static final int DEADLINE_PROJECT = 0;
 
@@ -46,7 +47,8 @@ public class UserManager {
 
     private ChronopolysPlugin plugin;
 
-    public UserManager(ChronopolysPlugin plugin) {
+    public UserManager(ChronopolysPlugin plugin)
+    {
         this.plugin = plugin;
     }
 
@@ -60,7 +62,8 @@ public class UserManager {
     /*
      * Flush users cache (contains xwiki users)
      */
-    public void flushUsersCache() {
+    public void flushUsersCache()
+    {
         if (usersCache != null) {
             usersCache.flushAll();
             usersCache = null;
@@ -70,7 +73,8 @@ public class UserManager {
     /*
      * Flush user's datas cache (contains user's tasks, meetings and deadlines map)
      */
-    public void flushUserdataCache() {
+    public void flushUserdataCache()
+    {
         if (userdataCache != null) {
             userdataCache.flushAll();
             userdataCache = null;
@@ -80,18 +84,20 @@ public class UserManager {
     /*
      * Init user datas cache
      */
-    private void initUserdataCache(XWikiContext context) throws XWikiException {
+    private void initUserdataCache(XWikiContext context) throws XWikiException
+    {
         if (userdataCache == null) {
             XWikiCacheService cacheService = context.getWiki().getCacheService();
             userdataCache =
-                    cacheService.newCache("xwiki.chronopolys.userdata.cache", userdataCacheCapacity);
+                cacheService.newCache("xwiki.chronopolys.userdata.cache", userdataCacheCapacity);
         }
     }
 
     /*
      * Get all the wiki users
      */
-    public List getXWikiUsers(XWikiContext context) throws XWikiException {
+    public List getXWikiUsers(XWikiContext context) throws XWikiException
+    {
         List list = null;
         String key = context.getDatabase();
 
@@ -108,7 +114,7 @@ public class UserManager {
                 // update the users list cache
                 usersCache.cancelUpdate(key);
                 String hql = ", BaseObject as obj where obj.name=doc.fullName"
-                        + " and obj.className='XWiki.XWikiUsers'";
+                    + " and obj.className='XWiki.XWikiUsers'";
                 list = context.getWiki().getStore().searchDocumentsNames(hql, context);
                 usersCache.putInCache(key, list);
             }
@@ -124,7 +130,8 @@ public class UserManager {
      * Set a new password to the given user and send him an email with the new credentials
      */
 
-    public boolean resetPassword(String user, XWikiContext context) {
+    public boolean resetPassword(String user, XWikiContext context)
+    {
         if (context.getDoc().getFullName() != "XWiki.XWikiLogin") {
             try {
                 if (!context.getWiki().exists("XWiki." + user, context)) {
@@ -138,7 +145,7 @@ public class UserManager {
                 userdoc.setStringValue("XWiki.XWikiUsers", "password", password);
                 context.getWiki().saveDocument(userdoc, context);
                 context.getWiki().sendConfirmationEmail(userdoc.getName(), password, email,
-                        "message", "invitation_email_content", context);
+                    "message", "invitation_email_content", context);
                 context.put("email", email);
                 return true;
             } catch (XWikiException e) {
@@ -152,14 +159,16 @@ public class UserManager {
     /*
      * Get user's email from his profile
      */
-    public String getUserEmail(String user, XWikiContext context) throws XWikiException {
+    public String getUserEmail(String user, XWikiContext context) throws XWikiException
+    {
         return context.getWiki().getDocument(user, context).getStringValue("email");
     }
 
     /*
      * Get user's language from his profile
      */
-    public String getUserLanguage(String user, XWikiContext context) throws XWikiException {
+    public String getUserLanguage(String user, XWikiContext context) throws XWikiException
+    {
         return context.getWiki().getDocument(user, context).getStringValue("chronolanguage");
     }
 
@@ -170,21 +179,25 @@ public class UserManager {
      * Is the current user a chronopolys manager ?
      */
 
-    public boolean isManager(XWikiContext context) throws XWikiException {
-        return context.getWiki().getUser(context.getLocalUser(), context).isUserInGroup("ChronoAdmin.ManagerGroup") ||
-                context.getWiki().getUser(context.getLocalUser(), context)
-                        .isUserInGroup(context.getDatabase() + ":ChronoAdmin.ManagerGroup") ||
-                context.getWiki().getRightService().hasAdminRights(context);
+    public boolean isManager(XWikiContext context) throws XWikiException
+    {
+        return context.getWiki().getUser(context.getLocalUser(), context)
+            .isUserInGroup("ChronoAdmin.ManagerGroup") ||
+            context.getWiki().getUser(context.getLocalUser(), context)
+                .isUserInGroup(context.getDatabase() + ":ChronoAdmin.ManagerGroup") ||
+            context.getWiki().getRightService().hasAdminRights(context);
     }
 
     /*
     * Is the current user a chronopolys administrator ?
     */
-    public boolean isAdmin(XWikiContext context) throws XWikiException {
-        return context.getWiki().getUser(context.getLocalUser(), context).isUserInGroup("ChronoAdmin.AdminGroup") ||
-                context.getWiki().getUser(context.getLocalUser(), context)
-                        .isUserInGroup(context.getDatabase() + ":ChronoAdmin.AdminGroup") ||
-                context.getWiki().getRightService().hasAdminRights(context);
+    public boolean isAdmin(XWikiContext context) throws XWikiException
+    {
+        return context.getWiki().getUser(context.getLocalUser(), context)
+            .isUserInGroup("ChronoAdmin.AdminGroup") ||
+            context.getWiki().getUser(context.getLocalUser(), context)
+                .isUserInGroup(context.getDatabase() + ":ChronoAdmin.AdminGroup") ||
+            context.getWiki().getRightService().hasAdminRights(context);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -194,14 +207,16 @@ public class UserManager {
      * Get user's next deadlines (meetings, tasks, project's ends, phase's ends)
      */
 
-    public List getMyLastModifications(int limit, XWikiContext context) throws XWikiException {
+    public List getMyLastModifications(int limit, XWikiContext context) throws XWikiException
+    {
         return plugin.getUtils().intelliSubList(limit, 0, this.getMyLastModifications(context));
     }
 
     /*
      * Get last modifications in user's projects
      */
-    public List getMyLastModifications(XWikiContext context) throws XWikiException {
+    public List getMyLastModifications(XWikiContext context) throws XWikiException
+    {
         TreeSet<Modification> modifications = new TreeSet<Modification>();
         ArrayList<Modification> list = new ArrayList<Modification>();
         List projects = plugin.getProjectManager().getMyProjects(context);
@@ -209,7 +224,7 @@ public class UserManager {
         for (Iterator it = projects.iterator(); it.hasNext();) {
             String name = (String) it.next();
             List mods = plugin.getProjectManager().getProject(name, context)
-                    .getLastModifications();
+                .getLastModifications();
             modifications.addAll(mods);
         }
 
@@ -261,14 +276,16 @@ public class UserManager {
     * Get user's next deadlines (meetings, tasks, project's ends, phase's ends)
     */
 
-    public List getMyNextDeadlines(int limit, XWikiContext context) throws XWikiException {
+    public List getMyNextDeadlines(int limit, XWikiContext context) throws XWikiException
+    {
         return plugin.getUtils().intelliSubList(limit, 0, this.getMyNextDeadlines(context));
     }
 
     /*
     * Get user's next deadlines (meetings, tasks, project's ends, phase's ends)
     */
-    public List getMyNextDeadlines(XWikiContext context) throws XWikiException {
+    public List getMyNextDeadlines(XWikiContext context) throws XWikiException
+    {
         String key = context.getDatabase() + ':' + context.getLocalUser() + "-deadlines";
         ArrayList<Deadline> list = null;
         Date today = new Date();
@@ -289,7 +306,8 @@ public class UserManager {
                     String page = (String) it.next();
                     XWikiDocument doc = context.getWiki().getDocument(page, context);
                     Date date = (Date) doc.newDocument(context).getValue("meetingend");
-                    deadlines.add(new Deadline(doc.getFullName(), doc.getDisplayTitle(context), DEADLINE_MEETING, date));
+                    deadlines.add(new Deadline(doc.getFullName(), doc.getDisplayTitle(context),
+                        DEADLINE_MEETING, date));
                 }
 
                 // tasks
@@ -298,7 +316,8 @@ public class UserManager {
                     String page = (String) it.next();
                     XWikiDocument doc = context.getWiki().getDocument(page, context);
                     Date date = (Date) doc.newDocument(context).getValue("taskduedate");
-                    deadlines.add(new Deadline(doc.getFullName(), doc.getDisplayTitle(context), DEADLINE_TASK, date));
+                    deadlines.add(new Deadline(doc.getFullName(), doc.getDisplayTitle(context),
+                        DEADLINE_TASK, date));
                 }
 
                 // projects
@@ -306,8 +325,8 @@ public class UserManager {
                 for (Iterator it = projects.iterator(); it.hasNext();) {
                     String page = (String) it.next();
                     XWikiDocument doc =
-                            context.getWiki()
-                                    .getDocument(page + "." + Project.PROJECT_HOMEDOC, context);
+                        context.getWiki()
+                            .getDocument(page + "." + Project.PROJECT_HOMEDOC, context);
                     /* Date date = (Date) doc.newDocument(context).getValue("end");
                     if (date.after(today)) {
                         deadlines.add(new Deadline(doc.getFullName(),
@@ -316,15 +335,15 @@ public class UserManager {
 
                     // Phases
                     List phases =
-                            plugin.getProjectManager().getProject(doc.getSpace(), context).getPhases();
+                        plugin.getProjectManager().getProject(doc.getSpace(), context).getPhases();
                     for (Iterator i = phases.iterator(); i.hasNext();) {
                         Object phase = (Object) i.next();
                         Date date = (Date) phase.getProperty("end").getValue();
                         if (date.after(today)) {
                             deadlines.add(new Deadline(doc.getFullName(),
-                                    phase.display("name", "view") +
-                                            " (" + doc.display("name", "view", context) + ")",
-                                    DEADLINE_PHASE, date));
+                                phase.display("name", "view") +
+                                    " (" + doc.display("name", "view", context) + ")",
+                                DEADLINE_PHASE, date));
                         }
                     }
                 }
@@ -339,8 +358,9 @@ public class UserManager {
     * Get number of projects the user receive notification's from
     */
     public int getMyProjectSubscriptionsNb
-            (XWikiContext
-                    context) throws XWikiException {
+        (XWikiContext
+            context) throws XWikiException
+    {
         return this.getMyProjectSubscriptions(context).size();
     }
 
@@ -348,8 +368,9 @@ public class UserManager {
     * Get projects the user receive notification's from
     */
     public List getMyProjectSubscriptions
-            (XWikiContext
-                    context) throws XWikiException {
+        (XWikiContext
+            context) throws XWikiException
+    {
         initUserdataCache(context);
         List list = null;
         String key = context.getDatabase() + ':' + context.getLocalUser() + "-subscriptions";
@@ -359,13 +380,13 @@ public class UserManager {
             } catch (XWikiCacheNeedsRefreshException e) {
                 userdataCache.cancelUpdate(key);
                 String hql =
-                        "select pdoc.fullName from XWikiDocument doc, XWikiDocument pdoc, BaseObject obj, StringProperty prop, " +
-                                "BaseObject pobj, StringProperty pprop where doc.fullName=obj.name and doc.name='ProjectMembers' " +
-                                "and obj.className='ChronoClasses.NotificationsClass' and obj.id=prop.id.id and prop.id.name='member' " +
-                                "and prop.value='" + context.getLocalUser() +
-                                "' and pdoc.web=doc.web and pdoc.name='WebHome' " +
-                                "and pdoc.fullName=pobj.name and pobj.className='ChronoClasses.ProjectClass' " +
-                                "and pobj.id=pprop.id.id and pprop.id.name='status' and pprop.value='1'";
+                    "select pdoc.fullName from XWikiDocument doc, XWikiDocument pdoc, BaseObject obj, StringProperty prop, " +
+                        "BaseObject pobj, StringProperty pprop where doc.fullName=obj.name and doc.name='ProjectMembers' " +
+                        "and obj.className='ChronoClasses.NotificationsClass' and obj.id=prop.id.id and prop.id.name='member' " +
+                        "and prop.value='" + context.getLocalUser() +
+                        "' and pdoc.web=doc.web and pdoc.name='WebHome' " +
+                        "and pdoc.fullName=pobj.name and pobj.className='ChronoClasses.ProjectClass' " +
+                        "and pobj.id=pprop.id.id and pprop.id.name='status' and pprop.value='1'";
                 list = context.getWiki().search(hql, context);
                 userdataCache.putInCache(key, list);
             }
@@ -377,8 +398,9 @@ public class UserManager {
     * Get the number of task for the current user
     */
     public int getMyTasksNb
-            (XWikiContext
-                    context) throws XWikiException {
+        (XWikiContext
+            context) throws XWikiException
+    {
         return this.getMyTasks(context).size();
     }
 
@@ -386,10 +408,11 @@ public class UserManager {
     * Get the current user's opened tasks (with index limits)
     */
     public List getMyTasks
-            (
-                    int limit,
-                    int start, XWikiContext
-                    context) throws XWikiException {
+        (
+            int limit,
+            int start, XWikiContext
+            context) throws XWikiException
+    {
         List list = this.getMyTasks(context);
         return plugin.getUtils().intelliSubList(limit, start, list);
     }
@@ -397,7 +420,8 @@ public class UserManager {
     /*
     * Get all the current user's opened tasks
     */
-    public List getMyTasks(XWikiContext context) throws XWikiException {
+    public List getMyTasks(XWikiContext context) throws XWikiException
+    {
         initUserdataCache(context);
         List list = null;
         String key = context.getDatabase() + ':' + context.getLocalUser() + "-tasks";
@@ -407,20 +431,21 @@ public class UserManager {
             } catch (XWikiCacheNeedsRefreshException e) {
                 userdataCache.cancelUpdate(key);
                 String hql =
-                        "select distinct doc.fullName, tdate.value from XWikiDocument doc, BaseObject obj, StringProperty prop, StringProperty list," +
-                                " DateProperty tdate, StringProperty completion where doc.fullName=obj.name " +
-                                "and obj.className='ChronoClasses.ProjectArticleClass' and obj.id=prop.id.id and obj.id=list.id.id " +
-                                "and obj.id=tdate.id.id and obj.id=completion.id.id and prop.id.name='taskassignee' " +
-                                "and prop.value='" + context.getLocalUser() +
-                                "' and list.id.name='type' and list.value='task' " +
-                                "and tdate.id.name='taskduedate' and completion.id.name='taskcompletion' and completion.value != '100%' order by tdate.value";
+                    "select distinct doc.fullName, tdate.value from XWikiDocument doc, BaseObject obj, StringProperty prop, StringProperty list," +
+                        " DateProperty tdate, StringProperty completion where doc.fullName=obj.name " +
+                        "and obj.className='ChronoClasses.ProjectArticleClass' and obj.id=prop.id.id and obj.id=list.id.id " +
+                        "and obj.id=tdate.id.id and obj.id=completion.id.id and prop.id.name='taskassignee' " +
+                        "and prop.value='" + context.getLocalUser() +
+                        "' and list.id.name='type' and list.value='task' " +
+                        "and tdate.id.name='taskduedate' and completion.id.name='taskcompletion' and completion.value != '100%' order by tdate.value";
                 // workaround for HSQLDB distinct/order limitation
                 List tmplist = context.getWiki().search(hql, context);
                 list = new ArrayList();
                 for (int i = 0; i < tmplist.size(); i++) {
                     String task = (String) ((java.lang.Object[]) tmplist.get(i))[0];
-                    if (task != null)
+                    if (task != null) {
                         list.add(task);
+                    }
                 }
                 userdataCache.putInCache(key, list);
             }
@@ -432,8 +457,9 @@ public class UserManager {
     * Get number of next meetings for the current user
     */
     public int getMyMeetingsNb
-            (XWikiContext
-                    context) throws XWikiException {
+        (XWikiContext
+            context) throws XWikiException
+    {
         return this.getMyMeetings(context).size();
     }
 
@@ -441,10 +467,11 @@ public class UserManager {
     * Get forthcoming meetings for the current user (with limits)
     */
     public List getMyMeetings
-            (
-                    int limit,
-                    int start, XWikiContext
-                    context) throws XWikiException {
+        (
+            int limit,
+            int start, XWikiContext
+            context) throws XWikiException
+    {
         List list = this.getMyMeetings(context);
         return plugin.getUtils().intelliSubList(limit, start, list);
     }
@@ -453,8 +480,9 @@ public class UserManager {
     * Get next meetings for the current user
     */
     public List getMyMeetings
-            (XWikiContext
-                    context) throws XWikiException {
+        (XWikiContext
+            context) throws XWikiException
+    {
         initUserdataCache(context);
         List list = null;
         String key = context.getDatabase() + ':' + context.getLocalUser() + "-meetings";
@@ -464,22 +492,23 @@ public class UserManager {
             } catch (XWikiCacheNeedsRefreshException e) {
                 userdataCache.cancelUpdate(key);
                 String hql =
-                        "select distinct doc.fullName, mdate.value from XWikiDocument doc, BaseObject obj, BaseObject robj, StringProperty rprop, " +
-                                "StringProperty list, DateProperty mdate, StringProperty status where doc.fullName=obj.name " +
-                                "and obj.className='ChronoClasses.ProjectArticleClass' and doc.fullName=robj.name " +
-                                "and robj.className='ChronoClasses.ProjectArticleRsvpClass' and robj.id=rprop.id.id " +
-                                "and robj.id=status.id.id and obj.id=list.id.id and obj.id=mdate.id.id and rprop.id.name='member' " +
-                                "and rprop.value='" + context.getLocalUser() +
-                                "' and status.id.name='status' and status.value!='no' " +
-                                "and list.id.name='type' and list.value='meeting' and mdate.id.name='meetingstart' " +
-                                "and mdate.value>=current_date order by mdate.value";
+                    "select distinct doc.fullName, mdate.value from XWikiDocument doc, BaseObject obj, BaseObject robj, StringProperty rprop, " +
+                        "StringProperty list, DateProperty mdate, StringProperty status where doc.fullName=obj.name " +
+                        "and obj.className='ChronoClasses.ProjectArticleClass' and doc.fullName=robj.name " +
+                        "and robj.className='ChronoClasses.ProjectArticleRsvpClass' and robj.id=rprop.id.id " +
+                        "and robj.id=status.id.id and obj.id=list.id.id and obj.id=mdate.id.id and rprop.id.name='member' " +
+                        "and rprop.value='" + context.getLocalUser() +
+                        "' and status.id.name='status' and status.value!='no' " +
+                        "and list.id.name='type' and list.value='meeting' and mdate.id.name='meetingstart' " +
+                        "and mdate.value>=current_date order by mdate.value";
                 // workaround for HSQLDB distinct/order limitation
                 List tmplist = context.getWiki().search(hql, context);
                 list = new ArrayList();
                 for (int i = 0; i < tmplist.size(); i++) {
                     String meeting = (String) ((java.lang.Object[]) tmplist.get(i))[0];
-                    if (meeting != null)
+                    if (meeting != null) {
                         list.add(meeting);
+                    }
                 }
                 userdataCache.putInCache(key, list);
             }
@@ -491,8 +520,9 @@ public class UserManager {
     * Get the number of projects the current user is member of
     */
     public int getMyProjectsNb
-            (XWikiContext
-                    context) throws XWikiException {
+        (XWikiContext
+            context) throws XWikiException
+    {
         return plugin.getProjectManager().getMyProjects(context).size();
     }
 
@@ -500,10 +530,11 @@ public class UserManager {
     * Get projects the current user is member of (with limits)
     */
     public List getMyProjects
-            (
-                    int limit,
-                    int start, XWikiContext
-                    context) throws XWikiException {
+        (
+            int limit,
+            int start, XWikiContext
+            context) throws XWikiException
+    {
         List list = plugin.getProjectManager().getMyProjects(context);
         return plugin.getUtils().intelliSubList(limit, start, list);
     }
@@ -511,7 +542,8 @@ public class UserManager {
     /*
     * Set the context's language from the user chronopolys preference (dirty fix which works well)
     */
-    public void setLanguage(String user, XWikiContext context) {
+    public void setLanguage(String user, XWikiContext context)
+    {
         try {
             String clang = context.getRequest().get("lang");
             if (clang != null && !"".equals(clang)) {
