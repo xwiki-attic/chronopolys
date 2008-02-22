@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <xwikidoc>
 <web>ChronoTemplates</web>
@@ -12,9 +12,9 @@
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
 <creationDate>1185283406000</creationDate>
-<date>1196762441000</date>
-<contentUpdateDate>1196762441000</contentUpdateDate>
-<version>10.1</version>
+<date>1203698245000</date>
+<contentUpdateDate>1203698245000</contentUpdateDate>
+<version>2.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
@@ -32,57 +32,37 @@
 <nameField></nameField>
 <validationScript></validationScript>
 <html>
-<contenttype>FullyRenderedText</contenttype>
-<customDisplay></customDisplay>
-<editor>---</editor>
 <name>html</name>
 <number>4</number>
 <prettyName>HTML</prettyName>
-<rows>30</rows>
+<rows>15</rows>
 <size>80</size>
-<tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </html>
 <language>
-<customDisplay></customDisplay>
 <name>language</name>
 <number>2</number>
 <prettyName>Language</prettyName>
 <size>5</size>
-<tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </language>
 <subject>
-<customDisplay></customDisplay>
 <name>subject</name>
 <number>1</number>
 <prettyName>Subject</prettyName>
 <size>40</size>
-<tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </subject>
 <text>
-<contenttype>FullyRenderedText</contenttype>
-<customDisplay></customDisplay>
-<editor>---</editor>
 <name>text</name>
 <number>3</number>
 <prettyName>Text</prettyName>
 <rows>15</rows>
 <size>80</size>
-<tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </text>
 </class>
@@ -98,7 +78,7 @@ $htmlheader
 &lt;br/&gt;
 &lt;table border="0" width="100%" style="font-size:12px;"&gt;
 &lt;tr&gt;
-&lt;td colspan="2"&gt;&lt;b&gt;&lt;i&gt;Your are invited to join the group &lt;a style="background-color:$style;" href="$projecturl"&gt;$project.get("name")&lt;/a&gt; (group leader : $xwiki.getLocalUserName($project.getProjectLeader(), false))&lt;/i&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;td colspan="2"&gt;&lt;b&gt;&lt;i&gt;Your are invited to join the working group &lt;a style="background-color:$style;" href="$projecturl"&gt;$project.get("name")&lt;/a&gt; (group leader : $xwiki.getLocalUserName($project.getProjectLeader(), false))&lt;/i&gt;&lt;/b&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;Description&lt;/td&gt;&lt;td&gt;$project.get("desc")&lt;/td&gt;
@@ -109,9 +89,9 @@ $htmlheader
 ## &lt;tr&gt;
 ## &lt;td&gt;End&lt;/td&gt;&lt;td&gt;$xwiki.formatDate($project.get("end"), $format)&lt;/td&gt;
 ## &lt;/tr&gt;
-&lt;tr&gt;&lt;td colspan="2" style="border-bottom: solid 1px #CCC;"&gt;&lt;a href="$doc.getExternalURL()" style="font-weight:bold;"&gt;Go to the group dashboard&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" style="border-bottom: solid 1px #CCC;"&gt;&lt;a href="$doc.getExternalURL()" style="font-weight:bold;"&gt;Go to the working group dashboard&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;
-&lt;td colspan="2"&gt;&lt;br/&gt;&lt;b&gt;&lt;i&gt;Group members :&lt;/i&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;td colspan="2"&gt;&lt;br/&gt;&lt;b&gt;&lt;i&gt;Working group members :&lt;/i&gt;&lt;/b&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;td colspan="2"&gt;
   #set ($glist = $project.getMembers())
@@ -135,7 +115,7 @@ $htmlfooter</html>
 <language>en</language>
 </property>
 <property>
-<subject>[$xwiki.getXWikiPreference("title")] You are invited to join the groupe '$project.get("name")'</subject>
+<subject>[$xwiki.getXWikiPreference("title")] You are invited to join the working group '$project.get("name")'</subject>
 </property>
 <property>
 <text></text>
@@ -152,57 +132,37 @@ $htmlfooter</html>
 <nameField></nameField>
 <validationScript></validationScript>
 <html>
-<contenttype>FullyRenderedText</contenttype>
-<customDisplay></customDisplay>
-<editor>---</editor>
 <name>html</name>
 <number>4</number>
 <prettyName>HTML</prettyName>
-<rows>30</rows>
+<rows>15</rows>
 <size>80</size>
-<tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </html>
 <language>
-<customDisplay></customDisplay>
 <name>language</name>
 <number>2</number>
 <prettyName>Language</prettyName>
 <size>5</size>
-<tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </language>
 <subject>
-<customDisplay></customDisplay>
 <name>subject</name>
 <number>1</number>
 <prettyName>Subject</prettyName>
 <size>40</size>
-<tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
 </subject>
 <text>
-<contenttype>FullyRenderedText</contenttype>
-<customDisplay></customDisplay>
-<editor>---</editor>
 <name>text</name>
 <number>3</number>
 <prettyName>Text</prettyName>
 <rows>15</rows>
 <size>80</size>
-<tooltip></tooltip>
 <unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </text>
 </class>
@@ -218,18 +178,18 @@ $htmlheader
 &lt;br/&gt;
 &lt;table border="0" width="100%" style="font-size:12px;"&gt;
 &lt;tr&gt;
-&lt;td colspan="2"&gt;&lt;b&gt;&lt;i&gt;Vous êtes invité à participer au groupe &lt;a style="background-color:$style;" href="$projecturl"&gt;$project.get("name")&lt;/a&gt; (responsable : $xwiki.getLocalUserName($project.getProjectLeader(), false))&lt;/i&gt;&lt;/b&gt;&lt;/td&gt;
+&lt;td colspan="2"&gt;&lt;b&gt;&lt;i&gt;Vous Ãªtes invitÃ© Ã  participer au groupe de travail &lt;a style="background-color:$style;" href="$projecturl"&gt;$project.get("name")&lt;/a&gt; (responsable : $xwiki.getLocalUserName($project.getProjectLeader(), false))&lt;/i&gt;&lt;/b&gt;&lt;/td&gt;
 &lt;/tr&gt;
 &lt;tr&gt;
 &lt;td&gt;Description&lt;/td&gt;&lt;td&gt;$project.get("desc")&lt;/td&gt;
 &lt;/tr&gt;
 ## &lt;tr&gt;
-## &lt;td&gt;Début du projet&lt;/td&gt;&lt;td&gt;$xwiki.formatDate($project.get("start"), $format)&lt;/td&gt;
+## &lt;td&gt;DÃ©but du projet&lt;/td&gt;&lt;td&gt;$xwiki.formatDate($project.get("start"), $format)&lt;/td&gt;
 ## &lt;/tr&gt;
 ## &lt;tr&gt;
 ## &lt;td&gt;Fin du projet&lt;/td&gt;&lt;td&gt;$xwiki.formatDate($project.get("end"), $format)&lt;/td&gt;
 ## &lt;/tr&gt;
-&lt;tr&gt;&lt;td colspan="2" style="border-bottom: solid 1px #CCC;"&gt;&lt;a href="$doc.getExternalURL()" style="font-weight:bold;"&gt;Accéder à la page d'accueil du groupe&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr&gt;&lt;td colspan="2" style="border-bottom: solid 1px #CCC;"&gt;&lt;a href="$doc.getExternalURL()" style="font-weight:bold;"&gt;AccÃ©der Ã  la page d'accueil du groupe&lt;/a&gt;&lt;br/&gt;&lt;br/&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;
 &lt;td colspan="2"&gt;&lt;br/&gt;&lt;b&gt;&lt;i&gt;Membres du groupe :&lt;/i&gt;&lt;/b&gt;&lt;/td&gt;
 &lt;/tr&gt;
@@ -255,7 +215,7 @@ $htmlfooter</html>
 <language>fr</language>
 </property>
 <property>
-<subject>[$xwiki.getXWikiPreference("title")] Vous êtes invité à participer au groupe '$project.get("name")'</subject>
+<subject>[$xwiki.getXWikiPreference("title")] Vous Ãªtes invitÃ© Ã  participer au groupe de travail '$project.get("name")'</subject>
 </property>
 <property>
 <text>Click here to go to that project space : $projecturl</text>
