@@ -97,7 +97,8 @@ $doc.display("role", $obj)&lt;/td&gt;
 #set ($users = $xwiki.rightsmanager.usersApi.getAllLocalUsersNames())
 ## sort by last name
 #sortdocnamesbylastname($users)
-#if ($members.size() &lt; $users.size())
+#set($users_size = $users.size() - 1) ## because of XWiki.Admin
+#if ($members.size() &lt; $users_size)
 #roundedtitletop($msg.get("addmember")) 
 &lt;form name="addusertogroup" action="$doc.getURL("view")" method="post"&gt;
 &lt;input type="hidden" id="do" name="do" value="addmember" /&gt;
@@ -106,7 +107,7 @@ $doc.display("role", $obj)&lt;/td&gt;
 $msg.get("user") : 
 &lt;select id="member" name="member"&gt;
  #foreach($user in $users)
-    #if(!$members.contains($user)))
+    #if(!$members.contains($user) &amp;&amp; $user != "XWiki.Admin")
     &lt;option value="$user"&gt;#displayUserFullName($user)&lt;/option&gt;
     #end
  #end
