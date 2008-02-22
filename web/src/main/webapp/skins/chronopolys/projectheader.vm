@@ -21,7 +21,7 @@
 		#if (($doc.name !=  "WebHome") || ($context.action != "view"))
 			<a id="backtoproject" href="$xwiki.getURL("${doc.web}.WebHome")">$msg.get("backtoproject")</a>
 		#else
-			#if ($isChronoAdmin)
+			#if ($isChronoAdmin || $xwiki.hasAccessLevel("delete"))
 				<a id="deleteproject" href="$doc.getURL('view', 'do=delete')">$msg.get("deleteproject")</a>
 			#end
 		#end
