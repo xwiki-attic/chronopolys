@@ -480,6 +480,12 @@ $doc.display("content", $obj)
    #if($localname.size() > $indx)
      #set($key = $localname.substring($indx))
      #capitalize($key) ## the last name 
+     #set($no = $velocityCount)
+     #foreach($k in $objkeys)
+        #if($key == $k)
+          #set($key = $key + "${no}") ## for users with the same last name or first name
+        #end
+     #end
      #set($discard = $objkeys.add($key))   
      #set($discard = $objmap.put($key, $obj))
    #elseif($localname != "") ## the first name, if the last name is empty
@@ -509,6 +515,12 @@ $doc.display("content", $obj)
     #end
     #if($key != "") 
       #capitalize($key)
+      #set($no = $velocityCount)
+      #foreach($k in $docnameskeys)
+        #if($key == $k)
+          #set($key = $key + "${no}") ## for users with the same last name or first name
+        #end
+      #end
       #set($discard = $docnameskeys.add($key))
       #set($discard = $docnamesmap.put($key, $docname))
     #end
