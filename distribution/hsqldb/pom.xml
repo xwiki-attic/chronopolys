@@ -13,7 +13,7 @@
     <dependency>
       <groupId>com.avane.xwiki.products</groupId>
       <artifactId>xwiki-product-chronopolys-database-hsqldb</artifactId>
-      <version>${version}</version>
+      <version>${pom.version}</version>
       <type>zip</type>
     </dependency>
   </dependencies>

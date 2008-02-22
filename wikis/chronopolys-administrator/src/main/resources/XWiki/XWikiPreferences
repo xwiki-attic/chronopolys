@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml version="1.0" encoding="UTF-8"?>
 
 <xwikidoc>
 <web>XWiki</web>
@@ -8,18 +8,18 @@
 <translation>0</translation>
 <parent>XWiki.WebHome</parent>
 <creator>XWiki.Admin</creator>
-<author>XWiki.Administrator</author>
+<author>XWiki.Admin</author>
 <customClass></customClass>
-<contentAuthor>XWiki.Administrator</contentAuthor>
+<contentAuthor>XWiki.Admin</contentAuthor>
 <creationDate>1106308017000</creationDate>
-<date>1201711459000</date>
-<contentUpdateDate>1201711459000</contentUpdateDate>
-<version>5.1</version>
+<date>1203673376000</date>
+<contentUpdateDate>1203673376000</contentUpdateDate>
+<version>3.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
-<comment>Added object</comment>
+<comment></comment>
 <minorEdit>false</minorEdit>
 <class>
 <name>XWiki.XWikiPreferences</name>
@@ -1561,16 +1561,16 @@ Password : $password
 Once logged in, you can edit your profile and change your password through the following page:
 http://${xwiki.getXWikiPreference("server_name")}/xwiki/bin/inline/XWiki/$xwikiname
 #else
-Subject: [$xwiki.getXWikiPreference("title")] Votre mot de passe a ?t? mis ? jour
+Subject: [$xwiki.getXWikiPreference("title")] Votre mot de passe a été mis à jour
 From: $xwiki.getXWikiPreference("admin_email")
 To: $email
 
-Vous pouvez acc?der ? cet espace en vous rendant ? cette adresse http://${xwiki.getXWikiPreference("server_name")}/xwiki/ avec les identifiants suivants :
+Vous pouvez accéder à cet espace en vous rendant à cette adresse http://${xwiki.getXWikiPreference("server_name")}/xwiki/ avec les identifiants suivants :
 
 Login : $xwikiname
 Mot de passe : $password
 
-Une fois identifi?, vous pouvez ?diter votre profil et changer votre mot de passe ainsi que les informations vous concernant en vous rendant ? cette adresse :
+Une fois identifié, vous pouvez éditer votre profil et changer votre mot de passe ainsi que les informations vous concernant en vous rendant à cette adresse :
 http://${xwiki.getXWikiPreference("server_name")}/xwiki/bin/inline/XWiki/$xwikiname
 #end</invitation_email_content>
 </property>
@@ -1705,18 +1705,18 @@ Password : $password
 Once logged in, you can edit your profile and change your password through the following page:
 http://${xwiki.getXWikiPreference("server_name")}/xwiki/bin/inline/XWiki/$xwikiname
 #else
-Subject: [$xwiki.getXWikiPreference("title")] Votre compte a ?t? cr??
+Subject: [$xwiki.getXWikiPreference("title")] Votre compte a été créé
 From: $xwiki.getXWikiPreference("admin_email")
 To: $email
 
 Bienvenue sur $xwiki.getXWikiPreference("title")! 
 
-Vous pouvez acc?der ? cet espace en vous rendant ? cette adresse http://${xwiki.getXWikiPreference("server_name")}/xwiki/ avec les identifiants suivants :
+Vous pouvez accéder à cet espace en vous rendant à cette adresse http://${xwiki.getXWikiPreference("server_name")}/xwiki/ avec les identifiants suivants :
 
 Login : $xwikiname
 Mot de passe : $password
 
-Une fois identifi?, vous pouvez ?diter votre profil et changer votre mot de passe ainsi que les informations vous concernant en vous rendant ? cette adresse :
+Une fois identifié, vous pouvez éditer votre profil et changer votre mot de passe ainsi que les informations vous concernant en vous rendant à cette adresse :
 http://${xwiki.getXWikiPreference("server_name")}/xwiki/bin/inline/XWiki/$xwikiname
 #end</validation_email_content>
 </property>
