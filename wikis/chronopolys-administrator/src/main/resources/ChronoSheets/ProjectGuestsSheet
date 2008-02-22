@@ -103,7 +103,8 @@ $msg.get("projectispublicextended")
 ## sort by last name
 #sortdocnamesbylastname($users) 
 #set($users_size = $users.size() - 1) ## because of XWiki.XWikiAdmin
-#if ($guests.size() &lt;= $users_size)
+#set($users_left = $users.size() - $members.size() - $guests.size())
+#if ($users_left &gt; 0)
 #roundedtitletop($msg.get("addguest")) 
 &lt;table style="width:100%;"&gt;
 &lt;tr&gt;&lt;td&gt;
