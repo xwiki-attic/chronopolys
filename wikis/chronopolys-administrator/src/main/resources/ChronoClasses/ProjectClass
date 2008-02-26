@@ -60,7 +60,8 @@
 <container>
 <cache>0</cache>
 <classname></classname>
-<customDisplay>#if($type=="view")$value#else#includeInContext("ChronoCode.CustomDisplayProjectContainer")#end</customDisplay>
+<customDisplay>#if($type=="view")$value
+#elseif($type!="editnopre") #includeInContext("ChronoCode.CustomDisplayProjectContainer")#else #includeInContextNoPre("ChronoCode.CustomDisplayProjectContainer")#end</customDisplay>
 <displayType>select</displayType>
 <idField></idField>
 <multiSelect>0</multiSelect>

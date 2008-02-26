@@ -138,8 +138,8 @@
 &lt;table class="panel_table"&gt;
 &lt;tr class="underlined"&gt;&lt;td colspan="2"&gt;&lt;span class="projectdata_label"&gt;$msg.get("projectname")&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
 &lt;tr&gt;&lt;td colspan="2"&gt;&lt;span class="projectdata_value"&gt;$obj.display("name", $action)&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr class="underlined"&gt;&lt;td colspan="2"&gt;&lt;span class="projectdata_label"&gt;$msg.get("activity")&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
-&lt;tr&gt;&lt;td colspan="2"&gt;
+&lt;tr class="underlined" style="display:none;"&gt;&lt;td colspan="2"&gt;&lt;span class="projectdata_label"&gt;$msg.get("activity")&lt;/span&gt;&lt;/td&gt;&lt;/tr&gt;
+&lt;tr style="display:none;"&gt;&lt;td colspan="2"&gt;
 #set ($contname = $obj.display("container", "view"))
 &lt;span class="projectdata_value"&gt;#if($action=="edit") $msg.get($obj.display("container", $action)) #else $msg.get($xwiki.getDocument("ProjectContainers.$contname").display("name", "view")) #end&lt;/span&gt;
 &lt;/td&gt;&lt;/tr&gt;
@@ -401,5 +401,5 @@
 &lt;img src="$xwiki.getSkinFile("mimetypes/bin.png")" style="width:$size;height:$size;"/&gt;#end
 #elseif($mime.startsWith("application/"))
 &lt;img src="$xwiki.getSkinFile("mimetypes/exec.png")" style="width:$size;height:$size;"/&gt;#end
-#end
-</content></xwikidoc>
+#end</content>
+</xwikidoc>
