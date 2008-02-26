@@ -30,4 +30,17 @@
 		##end
 	</span>
 </div>
-<div class="container_breadcrumb">$msg.get($currentAxis.display("name", "view")) > $msg.get($currentYard.display("name", "view")) > $msg.get($currentActivity.display("name", "view"))</div>
+#if($doc.name == "WebHome")
+ <div id="container_breadcrumb" class="container_breadcrumb">
+  <span id="breadcrumb_axis">$msg.get($currentAxis.display("name", "view"))</span> > <span id="breadcrumb_yard">$msg.get($currentYard.display("name", "view"))</span> > <span id="breadcrumb_activ">$msg.get($currentActivity.display("name", "view"))</span>
+  <span id="breadcrumb_action" onclick="toggleClass($('container_breadcrumb'), 'hidden'); toggleClass($('sel_container_breadcrumb'), 'hidden');" style="cursor:pointer;"> ($msg.get("edit").toLowerCase())</span>
+ </div>
+ <div id="sel_container_breadcrumb" class="container_breadcrumb hidden">
+  #set($proj = $doc.getObject("ChronoClasses.ProjectClass"))
+  $proj.display("container", "editnopre")
+ </div>
+#else
+ <div class="container_breadcrumb">
+  <span id="breadcrumb_axis">$msg.get($currentAxis.display("name", "view"))</span> > <span id="breadcrumb_yard">$msg.get($currentYard.display("name", "view"))</span> > <span id="breadcrumb_activ">$msg.get($currentActivity.display("name", "view"))</span>
+ </div>
+#end

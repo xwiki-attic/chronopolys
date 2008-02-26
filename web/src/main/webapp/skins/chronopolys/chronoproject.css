@@ -219,3 +219,46 @@ progid:DXImageTransform.Microsoft.AlphaImageLoader(src='$xwiki.getSkinFile("pane
 #article_filter {
   text-align:right;
 }
+
+/* project breadcrumbs header */
+div.select {
+  position:relative; 
+  display:inline; 
+  margin-top:2px;
+  padding:3px;
+  padding-left:4px;
+  color:#333;
+}
+div.select:hover {  
+  background:#fafafa;
+  cursor:pointer;
+}
+div.select a:hover {
+  color:#333 !important;
+}
+span.noitem {
+  cursor:default !important;
+}
+ul.selectbox {
+  position:absolute; 
+  top:18px; 
+  left:-1px; 
+  padding:2px 2px 0 2px; 
+  list-style:none;
+  background:#fafafa; 
+  z-index:1000; 
+  line-height:1.5em; 
+  display:block; 
+  margin:0px;
+}
+ul.selectbox li {
+  border-top: 1px solid #efefef; 
+  width:96%; 
+  padding: 2px 2%;
+}
+ul.selectbox li:hover {
+  background:#fefefe;
+}
+div.hide-dropdown .selectbox {
+  display: none;
+}
