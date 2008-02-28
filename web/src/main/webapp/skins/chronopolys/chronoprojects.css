@@ -202,7 +202,7 @@ progid:DXImageTransform.Microsoft.AlphaImageLoader(src='$xwiki.getSkinFile("yard
 }
 
 .activity .projectsNumber {
-  width:80px;
+  width:100px;
   color:#666666;
   font-style:italic;
   font-size:11px;
