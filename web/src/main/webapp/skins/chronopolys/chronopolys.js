@@ -1425,21 +1425,18 @@ xwkSlider.prototype = {
     this.step = ('step' in params ? params.step : 10); 
     this.maxVal = ('maxVal' in params ? params.maxVal : 100); 
     this.url = params.url;
-    this.dist = ('width' in params ? params.width : this.trackNode.clientWidth); // QUICKFIX: there is a problem with width and position of a div
-    this.start = ('start' in params ? params.start : findPos(this.trackNode)[0]); // that has display: none (is 0, no matter the style) so it should be passed as param.
+    this.dist = this.trackNode.clientWidth;
+    this.start = findPos(this.trackNode)[0];
     this.mouseDown = false;
     this.keyDown = false;
     this.temp = -1;
-    
     this.attachEventHandlers();
   },
-  
   attachEventHandlers: function()
   {
       this.mouseUpHandler = this.makeMouseUpHandler(this);
       this.mouseMoveHandler = this.makeMouseMoveHandler(this);
       this.keyUpHandler = this.makeKeyUpHandler(this);
-      
       Event.observe(this.domNode, 'mousedown', this.makeMouseDownHandler(this));
       Event.observe(this.trackNode, 'mouseover', this.makeMouseOverHandler(this));
       Event.observe(this.trackNode, 'mouseout', this.makeMouseOutHandler(this));
@@ -1447,7 +1444,6 @@ xwkSlider.prototype = {
       Event.observe(this.domNode, 'mouseout', this.makeMouseOutHandler(this));
       Event.observe(document, 'keydown', this.makeKeyDownHandler(this));
   },
- 
   makeKeyDownHandler: function(self)
   {
     return function(ev) {
@@ -1455,16 +1451,18 @@ xwkSlider.prototype = {
       var ev = (!ev) ? window.event : ev;
       self.keyDown = true;
       Event.observe(document, 'keyup', self.keyUpHandler);
-      
       if (ev.keyCode) code = ev.keyCode;
       else if (ev.which) code = ev.which;
+      if(self.dist == 0 || self.start == 0) {
+          self.dist = window.dist;
+          self.start = window.start;
+      }
       if(code == 39) // right arrow key
       { 
         self.tempdp = parseInt(self.domNode.style.left); // the percent at key down
         self.dp = self.tempdp;
         self.dp += self.step; // computing the new percent
         if(self.dp > self.maxVal) self.dp = self.maxVal;
-        
         self.domNode.style.left = self.dp + "%"; // updating in real time
         if(self.updCol) self.updCol.style.width = self.dp + "%";
         self.updHandler(self.slideNo, self.dp, self.tempdp);
@@ -1475,7 +1473,6 @@ xwkSlider.prototype = {
         self.dp = self.tempdp;
         self.dp -= self.step;
         if(self.dp < 0) self.dp = 0;
-        
         self.domNode.style.left = self.dp + "%";
         if(self.updCol) self.updCol.style.width = self.dp + "%";
         self.updHandler(self.slideNo, self.dp, self.tempdp);
@@ -1516,59 +1513,68 @@ xwkSlider.prototype = {
       Event.stopObserving(document, 'keyup', self.keyUpHandler);
     }
   },
-  
   makeMouseOverHandler: function(self)
   {
     return function(ev) {
       window.activeSlider = self;
     }
   },
-  
   makeMouseOutHandler: function(self)
   {
     return function(ev) {
       window.activeSlider = null;
     }
   },
-  
   makeMouseDownHandler: function(self)
   {
     return function(ev) {
       var ev = (!ev) ? window.event : ev;
+      if(self.dist == 0 || self.start == 0) {
+          self.dist = window.dist;
+          self.start = window.start;
+      }
       self.mouseDown = true; 
+      self.evX = ev.screenX;
       self.tempdp = parseInt(self.domNode.style.left);
       Event.observe(document, 'mouseup', self.mouseUpHandler);
       Event.observe(document, 'mousemove', self.mouseMoveHandler);
     }
   },
-  
   makeMouseMoveHandler: function(self) {
     return function(ev) {
       var ev = (!ev) ? window.event : ev;
       if(self.mouseDown) 
       {
         self.x = ev.screenX - self.start;
+        if(self.evX > ev.screenX) // drag left
+          self.x -= (self.domNode.clientWidth > 0 ? self.domNode.clientWidth : 10);  //QUICKFIX: change here if the slider handler width changes    
+        if(self.x < 0) self.x = 0;
+        if(self.x > self.dist) self.x = self.dist;
+        self.domNode.style.left = self.x + "px";
+        if(self.updCol) self.updCol.style.width = self.x + "px";
         self.p = Math.round(self.x * self.step / self.dist);
-        self.x = (self.p * self.dist) / self.step; // pixels
         self.dp = self.p * self.step; // percent
-        if(self.dp < 0) 
-          self.dp = 0;
-        if(self.dp > self.maxVal) 
-          self.dp = self.maxVal;
-           
-        self.domNode.style.left = self.dp + "%";
-        if(self.updCol) self.updCol.style.width = self.dp + "%";
+        if(self.dp < 0) self.dp = 0;
+        if(self.dp > self.maxVal) self.dp = self.maxVal;
         self.updHandler(self.slideNo, self.dp, self.tempdp);
         Event.stop(ev);
       }
     }
   },
-  
   makeMouseUpHandler: function(self) {
     return function(ev) {
       var ev = (!ev) ? window.event : ev;
-      if(self.mouseDown && self.tempdp != self.dp) 
+      if(self.mouseDown) 
       { 
+          //snapping
+          self.p = Math.round(self.x * self.step / self.dist);
+          self.x = (self.p * self.dist) / self.step; // pixels
+          self.dp = self.p * self.step; // percent
+          if(self.dp < 0) self.dp = 0;
+          if(self.dp > self.maxVal) self.dp = self.maxVal;
+          self.domNode.style.left = self.dp + "%";
+          if(self.updCol) self.updCol.style.width = self.dp + "%";         
+          self.updHandler(self.slideNo, self.dp, self.tempdp);       
           var url = self.url;
           if(url.indexOf("?taskcompletion") > 0) 
             url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
@@ -1579,11 +1585,12 @@ xwkSlider.prototype = {
               method: 'get',
               onSuccess: function(transport) {
                 pivot.loading.style.display = "none";
+                pivot.tempdp = pivot.dp;
               },
               onFailure: function(transport) {
                 pivot.domNode.style.left = pivot.tempdp + "%";
                 if(pivot.updCol) pivot.updCol.style.width = pivot.tempdp + "%";
-                pivot.updHandler(pivot.slideNo, pivot.dp, pivot.tempdp);
+                pivot.updHandler(pivot.slideNo, pivot.tempdp, -1);
               }
           });
       Event.stopObserving(document, 'mouseup', self.mouseUpHandler);
@@ -1612,25 +1619,28 @@ function updTaskCompl(no, per, oldper)
    id4 = 'plogheaderimg_' + no;
  }
   if(per != oldper) {
-    if($(id1)) 
-      $(id1).innerHTML = per + "%";
+    if($(id1)) $(id1).innerHTML = per + "%";
     if(per == 100) {
-      if($(id2))
-        $(id2).innerHTML = taskcomplete;
-      if($(id3))
-        $(id3).innerHTML = taskcomplete;
-      if($(id4))
-        $(id4).src = taskcompleteimg;
+      if($(id2)) $(id2).innerHTML = taskcomplete;
+      if($(id3)) $(id3).innerHTML = taskcomplete;
+      if($(id4)) $(id4).src = taskcompleteimg;
     }
     else if(oldper == 100) {
-      if($(id2))
-        $(id2).innerHTML = task;
-      if($(id3))
-        $(id3).innerHTML = task;
-      if($(id4))
-        $(id4).src = taskimg;
+      if($(id2)) $(id2).innerHTML = task;
+      if($(id3)) $(id3).innerHTML = task;
+      if($(id4)) $(id4).src = taskimg;
+    }
+    else if(oldper == -1) {
+      if(per == 100) {
+        if($(id2)) $(id2).innerHTML = taskcomplete;
+        if($(id3)) $(id3).innerHTML = taskcomplete;
+        if($(id4)) $(id4).src = taskcompleteimg;
+      }
+      else {
+        if($(id2)) $(id2).innerHTML = task;
+        if($(id3)) $(id3).innerHTML = task;
+        if($(id4)) $(id4).src = taskimg;
+      }
     }
   }
 }
-
-
