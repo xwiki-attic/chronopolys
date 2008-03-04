@@ -186,7 +186,7 @@
                         #set ($cdoc = $xwiki.getDocument("${result.web}.${result.name}"))
                         #set ($wdoc = $xwiki.getDocument("${result.web}.WebHome"))
                         #if ($prj.isPlogPage($cdoc.name))
-                            &lt;td align=left&gt;[$cdoc.display("title", "view")&gt;${result.web}.${result.name}]&lt;/td&gt;
+                            &lt;td align=left&gt;[$cdoc.displayTitle&gt;${result.web}.${result.name}]&lt;/td&gt;
                         #elseif ($prj.isWikiPage($cdoc.name))
                             &lt;td align=left&gt;[$cdoc.getDisplayTitle()&gt;${result.web}.${result.name}]&lt;/td&gt;
                         #elseif ($result.name == "WebHome")
