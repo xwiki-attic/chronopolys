@@ -12,16 +12,15 @@
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
 <creationDate>1157374918000</creationDate>
-<date>1201010338000</date>
-<contentUpdateDate>1201010338000</contentUpdateDate>
-<version>4.1</version>
+<date>1204884636000</date>
+<contentUpdateDate>1204884636000</contentUpdateDate>
+<version>3.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
 <minorEdit>false</minorEdit>
-
 <object>
 <class>
 <name>XWiki.TagClass</name>
@@ -36,7 +35,6 @@
 <cache>0</cache>
 <displayType>input</displayType>
 <multiSelect>1</multiSelect>
-
 <name>tags</name>
 <number>1</number>
 <prettyName>Tags</prettyName>
@@ -45,7 +43,6 @@
 <separators> ,|</separators>
 <size>30</size>
 <unmodifiable>0</unmodifiable>
-
 <values></values>
 <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
 </tags>
@@ -63,7 +60,7 @@
     #roundedtitletop($msg.get("deleteproject"))
     &lt;div&gt;
     &lt;span class="buttonwrapper"&gt;&lt;a href="$doc.getURL("view")"&gt;$msg.get("cancel")&lt;/a&gt;&lt;/span&gt;
-    &lt;span class="buttonwrapper"&gt;&lt;a href="" onclick="if (confirm('$msg.get("confirmdeleteproject2")')==false) { return false; } else { location='$doc.getURL("view", "do=confirmdelete")'; return false; }"&gt;$msg.get("confirmdeleteproject")&lt;/a&gt;&lt;/span&gt;
+    &lt;span class="buttonwrapper"&gt;&lt;nobr&gt;&lt;a href="" onclick="if (confirm('$msg.get("confirmdeleteproject2")')==false) { return false; } else { location='$doc.getURL("view", "do=confirmdelete")'; return false; }"&gt;$msg.get("confirmdeleteproject")&lt;/a&gt;&lt;/nobr&gt;&lt;/span&gt;
     &lt;div class="spacer"&gt;&lt;/div&gt;
     &lt;/div&gt;
     #roundedbottom()
@@ -85,7 +82,7 @@
 ## HELP
 #set ($results = $xwiki.searchDocuments(", BaseObject as obj where doc.fullName=obj.name and obj.className='ChronoClasses.ProjectClass' and doc.creator='${context.getUser()}'"))
 #if (($doc.getVersion() == "1.1" || $doc.getVersion() == "2.1" || $doc.getVersion() == "3.1") &amp;&amp; $results.size() == 1)
-&lt;img src="$xwiki.getSkinFile("tips/Project.WebHome.${context.language}.1.png")" style="margin-left:5px;margin-bottom:10px;" /&gt;
+&lt;img src="$xwiki.getSkinFile("tips/Project.WebHome.${context.language}.1.png")" style="margin-left:5px;margin-bottom:10px;width:789px;height:173px;" /&gt;
 #end
 &lt;div id="projectcol_1"&gt;
 ## ---------------------------------------------------------------
