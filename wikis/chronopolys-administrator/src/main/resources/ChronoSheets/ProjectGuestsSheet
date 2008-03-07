@@ -54,7 +54,8 @@
 <tags/>
 </property>
 </object>
-<content>#if ($request.do=="addguest")
+<content>#if ($request.do)
+#if ($request.do=="addguest")
 #set ($ret = $project.addGuest($request.guest))
 $response.sendRedirect($doc.getURL())
 #elseif ($request.do=="removeguest")
@@ -66,6 +67,7 @@ $response.sendRedirect($doc.getURL())
 #elseif ($request.do=="makeprivate")
 #set ($ret = $project.setPublic(false))
 $response.sendRedirect($doc.getURL())
+#end
 #end
 
 #roundedtitletop($msg.get("projectguests"))

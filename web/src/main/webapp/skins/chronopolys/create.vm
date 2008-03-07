@@ -57,7 +57,7 @@
 ##
 #elseif($tocreate=="project")
   #set($project=$xwiki.chronopolys.addProject($request.getParameter("name")))
-  $response.sendRedirect($xwiki.getURL($project.getProjectHomeDoc().fullName))
+  $response.sendRedirect($project.getProjectHomeDoc().getURL("view"))
 #end
 
 ##

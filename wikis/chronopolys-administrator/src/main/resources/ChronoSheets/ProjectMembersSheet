@@ -54,12 +54,14 @@
 <tags/>
 </property>
 </object>
-<content>#if ($request.do=="addmember")
+<content>#if ($request.do)
+#if ($request.do=="addmember")
 #set ($ret = $project.addMember($request.member))
 $response.sendRedirect($doc.getURL())
 #elseif ($request.do=="removemember")
 #set ($ret = $project.removeMember($request.member))
 $response.sendRedirect($doc.getURL())
+#end
 #end
 
 #roundedtitletop($msg.get("projectmembers"))

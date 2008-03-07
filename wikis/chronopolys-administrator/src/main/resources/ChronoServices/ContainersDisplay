@@ -225,7 +225,7 @@ masterloader = master_onLoad;
 ## --------------------------------------------------
 &lt;script type="text/javascript"&gt;
   ## if the services is called from remote call
-  #if ($request.xpage == "plain")
+  #if ($request.xpage &amp;&amp; $request.xpage == "plain")
     ##onTimelineVisibilityChange();
   #end
 initContainersStates('$xwiki.getDocument($context.getLocalUser()).display("prefered_containers_state", "view")');

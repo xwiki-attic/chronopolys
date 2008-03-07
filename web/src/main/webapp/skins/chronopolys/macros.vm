@@ -477,7 +477,7 @@ $doc.display("content", $obj)
    #set($localname = $xwiki.getLocalUserName($memberpage, false))
    #set($indx = $localname.indexOf(" "))
    #set($indx = $indx + 1)
-   #if($localname.size() > $indx)
+   #if($localname && $localname.size() > $indx)
      #set($key = $localname.substring($indx))
      #capitalize($key) ## the last name 
      #set($no = $velocityCount)

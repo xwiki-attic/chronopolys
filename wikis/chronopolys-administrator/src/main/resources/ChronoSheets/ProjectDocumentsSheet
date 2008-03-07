@@ -134,7 +134,7 @@ ${Msz}Mb
 #set($showactions = 0)
 #set($attachments = $doc.attachmentList)
 &lt;div id="projectmanager" class="xwikiintracontent"&gt;
-#if($inline == true)
+#if($inline &amp;&amp; $inline == true)
     &lt;div class="xwikititlewrapper" onclick="toggleClass($('attachments'), 'hidden'); toggleClass($('attachmentscontent'), 'exp')"&gt;&lt;h3 class="xwikiintratitle"&gt;$msg.get("attachments")&lt;span class="hidden"&gt;:&lt;/span&gt; &lt;span class="attachmentsno"&gt;$attachments.size()&lt;/span&gt;&lt;/h3&gt;&lt;/div&gt;
 #end
       &lt;div id="projectdocuments"&gt;

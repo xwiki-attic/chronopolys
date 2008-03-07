@@ -55,9 +55,9 @@ public class ProjectApi
         return project.getSpace();
     }
 
-    public XWikiDocument getProjectHomeDoc() throws XWikiException
+    public Document getProjectHomeDoc() throws XWikiException
     {
-        return project.getProjectHomeDoc(context);
+        return project.getProjectHomeDoc(context).newDocument(context);
     }
 
     public String getNewPlogUid() throws XWikiException

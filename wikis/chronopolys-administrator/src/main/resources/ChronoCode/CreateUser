@@ -54,14 +54,14 @@
 <tags/>
 </property>
 </object>
-<content>#if ($request.register=="1")
+<content>#if ($request.register &amp;&amp; $request.register=="1")
   #if ($request.register_email == "")
     #error($msg.get("mustprovideemail"))
   #else
     #set ($reg = $xwiki.createUser())
   #end
 #end
-#if($reg&lt;=0)
+#if($reg &amp;&amp; $reg&lt;=0)
   #if($reg==-2)
     #error("$msg.get('passwordmismatch').")
   #elseif($reg==-3)
