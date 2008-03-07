@@ -269,7 +269,7 @@ public class NotificationManager
             vcontext
                 .put("username", context.getWiki().getLocalUserName(user, null, false, context));
             emailService.sendMessageFromTemplate(
-                plugin.getChronoPreference("notifications_sender", context),
+                context.getWiki().getXWikiPreference("admin_email", context),
                 email, null, null, language, mailTemplate, vcontext);
         }
     }
