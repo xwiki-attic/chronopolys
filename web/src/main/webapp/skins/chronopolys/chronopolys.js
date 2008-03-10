@@ -1465,7 +1465,7 @@ xwkSlider.prototype = {
         if(self.dp > self.maxVal) self.dp = self.maxVal;
         self.domNode.style.left = self.dp + "%"; // updating in real time
         if(self.updCol) self.updCol.style.width = self.dp + "%";
-        self.updHandler(self.slideNo, self.dp, self.tempdp);
+        self.updHandler(self.slideNo, self.dp);
       }
       else if(code == 37) //left arrow key
       { 
@@ -1475,7 +1475,7 @@ xwkSlider.prototype = {
         if(self.dp < 0) self.dp = 0;
         self.domNode.style.left = self.dp + "%";
         if(self.updCol) self.updCol.style.width = self.dp + "%";
-        self.updHandler(self.slideNo, self.dp, self.tempdp);
+        self.updHandler(self.slideNo, self.dp);
       }
     }
   },
@@ -1505,7 +1505,7 @@ xwkSlider.prototype = {
                 // restore the previous percent
                 pivot.domNode.style.left = pivot.tempdp + "%"; 
                 if(pivot.updCol) pivot.updCol.style.width = pivot.tempdp + "%";
-                pivot.updHandler(pivot.slideNo, pivot.dp, pivot.tempdp);
+                pivot.updHandler(pivot.slideNo, pivot.tempdp);
               }
           });
       }
@@ -1535,9 +1535,14 @@ xwkSlider.prototype = {
       }
       self.mouseDown = true; 
       self.evX = ev.screenX;
+      self.x = ev.screenX - self.start;
+      if(self.evX > ev.screenX) // drag left
+          self.x -= (self.domNode.clientWidth > 0 ? self.domNode.clientWidth : 10);  //QUICKFIX: change here if the slider handler width changes    
+      if(self.x < 0) self.x = 0;
+      if(self.x > self.dist) self.x = self.dist;
       self.tempdp = parseInt(self.domNode.style.left);
-      Event.observe(document, 'mouseup', self.mouseUpHandler);
       Event.observe(document, 'mousemove', self.mouseMoveHandler);
+      Event.observe(document, 'mouseup', self.mouseUpHandler); 
     }
   },
   makeMouseMoveHandler: function(self) {
@@ -1556,7 +1561,7 @@ xwkSlider.prototype = {
         self.dp = self.p * self.step; // percent
         if(self.dp < 0) self.dp = 0;
         if(self.dp > self.maxVal) self.dp = self.maxVal;
-        self.updHandler(self.slideNo, self.dp, self.tempdp);
+        self.updHandler(self.slideNo, self.dp);
         Event.stop(ev);
       }
     }
@@ -1573,15 +1578,16 @@ xwkSlider.prototype = {
           if(self.dp < 0) self.dp = 0;
           if(self.dp > self.maxVal) self.dp = self.maxVal;
           self.domNode.style.left = self.dp + "%";
-          if(self.updCol) self.updCol.style.width = self.dp + "%";         
-          self.updHandler(self.slideNo, self.dp, self.tempdp);       
-          var url = self.url;
-          if(url.indexOf("?taskcompletion") > 0) 
-            url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
-          url += "?taskcompletion=" + self.dp + "%";
-          var pivot = self;
-          self.loading.style.display = "block";
-          new Ajax.Request(url, {
+          if(self.updCol) self.updCol.style.width = self.dp + "%";
+          if(self.dp != self.tempdp) {
+            self.updHandler(self.slideNo, self.dp);       
+            var url = self.url;
+            if(url.indexOf("?taskcompletion") > 0) 
+              url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
+            url += "?taskcompletion=" + self.dp + "%";
+            var pivot = self;
+            self.loading.style.display = "block";
+            new Ajax.Request(url, {
               method: 'get',
               onSuccess: function(transport) {
                 pivot.loading.style.display = "none";
@@ -1590,9 +1596,10 @@ xwkSlider.prototype = {
               onFailure: function(transport) {
                 pivot.domNode.style.left = pivot.tempdp + "%";
                 if(pivot.updCol) pivot.updCol.style.width = pivot.tempdp + "%";
-                pivot.updHandler(pivot.slideNo, pivot.tempdp, -1);
+                pivot.updHandler(pivot.slideNo, pivot.tempdp);
               }
-          });
+           });
+         }
       Event.stopObserving(document, 'mouseup', self.mouseUpHandler);
       Event.stopObserving(document, 'mousemove', self.mouseMoveHandler);
      }
@@ -1601,46 +1608,30 @@ xwkSlider.prototype = {
   }
 }
 
-function updTaskCompl(no, per, oldper) 
+function updTaskCompl(no, per) 
 {
   var id1 =  id2 = id3 = id4 = "";
-  if(no == 0)
-  {
+  if(no == 0)  {
     id1 = 'task_completed_value';
     id2 = 'plogheaderleft';
     id3 = 'plogtype';
     id4 = 'plogheaderimg';
   }
- else
- {
+ else  {
    id1 = 'task_completed_value_' + no;
    id2 = 'plogheaderleft_' + no;
    id3 = 'plogtype_' + no;
    id4 = 'plogheaderimg_' + no;
  }
-  if(per != oldper) {
-    if($(id1)) $(id1).innerHTML = per + "%";
-    if(per == 100) {
+ if($(id1)) $(id1).innerHTML = per + "%";
+ if(per == 100) {
       if($(id2)) $(id2).innerHTML = taskcomplete;
       if($(id3)) $(id3).innerHTML = taskcomplete;
       if($(id4)) $(id4).src = taskcompleteimg;
-    }
-    else if(oldper == 100) {
+ }
+ else {
       if($(id2)) $(id2).innerHTML = task;
       if($(id3)) $(id3).innerHTML = task;
       if($(id4)) $(id4).src = taskimg;
-    }
-    else if(oldper == -1) {
-      if(per == 100) {
-        if($(id2)) $(id2).innerHTML = taskcomplete;
-        if($(id3)) $(id3).innerHTML = taskcomplete;
-        if($(id4)) $(id4).src = taskcompleteimg;
-      }
-      else {
-        if($(id2)) $(id2).innerHTML = task;
-        if($(id3)) $(id3).innerHTML = task;
-        if($(id4)) $(id4).src = taskimg;
-      }
-    }
-  }
+ }
 }
