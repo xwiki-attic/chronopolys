@@ -106,6 +106,11 @@ $obj.set('taskcompletion', $request.taskcompletion)
 &lt;/ul&gt;
 &lt;div style="clear:both;"&gt;&lt;/div&gt;
 #roundedbottom()
+{pre}
+&lt;script type="text/javascript"&gt;
+var slider = new xwkSlider({domNode:'slider', trackNode:'slider_track', updCol:'task_completed', loading:'tc_loading', url:'$doc.getURL()', updHandler:updTaskCompl} );
+&lt;/script&gt;
+{/pre}
 #end
 #if ($doc.type == "meeting")
 #roundedtop()
@@ -132,13 +137,6 @@ $content
   border-bottom:0px;
 }
 &lt;/style&gt;
-
-{pre}
-&lt;script type="text/javascript"&gt;
-var slider = new xwkSlider({domNode:'slider', trackNode:'slider_track', updCol:'task_completed', loading:'tc_loading', url:'$doc.getURL()', updHandler:updTaskCompl} );
-&lt;/script&gt;
-{/pre}
-
 #else
 ## ----------------------------------------------------------------------------
 ## EDIT
