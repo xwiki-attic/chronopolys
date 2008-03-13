@@ -115,28 +115,30 @@ Event.observe(window, 'load', function() {
   //init axis
   var temp = initul(root);
   var axis = temp.list;
-  var fc = temp.fc;
+  var fc = "ProjectContainer." + currentContainer;
   //init axis, yards and activities (for first selected axis)
   $('sel_axis').innerHTML = "";
   new Insertion.Bottom('sel_axis', axis);
   observeDropDownOptions($('sel_axis'));
-  $('sel_axis_i').value = fc;
-  // init yards
-  inityards(root[fc].childs);
-  $('sel_yard_a').innerHTML = "$msg.get($currentYard.display("name", "view"))";
-  $('sel_yard_i').value = "ProjectContainers." + "$currentActivity.display("parent","view")";
-  //init activity select according to the first selected yard
-  var ys = $('sel_yard_i').value;
-  if(ys) {
-    var c = root[fc].childs[ys].childs; //activities
-    initacts(c);
-    $('sel_act_a').innerHTML = "$msg.get($currentActivity.display("name", "view"))";
-  }
-  // there no yards, so no activities
-  else {
-     togglePairVisib($('sel_act_a'), $('sel_act_span'), false);
-     $('sel_act_span').innerHTML = '$msg.get("noactivities")';
-     togglePairVisib($('sel_save'), $('sel_back'), false);
+  $('sel_axis_i').value = "$msg.get($currentAxis.display("name", "view"))";
+  // init yards;
+  if(root[fc]) {
+    inityards(root[fc].childs);
+    $('sel_yard_a').innerHTML = "$msg.get($currentYard.display("name", "view"))";
+    $('sel_yard_i').value = "ProjectContainers." + "$currentActivity.display("parent","view")";
+    //init activity select according to the first selected yard
+    var ys = $('sel_yard_i').value;
+    if(ys &amp;&amp; root[fc].childs[ys]) {
+      var c = root[fc].childs[ys].childs; //activities
+      initacts(c);
+      $('sel_act_a').innerHTML = "$msg.get($currentActivity.display("name", "view"))";
+      }
+      // there no yards, so no activities
+      else {
+        togglePairVisib($('sel_act_a'), $('sel_act_span'), false);
+        $('sel_act_span').innerHTML = '$msg.get("noactivities")';
+        togglePairVisib($('sel_save'), $('sel_back'), false);
+      }
 }});
 
 
