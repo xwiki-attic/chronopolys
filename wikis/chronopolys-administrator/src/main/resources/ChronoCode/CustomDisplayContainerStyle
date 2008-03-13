@@ -59,10 +59,14 @@ $value
 #else
 #set ($dUid = $object.display("uid", "view"))
 &lt;input type="text" name="ChronoClasses.ProjectContainerClass_0_style" style="background:$value" id="ChronoClasses.ProjectContainerClass_0_style_${dUid}" size="7" disabled="disabled" value="$value" onchange="" /&gt;
+&lt;a id="pick_${dUid}" name="pick_${dUid}" style="cursor:pointer;"&gt;&lt;img src="/xwiki/tiny_mce/themes/wikieditor/images/forecolor.gif" /&gt;&lt;/a&gt;
+{pre}
 &lt;script type="text/javascript"&gt;
-  var cp_${dUid} = new ColorPicker();
+  colorpickers[${dUid}] = new ColorPicker();
+  Event.observe('pick_${dUid}', 'click', function() { colorpickers[${dUid}].select($('ChronoClasses.ProjectContainerClass_0_style_${dUid}'),'pick_${dUid}');
+return false; });
 &lt;/script&gt;
-&lt;a id="pick_${dUid}" name="pick_${dUid}" onclick="cp_${dUid}.select($('ChronoClasses.ProjectContainerClass_0_style_${dUid}'),'pick_${dUid}');return false;" href="#"&gt;&lt;img src="/xwiki/tiny_mce/themes/wikieditor/images/forecolor.gif" /&gt;&lt;/a&gt;
+{/pre}
 #*
 OLD VERSION
 
