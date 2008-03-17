@@ -23,10 +23,9 @@
 #template("stylesheets.vm")
 <meta http-equiv="imagetoolbar" content="no"/>
 <script type="text/javascript" src="$xwiki.getSkinFile("skin.js")"></script>
-<script type="text/javascript" src="$xwiki.getSkinFile("rico/prototype.js")"></script>
-<script type="text/javascript" src="$xwiki.getSkinFile("scriptaculous/effects.js")"></script>
-<script type="text/javascript" src="$xwiki.getSkinFile("rico/rico.js")"></script>
-<script type="text/javascript" src="$xwiki.getSkinFile("rico/xwrico.js")"></script>
+<script type="text/javascript" src="$xwiki.getSkinFile("prototype/prototype.js")"></script>
+<script type="text/javascript" src="$xwiki.getSkinFile("scriptaculous/scriptaculous.js")"></script>
+<script type="text/javascript" src="$xwiki.getSkinFile("accordion/accordion.js")"></script>
 <script type="text/javascript" src="$xwiki.getSkinFile("xwiki.js")"></script>
 <script type="text/javascript" src="$xwiki.getSkinFile("browserdetect.js")"></script>
 ## <script type="text/javascript" src="$xwiki.getSkinFile("scripts/table/tablefilterNsort.js", true)"></script>
@@ -129,7 +128,7 @@ img {
 // ]]>
 </script>
 </head>
-<body onunload="return false; cancelEdit()" onload="prepareCancelEdit(); createColorPicker();" id="body" class="${context.action}body">
+<body onunload="return false; cancelEdit()" onload="prepareCancelEdit();" id="body" class="${context.action}body">
 <div id="xwikimaincontainer">
 <div id="xwikimaincontainerinner">
 #else

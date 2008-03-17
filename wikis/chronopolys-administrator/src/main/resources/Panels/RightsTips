@@ -111,7 +111,7 @@ To open a Wiki for editing by the public:
 * Allow/Deny: Allow
     &lt;/div&gt;
   &lt;/div&gt;
-  &lt;div id="xwikitipsregistered"&gt;
+  &lt;div id="xwikitipsregistered" class="accordion"&gt;
     &lt;div id="xwikitipsregisteredHeader" class="accordionTabTitleBar"&gt;&lt;h6&gt;Authenticate on view/edit&lt;/h6&gt;&lt;/div&gt;
     &lt;div id="xwikitipsregisteredContent" class="accordionTabContentBox"&gt;
 To protect a Wiki or Space by allowing only logged-in users using an account created on your Wiki use:
@@ -136,7 +136,10 @@ To protect a Wiki or Space by disallowing banned users to edit documents use:
 &lt;/div&gt;
 #panelfooter()
 &lt;/div&gt;
-&lt;script type="text/javascript"&gt;new Rico.Accordion( 'xwikirightstips', {panelHeight:'max'} ); togglePanelVisibility((document.getElementById('xwikirightstipspanel')).getElementsByTagName('div').item(0));&lt;/script&gt;</content>
+&lt;script type="text/javascript"&gt;
+var obj = {div:'xwikirightstips',no:0,height:250};
+var acc = createAccordion(obj);
+togglePanelVisibility((document.getElementById('xwikirightstipspanel')).getElementsByTagName('div').item(0));&lt;/script&gt;</content>
 </property>
 <property>
 <description>Extended help on Rights Editor Usage.</description>

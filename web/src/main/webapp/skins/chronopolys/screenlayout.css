@@ -718,7 +718,7 @@ span.pitemseparator{
 }
 /*
 ----------------------------------
-Rico Acordeon
+Scriptaculous Acordeon
 ----------------------------------
 */
 #xwikisyntaxhelp {
@@ -728,6 +728,10 @@ Rico Acordeon
   border: none;
 }
 
+.accordionTabContentBox {
+  overflow: hidden !important;
+}
+
 .accordionTabTitleBar h6{
   margin: 0px;
   padding: 0px 4px;
@@ -735,7 +739,7 @@ Rico Acordeon
 
 #editPanels .accordionTabContentBox{
   border: none;
-  overflow: auto;
+  overflow: auto !important;
 }
 
 #editPanels .accordionTabContentBox table{
@@ -782,6 +786,7 @@ td.label{
 }
 #xwikiclassproperties, #xwikiobjects{
   border: 1px solid #DDD !important;
+  overflow: hidden;
 }
 .center{
   text-align: center;
@@ -971,11 +976,16 @@ div.pagelayoutoptions td{
 }
 
 #xwikieditcontent{
-  border: 1px solid #666;
+  border: 2px solid #3381CC;
   padding: 3px 8px 3px 3px;
   overflow: auto;
 }
-*html #xwikieditcontent{
+
+#xwikieditcontent div{
+  overflow: hidden;
+}
+
+* html #xwikieditcontent{
   padding: 0px 3px 3px 3px;
 }
 

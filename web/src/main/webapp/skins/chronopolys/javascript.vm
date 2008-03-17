@@ -1,7 +1,7 @@
 <script type="text/javascript" src="$xwiki.getSkinFile("skin.js", true)"></script>
-<script type="text/javascript" src="$xwiki.getSkinFile("rico/prototype.js", true)"></script>
-<script type="text/javascript" src="$xwiki.getSkinFile("rico/rico.js", true)"></script>
-<script type="text/javascript" src="$xwiki.getSkinFile("rico/xwrico.js", true)"></script>
+<script type="text/javascript" src="$xwiki.getSkinFile("prototype/prototype.js")"></script>
+<script type="text/javascript" src="$xwiki.getSkinFile("scriptaculous/scriptaculous.js")"></script>
+<script type="text/javascript" src="$xwiki.getSkinFile("accordion/accordion.js")"></script>
 <script type="text/javascript" src="$xwiki.getSkinFile("xwiki.js", true)"></script>
 <script type="text/javascript" src="$xwiki.getSkinFile("browserdetect.js", true)"></script>
 <script type="text/javascript" src="$xwiki.getSkinFile("chwScripts.js", true)"></script>

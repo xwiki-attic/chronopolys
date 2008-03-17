@@ -147,16 +147,17 @@ $xwiki.hashMap
 #end
 window.showLeftColumn = $showLeftPanels;
 window.showRightColumn = $showRightPanels;
+var obj = {div:'panellistaccordion', no:0, height:512};  
+Event.observe(window,'load',createAccordion.bind(this,obj));
 &lt;/script&gt;
-&lt;script type="text/javascript" src="$xwiki.getSkinFile("ajax/panelWizard.js")"&gt; &lt;/script&gt;
+&lt;script type="text/javascript" src="$xwiki.getSkinFile("ajax/panelWizard.js")"&gt;&lt;/script&gt;
 {/pre}
 &lt;div id="allviewpanels"&gt;
 ## start of accordion:
-  &lt;div id="panellistaccordion"&gt;
+  &lt;div id="panellistaccordion" class="accordion"&gt;
   #foreach($category in $categoryList)
-    ## start of accordion tab:
-    &lt;div&gt;
-      &lt;div class="accordionTabTitleBar"&gt;&lt;h6&gt;$category&lt;/h6&gt;&lt;/div&gt;
+      ## start of accordion tab:
+      &lt;div class="accordionTabTitleBar" id="${category}_header"&gt;&lt;h6&gt;$category&lt;/h6&gt;&lt;/div&gt;
       ## start of accordion tab content:
       &lt;div class="accordionTabContentBox"&gt;
       #set($categPanels = $categoryMap.get($category))
