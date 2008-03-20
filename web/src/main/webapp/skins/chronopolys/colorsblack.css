@@ -544,6 +544,7 @@ th{
 .accordionTabContentBox{
   color: #384554 !important;
   border-width: 1px !important;
+  overflow: auto !important;
 }
 .panel .accordionTabContentBox a{
   color: #2E5A87 !important;
