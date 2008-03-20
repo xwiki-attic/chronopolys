@@ -36,8 +36,7 @@
   <span id="breadcrumb_action" onclick="toggleClass($('container_breadcrumb'), 'hidden'); toggleClass($('sel_container_breadcrumb'), 'hidden');" class="sel_edit"> ($msg.get("edit").toLowerCase())</span>
  </div>
  <div id="sel_container_breadcrumb" class="container_breadcrumb hidden">
-  #set($proj = $doc.getObject("ChronoClasses.ProjectClass"))
-  $proj.display("container", "editnopre")
+  #template("headerbreadcrumbs.vm")
  </div>
 #else
  <div class="container_breadcrumb">
