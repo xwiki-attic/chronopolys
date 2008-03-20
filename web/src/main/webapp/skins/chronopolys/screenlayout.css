@@ -976,7 +976,7 @@ div.pagelayoutoptions td{
 }
 
 #xwikieditcontent{
-  border: 2px solid #3381CC;
+  border: 1px solid #666;
   padding: 3px 8px 3px 3px;
   overflow: auto;
 }
