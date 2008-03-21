@@ -18,6 +18,7 @@
     <platform.tool.configuration.version>1.8</platform.tool.configuration.version>
     <platform.tool.packager.version>1.8</platform.tool.packager.version>
     <platform.tool.jetty.version>1.8</platform.tool.jetty.version>
+    <platform.tool.test.version>1.8</platform.tool.test.version>
     <platform.core.version>1.2.2</platform.core.version>
     <platform.web.version>1.2.2</platform.web.version>
     <platform.panels.version>1.2.2</platform.panels.version>
@@ -56,6 +57,7 @@
     <module>wikis</module>
     <module>database</module>
     <module>distribution</module>
+    <module>distribution-test</module>
     <module>installers</module>
   </modules>
   <scm>
