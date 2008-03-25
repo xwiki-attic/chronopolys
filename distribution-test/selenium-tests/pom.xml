@@ -26,10 +26,10 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.avane.xwiki.products</groupId>
-    <artifactId>xwiki-product-chronopolys-test</artifactId>
+    <artifactId>distribution-test</artifactId>
     <version>1.1-SNAPSHOT</version>
   </parent>
-  <artifactId>xwiki-product-chronopolys-test-selenium</artifactId>
+  <artifactId>selenium-tests</artifactId>
   <name>XWiki Products - Chronopolys - Functional Selenium Tests</name>
   <packaging>pom</packaging>
   <description>XWiki Products - Chronopolys - Functional Selenium Tests</description>
