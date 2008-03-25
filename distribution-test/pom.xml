@@ -29,7 +29,7 @@
     <artifactId>xwiki-product-chronopolys-parent</artifactId>
     <version>1.1-SNAPSHOT</version>
   </parent>
-  <artifactId>distribution-test</artifactId>
+  <artifactId>xwiki-product-chronopolys-test</artifactId>
   <name>XWiki Products - Chronopolys - Functional Tests</name>
   <packaging>pom</packaging>
   <description>XWiki Products - Chronopolys - Functional Tests</description>
