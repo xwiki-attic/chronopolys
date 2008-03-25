@@ -27,6 +27,29 @@
     <platform.plugin.watchlist.version>1.1</platform.plugin.watchlist.version>    
     <subethamail.smtp.version>1.2</subethamail.smtp.version>
   </properties>
+  <modules>    
+    <module>plugins</module>
+    <module>web</module>    
+    <module>wikis</module>
+    <module>database</module>
+    <module>distribution</module>
+  </modules>
+  <profiles>
+    <profile>
+      <id>ci</id>
+      <activation>
+        <!-- This property is automatically defined by the Maven release plugin when executing
+             a release. Thus this profile will be automatically enabled when releasing -->
+        <property>
+          <name>performRelease</name>
+        </property>
+      </activation>
+      <modules>
+        <module>installers</module>
+        <module>distribution-test</module>
+      </modules>
+    </profile>
+  </profiles>
   <build>
     <plugins>
       <plugin>
@@ -51,15 +74,6 @@
       </extension>
     </extensions>
   </build>
-  <modules>    
-    <module>plugins</module>
-    <module>web</module>    
-    <module>wikis</module>
-    <module>database</module>
-    <module>distribution</module>
-    <module>distribution-test</module>
-    <module>installers</module>
-  </modules>
   <scm>
     <connection>scm:svn:http://svn.xwiki.org/svnroot/chronopolys/trunk</connection>
     <developerConnection>scm:svn:https://svn.xwiki.org/svnroot/chronopolys/trunk</developerConnection>
