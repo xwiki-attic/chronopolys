@@ -155,27 +155,31 @@ public class ProjectManager
         String space = getNewProjectUid(context);
 
         context.getWiki()
-            .copyDocument(TEMPLATE_PROJECT, space + "." + Project.PROJECT_HOMEDOC, context);
-        context.getWiki().getDocument(space + "." + Project.PROJECT_HOMEDOC, context)
-            .setCreationDate(context.getWiki().getCurrentDate());
+            .copyDocument(TEMPLATE_PROJECT, space + "." + Project.PROJECT_HOMEDOC, null, null, null,
+                true, true, true, context);
         context.getWiki()
-            .copyDocument(TEMPLATE_PROJECT_LOG, space + "." + Project.PROJECT_LOGDOC, context);
+            .copyDocument(TEMPLATE_PROJECT_LOG, space + "." + Project.PROJECT_LOGDOC, null, null,
+                null, true, true, true, context);
         context.getWiki().copyDocument(TEMPLATE_PROJECT_DOCUMENTS,
-            space + "." + Project.PROJECT_DOCUMENTSDOC, context);
+            space + "." + Project.PROJECT_DOCUMENTSDOC, null, null, null, true, true, true,
+            context);
         context.getWiki().copyDocument(TEMPLATE_PROJECT_MEMBERS,
-            space + "." + Project.PROJECT_MEMBERSDOC, context);
+            space + "." + Project.PROJECT_MEMBERSDOC, null, null, null, true, true, true, context);
         context.getWiki().copyDocument(TEMPLATE_PROJECT_GUESTS,
-            space + "." + Project.PROJECT_GUESTSDOC, context);
+            space + "." + Project.PROJECT_GUESTSDOC, null, null, null, true, true, true, context);
         context.getWiki().copyDocument(TEMPLATE_PROJECT_LEADERS,
-            space + "." + Project.PROJECT_LEADERSDOC, context);
+            space + "." + Project.PROJECT_LEADERSDOC, null, null, null, true, true, true, context);
         context.getWiki().copyDocument(TEMPLATE_PROJECT_PHASES,
-            space + "." + Project.PROJECT_PHASESDOC, context);
+            space + "." + Project.PROJECT_PHASESDOC, null, null, null, true, true, true, context);
         context.getWiki()
-            .copyDocument(TEMPLATE_PROJECT_WIKI, space + "." + Project.PROJECT_WIKIDOC, context);
+            .copyDocument(TEMPLATE_PROJECT_WIKI, space + "." + Project.PROJECT_WIKIDOC, null, null,
+                null, true, true, true, context);
         context.getWiki()
-            .copyDocument(TEMPLATE_PROJECT_NOTE, space + "." + Project.PROJECT_NOTEDOC, context);
+            .copyDocument(TEMPLATE_PROJECT_NOTE, space + "." + Project.PROJECT_NOTEDOC, null, null,
+                null, true, true, true, context);
         context.getWiki()
-            .copyDocument(TEMPLATE_PROJECT_PREFS, space + "." + Project.PROJECT_PREFSDOC, context);
+            .copyDocument(TEMPLATE_PROJECT_PREFS, space + "." + Project.PROJECT_PREFSDOC, null,
+                null, null, true, true, true, context);
 
         XWikiDocument homeDoc =
             context.getWiki().getDocument(space, Project.PROJECT_HOMEDOC, context);
