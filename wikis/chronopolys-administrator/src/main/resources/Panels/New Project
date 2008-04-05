@@ -99,11 +99,9 @@
 <property>
 <content>&lt;div id="panelprojectcreate"&gt;
 #panelheadercollapsed($msg.get("createproject"))
-
 &lt;form method="post" action="$xwiki.getURL("$doc.fullName", "view", "xpage=create")" onsubmit="cancelCancelEdit()"&gt;
   &lt;div style="text-align:center;"&gt;
     &lt;input type="hidden" name="tocreate" value="project"/&gt;
-
     &lt;input type="text" name="name" value="$msg.get("projectname")"
 onfocus="if(this.value=='$msg.get("projectname")') this.value=''" onblur="if(this.value=='') this.value='$msg.get("projectname")'"/&gt;        
     &lt;span class="buttonwrapper"&gt;&lt;input type="submit" value="$msg.get("createprojectbutton")" class="button"/&gt;&lt;/span&gt;
