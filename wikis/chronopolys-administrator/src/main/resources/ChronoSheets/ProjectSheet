@@ -60,7 +60,7 @@
     #roundedtitletop($msg.get("deleteproject"))
     &lt;div&gt;
     &lt;span class="buttonwrapper"&gt;&lt;a href="$doc.getURL("view")"&gt;$msg.get("cancel")&lt;/a&gt;&lt;/span&gt;
-    &lt;span class="buttonwrapper"&gt;&lt;nobr&gt;&lt;a href="" onclick="if (confirm('$msg.get("confirmdeleteproject2")')==false) { return false; } else { location='$doc.getURL("view", "do=confirmdelete")'; return false; }"&gt;$msg.get("confirmdeleteproject")&lt;/a&gt;&lt;/nobr&gt;&lt;/span&gt;
+    &lt;span class="buttonwrapper"&gt;&lt;a href="" onclick="if (confirm('$msg.get("confirmdeleteproject2")')==false) { return false; } else { location='$doc.getURL("view", "do=confirmdelete")'; return false; }"&gt;$msg.get("confirmdeleteproject")&lt;/a&gt;&lt;/span&gt;
     &lt;div class="spacer"&gt;&lt;/div&gt;
     &lt;/div&gt;
     #roundedbottom()
