@@ -63,7 +63,7 @@
 ## ----------------------------------------------------------------------------
 #if($request.taskcompletion)
 $obj.set('taskcompletion', $request.taskcompletion)
-#set($discard = $doc.save)
+#set($discard = $doc.save())
 #end
 ## ----------------------------------------------------------------------------
 ## VIEW
