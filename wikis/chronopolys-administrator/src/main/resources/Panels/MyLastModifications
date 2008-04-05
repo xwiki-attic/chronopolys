@@ -97,22 +97,17 @@
 <category>Information</category>
 </property>
 <property>
-<content>&lt;div id="panellastmodifications"&gt;
-#set ($rssicon = $xwiki.getSkinFile("icons/black-rss-mini.png"))
-#set ($rssurl = $xwiki.getURL('ChronoRSS.LastModifications', 'view', 'xpage=rdf'))
-#set ($rsslink = "&lt;a href='${rssurl}&amp;${context.localUser}' target='_blank'&gt;&lt;img src='${rssicon}' style='height:14px;width:16px;' /&gt;&lt;/a&gt;")
-&lt;div class="panel expanded"&gt;
-
-&lt;div class="rsslink" style="float:left;margin-left:4px;_margin-left:3px;margin-right:0px;margin-top:5px;"&gt;
-$rsslink&lt;/div&gt;
-&lt;h5 class="xwikipaneltitle" onclick="togglePanelVisibility(this.parentNode);" style="background-image:none;padding-left:0px!important;padding-right:2px!important;"&gt; ${msg.get('5lastmodifications')}&lt;/h5&gt;
-&lt;div class="xwikipanelcontents"&gt;
-#includeMacros("ChronoCode.UserMacros")
-#displayMyLastModifications("#E6E6E6")
-#panelfooter()
+<content>#set($rssurl = "$xwiki.getURL('ChronoRSS.LastModifications', 'view', 'xpage=rdf')&amp;${context.localUser}")
+## display panel
+&lt;div id="panellastmodifications"&gt;
+#notifspanel("modifications" $msg.get('5lastmodifications') $rssurl)
 &lt;/div&gt;
-&lt;/div&gt;</content>
-
+#set($notifstotal = 0)
+#getNotifs("modifications" 0 "past" false)
+&lt;script type="text/javascript"&gt;
+  new NotifsPanel({type:"modifications",url:"$xwiki.getURL('ChronoCode.GetNotifs')?xpage=plain",
+id:"modifications",limit:"$notifstotal"});
+&lt;/script&gt;</content>
 </property>
 <property>
 <description></description>

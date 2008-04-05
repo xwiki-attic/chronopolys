@@ -97,26 +97,17 @@
 <category>Information</category>
 </property>
 <property>
-<content>&lt;div id="panelmytasks"&gt;
-#set($nb = $xwiki.chronopolys.getMyTasksNb())
-#if ($nb &gt; 0)
-  #if ($nb &gt; 5)
-    #panelheader("${msg.get('mytasks')} (5 $msg.get('onnb') ${nb})")
-  #else
-    #panelheader("${msg.get('mytasks')} (${nb})")
-  #end
-#else
-  #panelheadercollapsed("${msg.get('mytasks')} (${nb})")
-#end
-#includeMacros("ChronoCode.UserMacros")
-#displayMyTasks("#E6E6E6")
-#if ($nb &gt; 5)
-&lt;div style="text-align:left;width:100%;"&gt;
-[$msg.get("seealltasks")&gt;$context.user.replaceAll("xwiki:", "")]
+<content>#set($rssurl = "#")
+## display panel
+&lt;div id="panelmytasks"&gt;
+#notifspanel("tasks" $msg.get('mytasks') $rssurl)
 &lt;/div&gt;
-#end
-#panelfooter()
-&lt;/div&gt;</content>
+#set($notifstotal = 0)
+#getNotifs("tasks" 0 "all" false)
+&lt;script type="text/javascript"&gt;
+  new NotifsPanel({type:"tasks",url:"$xwiki.getURL('ChronoCode.GetNotifs')?xpage=plain",
+id:"tasks",limit:"$notifstotal"});
+&lt;/script&gt;</content>
 </property>
 <property>
 <description>Display user's chronopolys tasks</description>

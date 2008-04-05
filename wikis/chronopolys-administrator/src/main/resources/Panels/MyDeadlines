@@ -97,20 +97,17 @@
 <category>Information</category>
 </property>
 <property>
-<content>&lt;div id="panelnextdeadlines"&gt;
-#set ($rssicon = $xwiki.getSkinFile("icons/black-rss-mini.png"))
-#set ($rssurl = $xwiki.getURL('ChronoRSS.NextDeadlines', 'view', 'xpage=rdf'))
-#set ($rsslink = "&lt;a href='${rssurl}&amp;${context.localUser}' target='_blank'&gt;&lt;img src='${rssicon}' style='height:14px;width:16px;' /&gt;&lt;/a&gt;")
-&lt;div class="panel expanded"&gt;
-
-&lt;div style="float:left;margin-left:4px;_margin-left:3px;margin-top:5px;"&gt;
-$rsslink&lt;/div&gt;
-&lt;h5 class="xwikipaneltitle" onclick="togglePanelVisibility(this.parentNode);" style="background-image:none;padding-left:0px!important;padding-right:4px;"&gt;${msg.get('5nextdeadlines')}&lt;/h5&gt;
-&lt;div class="xwikipanelcontents"&gt;
-#includeMacros("ChronoCode.UserMacros")
-#displayMyDeadlines("#E6E6E6")
-#panelfooter()
-&lt;/div&gt;</content>
+<content>#set($rssurl = "$xwiki.getURL('ChronoRSS.NextDeadlines', 'view', 'xpage=rdf')&amp;${context.localUser}")
+## display panel
+&lt;div id="panelnextdeadlines"&gt;
+#notifspanel("deadlines" $msg.get('5nextdeadlines') $rssurl)
+&lt;/div&gt;
+#set($notifstotal = 0)
+#getNotifs("deadlines" 0 "all" false)
+&lt;script type="text/javascript"&gt;
+  new NotifsPanel({type:"deadlines",url:"$xwiki.getURL('ChronoCode.GetNotifs')?xpage=plain",
+id:"deadlines",limit:"$notifstotal"});
+&lt;/script&gt;</content>
 </property>
 <property>
 <description></description>

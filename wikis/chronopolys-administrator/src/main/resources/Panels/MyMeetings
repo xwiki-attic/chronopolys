@@ -97,26 +97,17 @@
 <category>Information</category>
 </property>
 <property>
-<content>&lt;div id="panelmymeetings"&gt;
-#set($nb = $xwiki.chronopolys.getMyMeetingsNb())
-#if ($nb != "0")
-  #if ($xwiki.parseInt($nb) &gt; 5)
-    #panelheader("${msg.get('mymeetings')} (5 $msg.get('onnb') ${nb})")
-  #else
-    #panelheader("${msg.get('mymeetings')} (${nb})")
-  #end
-#else
-  #panelheadercollapsed("${msg.get('mymeetings')} (${nb})")
-#end
-#includeMacros("ChronoCode.UserMacros")
-#displayMyMeetings("#E6E6E6")
-#if ($xwiki.parseInt($nb) &gt; 5)
-&lt;div style="text-align:left;width:100%;"&gt;
-[$msg.get("seeallmeetings")&gt;$context.user.replaceAll("xwiki:", "")]
+<content>#set($rssurl = "#")
+## display panel
+&lt;div id="panelmymeetings"&gt;
+#notifspanel("meetings" $msg.get('mymeetings') $rssurl)
 &lt;/div&gt;
-#end
-#panelfooter()
-&lt;/div&gt;</content>
+#set($notifstotal = 0)
+#getNotifs("meetings" 0 "future" false)
+&lt;script type="text/javascript"&gt;
+  new NotifsPanel({type:"meetings",url:"$xwiki.getURL('ChronoCode.GetNotifs')?xpage=plain",
+id:"meetings",limit:"$notifstotal"});
+&lt;/script&gt;</content>
 </property>
 <property>
 <description>Display user's chronopolys meetings</description>
