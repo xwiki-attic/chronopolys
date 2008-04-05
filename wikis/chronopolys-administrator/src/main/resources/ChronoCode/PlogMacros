@@ -100,7 +100,15 @@
             #set($deployarticle = 'open')
             #set($deployactionarticle = 'closed')
           #end
-          &lt;span id="article_deploy_$velocityCount" class="article_deploy_${deployarticle}" onclick="javascript:toggleClass($('article_content_$velocityCount'), 'hidden');switchClass('article_deploy_$velocityCount');updSlider('$velocityCount');" title="$msg.get('opencloseplog')" &gt;&lt;/span&gt;
+          &lt;span id="article_deploy_$velocityCount" class="article_deploy_${deployarticle}"  title="$msg.get('opencloseplog')" &gt;&lt;/span&gt;
+          &lt;script type="text/javascript"&gt;
+           $('article_deploy_${velocityCount}').observe('click', function()
+           {
+             toggleClass($('article_content_$velocityCount'), 'hidden');
+             switchClass('article_deploy_$velocityCount');
+             #if($bentrydoc.type == "task") updSlider('$velocityCount'); #end
+            });
+          &lt;/script&gt;
           &lt;h1 class="article_title"&gt;$title&lt;/h1&gt;
           &lt;div id="article_content_$velocityCount" #if($deployarticle == 'closed') class="hidden" #end &gt;
             &lt;div class="article_content"&gt;
@@ -161,7 +169,7 @@
    {pre}
    &lt;script type="text/javascript"&gt;
     window.dist = window.start = 0;
-    function updSlider(val) 
+    updSlider = function(val) 
     {
       var tr = 'slider_track_' + val;
       window.dist = $(tr).clientWidth;
