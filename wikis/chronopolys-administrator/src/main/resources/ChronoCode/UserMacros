@@ -56,7 +56,6 @@
 </object>
 <content>#macro(chronopanelheader $title)
   &lt;div class="chronopanel" id="${title}_panel"&gt;
-
     &lt;div class="chronopanel_header" style=""&gt;
       &lt;div style="float:left;"&gt;$msg.get($title)&lt;/div&gt;
     &lt;/div&gt;
@@ -64,42 +63,7 @@
 #end
 #macro(chronopanelfooter)
     &lt;/div&gt;
-
   &lt;/div&gt;
-#end
-#macro(displayMyDeadlines $border-color)
-&lt;table width="162px"&gt;
-  #foreach($item in $xwiki.chronopolys.getMyNextDeadlines(5))
-    #set ($cdate = $xwiki.formatDate($item.getDate(), "dd/MM/yyyy"))
-    #set ($pdoc = $xwiki.getDocument("${xwiki.getDocument($item.getPage()).getSpace()}.WebHome"))
-    &lt;tr&gt;
-      &lt;td class="leftpanelcolumn" style="background-color:$xwiki.chronopolys.getProjectContainerStyle($pdoc.display("container", "view"));border-color:$border-color;"&gt;
-      &lt;/td&gt;
-      &lt;td style="padding-left:3px;"&gt;
-
-        &lt;a href="$xwiki.getURL($item.getPage())" title="$msg.get("deadline$item.getType()") $cdate"&gt;$item.getName()&lt;/a&gt;
-      &lt;/td&gt;
-    &lt;/tr&gt;
-  #end
-&lt;/table&gt;
-#end
-#macro(displayMyLastModifications $border-color)
-&lt;table width="162px"&gt;
-
-  #foreach($item in $xwiki.chronopolys.getMyLastModifications(5))
-    #set ($cdoc = $xwiki.getDocument($item.getPage()))
-    #set ($cdate = $xwiki.formatDate($item.getDate(), "dd/MM/yyyy, HH:mm"))
-    #set ($pdoc = $xwiki.getDocument("${cdoc.space}.WebHome"))
-    &lt;tr&gt;
-      &lt;td class="leftpanelcolumn" style="background-color:$xwiki.chronopolys.getProjectContainerStyle($pdoc.display("container", "view"));border-color:$border-color;"&gt;
-      &lt;/td&gt;
-      &lt;td style="padding-left:3px;"&gt;
-        &lt;a href="$xwiki.getURL($cdoc.fullName)" title="$cdate"&gt;&lt;span style="font-weight:bold;"&gt;$msg.get($item.getName())&lt;/span&gt; ($pdoc.display("name", "view"))&lt;/a&gt;
-
-      &lt;/td&gt;
-    &lt;/tr&gt;
-  #end
-&lt;/table&gt;
 #end
 #macro(displayMyProjects $border-color $nb)
   #if ($nb == 0)
@@ -136,11 +100,11 @@
           [$projname&gt;${proj}.WebHome]
         &lt;/td&gt;
         &lt;/tr&gt;
-
       #end
     &lt;/table&gt;
   #end
 #end
+
 #macro(displayMyTasks $border-color $nb)
   #if ($nb == 0)
     #set ($tasks = $xwiki.chronopolys.getMyTasks($xwiki.chronopolys.getMyTasksNb(), 0))
@@ -157,7 +121,6 @@
         #set ($pobj=$xwiki.getDocument("${tdoc.web}.WebHome").getObject("ChronoClasses.ProjectClass"))
         &lt;tr&gt;
         &lt;td class="leftpanelcolumn" style="padding:0;border-color:$border-color;"&gt;
-
           #set ($color = $xwiki.chronopolys.getProjectContainerStyle($pobj.display("container", "view")))
           &lt;script type="text/javascript"&gt;
             todayDiff("$xwiki.chronopolys.getListTool().get($tobj.display("taskduedate", "view").split(" "), 0)", "$color");
@@ -165,7 +128,6 @@
         &lt;/td&gt;
         &lt;td style="padding-left:3px;"&gt;
           &lt;a href="$xwiki.getURL($task)" title="$tobj.display("taskcompletion", 'view')"&gt;$tdoc.displayTitle&lt;/a&gt;
-
         &lt;/td&gt;
         &lt;/tr&gt;
       #end
@@ -187,7 +149,6 @@
         #set ($mobj=$mdoc.getObject("ChronoClasses.ProjectArticleClass"))
         #set ($pobj=$xwiki.getDocument("${mdoc.web}.WebHome").getObject("ChronoClasses.ProjectClass"))
         &lt;tr&gt;
-
         &lt;td class="leftpanelcolumn" style="padding:0;border-color:$border-color;"&gt;
           #set ($color = $xwiki.chronopolys.getProjectContainerStyle($pobj.display("container", "view")))
           &lt;script type="text/javascript"&gt;
@@ -195,7 +156,6 @@
           &lt;/script&gt;
         &lt;/td&gt;
         &lt;td style="padding-left:3px;"&gt;
-
           &lt;a href="$xwiki.getURL($meeting)"&gt;$mdoc.displayTitle&lt;/a&gt;
         &lt;/td&gt;
         &lt;/tr&gt;
