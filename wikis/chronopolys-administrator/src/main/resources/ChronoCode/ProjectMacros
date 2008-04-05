@@ -160,7 +160,7 @@
 #end
 &lt;/table&gt;
 #end
-#macro(displayProjectPhaseEdition $phase)
+#macro( displayProjectPhaseEdition $phase)
 #set ($phasesDoc = $xwiki.getDocument("${doc.web}.ProjectPhases"))
 #set ($trid = "phaseedition_$phase.getNumber()")
 &lt;tbody id="$trid"&gt;
@@ -171,10 +171,11 @@
       &lt;tr&gt;
         &lt;td colspan="2"&gt;
           &lt;div style="float:left;"&gt;
-            &lt;select size="1" name="ChronoClasses.ProjectPhaseClass_${phase.getNumber()}_type" id="ChronoClasses.ProjectPhaseClass_${phase.getNumber()}_type" #if($phase.getProperty("type").getValue()==1)disabled="disabled"#end&gt;
+            &lt;select size="1" name="ChronoClasses.ProjectPhaseClass_${phase.getNumber()}_stype" id="ChronoClasses.ProjectPhaseClass_${phase.getNumber()}_stype" #if($phase.getProperty("type").getValue()==1)disabled="disabled"#end&gt;
               &lt;option value="0" #if($phase.getProperty("type").getValue()==0)selected="selected"#end&gt;$msg.get("ChronoClasses.ProjectPhaseClass_type_0")&lt;/option&gt;
               &lt;option value="1" #if($phase.getProperty("type").getValue()==1)selected="selected"#end&gt;$msg.get("ChronoClasses.ProjectPhaseClass_type_1")&lt;/option&gt;
             &lt;/select&gt;
+            &lt;input type="hidden" id="ChronoClasses.ProjectPhaseClass_${phase.getNumber()}_type" name="ChronoClasses.ProjectPhaseClass_${phase.getNumber()}_type" value="0" /&gt;
             ## $phase.display("type", "edit")
           &lt;/div&gt;
           $phase.display("iscurrentphase", "hidden")
@@ -196,7 +197,7 @@
             /* add the phase id to the phases list */
             registerPhase(nb);
             /* add the onchange handler on phase's type */
-            $('ChronoClasses.ProjectPhaseClass_' + nb + '_type').onchange = function() { phaseTypeOnChange("$phase.getNumber()") };
+            $('ChronoClasses.ProjectPhaseClass_' + nb + '_stype').onchange = function() { phaseTypeOnChange("$phase.getNumber()") };
           &lt;/script&gt;
           {/pre}
         &lt;/td&gt;
