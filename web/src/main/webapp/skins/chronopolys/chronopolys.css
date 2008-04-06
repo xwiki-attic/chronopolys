@@ -190,10 +190,38 @@ a.modifylink {
     height: 25px;
 }
 
-.collapsed .xwikipaneltitle {
+.expanded .notifspanelheader {
+  background: transparent url( panelheader_expanded1.gif ) top left no-repeat;
+  height: 25px;
+  color: #D61385;
+}
+
+.collapsed .xwikipaneltitle, .collapsed .notifspanelheader {
     background: transparent;
     color: #D61385;
     height: 25px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.collapsed .notifspanelheader {
+   background: transparent url( panelheader_collapsed1.gif ) top left no-repeat;
+} 
+
+.notifspaneltitle {
+  color: #D61385;
+  padding: 0px 5px;
+  margin: 0px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.notifspanelcontents {
+  font-size: 11px;
+}
+
+.collapsed .notifspanelcontents {
+  display: none;
 }
 
 #globalsearch input {
@@ -206,7 +234,7 @@ a.modifylink {
     text-align: center;
 }
 
-panel .accordionTabTitleBar {
+.panel .accordionTabTitleBar {
     background-color: #E6E6E6 !important;
 }
 
@@ -225,12 +253,79 @@ panel .accordionTabTitleBar {
     background-color: #F1F1F1 !important;
     border: 1px solid #F1F1F1 !important;
 }
-
 .xwikipanelcontents {
     background: transparent url( panel_bottom.gif ) left bottom no-repeat;
     line-height: 13px;
 }
-
+.notifsactiontop, .notifsactionbottom {
+  background-color: #b8b8b8;
+  height: 19px;
+  line-height: 19px;
+  font-weight: bold;
+  font-size: 10px;
+  padding: 0px 6px 0px 6px;
+}
+.notifsactionbottom {
+  background: transparent url( panel_bottom1.gif ) left bottom no-repeat;
+  line-height: 19px;
+}
+.notifscontents {
+  background: #E6E6E6;
+  padding: 0px 4px 4px 4px; 
+}
+.notifsicon {
+  float:left;
+  margin-left:4px;
+  margin-right:3px;
+  margin-top:4px;
+  width: 16px;
+  height: 16px;
+}
+#notifsdeadlines {
+  background: transparent url(WidgetDeadlines.png);
+  _background-image:url();
+  _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/xwiki/skins/chronopolys/WidgetDeadlines.png', sizingMethod='image');
+}
+#notifsmodifications {
+  background: transparent url(WidgetModifications.png);
+   _background-image:url();
+  _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/xwiki/skins/chronopolys/WidgetModifications.png', sizingMethod='image');
+}
+.notifsdate {
+  padding: 2px 0px 2px 0px;
+  font-weight:bold;
+}
+.next5, .prev5, .seeall, .notifsrss {
+  cursor: pointer;
+}
+.displaynr, .next5, .prev5, .notifsrss {
+  float: left;
+}
+.next5, .prev5, .notifsrss {
+  margin-left: 5px;
+}
+.seeall {
+  float: right;
+}
+.notifsrss {
+  background: transparent url(icons/black-rss-mini.png);
+  width:16px;
+  height:14px;
+  margin-top:2px;
+}
+.displaynr {
+  font-style: italic;
+}
+.nonotifs {
+  font-weight:bold;
+  margin:0px auto;
+  padding:0px;
+}
+.leftpanelcolumnimg {
+  width:24px;
+  height:24px;
+  background-repeat:no-repeat;
+}
 /*
 ** VIEW
 */

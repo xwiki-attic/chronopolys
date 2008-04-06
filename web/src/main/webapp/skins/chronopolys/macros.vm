@@ -563,3 +563,269 @@ $doc.display("content", $obj)
   #end
 #end
 #end
+  
+##-----------------------------------------##
+## macro to display a notification panel 
+## (deadlines, modifcations, tasks, meetings) 
+##----------------------------------------##
+#macro(notifspanel $type $title $rssurl)
+<div class="panel expanded">
+ <div class="notifspanelheader" onclick="togglePanelVisibility(this.parentNode);"><div class="notifsicon" id="notifs${type}">&nbsp;</div><h5 class="notifspaneltitle">$title</h5></div>
+ <div class="notifspanelcontents">
+  <div class="notifsactiontop">
+   <div id="displaynr_${type}" class="displaynr hidden"><span id="nr_${type}"></span>&nbsp;$msg.get("last")</div>
+   <div id="seeall_${type}" class="seeall hidden">$msg.get("seeall")</div>
+   <div id="nonotifs_${type}" class="nonotifs hidden">
+   #if($type == "modifications") $msg.get("nomodifs") 
+    #elseif($type == "deadlines") $msg.get("nodeadlines")
+    #elseif($type == "tasks") $msg.get("notasks")
+    #elseif($type == "meetings") $msg.get("nomeetings") 
+   #end</div>
+  </div> ## actiontop
+  <div id="notifscontents_${type}" class="notifscontents hidden">
+    <table width="162px" id="$type">
+       #set($notifsnr = 0)
+       #if($type == "modifications")
+         #getNotifs($type 5 "past" true) ## true means also display the notifs
+       #else
+         #getNotifs($type 5 "all" true)  
+       #end
+       <tr class="hidden"><td id="sofar_${type}">$notifsnr</td></tr>
+    </table>
+  </div>## notifscontents
+  <div class="notifsactionbottom">
+   <div id="next5_${type}" class="next5 hidden">$msg.get("next5")</div>
+   <div id="prev5_${type}" class="prev5 hidden">$msg.get("prev5")</div>
+   #if($type == "deadlines") <a id="notifsrss_${type}" class="notifsrss hidden" href="$rssurl" target='_blank'></a> #end
+  </div> ## actionbottom
+ </div> ## notifspanelcontents
+</div> ## panel expanded
+#end
+ 
+##------------------------------##
+## initialize a calendar object 
+## based on a date object 
+##------------------------------##
+#macro(initCalByDate $dateobj)
+    #set($year = $dateobj.getYear() + 1900)
+    #set($month = $dateobj.getMonth() + 1)
+    #set($day = $dateobj.getDate())
+#end
+ 
+##------------------------------##
+## initialize a calendar object 
+## based on a string "dd/mm/yyyy"
+##------------------------------##
+#macro(initCalByStr $str)
+  #set($tmp = $str.split("/"))
+  #foreach($i in $tmp)
+    #if($velocityCount == 1)
+      #set($day = $xwiki.parseInt($i))
+    #elseif($velocityCount == 2)
+      #set($month = $xwiki.parseInt($i))
+    #else
+      #set($year = $xwiki.parseInt($i))
+    #end
+  #end
+#end
+ 
+##--------------------------------##
+## checks if a date is after another
+## (without taking in consideration
+## the time)
+##---------------------------------##
+#macro(dateIsAfter $date1 $date2)
+  #set($d1 = $date1.getDate())
+  #set($d2 = $date2.getDate())
+  #set($m1 = $date1.getMonth() + 1)
+  #set($m2 = $date2.getMonth() + 1)
+  #set($y1 = $date1.getYear() + 1900)
+  #set($y2 = $date2.getYear() + 1900)
+  #if( ($y1 == $y2 && $m1 == $m2 && $d1 > $d2) || ($y1 == $y2 && $m1 > $m2) || ($y1 > $y2) )
+    #set($isAfter = true)
+  #else
+    #set($isAfter = false)
+  #end
+#end
+
+##--------------------------------##
+## get the difference in days 
+## between 2 calendar objects
+##--------------------------------##
+#macro(getDateDiff $type $item)
+    ## current calendar
+    #set($cc = $xwiki.calendar.getCalendar())
+    #initCalByDate($xwiki.getDate())
+    #set($tmp = $cc.set($year, $month, $day))
+    ## item's calendar
+    #set($ci = $xwiki.calendar.getCalendar())
+    ## modifications & deadlines
+    #if($type == "modifications" || $type == "deadlines")
+      #initCalByDate($item.getDate())
+      #set($tmp = $ci.set($year, $month, $day))
+    ## tasks
+    #elseif($type == "tasks")
+        #set($tdoc = $xwiki.getDocument($item))
+        #set($tobj = $tdoc.getObject("ChronoClasses.ProjectArticleClass"))
+        #set($tdate = $xwiki.chronopolys.getListTool().get($tobj.display("taskduedate", "view").split(" "), 0))
+        #initCalByStr($tdate)
+        #set($tmp = $ci.set($year, $month, $day))
+    #elseif($type == "meetings")
+        #set($mdoc = $xwiki.getDocument($item))
+        #set($mobj = $mdoc.getObject("ChronoClasses.ProjectArticleClass"))
+        #set($mdate = $xwiki.chronopolys.getListTool().get($mobj.display("meetingend", "view").split(" "), 0))
+        #initCalByStr($mdate)
+        #set($tmp = $ci.set($year, $month, $day))
+    #end
+    #set($diff = $xwiki.chronopolys.getDaysBetween($cc, $ci))
+    #dateIsAfter($item.getDate() $xwiki.getDate())
+#end
+
+##-------------------------------------##
+## get notifications from the future
+## (deadlines, tasks, meetings)
+##-------------------------------------##
+#macro(getNotifs $type $limit $when $displ)
+ #if($type == "deadlines")
+   #if($limit > 0) #set($items = $xwiki.chronopolys.getMyNextDeadlines($limit))
+   #else #set($items = $xwiki.chronopolys.getMyNextDeadlines()) #end
+ #elseif($type == "modifications")
+   #if($limit > 0) #set($items = $xwiki.chronopolys.getMyLastModifications($limit))
+   #else #set($items = $xwiki.chronopolys.getMyLastModifications()) #end
+ #elseif($type == "tasks")
+   #if($limit > 0) #set($items = $xwiki.chronopolys.getMyTasks($limit, 0))
+   #else #set($items = $xwiki.chronopolys.getMyTasks()) #end
+ #elseif($type == "meetings")
+   #if($limit > 0) #set($items = $xwiki.chronopolys.getMyMeetings($limit, 0))    
+   #else #set($items = $xwiki.chronopolys.getMyMeetings()) #end
+ #end
+   
+ #initCalByDate($xwiki.getDate())
+ #set($tmp = $cc.set($year,$month,$day))
+ #set($febr = 28)
+ #if ($cc.isLeapYear($now.getYear())) #set($febr = 29)  #end
+ #set($ndays = [31,$febr,31,30,31,30,31,31,30,31,30,31])
+ #set($month = $xwiki.getDate().getMonth())
+ #set($mlength = $ndays.get($month))
+ #set($mlength2 = 2 * $mlength)
+ #set($mlength3 = 3 * $mlength)
+ #set($limits = [0, 1, 2, 7, 14, $mlength, $mlength2, $mlength3, 9000]) ## 9000 days =  max limit of the future/older notifs
+ #set($limitNamesPast = [$msg.get("today"),$msg.get("yesterday"),$msg.get("since2d"),$msg.get("since1w"),$msg.get("since2w"),$msg.get("since1m"),$msg.get("since2m"),$msg.get("since3m"),$msg.get("older")])
+ #set($limitNamesFuture = [$msg.get("today"),$msg.get("tomorrow"),$msg.get("within2d"),$msg.get("within1w"),$msg.get("within2w"),$msg.get("within1m"),$msg.get("within2m"),$msg.get("within3m"),$msg.get("future")])
+ #set($oldLimit = -1)
+ #set($match = -1)
+ #set($wasBefore = true)
+ 
+ #foreach($item in $items)
+   #getDateDiff($type $item)
+   #if( ($when == "past" && $isAfter == false) || ($when == "future" && $isAfter) || ($when == "all")) 
+     #if($isAfter) 
+       #set($limitNames = $limitNamesFuture)
+       #if($wasBefore)
+         #set($oldLimit = -1)
+         #set($wasBefore = false)
+         #set($match = -1)
+       #end
+     #else  #set($limitNames = $limitNamesPast) #set($diff = (-1) * $diff) #end
+     #foreach($limit in $limits)
+      #if($diff > $oldLimit && $diff <= $limit)
+        #set($newMatch = $velocityCount - 1)
+        #if ($newMatch != $match)
+          ## display the classification header
+          #if($displ == true) <tr><td class="notifsdate" colspan="2">$limitNames.get($newMatch)</td></tr> #end
+          #set($match = $newMatch)
+        #end ## end if
+        #set($oldLimit = $limit)
+       #end ## end if
+     #end ## end foreach
+     #if($displ == true) 
+       #displayNotif($type $item)
+       #set($notifsnr = $notifsnr + 1)
+     #else
+       #set($notifstotal = $notifstotal + 1)
+     #end
+   #end
+ #end ## end foreach
+#end ## end macro
+  
+##-------------------------------##
+## macro to display a notification
+##-------------------------------##
+#macro(displayNotif $type $item)
+  #set($border-color = "#E6E6E6")
+
+  #if($type == "modifications")
+    #set ($cdoc = $xwiki.getDocument($item.getPage()))
+    #set ($cdate = $xwiki.formatDate($item.getDate(), "dd/MM/yyyy, HH:mm"))
+    #set ($pdoc = $xwiki.getDocument("${cdoc.space}.WebHome"))
+    #set ($dname = $msg.get($item.getName()))
+    #set ($tmp = ["WebHome","ProjectMembers","ProjectGuests","ProjectLeaders","ProjectPhases","ProjectNote","ProjectWiki","ProjectDocuments","Task","Meeting","Page","Plog"])
+    #set ($icons = ["WebHome.png","ProjectMembers.png","ProjectGuests.png","ProjectLeaders.png","ProjectPhases.png","ProjectNote.png","ProjectWiki.png","ProjectDocuments.png",
+    "ProjectTask.png","ProjectMeeting.png","ProjectWiki.png","ProjectWiki.png"])
+    #set($img = $xwiki.getSkinFile("ProjectWiki.png")) ## default icon
+    #foreach($i in $tmp)
+      #if($item.getName().indexOf($i) >= 0)
+        #set($j = $velocityCount - 1)
+        #set($img = $xwiki.getSkinFile($icons.get($j)))
+      #end
+    #end
+    #set ($backcolor = $xwiki.chronopolys.getProjectContainerStyle($pdoc.display("container", "view")))
+    <tr>
+      <td class="leftpanelcolumnimg" style="background-color:$backcolor;background-image:url($img);background-position:center center;_background-image:url();
+      _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='${img}', sizingMethod='image');border-color:$border-color;"></td>
+      <td style="padding-left:3px;"><a href="$xwiki.getURL($cdoc.fullName)" title="$cdate"><strong>$msg.get($item.getName())</strong> ($pdoc.display("name", "view"))</a></td>
+    </tr>
+  #elseif($type == "deadlines")
+    #set($cdate = $xwiki.formatDate($item.getDate(), "dd/MM/yyyy"))
+    #set($pdoc = $xwiki.getDocument("${xwiki.getDocument($item.getPage()).getSpace()}.WebHome"))
+    #set($dtype = $item.getType()) 
+    #set($types = ["phase", "milestone", "task", "meeting"])
+    #set($pos   = ["center center", "center center", "bottom right", "bottom right"])
+    #set($img = $xwiki.getSkinFile("${types.get($dtype)}_icon.png"))
+    #set($bpos = $pos.get($dtype))
+    #set($backcolor = $xwiki.chronopolys.getProjectContainerStyle($pdoc.display("container", "view")))
+    #if($dtype == 2)
+       #set($tdoc=$xwiki.getDocument($item.getPage()))
+       #set($tobj=$tdoc.getObject("ChronoClasses.ProjectArticleClass"))
+       #set($tcompl=$tobj.display('taskcompletion', 'view'))
+       ## TO DO: show completed tasks
+    #end
+    <tr>
+      <td class="leftpanelcolumnimg" style="background-image:url($img);background-position:$bpos;background-color:$backcolor;_background-image:url();
+      _filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src='${img}',sizingMethod='image');border-color:$border-color;"></td>
+      <td style="padding-left:3px;">
+        <a href="$xwiki.getURL($item.getPage())" title="$msg.get("deadline$item.getType()") $cdate #if($dtype==2) - $tcompl #end"><strong>$msg.get($item.getName())</strong> ($pdoc.display("name", "view"))</a>
+      </td>
+    </tr>  
+  #elseif($type == "tasks")
+    #set($tdoc=$xwiki.getDocument($item))
+    #set($tobj=$tdoc.getObject("ChronoClasses.ProjectArticleClass"))
+    #set($pobj=$xwiki.getDocument("${tdoc.web}.WebHome").getObject("ChronoClasses.ProjectClass"))
+    #set ($color = $xwiki.chronopolys.getProjectContainerStyle($pobj.display("container", "view")))
+    <tr>
+      <td class="leftpanelcolumn" style="border-color:$border-color;">
+        <script type="text/javascript">
+          todayDiff("$xwiki.chronopolys.getListTool().get($tobj.display("taskduedate", "view").split(" "), 0)", "$color");
+        </script>
+      </td>
+      <td style="padding-left:3px;">
+        <a href="$xwiki.getURL($item)" title="$tobj.display("taskcompletion", 'view')">$tdoc.displayTitle</a>
+      </td>
+    </tr>
+  #elseif($type == "meetings")
+    #set ($mdoc=$xwiki.getDocument($item))
+    #set ($mobj=$mdoc.getObject("ChronoClasses.ProjectArticleClass"))
+    #set ($pobj=$xwiki.getDocument("${mdoc.web}.WebHome").getObject("ChronoClasses.ProjectClass"))
+    #set ($color = $xwiki.chronopolys.getProjectContainerStyle($pobj.display("container", "view")))
+    <tr>
+      <td class="leftpanelcolumn" style="padding:0;border-color:$border-color;">
+        <script type="text/javascript">
+          todayDiff("$xwiki.chronopolys.getListTool().get($mobj.display("meetingstart", "view").split(" "), 0)", "$color");
+        </script>
+      </td>
+      <td style="padding-left:3px;">
+        <a href="$xwiki.getURL($item)">$mdoc.displayTitle</a>
+      </td>
+    </tr>  
+  #end
+#end

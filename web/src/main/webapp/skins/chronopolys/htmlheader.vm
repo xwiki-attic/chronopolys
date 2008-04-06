@@ -62,12 +62,14 @@
   taskcomplete = "$msg.get("task-complete") ";
   taskimg = "$xwiki.getSkinFile("task-large.gif")";
   taskcompleteimg = "$xwiki.getSkinFile("task-complete-large.gif")";
+  last = "$msg.get("last")";
+  next = "$msg.get("next")"; 
   #if ($isProject)
   currentContainer = "$project.get("container")";
   confirmprojectcontainerchange = "$msg.get("confirmprojectcontainerchange")";
   noactivities = "$msg.get("noactivities")";
   noyards = "$msg.get("noyards")";
-  #end
+  #end 
 </script>
 <style type="text/css" media="screen">
 img {

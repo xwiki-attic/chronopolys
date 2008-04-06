@@ -125,7 +125,7 @@ Panels
 .panel{
 #csscolorproperty("border-color" "bordercolor")
 }
-.xwikipaneltitle{
+.xwikipaneltitle, .notifspaneltitle {
 #csscolorproperty("background-color" "titlebarcolor")
 }
 

@@ -14,6 +14,8 @@ var confirmcontainerdelete;
 var confirmplogdelete;
 var confirmphasetomilestone;
 var colorpickers = [];
+var modificationslimit;
+var deadlineslimit;
 
 // ---------------- //
 // Dashboard modes  //
@@ -832,9 +834,8 @@ function projectphases_save()
     var id = 'projectphases_view';
     $('projectphases_content_edit').style.visibility = "hidden";
     var surl = getXWikiURL(currentSpace, "ProjectPhases", "save", "");
-    parameters = Form.serialize($('projectphases_form'));
-    parameters = parameters + '&comment=editphases';
-
+    parameters = $('projectphases_form').serialize();
+    parameters = parameters + '&comment=editphases';    
     var myAjax = new Ajax.Request(
             surl,
     {
@@ -859,16 +860,17 @@ function registerPhase(id)
 function phaseTypeOnChange(phasenb)
 {
     if (!confirm(confirmphasetomilestone)) {
-        $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_type').selectedIndex = 0;
+        $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_stype').selectedIndex = 0;
         return;
     }
-    var type = $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_type').value;
+    var type = $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_stype').value;
     if (type == "1") {
         addClass($('phaseedition_' + phasenb + '_start'), 'hidden');
         addClass($('phaseedition_' + phasenb + '_end'), 'hidden');
         addClass($('phaseedition_' + phasenb + '_endd'), 'hidden');
         addClass($(phasenb + '_currentcontainer'), 'hidden');
-        $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_type').disabled = 'disabled';
+        $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_stype').disabled = 'disabled';
+        $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_type').value = '1';
         rmClass($('phaseedition_' + phasenb + '_mile'), 'hidden');
         $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_iscurrentphase').value = '0';
         $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_end').value = $('ChronoClasses.ProjectPhaseClass_' + phasenb + '_start').value;
@@ -1841,4 +1843,121 @@ function projectcontainerChange(name, page, displayConfirm) {
      projectdata_save();
   } 
 }
+
+//---------------------------//
+// Notifs panels            //
+//-------------------------//
+NotifsPanel = Class.create({
+    initialize: function(params) 
+    {
+        this.type  = params.type;
+        this.url = params.url;
+        this.content = $(params.id);
+        this.notifscontent = $('notifscontents_'+this.type);
+        this.next5 = $("next5_"+this.type);
+        this.prev5 = $("prev5_"+this.type);
+        this.seeall = $("seeall_"+this.type);
+        this.rss = $("notifsrss_"+this.type);
+        this.displaynr = $("displaynr_"+this.type);
+        this.nr = $("nr_"+this.type);
+        this.nonotifs = $("nonotifs_"+this.type);
+        this.limit = parseInt(params.limit);
+        if(isNaN(this.limit))
+          this.limit = 0;
+        this.current = 0;
+        this.max = (this.limit < 25) ? this.limit : 25;
+        
+        this.attachEventHandlers();
+        this.initContent();
+    },
+    
+    initContent: function()
+    {
+      if(this.max > 0)
+      {
+        this.notifscontent.removeClassName('hidden');
+        this.displaynr.removeClassName('hidden');
+        if(this.rss) this.rss.removeClassName('hidden');
+        if(this.max > 5)
+        {
+          //this.seeall.removeClassName('hidden');
+          this.next5.removeClassName('hidden');
+        }
+      }
+      else
+        this.nonotifs.removeClassName('hidden');
+      this.current = parseInt($('sofar_'+this.type).innerHTML);
+      this.nr.update(this.current);
+    },
+    
+    attachEventHandlers: function()
+    {
+      Event.observe(this.next5, 'click', this.next5Handler(this));
+      Event.observe(this.prev5, 'click', this.prev5Handler(this));
+      Event.observe(this.seeall, 'click', this.seeallHandler(this));
+    },
+    next5Handler: function(self)
+    {
+      return function(ev)
+      {
+        if(self.current < self.max)
+        {
+          var tmp = self.current + 5;
+          var url = self.url+"&ntype="+self.type+"&limit="+tmp;
+          new Ajax.Request(url, {
+              method: 'get',
+              onSuccess: function(transport)
+              {
+                //update the number of currently displayed notifs
+                self.content.update(transport.responseText);
+                self.current = parseInt($('sofar_'+self.type).innerHTML);
+                self.nr.update(self.current);
+                //if all notifs are displayed, hide next5 and show prev5
+                if(self.current > 5)
+                  if(self.prev5.hasClassName('hidden')) 
+                    self.prev5.removeClassName('hidden');
+                if(self.current >= self.max) 
+                 self.next5.addClassName('hidden');
+               
+              }
+          }); // end request
+        }
+      }
+    },
+    prev5Handler: function(self)
+    {
+      return function(ev)
+      {
+        var tmp = (self.current % 5 == 0) ? self.current - 5 : self.current - self.current % 5;
+        if(tmp > 0)
+        {
+          var url = self.url+"&ntype="+self.type+"&limit="+tmp;
+          new Ajax.Request(url, {
+              method: 'get',
+              onSuccess: function(transport)
+              {
+                //update the number of currently displayed notifs
+                self.content.update(transport.responseText);
+                self.current = parseInt($('sofar_'+self.type).innerHTML);
+                self.nr.update(self.current);
+                //if all notifs are displayed, show next5 and hide prev5
+                if(self.current == 5) 
+                  self.prev5.addClassName('hidden');
+                if(self.current < self.max) 
+                  if(self.next5.hasClassName('hidden')) 
+                    self.next5.removeClassName('hidden');
+
+              }
+          }); // end request
+        }
+      }
+    },
+    seeallHandler: function(self)
+    {
+      return function(ev)
+      {
+        //to be..
+      }
+    }
+});
 
