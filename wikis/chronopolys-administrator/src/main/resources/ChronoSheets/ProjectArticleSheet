@@ -72,25 +72,25 @@ $obj.set('taskcompletion', $request.taskcompletion)
 #set($showcomments = "yes")
 &lt;div id="projectlogarticle"&gt;
 #if ($doc.taskcompletion == "100%")
-  #set ($type = "${bentrydoc.type}-complete")
+  #set ($btype = "${bentrydoc.type}-complete")
 #else
-  #set ($type = $bentrydoc.type)
+  #set ($btype = $bentrydoc.type)
 #end
 &lt;div class="rounded-title" #if (!$currentStyle) style="background-color:#eee;color:#D61385;" #else style="background-color:$currentStyle" #end &gt;
-  &lt;span class="plogheaderleft" id="plogheaderleft"&gt;$msg.get($type)&lt;/span&gt;
+  &lt;span class="plogheaderleft" id="plogheaderleft"&gt;$msg.get($btype)&lt;/span&gt;
   #if($context.action != "edit")
     &lt;span id="plogbar-actions"&gt;
-      &lt;a id="plogbar-edit" href="$editurl"&gt;$msg.get("editpost")&lt;/a&gt;
+      &lt;a id="plogbar-edit" href="$editurl"&gt;$msg.get("edit${bentrydoc.type}")&lt;/a&gt;
       #if($isXWikiAdmin || $isChronoManager || $isChronoAdmin || $context.user == $doc.creator)
-        | &lt;a id="deleteplogarticle" href="$doc.getURL('delete')"&gt;$msg.get("delete$type")&lt;/a&gt;
+        | &lt;a id="deleteplogarticle" href="$doc.getURL('delete')"&gt;$msg.get("delete${bentrydoc.type}")&lt;/a&gt;
       #end
     &lt;/span&gt;
   #end
 &lt;/div&gt;
 &lt;div class="roundedcontent"&gt;
 &lt;div class="article_header"&gt;
-&lt;img id="plogheaderimg" src="$xwiki.getSkinFile("${type}-large.gif")" width="32" height="32" style="float:left;margin-right:10px;" /&gt;
-&lt;div style="float:left;margin-top:-5px;"&gt;&lt;span id="plogtype"&gt;$msg.get("$type") &lt;/span&gt;$msg.get("article_date") $creationDate, $msg.get("article_author") #displayUser($bentrydoc.getCreator())&lt;br/&gt;
+&lt;img id="plogheaderimg" src="$xwiki.getSkinFile("${btype}-large.gif")" width="32" height="32" style="float:left;margin-right:10px;" /&gt;
+&lt;div style="float:left;margin-top:-5px;"&gt;&lt;span id="plogtype"&gt;$msg.get("$btype") &lt;/span&gt;$msg.get("article_date") $creationDate, $msg.get("article_author") #displayUser($bentrydoc.getCreator())&lt;br/&gt;
 &lt;span style="font-size:20px;font-weight:bold;"&gt;$doc.title&lt;/span&gt;
 &lt;/div&gt;
 &lt;/div&gt;
