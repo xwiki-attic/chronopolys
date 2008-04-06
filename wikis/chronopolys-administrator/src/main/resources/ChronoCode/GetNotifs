@@ -60,6 +60,8 @@
 #set($notifsnr = 0)
 #if($ntype == "modifications")
  #getNotifs($ntype $limit "past" true)
+#elseif($ntype == "meetings")
+ #getNotifs($ntype $limit "future" true)
 #else
  #getNotifs($ntype $limit "all" true)  
 #end
