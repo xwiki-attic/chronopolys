@@ -665,7 +665,7 @@ html {
      background: url( plog-bar.png ) no-repeat;
     _background-image:url();
     _filter:
-progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/xwiki/bin/skin/ChronoCode/Skin01/plog%2Dbar.png', sizingMethod='scale');
+progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/xwiki/skins/chronopolys/plog%2Dbar.png', sizingMethod='scale');
     _position: relative;
     height: 20px;
     padding: 4px 0 0 10px;
@@ -679,7 +679,7 @@ progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/xwiki/bin/skin/ChronoCo
     _position: relative;
     _background-image: url( );
     _filter:
-progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/xwiki/bin/skin/ChronoCode/Skin01/axis.png', sizingMethod='scale');
+progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/xwiki/skins/chronopolys/axis.png', sizingMethod='scale');
     height: 20px;
     padding: 4px 0 0 10px;
     margin: 0 -5px;
@@ -703,7 +703,7 @@ progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/xwiki/bin/skin/ChronoCo
     background: transparent url( mail-attachment.png ) no-repeat;
     _background-image: url( );
     _filter:
-    progid: DXImageTransform . Microsoft . AlphaImageLoader( src = '/xwiki/bin/skin/ChronoCode/Skin01/mail%2Dattachment.png', sizingMethod = 'scale' );
+    progid: DXImageTransform . Microsoft . AlphaImageLoader( src = '/xwiki/skins/chronopolys/mail%2Dattachment.png', sizingMethod = 'scale' );
     padding: 0;
     height: 16px;
     width: 16px;
@@ -713,7 +713,7 @@ progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/xwiki/bin/skin/ChronoCo
     background: transparent url( comments.png ) no-repeat;
     _background-image: url( );
     _filter:
-    progid: DXImageTransform . Microsoft . AlphaImageLoader( src = '/xwiki/bin/skin/ChronoCode/Skin01/comments.png', sizingMethod = 'scale' );
+    progid: DXImageTransform . Microsoft . AlphaImageLoader( src = '/xwiki/skins/chronopolys/comments.png', sizingMethod = 'scale' );
     padding: 0;
     height: 16px;
     width: 16px;
