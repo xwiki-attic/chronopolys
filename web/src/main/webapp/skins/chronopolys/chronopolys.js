@@ -13,6 +13,7 @@ var confirmdelphase;
 var confirmcontainerdelete;
 var confirmplogdelete;
 var confirmphasetomilestone;
+var colorpickers = [];
 
 // ---------------- //
 // Dashboard modes  //
