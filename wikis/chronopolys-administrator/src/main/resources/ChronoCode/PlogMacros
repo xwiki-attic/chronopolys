@@ -70,7 +70,7 @@
   &lt;/div&gt;
   &lt;div class="spacer"&gt;&lt;/div&gt;
   #roundedbottom()
-  #set($slideNo = 0)
+  #set($slideNo =  $xwiki.arrayList)
   #set($docNames = $xwiki.arrayList)
   #foreach ($item in $xwiki.searchDocuments($sql, $inbitems, $inbstart))
      #if ($xwiki.hasAccessLevel("view", $context.user, "${context.database}:${item}"))
@@ -100,12 +100,20 @@
             #set($deployarticle = 'open')
             #set($deployactionarticle = 'closed')
           #end
-          &lt;span id="article_deploy_$velocityCount" class="article_deploy_${deployarticle}" onclick="javascript:toggleClass($('article_content_$velocityCount'), 'hidden');switchClass('article_deploy_$velocityCount');updSlider('$velocityCount');" title="$msg.get('opencloseplog')" &gt;&lt;/span&gt;
+          &lt;span id="article_deploy_$velocityCount" class="article_deploy_${deployarticle}"  title="$msg.get('opencloseplog')" &gt;&lt;/span&gt;
+          &lt;script type="text/javascript"&gt;
+           $('article_deploy_${velocityCount}').observe('click', function()
+           {
+             toggleClass($('article_content_$velocityCount'), 'hidden');
+             switchClass('article_deploy_$velocityCount');
+             #if($bentrydoc.type == "task") updSlider('$velocityCount'); #end
+            });
+          &lt;/script&gt;
           &lt;h1 class="article_title"&gt;$title&lt;/h1&gt;
           &lt;div id="article_content_$velocityCount" #if($deployarticle == 'closed') class="hidden" #end &gt;
             &lt;div class="article_content"&gt;
             #if ($bentrydoc.type == "task")
-              #set($slideNo = $slideNo + 1)
+              #set($disc = $slideNo.add($velocityCount))
               #set($disc = $docNames.add($bentrydoc.fullName))
               &lt;ul class="star"&gt;
                 &lt;li&gt;&lt;strong&gt;$msg.get("taskduedate") : &lt;/strong&gt;&lt;span&gt;$bentrydoc.taskduedate&lt;/span&gt;&lt;/li&gt;
@@ -157,22 +165,25 @@
           ##end
       #end
    #end
-   #if($slideNo &gt; 0)
+   #if($slideNo.size() &gt; 0)
    {pre}
    &lt;script type="text/javascript"&gt;
     window.dist = window.start = 0;
-    function updSlider(val) 
+    updSlider = function(val) 
     {
       var tr = 'slider_track_' + val;
       window.dist = $(tr).clientWidth;
       window.start = findPos($(tr))[0];
     }
-    #foreach($i in [1..$slideNo])
-     #set($j = $i - 1)
+    Event.observe(window, 'load', function() {
+    #foreach($i in $slideNo) 
+     #set($j = $velocityCount - 1)   
      window.slider_$i = new xwkSlider({domNode:'slider_$i', trackNode:'slider_track_$i', slideNo: $i, updCol:'task_completed_$i', loading:'tc_loading_$i', url:'$xwiki.getURL($docNames.get($j))', updHandler:updTaskCompl});
     #end
+   });
    &lt;/script&gt;
    {/pre}
    #end   
 #end</content>
 </xwikidoc>
+
