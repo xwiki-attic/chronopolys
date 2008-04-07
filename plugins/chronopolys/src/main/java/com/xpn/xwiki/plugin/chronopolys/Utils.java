@@ -126,4 +126,37 @@ public class Utils
         }
         return list.subList(min, max);
     }
+    
+   /**
+   * Calculates the number of days between two calendar days 
+   * @param d1    The first date.
+   * @param d2    The second date.
+   * @return      The number of days between the two dates.  Zero is
+   *              returned if the dates are the same, one if the dates are
+   *              adjacent, etc.  
+   *              If Calendar types of d1 and d2
+   *              are different, the result may not be accurate.
+   */
+  public int getDaysBetween (java.util.Calendar d1, java.util.Calendar d2) {
+      boolean neg = false;
+      if (d1.after(d2)) {  // swap dates so that d1 is start and d2 is end
+          java.util.Calendar swap = d1;
+          d1 = d2;
+          d2 = swap;
+          neg = true;
+      }
+      int days = d2.get(java.util.Calendar.DAY_OF_YEAR) - d1.get(java.util.Calendar.DAY_OF_YEAR);
+      int y2 = d2.get(java.util.Calendar.YEAR);
+      if (d1.get(java.util.Calendar.YEAR) != y2) {
+          d1 = (java.util.Calendar) d1.clone();
+          do {
+              days += d1.getActualMaximum(java.util.Calendar.DAY_OF_YEAR);
+              d1.add(java.util.Calendar.YEAR, 1);
+          } while (d1.get(java.util.Calendar.YEAR) != y2);
+      }
+      if(neg) return (-1) * days;
+      return days;
+  }
 }
+
+

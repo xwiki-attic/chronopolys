@@ -190,6 +190,11 @@ public class ChronopolysPluginApi extends Api
     {
         return plugin.getUserManager().getMyTasks(limit, start, context);
     }
+    
+    public List getMyTasks() throws XWikiException
+    {
+        return plugin.getUserManager().getMyTasks(context);
+    }
 
     public int getMyMeetingsNb() throws XWikiException
     {
@@ -199,6 +204,11 @@ public class ChronopolysPluginApi extends Api
     public List getMyMeetings(int limit, int start) throws XWikiException
     {
         return plugin.getUserManager().getMyMeetings(limit, start, context);
+    }
+    
+    public List getMyMeetings() throws XWikiException
+    {
+      return plugin.getUserManager().getMyMeetings(context);
     }
 
     public int getMyProjectsNb() throws XWikiException
@@ -220,6 +230,11 @@ public class ChronopolysPluginApi extends Api
     {
         return plugin.getUserManager().getMyLastModifications(limit, context);
     }
+    
+    public List getMyLastModifications(int limit, int start) throws XWikiException
+    {
+        return plugin.getUserManager().getMyLastModifications(limit, start, context);
+    }
 
     public List getMyNextDeadlines() throws XWikiException
     {
@@ -229,6 +244,11 @@ public class ChronopolysPluginApi extends Api
     public List getMyNextDeadlines(int limit) throws XWikiException
     {
         return plugin.getUserManager().getMyNextDeadlines(limit, context);
+    }
+    
+    public List getMyNextDeadlines(int limit, int start) throws XWikiException
+    {
+        return plugin.getUserManager().getMyNextDeadlines(limit, start, context);
     }
 
     /* *********************************************************************************************
@@ -325,5 +345,10 @@ public class ChronopolysPluginApi extends Api
     public List getProjectContainers(String type) throws XWikiException
     {
         return plugin.getFolderManager().getRootFolders(context);
+    }
+    
+    public int getDaysBetween(java.util.Calendar d1, java.util.Calendar d2) throws XWikiException
+    {
+       return plugin.getUtils().getDaysBetween(d1, d2); 
     }
 }

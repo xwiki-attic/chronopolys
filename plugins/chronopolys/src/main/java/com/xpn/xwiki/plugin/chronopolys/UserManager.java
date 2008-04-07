@@ -30,16 +30,20 @@ import com.xpn.xwiki.api.Object;
 
 import java.util.*;
 
+
 public class UserManager
 {
     // Deadline types
-    public static final int DEADLINE_PROJECT = 0;
-
-    public static final int DEADLINE_PHASE = 1;
+  
+    public static final int DEADLINE_MILESTONE = 1;
+    
+    public static final int DEADLINE_PHASE = 0;
 
     public static final int DEADLINE_TASK = 2;
 
     public static final int DEADLINE_MEETING = 3;
+    
+    public static final int DEADLINE_PROJECT = 4;
 
     public static final int usersCacheCapacity = 100;
 
@@ -211,6 +215,11 @@ public class UserManager
     {
         return plugin.getUtils().intelliSubList(limit, 0, this.getMyLastModifications(context));
     }
+    
+    public List getMyLastModifications(int limit, int start, XWikiContext context) throws XWikiException
+    {
+        return plugin.getUtils().intelliSubList(limit, start, this.getMyLastModifications(context));
+    }
 
     /*
      * Get last modifications in user's projects
@@ -280,6 +289,11 @@ public class UserManager
     {
         return plugin.getUtils().intelliSubList(limit, 0, this.getMyNextDeadlines(context));
     }
+    
+    public List getMyNextDeadlines(int limit, int start, XWikiContext context) throws XWikiException
+    {
+        return plugin.getUtils().intelliSubList(limit, start, this.getMyNextDeadlines(context));
+    }
 
     /*
     * Get user's next deadlines (meetings, tasks, project's ends, phase's ends)
@@ -340,10 +354,10 @@ public class UserManager
                         Object phase = (Object) i.next();
                         Date date = (Date) phase.getProperty("end").getValue();
                         if (date.after(today)) {
+                            int type = Integer.parseInt((String)phase.getProperty("type").getValue());
                             deadlines.add(new Deadline(doc.getFullName(),
-                                phase.display("name", "view") +
-                                    " (" + doc.display("name", "view", context) + ")",
-                                DEADLINE_PHASE, date));
+                                phase.display("name", "view").toString(),
+                                type, date));
                         }
                     }
                 }
@@ -479,9 +493,7 @@ public class UserManager
     /*
     * Get next meetings for the current user
     */
-    public List getMyMeetings
-        (XWikiContext
-            context) throws XWikiException
+    public List getMyMeetings(XWikiContext context) throws XWikiException
     {
         initUserdataCache(context);
         List list = null;
