@@ -1645,3 +1645,210 @@ function updTaskCompl(no, per, oldper)
     }
   }
 }
+
+// --------------------------- //
+// Header breadcrumbs         //
+// ------------------------- //
+
+//initialize dropdowns
+function hideDropDowns () {
+  var dropdowns = document.getElementsByClassName('select');
+  for (var i = 0; i < dropdowns.length; i++) {
+    dropdown = dropdowns[i];
+    Element.addClassName(dropdown, 'hide-dropdown');
+  }
+} 
+
+//observe dropdown opener
+function observeOpener(opener) {
+  var dropdown = opener.parentNode;
+  if (Element.hasClassName(dropdown, 'hide-dropdown')) {
+    Element.removeClassName(dropdown, 'hide-dropdown');    
+  } 
+  else {
+    Element.addClassName(dropdown, 'hide-dropdown');
+  }
+ return false;
+}
+
+//observing dropdown option
+function observeOption(event) {
+  var option = Event.element(event);
+  var value = option.childNodes[0].nodeValue;
+  var itemid = option.getAttribute('value');
+  var selectbox = Event.findElement(event, 'ul');
+  setDDValue(selectbox.parentNode, itemid, value);
+  Element.addClassName(selectbox.parentNode, 'hide-dropdown');    
+  Event.stop(event);
+}
+
+//observing dropdown options
+function observeDropDownOptions(select) {
+  var options = select.select('li');
+  for (var j = 0; j < options.length; j++) {
+   var option = options[j];
+   Event.observe(option, 'click', observeOption, false);
+  }
+}
+
+function togglePairVisib(first, second, opt) {
+  if(opt == true)  {
+    first.style.display = "";
+    second.style.display = "none";
+  }
+  else  {
+    first.style.display = "none";
+    second.style.display = "";
+  }
+}
+
+//init ul
+function initul(parent) {
+  var list = "";
+  var f = 0;
+  var fc = "";
+  for(i in parent) {
+    if(parent[i].name) {
+      if(f == 0) {fc = i; f++;}
+      list += '<li value="' + i + '">' + parent[i].name + '</li>';
+    }
+  }
+  return {"fc": fc, "list": list};
+}
+
+//init activities
+function initacts(parent) {
+    var temp = initul(parent);
+    var acts = temp.list;
+    var fc = temp.fc;
+    $('sel_act').innerHTML = "";
+    $('sel_act_i').value = fc;
+    if(acts) {
+      togglePairVisib($('sel_act_a'), $('sel_act_span'), true);
+      $('sel_act_a').innerHTML = parent[fc].name;
+      $('sel_act_span').innerHTML = "";
+      new Insertion.Bottom('sel_act', acts);
+      observeDropDownOptions($('sel_act'));
+      //if selected breadcrumbs != current breadcrumbs display save link
+      if(curr_axis != $('sel_axis_a').innerHTML || curr_yard != $('sel_yard_a').innerHTML || curr_act != $('sel_act_a').innerHTML) 
+        togglePairVisib($('sel_save'), $('sel_back'), true);
+      else
+        togglePairVisib($('sel_save'), $('sel_back'), false);
+    }
+    else {
+     togglePairVisib($('sel_act_a'), $('sel_act_span'), false);
+     $('sel_act_span').innerHTML = noactivities;
+     togglePairVisib($('sel_save'), $('sel_back'), false);
+    }
+}
+
+//inityards
+function inityards(parent) {
+  var temp = initul(parent);
+  var fc = temp.fc;
+  var yards = temp.list;
+  $('sel_yard').innerHTML = "";
+  $('sel_yard_i').value = fc;
+  if(yards) {
+    togglePairVisib($('sel_yard_a'), $('sel_yard_span'), true);
+    $('sel_yard_a').innerHTML = parent[fc].name;
+    $('sel_yard_span').innerHTML = "";
+    new Insertion.Bottom('sel_yard', yards);
+    observeDropDownOptions($('sel_yard'));
+  }
+  else {
+     togglePairVisib($('sel_yard_a'), $('sel_yard_span'), false);
+     $('sel_yard_span').innerHTML = noyards;
+  }
+} 
+
+//setting dropdown value into hidden field
+function setDDValue(dropdown, itemid, value) {
+  var a = dropdown.getElementsByTagName('a')[0];
+  var input = dropdown.getElementsByTagName('input')[0];
+  Element.update(a, value);
+  //update the input for the current breadcrumb
+  if (input) {
+    input.value = itemid;
+  }
+  //selecting an axis will load yard and activity options for it
+  if(a.id.indexOf('axis') > 0)  {
+   var c = root[itemid].childs; // yards
+   inityards(c);
+   //init activity select according to the first selected yard
+   var ys = $('sel_yard_i').value;
+   if(ys) {
+    var c = root[itemid].childs[ys].childs; //activities
+    initacts(c);
+   }
+   // there no yards, so no activities
+   else {
+     togglePairVisib($('sel_act_a'), $('sel_act_span'), false);
+     $('sel_act_span').innerHTML = noactivities;
+     togglePairVisib($('sel_save'), $('sel_back'), false);
+   }
+  }
+  //selecting a yard will load activities options for it
+  else if(a.id.indexOf('yard') > 0)  {
+      var c = root[$('sel_axis_i').value].childs[itemid].childs;
+      initacts(c);
+  }
+  else if(a.id.indexOf('act') > 0) {
+     //if selected breadcrumbs != current breadcrumbs display save link
+      if(curr_act != $('sel_act_a').innerHTML) 
+        togglePairVisib($('sel_save'), $('sel_back'), true);
+      else
+        togglePairVisib($('sel_save'), $('sel_back'), false);
+  }
+}
+
+//closing dropdown by ESC
+function onKeyPress(event) {
+  switch(event.keyCode) {
+    case Event.KEY_ESC: hideDropDowns(event);
+    Event.stop(event);
+    return;
+  }
+}
+
+//closing dropdown by click out of it
+function hideDropDownsOnClick(event) {
+  var a = Event.element(event);
+  if (a.tagName == 'a') { return false; }
+  var dropdowns = document.getElementsByClassName('select');
+  for (var i = 0; i < dropdowns.length; i++) {
+    dropdown = dropdowns[i];
+     Element.addClassName(dropdown, 'hide-dropdown');
+  }
+}
+
+function saveChanges() {
+   var name = $('sel_act_a').innerHTML;
+   var ax = $('sel_axis_i').value;
+   var y = $('sel_yard_i').value;
+   var ac = $('sel_act_i').value;
+   var page = root[ax].childs[y].childs[ac].obj;
+   var t = true;
+   if(page == "OrphanActivity")
+    t = false;
+   projectcontainerChange(name, page, t);    
+}
+
+function projectcontainerChange(name, page, displayConfirm) {
+  if (displayConfirm) {
+    if(confirm(confirmprojectcontainerchange)) {
+      $('ChronoClasses.ProjectClass_0_container').value = page;
+      var vis = $('ChronoClasses.ProjectClass_0_container_visible');
+      vis.value = name;
+      projectdata_save();
+    }
+  }
+  else {
+     $('ChronoClasses.ProjectClass_0_container').value = page;
+     var vis = $('ChronoClasses.ProjectClass_0_container_visible');
+     vis.value = name;
+     projectdata_save();
+  } 
+}
+
+
