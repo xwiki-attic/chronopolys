@@ -1,0 +1,84 @@
+<div class="select">
+      <span id="sel_axis_span" class="noitem" style="display:none;"></span>
+      <a id="sel_axis_a" href="" onclick="return observeOpener(this);">$msg.get($currentAxis.display("name", "view"))</a> 
+      <ul id="sel_axis" class="selectbox" style="width:130px"><li>$msg.get($currentAxis.display("name", "view"))</li></ul>
+      <input type="hidden" id="sel_axis_i" value="" />
+</div>&nbsp;&gt;&nbsp;
+<div class="select">
+       <span id="sel_yard_span" class="noitem" style="display:none;"></span>
+       <a id="sel_yard_a" href="" onclick="return observeOpener(this);">$msg.get($currentYard.display("name", "view"))</a> 
+       <ul id="sel_yard" class="selectbox" style="width:130px"><li>$msg.get($currentYard.display("name", "view"))</li></ul>
+       <input type="hidden" id="sel_yard_i" value="" />
+</div>&nbsp;&gt;&nbsp;
+<div class="select">
+      <span id="sel_act_span" class="noitem" style="display:none;"></span>
+      <a id="sel_act_a" href="" onclick="return observeOpener(this);">$msg.get($currentActivity.display("name", "view"))</a> 
+      <ul id="sel_act" class="selectbox" style="width:130px"><li>$msg.get($currentActivity.display("name", "view"))</li></ul>
+      <input type="hidden" id="sel_act_i" value="" />
+</div>&nbsp;
+<span id="sel_save" class="sel_save" style="display:none;" onclick="saveChanges();">($msg.get("save").toLowerCase())</span>
+<span id="sel_back" class="sel_back" onclick="toggleClass($('container_breadcrumb'), 'hidden'); toggleClass($('sel_container_breadcrumb'), 'hidden');">($msg.get("back").toLowerCase())</span>
+
+<script type="text/javascript"><!--//--><![CDATA[//><!--
+var curr_axis = "$msg.get($currentAxis.display("name", "view"))";
+var curr_yard = "$msg.get($currentYard.display("name", "view"))";
+var curr_act = "$msg.get($currentActivity.display("name", "view"))";
+var root = { 
+#foreach($axis in $xwiki.chronopolys.getProjectContainers("axis"))
+ #if($velocityCount > 1),#end
+  #set ($tmp = $axis.name)  #set ($count = $tmp.indexOf(".") + 1)  #set($axispage = $tmp.substring($count))
+  "$axis.name": { "name": "$xwiki.getXMLEncoded($msg.get($axis.get("name")))", "obj": "$axispage", "childs" : { 
+	#set ($ylist = "") 	#set ($ylist = $xwiki.chronopolys.getProjectContainerChilds($axispage))
+	#if ($ylist.size() > 0)
+	  #foreach($yard in $xwiki.chronopolys.getProjectContainerChilds($axispage))  
+	    #if($velocityCount > 1),#end
+	    #set ($tmp = $yard.name)  #set ($count = $tmp.indexOf(".") + 1)  #set ($apage = $tmp.substring($count))
+	    "$yard.name" : { "name": "$xwiki.getXMLEncoded($msg.get($yard.get("name")))", "obj": "$apage", "childs": {
+	    #set ($alist = "") #set ($alist = $xwiki.chronopolys.getProjectContainerChilds($apage))
+	    #if ($alist.size() > 0)
+        #foreach($activity in $alist)
+	       #if($velocityCount > 1),#end
+	       #set ($tmp = $activity.name) #set ($count = $tmp.indexOf(".") + 1) #set ($apage = $tmp.substring($count))
+	       "$activity.name": { "name": "$xwiki.getXMLEncoded($msg.get($activity.get("name")))", "obj": "$apage" }
+	      #end
+	    #end
+	    }}
+	  #end        
+	#end
+  }}
+#end
+};
+Event.observe(window, 'load', function() {
+  //init axis
+  var temp = initul(root);
+  var axis = temp.list;
+  var fc = "$currentAxis.name";
+  //init axis, yards and activities (for first selected axis)
+  $('sel_axis').innerHTML = "";
+  new Insertion.Bottom('sel_axis', axis);
+  observeDropDownOptions($('sel_axis'));
+  $('sel_axis_i').value = "$currentAxis.name";
+  // init yards
+  if(root[fc]) {
+    inityards(root[fc].childs);
+    $('sel_yard_a').innerHTML = "$msg.get($currentYard.display("name", "view"))";
+    $('sel_yard_i').value = "$currentYard.name";
+    //init activity select according to the first selected yard
+    var ys = $('sel_yard_i').value;
+    if(ys && root[fc].childs[ys]) {
+      var c = root[fc].childs[ys].childs; //activities
+      initacts(c);
+      $('sel_act_a').innerHTML = "$msg.get($currentActivity.display("name", "view"))";
+      }
+      // there no yards, so no activities
+      else {
+        togglePairVisib($('sel_act_a'), $('sel_act_span'), false);
+        $('sel_act_span').innerHTML = '$msg.get("noactivities")';
+        togglePairVisib($('sel_save'), $('sel_back'), false);
+      }
+}});
+
+Event.observe(window, 'load', hideDropDowns, false);
+Event.observe(document, "keypress", onKeyPress, true);
+Event.observe(document, "mouseup", hideDropDownsOnClick, true);
+//--><!]]></script>
