@@ -55,11 +55,12 @@
       </includes>
       <outputDirectory>/</outputDirectory>
       <unpack>true</unpack>
-      <unpackOptions>
+      <!-- unpackOptions>
         <includes>
           <include>**/*.sh</include>
+          <include>**/*.bat</include>
         </includes>
-      </unpackOptions>
+      </unpackOptions -->
       <fileMode>755</fileMode>
     </dependencySet>
     <!-- Copy all other files (excluding sh files). See above for details. -->
@@ -73,11 +74,12 @@
       </includes>
       <outputDirectory>/</outputDirectory>
       <unpack>true</unpack>
-      <unpackOptions>
+      <!-- unpackOptions>
         <excludes>
           <exclude>**/*.sh</exclude>
+          <exclude>**/*.bat</exclude>
         </excludes>
-      </unpackOptions>
+      </unpackOptions -->
     </dependencySet>
     <dependencySet>
       <includes>

@@ -91,29 +91,41 @@ public class NotificationManager
         List rcpt = new ArrayList();
         String mailTemplate = "";
 
+        // Hack, see XWIKI-2105 for more details
+        int eventType;
+        if (olddoc == null) {
+            eventType = XWikiNotificationInterface.EVENT_NEW;
+        } else {
+            if (!newdoc.isNew()) {
+                eventType = XWikiNotificationInterface.EVENT_CHANGE;
+            } else {
+                eventType = XWikiNotificationInterface.EVENT_DELETE;
+            }
+        }
+
         // folders
         if (newdoc.getObject(FolderManager.CLASS_FOLDER) != null) {
             plugin.getFolderManager().flushFoldersCache();
         }
 
-        if (event == XWikiNotificationInterface.EVENT_NEW ||
-            event == XWikiNotificationInterface.EVENT_DELETE)
+        if (eventType == XWikiNotificationInterface.EVENT_NEW ||
+            eventType == XWikiNotificationInterface.EVENT_DELETE)
         {
             // chronopolys user
-            if ((newdoc.getObject(ChronopolysPlugin.CLASS_XWIKIUSERS) != null ||
-                olddoc.getObject(ChronopolysPlugin.CLASS_XWIKIUSERS) != null))
+            if ((newdoc != null && newdoc.getObject(ChronopolysPlugin.CLASS_XWIKIUSERS) != null) ||
+                (olddoc != null && olddoc.getObject(ChronopolysPlugin.CLASS_XWIKIUSERS) != null))
             {
                 plugin.getUserManager().flushUsersCache();
             }
             // meeting or task
-            if ((newdoc.getObjects(ProjectLog.CLASS_PROJECTARTICLE) != null) ||
-                (olddoc.getObjects(ProjectLog.CLASS_PROJECTARTICLE) != null))
+            if ((newdoc != null && newdoc.getObjects(ProjectLog.CLASS_PROJECTARTICLE) != null) ||
+                (olddoc != null && olddoc.getObjects(ProjectLog.CLASS_PROJECTARTICLE) != null))
             {
                 plugin.getUserManager().flushUserdataCache();
             }
             // subscriptions
-            if ((newdoc.getObjects(CLASS_NOTIFICATIONS) != null) ||
-                (olddoc.getObjects(CLASS_NOTIFICATIONS) != null))
+            if ((newdoc != null && newdoc.getObjects(CLASS_NOTIFICATIONS) != null) ||
+                (olddoc != null && olddoc.getObjects(CLASS_NOTIFICATIONS) != null))
             {
                 plugin.getUserManager().flushUserdataCache();
             }
