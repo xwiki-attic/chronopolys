@@ -54,53 +54,52 @@
 <tags/>
 </property>
 </object>
-<content>#roundedtitletop($msg.get("groupmembers"))
-
-#set($groupMembers = $doc.getObjects("XWiki.XWikiGroups"))
-&lt;table width="400px" class="projetmembers"&gt;
-#set($members = $xwiki.chronopolys.getNewList())
-#foreach($obj in $groupMembers)
-&lt;tr class="underlined" style="height:25px;"&gt;
-#set ($memberpage=$doc.display("member", $obj))
-#set ($ret = $members.add($memberpage))
-&lt;td&gt;$xwiki.getLocalUserName($memberpage)&lt;/td&gt;
-&lt;td&gt;$doc.display("role", $obj)&lt;/td&gt;
-&lt;td&gt;
-#if ($xwiki.hasAccessLevel("edit"))
-&lt;a class="deletelink" href="$doc.getURL("objectremove", "classname=XWiki.XWikiGroups&amp;amp;classid=${obj.number}&amp;amp;xredirect=${doc.getURL('view')}")" title="$msg.get("removethisuserfromgroup")"&gt;$msg.get("removegroupmember")&lt;/a&gt;
-#end
-&lt;/td&gt;
-&lt;/tr&gt;
-#end
-&lt;/table&gt;
-#roundedbottom()
-
-
-#if ($xwiki.hasAccessLevel("edit"))
-#roundedtitletop($msg.get("addmembertogroup")) 
-
-#set ($users=$xwiki.rightsmanager.usersApi.getAllLocalUsersNames())
-#if ($members.size() &lt; $users.size())
-&lt;form name="addusertogroup" action="$doc.getURL("objectadd")" method="post"&gt;
-&lt;input type="hidden" id="classname" name="classname" value="XWiki.XWikiGroups" /&gt;
-&lt;input type="hidden" id="xredirect" name="xredirect" value="$doc.getURL()" /&gt;
-$msg.get("user") : 
-&lt;select id="XWiki.XWikiGroups_member" name="XWiki.XWikiGroups_member"&gt;
-#foreach ($user in $users)
-  #if (!$members.contains($user) &amp;&amp; $user != "XWiki.Admin")
-    &lt;option value="$user"&gt;#displayUserFullName($user)&lt;/option&gt;
+<content>&lt;div id="admincontainer"&gt;
+#roundedmediumtitletop($msg.get("groupmembers"))
+  #set($groupMembers = $doc.getObjects("XWiki.XWikiGroups"))
+  &lt;table width="400px" class="projectmembers"&gt;
+  #set($members = $xwiki.chronopolys.getNewList())
+  #foreach($obj in $groupMembers)
+    &lt;tr class="underlined" style="height:25px;"&gt;
+    #set ($memberpage=$doc.display("member", $obj))
+    #set ($ret = $members.add($memberpage))
+    &lt;td&gt;$xwiki.getLocalUserName($memberpage)&lt;/td&gt;
+    &lt;td&gt;$doc.display("role", $obj)&lt;/td&gt;
+    &lt;td&gt;
+      #if ($xwiki.hasAccessLevel("edit"))
+        &lt;a class="deletelink" href="$doc.getURL("objectremove", "classname=XWiki.XWikiGroups&amp;amp;classid=${obj.number}&amp;amp;xredirect=${doc.getURL('view')}")" title="$msg.get("removethisuserfromgroup")"&gt;$msg.get("removegroupmember")&lt;/a&gt;
+      #end
+    &lt;/td&gt;
+   &lt;/tr&gt;
   #end
-#end
-&lt;/select&gt;
-&lt;a class="addlink" href="" onclick="document.addusertogroup.submit();return false;" title="$msg.get("addtogroupmembers")" style="cursor:pointer;"&gt;$msg.get("addtogroupmembers")&lt;/a&gt;
-&lt;/form&gt;
+ &lt;/table&gt;
 #roundedbottom()
-#else
-#roundedtop()
-$msg.get("nomorewikiuserstoadd")
-#roundedbottom()
+#if ($xwiki.hasAccessLevel("edit"))
+  #set ($users=$xwiki.rightsmanager.usersApi.getAllLocalUsersNames())
+  ## sort by last name
+  #sortdocnamesbylastname($users)
+  #set($users_size = $users.size() - 1) ## because of XWiki.Admin
+  #if ($members.size() &lt; $users_size)
+    #roundedmediumtitletop($msg.get("addmembertogroup"))
+    &lt;form name="addusertogroup" action="$doc.getURL("objectadd")" method="post"&gt;
+    &lt;input type="hidden" id="classname" name="classname" value="XWiki.XWikiGroups" /&gt;
+    &lt;input type="hidden" id="xredirect" name="xredirect" value="$doc.getURL()" /&gt;
+    $msg.get("user") : 
+    &lt;select id="XWiki.XWikiGroups_member" name="XWiki.XWikiGroups_member"&gt;
+    #foreach ($user in $users)
+      #if (!$members.contains($user) &amp;&amp; $user != "XWiki.Admin")
+        &lt;option value="$user"&gt;#displayUserFullName($user)&lt;/option&gt;
+      #end
+    #end
+   &lt;/select&gt;
+   &lt;a class="addlink" href="" onclick="document.addusertogroup.submit();return false;" title="$msg.get("addtogroupmembers")" style="cursor:pointer;"&gt;$msg.get("addtogroupmembers")&lt;/a&gt;
+   &lt;/form&gt;
+   #roundedbottom()
+ #else
+   #roundedtop()
+   $msg.get("nomorewikiuserstoadd")
+   #roundedbottom()
+ #end
 #end
-
-#end
-
-</content></xwikidoc>
+&lt;/div&gt;</content>
+</xwikidoc>
