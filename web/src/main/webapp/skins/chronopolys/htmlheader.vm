@@ -30,7 +30,7 @@
 <script type="text/javascript" src="$xwiki.getSkinFile("xwiki.js")"></script>
 <script type="text/javascript" src="$xwiki.getSkinFile("browserdetect.js")"></script>
 ## <script type="text/javascript" src="$xwiki.getSkinFile("scripts/table/tablefilterNsort.js", true)"></script>
-#if ($doc.fullName == "Main.Projects")
+#if ($doc.fullName == "Main.Projects" || $doc.fullName == "Main.ProjectsZoom")
 <script type="text/javascript" src="/xwiki/colorpicker/AnchorPosition.js"></script>
 <script type="text/javascript" src="/xwiki/colorpicker/PopupWindow.js"></script>
 <script type="text/javascript" src="/xwiki/colorpicker/ColorPicker2.js"></script>
@@ -65,6 +65,9 @@
   taskcompleteimg = "$xwiki.getSkinFile("task-complete-large.gif")";
   #if ($isProject)
   currentContainer = "$project.get("container")";
+  confirmprojectcontainerchange = "$msg.get("confirmprojectcontainerchange")";
+  noactivities = "$msg.get("noactivities")";
+  noyards = "$msg.get("noyards")";
   #end
 </script>
 <style type="text/css" media="screen">
@@ -129,7 +132,7 @@ img {
 // ]]>
 </script>
 </head>
-<body onunload="return false; cancelEdit()" onload="prepareCancelEdit(); createColorPicker();" id="body" class="${context.action}body">
+<body onunload="return false; cancelEdit()" onload="prepareCancelEdit();" id="body" class="${context.action}body">
 <div id="xwikimaincontainer">
 <div id="xwikimaincontainerinner">
 #else
@@ -143,3 +146,4 @@ img {
 <script type="text/javascript" src="$xwiki.getSkinFile("skin.js")"></script>
 #end
 ##includeInContextNoPre("ChronoCode.JSCode")
+
