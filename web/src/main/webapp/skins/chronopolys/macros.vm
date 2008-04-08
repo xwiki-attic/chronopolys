@@ -612,23 +612,6 @@ $doc.display("content", $obj)
     #set($day = $dateobj.getDate())
 #end
  
-##------------------------------##
-## initialize a calendar object 
-## based on a string "dd/mm/yyyy"
-##------------------------------##
-#macro(initCalByStr $str)
-  #set($tmp = $str.split("/"))
-  #foreach($i in $tmp)
-    #if($velocityCount == 1)
-      #set($day = $xwiki.parseInt($i))
-    #elseif($velocityCount == 2)
-      #set($month = $xwiki.parseInt($i))
-    #else
-      #set($year = $xwiki.parseInt($i))
-    #end
-  #end
-#end
- 
 ##--------------------------------##
 ## checks if a date is after another
 ## (without taking in consideration
@@ -663,22 +646,24 @@ $doc.display("content", $obj)
     #if($type == "modifications" || $type == "deadlines")
       #initCalByDate($item.getDate())
       #set($tmp = $ci.set($year, $month, $day))
+      #dateIsAfter($item.getDate() $xwiki.getDate())
     ## tasks
     #elseif($type == "tasks")
         #set($tdoc = $xwiki.getDocument($item))
         #set($tobj = $tdoc.getObject("ChronoClasses.ProjectArticleClass"))
-        #set($tdate = $xwiki.chronopolys.getListTool().get($tobj.display("taskduedate", "view").split(" "), 0))
-        #initCalByStr($tdate)
+        #set($tdate = $tobj.getProperty("taskduedate").value)
+        #initCalByDate($tdate)
         #set($tmp = $ci.set($year, $month, $day))
+        #dateIsAfter($tdate $xwiki.getDate())
     #elseif($type == "meetings")
         #set($mdoc = $xwiki.getDocument($item))
         #set($mobj = $mdoc.getObject("ChronoClasses.ProjectArticleClass"))
-        #set($mdate = $xwiki.chronopolys.getListTool().get($mobj.display("meetingend", "view").split(" "), 0))
-        #initCalByStr($mdate)
+        #set($mdate = $mobj.getProperty("meetingend").value)
+        #initCalByDate($mdate)
         #set($tmp = $ci.set($year, $month, $day))
+        #dateIsAfter($mdate $xwiki.getDate())
     #end
     #set($diff = $xwiki.chronopolys.getDaysBetween($cc, $ci))
-    #dateIsAfter($item.getDate() $xwiki.getDate())
 #end
 
 ##-------------------------------------##
