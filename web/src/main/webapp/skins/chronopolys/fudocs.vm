@@ -40,7 +40,7 @@
   #set ($isProjectLeader = ($context.localUser == $projectLeader))
   #set ($isProjectCreator = ($context.localUser == $projectCreator))
   #set ($currentActivity=$xwiki.chronopolys.getProjectContainer($project.get("container")))
-  #set ($currentYard=$xwiki.chronopolys.getProjectContainer($currentActivity.display("parent", "view")))
-  #set ($currentAxis=$xwiki.chronopolys.getProjectContainer($currentYard.display("parent", "view")))
-  #set ($currentStyle=$xwiki.chronopolys.getProjectContainerStyle($currentAxis.display("uid", "view")))
+  #set ($currentYard=$xwiki.chronopolys.getProjectContainer($currentActivity.getParent()))
+  #set ($currentAxis=$xwiki.chronopolys.getProjectContainer($currentYard.getParent()))
+  #set ($currentStyle=$currentAxis.getStyle())
 #end

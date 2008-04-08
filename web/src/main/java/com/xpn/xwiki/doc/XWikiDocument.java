@@ -1366,7 +1366,8 @@ public class XWikiDocument
             // TODO: It would better to check if the field exists rather than catching an exception
             // raised by a NPE as this is currently the case here...
             log.warn("Failed to display field [" + fieldname + "] in [" + type
-                + "] mode for Object [" + (obj == null ? "NULL" : obj.getName()) + "]");
+                + "] mode for Object [" + (obj == null ? "NULL" : obj.getName()) + "]");            
+            ex.printStackTrace();
             return "";
         }
         finally {

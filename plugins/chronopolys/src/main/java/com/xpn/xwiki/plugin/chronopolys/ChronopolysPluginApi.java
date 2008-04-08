@@ -271,7 +271,7 @@ public class ChronopolysPluginApi extends Api
             .addProjectContainer(type, parent, name, desc, style, context);
     }
 
-    public Object getProjectContainer(String uid) throws XWikiException
+    public Folder getProjectContainer(String uid) throws XWikiException
     {
         return plugin.getFolderManager().getProjectContainer(uid, context);
     }

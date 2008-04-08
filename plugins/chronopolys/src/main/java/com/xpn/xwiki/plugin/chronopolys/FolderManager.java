@@ -26,7 +26,6 @@ import com.xpn.xwiki.cache.api.XWikiCacheNeedsRefreshException;
 import com.xpn.xwiki.cache.api.XWikiCache;
 import com.xpn.xwiki.cache.api.XWikiCacheService;
 import com.xpn.xwiki.api.Object;
-import com.xpn.xwiki.plugin.PluginException;
 import com.xpn.xwiki.objects.BaseObject;
 import com.xpn.xwiki.doc.XWikiDocument;
 import com.xpn.xwiki.web.XWikiMessageTool;
@@ -154,87 +153,36 @@ public class FolderManager
      */
     public boolean isProjectContainer(String uid, XWikiContext context) throws XWikiException
     {
-        return context.getWiki().exists(FOLDERS_SPACE + "." + uid, context);
-    }
-
-    /*
-     * Update project folder informations
-     *
-     * @param uid unique id
-     * @param name display name
-     * @param desc decription
-     * @param parent parent folder (uid)
-     * @param type type (axis, yard, activity)
-     * @param style html color
-     * @param order order
-     * @param context request context
-     * @throws XWikiException
-     */
-    public void updateProjectContainer(String uid, String name, String desc, String parent,
-        String type, String style, String order, XWikiContext context) throws XWikiException
-    {
-        if (!isProjectContainer(uid, context)) {
-            throw new ChronopolysPluginException(
-                ChronopolysPluginException.ERROR_CONTAINER_DOESNOTEXIST,
-                "This folder does not exist"
-            );
+        try {
+            new Folder(context.getWiki().getDocument(FOLDERS_SPACE + "." + uid, context), context);
+        } catch (ChronopolysPluginException e) {
+            return false;
         }
-        com.xpn.xwiki.api.Object container = getProjectContainer(uid, context);
-
-        if (!name.equals("")) {
-            container.set("name", name);
-        }
-        if (!desc.equals("")) {
-            container.set("desc", desc);
-        }
-        if (!parent.equals("")) {
-            container.set("parent", parent);
-        }
-        if (!type.equals("")) {
-            container.set("type", type);
-        }
-        if (!style.equals("")) {
-            container.set("style", style);
-        }
-        if (!style.equals("")) {
-            container.set("order", order);
-        }
-
-        XWikiDocument doc = context.getWiki().getDocument(container.getName(), context);
-        context.getWiki().saveDocument(doc, context);
-
-        this.flushFoldersCache();
+        return true;
     }
 
     /*
      * Get a folder by ID
      */
-    public Object getProjectContainer(String uid, XWikiContext context) throws XWikiException
+    public Folder getProjectContainer(String uid, XWikiContext context) throws XWikiException
     {
-        Object folder;
         String key = context.getDatabase() + ":" + uid;
+        Folder container = null;
 
         initFoldersCache(context);
         synchronized (key) {
             try {
                 // retrieve it from cache
-                folder = (Object) foldersCache.getFromCache(key);
+                container = (Folder) foldersCache.getFromCache(key);
             } catch (XWikiCacheNeedsRefreshException e) {
                 foldersCache.cancelUpdate(key);
-                XWikiDocument containerDoc =
-                    context.getWiki().getDocument(FOLDERS_SPACE + "." + uid, context);
-                BaseObject bobj = containerDoc.getObject(CLASS_FOLDER);
-                if (bobj == null) {
-                    throw new ChronopolysPluginException(
-                        ChronopolysPluginException.ERROR_CONTAINER_DOESNOTEXIST,
-                        "This folder does not exist : " + FOLDERS_SPACE + "." + uid
-                    );
-                }
-                folder = new Object(bobj, context);
-                foldersCache.putInCache(key, folder);
+                container =
+                    new Folder(context.getWiki().getDocument(FOLDERS_SPACE + "." + uid, context),
+                        context);
+                foldersCache.putInCache(key, container);
             }
         }
-        return folder;
+        return container;
     }
 
     /*
@@ -243,22 +191,19 @@ public class FolderManager
     public void deleteProjectContainer(String uid, boolean firstLevel, XWikiContext context)
         throws XWikiException
     {
-        Object container = getProjectContainer(uid, context);
-        Object obj;
+        Folder container = getProjectContainer(uid, context);
 
         if (firstLevel) {
             /* manage container's brothers order */
-            ArrayList<Object> broContainers = getProjectContainerBrothers(uid, true, context);
+            ArrayList<Folder> broContainers = getProjectContainerBrothers(uid, true, context);
 
+            Folder currentBroContainer;
             for (int i = 0; i < broContainers.size(); i++) {
-                obj = broContainers.get(i);
-                int newIndex = Integer.parseInt(obj.display("order", "view").toString()) - 1;
-                updateProjectContainer(obj.display("uid", "view").toString(), "", "", "", "", "",
-                    Integer.toString(newIndex), context);
+                broContainers.get(i).decrementOrder(context);
             }
         }
 
-        if (FOLDERS_LEAF.equals(container.display("type", "view"))) {
+        if (FOLDERS_LEAF.equals(container.getType())) {
             /* set child projects (if any) as orphans */
             ArrayList<Object> childProjects = getProjectContainerProjects(uid, context);
             if (childProjects != null) {
@@ -273,16 +218,15 @@ public class FolderManager
         }
 
         /* delete childs */
-        ArrayList<Object> childContainers = getProjectContainerChilds(uid, context);
+        ArrayList<Folder> childContainers = getProjectContainerChilds(uid, context);
         if (childContainers != null) {
             for (int i = 0; i < childContainers.size(); i++) {
-                obj = childContainers.get(i);
-                this.deleteProjectContainer((String) obj.display("uid", "view"), false, context);
+                this.deleteProjectContainer(childContainers.get(i).getUid(), false, context);
             }
         }
 
         /* delete container itself */
-        XWikiDocument doc = context.getWiki().getDocument(container.getName(), context);
+        XWikiDocument doc = context.getWiki().getDocument(container.getFullName(), context);
         context.getWiki().deleteDocument(doc, context);
 
         /* unvalidate cache */
@@ -298,17 +242,16 @@ public class FolderManager
      * @param elder if true returns the elder brothers, if false the younger ones
      * @return brothersList
      */
-    public ArrayList<Object> getProjectContainerBrothers(String uid, boolean elder,
+    public ArrayList<Folder> getProjectContainerBrothers(String uid, boolean elder,
         XWikiContext context) throws XWikiException
     {
-        Object container = getProjectContainer(uid, context);
-        ArrayList<Object> containers = getProjectContainerBrothers(uid, context);
-        Object obj;
+        Folder container = getProjectContainer(uid, context);
+        ArrayList<Folder> containers = getProjectContainerBrothers(uid, context);
+        Folder obj;
 
-        int index = Integer.parseInt(container.display("order", "view").toString());
+        int index = container.getOrder();
         for (int i = 0; i < containers.size(); i++) {
-            obj = containers.get(i);
-            if (index > Integer.parseInt(obj.display("order", "view").toString())) {
+            if (index > containers.get(i).getOrder()) {
                 if (elder) {
                     containers.remove(i);
                     i--;
@@ -326,22 +269,21 @@ public class FolderManager
     /*
      * Get the folder's brothers (same level, same parent)
      */
-    public ArrayList<Object> getProjectContainerBrothers(String uid, XWikiContext context)
+    public ArrayList<Folder> getProjectContainerBrothers(String uid, XWikiContext context)
         throws XWikiException
     {
-        Object container = getProjectContainer(uid, context);
-        ArrayList<Object> containers;
+        Folder container = getProjectContainer(uid, context);
+        ArrayList<Folder> containers;
 
-        if (FOLDERS_ROOT.equals(container.display("type", "view"))) {
+        if (FOLDERS_ROOT.equals(container.getType())) {
             containers = this.getRootFolders(context);
         } else {
-            containers = getProjectContainerChilds(
-                container.getProperty("parent").getValue().toString(), context);
+            containers = getProjectContainerChilds(container.getParent(), context);
         }
-        Object obj;
+        Folder obj;
         for (int i = 0; i < containers.size(); i++) {
             obj = containers.get(i);
-            if (uid.equals(obj.display("uid", "view"))) {
+            if (uid.equals(container.getUid())) {
                 containers.remove(i);
             }
         }
@@ -351,16 +293,14 @@ public class FolderManager
     /*
      * Get the folder's childs (same parent)
      */
-    public ArrayList<Object> getProjectContainerChilds(String uid, XWikiContext context)
+    public ArrayList<Folder> getProjectContainerChilds(String uid, XWikiContext context)
         throws XWikiException
     {
-        ArrayList<Object> containers = this.getProjectContainers(context);
+        ArrayList<Folder> containers = this.getProjectContainers(context);
         projectContainerComparator comp = new projectContainerComparator();
-        Object obj;
 
         for (int i = 0; i < containers.size(); i++) {
-            obj = containers.get(i);
-            if (!uid.equals(obj.getProperty("parent").getValue().toString())) {
+            if (!uid.equals(containers.get(i).getParent())) {
                 containers.remove(i);
                 i--;
             }
@@ -372,21 +312,17 @@ public class FolderManager
     /*
      * Get the folder's child at the specified index
      */
-    public Object getProjectContainerChild(String uid, int index, XWikiContext context)
+    public Folder getProjectContainerChild(String uid, int index, XWikiContext context)
         throws XWikiException
     {
-        List childs = getProjectContainerChilds(uid, context);
+        ArrayList<Folder> childs = getProjectContainerChilds(uid, context);
         Iterator it = childs.iterator();
-        Object obj;
+        Folder obj;
+
         while (it.hasNext()) {
-            obj = (Object) it.next();
-            if (!FOLDERS_ROOT.equals(obj.display("type", "view"))) { // handle badly filled parent
-                String orderStr = obj.display("order", "view").toString();
-                if (orderStr.equals("")) // handle badly filled order
-                {
-                    orderStr = "0";
-                }
-                if (Integer.parseInt(orderStr) == index) {
+            obj = (Folder) it.next();
+            if (!FOLDERS_ROOT.equals(obj.getType())) { // handle badly filled parent
+                if (obj.getOrder() == index) {
                     return obj;
                 }
             }
@@ -397,20 +333,16 @@ public class FolderManager
     /*
      * Get the root folder at the specified index
      */
-    public Object getRootProjectContainerFromIndex(int index, XWikiContext context)
+    public Folder getRootProjectContainerFromIndex(int index, XWikiContext context)
         throws XWikiException
     {
-        List containers = this.getRootFolders(context);
+        ArrayList<Folder> containers = this.getRootFolders(context);
         Iterator it = containers.iterator();
-        Object obj;
+        Folder obj;
+
         while (it.hasNext()) {
-            obj = (Object) it.next();
-            String orderStr = obj.display("order", "view").toString();
-            if (orderStr.equals("")) // handle badly filled order
-            {
-                orderStr = "0";
-            }
-            if (Integer.parseInt(orderStr) == index) {
+            obj = (Folder) it.next();
+            if (obj.getOrder() == index) {
                 return obj;
             }
         }
@@ -420,9 +352,9 @@ public class FolderManager
     /*
      * Get the roots folders list
      */
-    public ArrayList<Object> getRootFolders(XWikiContext context) throws XWikiException
+    public ArrayList<Folder> getRootFolders(XWikiContext context) throws XWikiException
     {
-        ArrayList list = null;
+        ArrayList<Folder> list = null;
         String key = context.getDatabase() + ":" + context.getLocalUser() + ":rootfolders";
 
         initFoldersCache(context);
@@ -433,14 +365,14 @@ public class FolderManager
             } catch (XWikiCacheNeedsRefreshException e) {
                 foldersCache.cancelUpdate(key);
 
-                list = new ArrayList<Object>();
+                list = new ArrayList<Folder>();
                 List allContainers = this.getProjectContainers(context);
                 Iterator it = allContainers.iterator();
 
                 // Build the list from the global folders list
                 while (it.hasNext()) {
-                    Object folder = (Object) it.next();
-                    if (FOLDERS_ROOT.equals(folder.display("type", "view"))) {
+                    Folder folder = (Folder) it.next();
+                    if (FOLDERS_ROOT.equals(folder.getType())) {
                         list.add(folder);
                     }
                 }
@@ -461,19 +393,19 @@ public class FolderManager
      * @param context the request context
      * @return foldersList
      */
-    public ArrayList<Object> getProjectContainers(XWikiContext context) throws XWikiException
+    public ArrayList<Folder> getProjectContainers(XWikiContext context) throws XWikiException
     {
-        ArrayList list = null;
+        ArrayList<Folder> list = null;
         String key = context.getDatabase() + ":" + context.getLocalUser() + ":folders";
-
         initFoldersCache(context);
+
         synchronized (key) {
             try {
                 // retreive folders list from cache
                 list = (ArrayList) foldersCache.getFromCache(key);
             } catch (XWikiCacheNeedsRefreshException e) {
                 foldersCache.cancelUpdate(key);
-                list = new ArrayList<Object>();
+                list = new ArrayList<Folder>();
 
                 if (plugin.getUserManager().isAdmin(context) ||
                     plugin.getUserManager().isManager(context))
@@ -485,13 +417,11 @@ public class FolderManager
                     List containerPages =
                         context.getWiki().getStore().searchDocumentsNames(hql, context);
                     Iterator it = containerPages.iterator();
-                    BaseObject bobj;
+
                     while (it.hasNext()) {
                         String docName = (String) it.next();
-                        bobj =
-                            context.getWiki().getDocument(docName, context).getObject(CLASS_FOLDER);
-                        Object obj = new Object(bobj, context);
-                        list.add(obj);
+                        list.add(
+                            new Folder(context.getWiki().getDocument(docName, context), context));
                     }
                 } else {
                     // basic users (builds the list from the user's projects)
@@ -506,21 +436,24 @@ public class FolderManager
                         if (!currentFolder.isNew()) {
                             // Let's climb the tree to its root (sic)
                             while (currentFolder != null) {
-                                // get the folder object and put it in the list if it's not already in it
-                                BaseObject bobj = currentFolder.getObject(CLASS_FOLDER);
-                                if (bobj != null) {
-                                    Object obj = new Object(bobj, context);
-                                    if (!list.contains(obj)) {
-                                        list.add(obj);
+                                // Get the folder object and put it in the list if it's not already in it
+                                try {
+                                    Folder currentFolderObj = new Folder(currentFolder, context);
+
+                                    // Add the folder to the list
+                                    if (!list.contains(currentFolderObj)) {
+                                        list.add(currentFolderObj);
                                     }
-                                    String parent = currentFolder.getStringValue("parent");
+
+                                    // Retreive parent
+                                    String parent = currentFolderObj.getParent();
                                     if (parent != null && !parent.equals("")) {
                                         currentFolder = context.getWiki()
                                             .getDocument(FOLDERS_SPACE + "." + parent, context);
                                     } else {
                                         currentFolder = null;
                                     }
-                                } else {
+                                } catch (Exception ex) {
                                     currentFolder = null;
                                 }
                             }
@@ -531,7 +464,7 @@ public class FolderManager
             }
         }
 
-        return (ArrayList<Object>) list.clone();
+        return (ArrayList<Folder>) list.clone();
     }
 
     /*
@@ -545,31 +478,30 @@ public class FolderManager
     public String moveProjectContainer(String uid, boolean moveUp, XWikiContext context)
         throws XWikiException
     {
-        Object container = getProjectContainer(uid, context);
+        Folder container = getProjectContainer(uid, context);
 
-        int oldindex = Integer.parseInt(container.display("order", "view").toString());
+        int oldindex = container.getOrder();
         int newindex;
         if (moveUp) {
             newindex = oldindex - 1;
         } else {
             newindex = oldindex + 1;
         }
-        Object replacedContainer;
-        if (FOLDERS_ROOT.equals(container.display("type", "view"))) {
+        Folder replacedContainer;
+        if (FOLDERS_ROOT.equals(container.getType())) {
             replacedContainer = getRootProjectContainerFromIndex(newindex, context);
         } else {
             replacedContainer = getProjectContainerChild(
-                container.getProperty("parent").getValue().toString(), newindex, context);
+                container.getParent(), newindex, context);
         }
         if (replacedContainer != null) {
-            replacedContainer.set("order", container.display("order", "view"));
-            container.set("order", newindex);
+            replacedContainer.setOrder(container.getOrder(), context);
+            container.setOrder(newindex, context);
         } else {
             // TODO : throw exception
         }
         flushFoldersCache();
-        return container.display("uid", "view").toString() + " " +
-            replacedContainer.display("uid", "view").toString();
+        return container.getUid() + " " + replacedContainer.getUid();
     }
 
     /*
@@ -578,7 +510,7 @@ public class FolderManager
     public int getLastProjectContainerIndex(String parent, XWikiContext context)
         throws XWikiException
     {
-        ArrayList<Object> list;
+        ArrayList<Folder> list;
         if (parent != null && !parent.equals("")) {
             list = getProjectContainerChilds(parent, context);
         } else {
@@ -592,41 +524,7 @@ public class FolderManager
      */
     public String getProjectContainerStyle(String uid, XWikiContext context) throws XWikiException
     {
-        String style;
-        Object container = null;
-        try {
-            container = getProjectContainer(uid, context);
-        } catch (Exception e) {
-            return "gainsboro";
-        }
-        String key = context.getDatabase() + ":" + uid + ":style";
-
-        initFoldersCache(context);
-        synchronized (key) {
-            try {
-                // retreive projects list from cache
-                style = (String) foldersCache.getFromCache(key);
-            } catch (XWikiCacheNeedsRefreshException e) {
-                foldersCache.cancelUpdate(key);
-                try {
-                    if (FOLDERS_ROOT.equals(container.display("type", "view"))) {
-                        style = container.display("style", "view").toString();
-                    } else {
-                        Object parent = getProjectContainer(
-                            container.display("parent", "view").toString(), context);
-                        while (!FOLDERS_ROOT.equals(parent.display("type", "view").toString())) {
-                            parent = getProjectContainer(
-                                parent.display("parent", "view").toString(), context);
-                        }
-                        style = parent.display("style", "view").toString();
-                    }
-                } catch (Exception ex) {
-                    style = "gainsboro";
-                }
-                foldersCache.putInCache(key, style);
-            }
-        }
-        return style;
+        return getProjectContainer(uid, context).getStyle();
     }
 
     /*
@@ -636,6 +534,7 @@ public class FolderManager
         throws XWikiException
     {
         ArrayList<Object> list = null;
+
         String key = context.getDatabase() + ":" + context.getLocalUser() + ":" + uid + ":childs";
 
         initFoldersCache(context);
@@ -649,12 +548,11 @@ public class FolderManager
                 list = new ArrayList<Object>();
 
                 // recursively call this method passing childs UID's
-                ArrayList<Object> childs = getProjectContainerChilds(uid, context);
+                ArrayList<Folder> childs = getProjectContainerChilds(uid, context);
                 Iterator it = childs.iterator();
                 while (it.hasNext()) {
-                    Object obj = (Object) it.next();
-                    String objUid = (String) obj.display("uid", "view");
-                    ArrayList<Object> subList = getProjectContainerProjects(objUid, context);
+                    Folder obj = (Folder) it.next();
+                    ArrayList<Object> subList = getProjectContainerProjects(obj.getUid(), context);
                     if (subList != null) {
                         list.addAll(subList);
                     }
@@ -697,9 +595,7 @@ public class FolderManager
     {
         public int compare(java.lang.Object o1, java.lang.Object o2)
         {
-            int io1 = ((Number) ((Object) o1).getProperty("order").getValue()).intValue();
-            int io2 = ((Number) ((Object) o2).getProperty("order").getValue()).intValue();
-            return io1 - io2;
+            return ((Folder)o1).getOrder() - ((Folder)o2).getOrder();
         }
     }
 }
