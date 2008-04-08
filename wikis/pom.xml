@@ -11,5 +11,6 @@
   <description>XWiki Products - Chronopolys - Wikis - Parent POM</description>
   <modules>
     <module>chronopolys-administrator</module>
+    <module>chronopolys-initial-data</module>    
   </modules>
 </project>
