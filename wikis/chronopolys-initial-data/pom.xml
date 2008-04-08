@@ -9,6 +9,14 @@
   <name>XWiki Products - Chronopolys - Wikis - Chronopolys Initial Data</name>
   <packaging>xar</packaging>
   <description>XWiki Products - Chronopolys - Wikis - Chronopolys Initial Data</description>
+  <dependencies>
+    <dependency>
+      <groupId>com.avane.xwiki.products</groupId>
+      <artifactId>xwiki-product-chronopolys-wiki-administrator</artifactId>
+      <version>${pom.version}</version>
+      <type>xar</type>
+    </dependency>
+  </dependencies>  
   <build>
     <resources>
       <resource>
