@@ -1684,7 +1684,7 @@ function observeOption(event) {
 
 //observing dropdown options
 function observeDropDownOptions(select) {
-  var options = select.select('li');
+  var options = document.getElementsByTagName('li');
   for (var j = 0; j < options.length; j++) {
    var option = options[j];
    Event.observe(option, 'click', observeOption, false);
