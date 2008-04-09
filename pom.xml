@@ -30,6 +30,7 @@
   <modules>    
     <module>plugins</module>
     <module>web</module>    
+    <module>applications</module>
     <module>wikis</module>
     <module>database</module>
     <module>distribution</module>
