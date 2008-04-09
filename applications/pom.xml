@@ -12,7 +12,8 @@
   <modules>
     <module>developer-tools</module>
     <module>farm-manager</module>
-    <module>initial-sample-data</module>    
-    <module>initial-users-groups</module>    
+    <module>initial-accounts-settings</module>
+    <module>initial-sample-data</module>  
+    <module>panels</module>    
   </modules>
 </project>

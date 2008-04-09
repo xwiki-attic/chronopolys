@@ -10,7 +10,8 @@
   <name>XWiki Products - Chronopolys - Wikis - Parent POM</name>
   <description>XWiki Products - Chronopolys - Wikis - Parent POM</description>
   <modules>
-    <module>chronopolys-administrator</module>
-    <module>chronopolys-initial-data</module>    
+    <module>chronopolys-base</module>
+    <module>chronopolys-development</module>
+    <module>chronopolys-install</module>    
   </modules>
 </project>

@@ -12,7 +12,7 @@
   <dependencies>
     <dependency>
       <groupId>com.avane.xwiki.products</groupId>
-      <artifactId>xwiki-product-chronopolys-wiki-initial-data</artifactId>      
+      <artifactId>xwiki-product-chronopolys-wiki-development</artifactId>      
       <version>${pom.version}</version>
       <type>xar</type>
     </dependency>
@@ -48,7 +48,7 @@
           <version>${platform.tool.xar-plugin.version}</version>
           <configuration>
             <groupId>com.avane.xwiki.products</groupId>
-            <artifactId>xwiki-product-chronopolys-wiki-initial-data</artifactId>
+            <artifactId>xwiki-product-chronopolys-wiki-development</artifactId>
             <outputDirectory>${project.build.directory}/xar</outputDirectory>
           </configuration>
           <executions>
