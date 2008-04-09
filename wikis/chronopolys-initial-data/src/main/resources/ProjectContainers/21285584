@@ -7,10 +7,10 @@
 <defaultLanguage></defaultLanguage>
 <translation>0</translation>
 <parent>86751116</parent>
-<creator>XWiki.Administrator</creator>
-<author>XWiki.Administrator</author>
+<creator>XWiki.Admin</creator>
+<author>XWiki.Admin</author>
 <customClass></customClass>
-<contentAuthor>XWiki.Administrator</contentAuthor>
+<contentAuthor>XWiki.Admin</contentAuthor>
 <creationDate>1207668018000</creationDate>
 <date>1207668032000</date>
 <contentUpdateDate>1207668032000</contentUpdateDate>

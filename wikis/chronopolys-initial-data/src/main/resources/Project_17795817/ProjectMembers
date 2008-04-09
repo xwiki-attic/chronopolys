@@ -8,9 +8,9 @@
 <translation>0</translation>
 <parent></parent>
 <creator>XWiki.Admin</creator>
-<author>XWiki.Administrator</author>
+<author>XWiki.Admin</author>
 <customClass></customClass>
-<contentAuthor>XWiki.Administrator</contentAuthor>
+<contentAuthor>XWiki.Admin</contentAuthor>
 <creationDate>1207662969000</creationDate>
 <date>1207668215000</date>
 <contentUpdateDate>1207668215000</contentUpdateDate>
@@ -77,7 +77,7 @@
 <number>1</number>
 <className>XWiki.XWikiGroups</className>
 <property>
-<member>XWiki.Administrator</member>
+<member>XWiki.Admin</member>
 </property>
 </object>
 <object>

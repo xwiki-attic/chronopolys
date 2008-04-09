@@ -83,7 +83,7 @@
 <number>1</number>
 <className>XWiki.XWikiGroups</className>
 <property>
-<member>XWiki.Administrator</member>
+<member>XWiki.Admin</member>
 
 </property>
 </object>
