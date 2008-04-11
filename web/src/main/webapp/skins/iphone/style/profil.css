@@ -1,0 +1,20 @@
+/*
+ Profil Page
+*/
+
+#page-profil .vcard .fn {
+    font-weight: bolder;
+}
+
+#page-profil .vcard .adr {
+    color: rgba(0,0,0,0.9);
+}
+
+#page-profil .vcard .tel :first-child,
+#page-profil .vcard .mail :first-child {
+    color: rgba(0,0,0,0.6);
+}
+
+#page-profil tr td:first-child {
+    color: rgba(0,0,0,0.6);
+}

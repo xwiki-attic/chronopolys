@@ -14,6 +14,7 @@
     <module>farm-manager</module>
     <module>initial-accounts-settings</module>
     <module>initial-sample-data</module>  
+    <module>iphone</module>    
     <module>panels</module>    
   </modules>
 </project>

@@ -1,0 +1,23 @@
+/*
+ Plog Page
+*/
+#page-plog dt {
+ font-weight:bold;
+}
+#page-plog #description{
+    padding: 10px;
+}
+
+.commands> a   {
+ padding-left: 20px;
+ content: url("icons/24/add.png"); 
+}
+
+.commands> a + a{
+ padding-left: 5px;
+ content: url("icons/24/edit.png");
+}
+
+input[type="submit"]{
+ width: auto;
+}

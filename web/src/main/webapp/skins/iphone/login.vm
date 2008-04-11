@@ -1,0 +1,54 @@
+#if($context.user!="XWiki.XWikiGuest")
+#if($request.xredirect)
+$response.sendRedirect($request.xredirect)
+#else
+$response.sendRedirect($xwiki.getURL("ChronoMobile.SupervisionList"))
+#end
+#elseif($doc.fullName != "XWiki.XWikiLogin")
+#set($qs = "")
+#set($qs = $request.queryString)
+#if(!$request.getParameter("xredirect"))
+#set($qs = "xredirect=$xwiki.getURLEncoded($doc.getURL('view'))&${qs}")
+#end
+$response.sendRedirect($xwiki.getURL("XWiki.XWikiLogin", "login", $qs))
+#else
+###
+### Login page
+###
+###
+#set ($skin = $xwiki.getSkin())#set($prefdoc = $!xwiki.getDocument("XWiki.XWikiPreferences"))#set($logoname = $xwiki.getSkinPreference("logo", "defaultLogoCustomer.png"))#set($logo = $!prefdoc.getAttachment($logoname))#if(!$logo)#set($logourl = $xwiki.getSkinFile($logoname))#else#set($logourl = $prefdoc.getAttachmentURL($logo.filename, "download"))#end
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+ <head>
+  <title>$xwiki.getWebPreference("title")</title>
+  <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+  <link href="$xwiki.getSkinFile("style/iphone.css")" rel="stylesheet" type="text/css" />
+  <link rel="icon" href="$logourl" type="image/png" title="Customer" />
+  <link rel="apple-touch-icon" href="$xwiki.getSkinFile("style/icon.png")"/>
+ </head>
+<body id="page-login">
+
+<div id="login-logo">
+<img src="$!logourl" alt="Chronopolys"/><!-- $logoname $!prefdoc.getAttachment($logoname) -->
+</div>
+
+<form id="loginForm" action="$doc.getURL("loginsubmit")?skin=$skin" method="post">
+<input type="hidden" name="xredirect" value="$!request.xredirect" />
+
+#set($message = $msg.get($xwiki.parseMessage()))
+#if($message)<div class="error">$message</div>#end
+
+<fieldset id="global-commands-login">
+ <legend> <a>Log-in</a></legend>
+<input type="hidden" name="xredirect" value="" />
+<table>
+<tr><th><label for="j_username">$msg.get("username")</label></th><td><input type="text" id="j_username" name="j_username" value="" /></td></tr>
+<tr><th><label for="j_password">$msg.get("password")</label></th><td><input type="password" id="j_password" name="j_password" value="" /></td></tr>
+<tr><td colspan="2"><div id="commands-login"><input type="submit" value="$msg.get("login")" /></div></td></tr>
+</table>
+</fieldset>
+</form>
+</body>
+</html>
+#end

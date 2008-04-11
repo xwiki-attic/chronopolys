@@ -16,6 +16,12 @@
       <version>${platform.plugin.scheduler.version}</version>
       <type>xar</type>
     </dependency>
+    <dependency>
+      <groupId>com.avane.xwiki.products</groupId>
+      <artifactId>xwiki-product-chronopolys-application-iphone</artifactId>
+      <version>${pom.version}</version>
+      <type>xar</type>
+    </dependency>
   </dependencies>
   <build>
     <resources>

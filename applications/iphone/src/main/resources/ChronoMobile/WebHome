@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xwikidoc>
+<web>ChronoMobile</web>
+<name>WebHome</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>XWiki.Admin</creator>
+<author>XWiki.Admin</author>
+<customClass></customClass>
+<contentAuthor>XWiki.Admin</contentAuthor>
+<creationDate>1201788257000</creationDate>
+<date>1202392985000</date>
+<contentUpdateDate>1203071148000</contentUpdateDate>
+<version>1.1</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<minorEdit>false</minorEdit>
+<object>
+<class>
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<cache>0</cache>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+<name>tags</name>
+<number>1</number>
+<prettyName>Tags</prettyName>
+<relationalStorage>1</relationalStorage>
+<separator> </separator>
+<separators> ,|</separators>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<values></values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>ChronoMobile.WebHome</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<property>
+<tags/>
+</property>
+</object>
+<content>#*
+#set ($attributes = $request.getSession(true).getAttributeNames())
+&lt;h2&gt;Session&lt;/h2&gt;
+&lt;table&gt;
+#foreach ($attribute in $attributes )
+&lt;tr&gt;&lt;td&gt;$attribute&lt;/td&gt;&lt;td&gt;$request.getSession(true).getAttribute($attribute).getClass()&lt;/td&gt;&lt;td&gt;$request.getSession(true).getAttribute($attribute)&lt;/td&gt;&lt;/tr&gt;
+#end
+&lt;/table&gt;
+&lt;h2&gt;Request&lt;/h2&gt;
+#set ($attributes = $request.getAttributeNames())
+&lt;table&gt;
+#foreach ($attribute in $attributes )
+&lt;tr&gt;&lt;td&gt;$attribute&lt;/td&gt;&lt;td&gt;$request.getAttribute($attribute).getClass()&lt;/td&gt;&lt;td&gt;$request.getAttribute($attribute)&lt;/td&gt;&lt;/tr&gt;
+#end
+&lt;/table&gt;
+*#
+#set ($pageKey = "welcome")
+#set ($pageTitle = "Bienvenue !")
+#set ($projectsNb = $xwiki.chronopolys.getMyProjectsNb())
+#set ($deadlineNb = $xwiki.chronopolys.getMyNextDeadlines().size())
+#set ($deadlineNbNextWeek = $xwiki.chronopolys.getMyNextDeadlines(7).size())
+#set ($updatesNbLastWeek = $xwiki.chronopolys.getMyLastModifications().size())
+#set ($skin = $xwiki.getSkin())
+ &lt;fieldset id="global-commands-user" title="Accueil" selected="true"&gt;
+ &lt;legend&gt; &lt;a&gt;$!xwiki.getUserName($context.user, false)&lt;/a&gt;&lt;/legend&gt;
+ &lt;ul id="global-menu" title="Global" &gt; 
+   &lt;li&gt;&lt;span&gt;Supervision&lt;/span&gt;
+    &lt;ul&gt;
+     &lt;li&gt;&lt;a class="titled" href="$xwiki.getURL("${doc.web}.Projects")?skin=$skin" title="$projectsNb en cours"&gt;Projets&lt;/a&gt;&lt;/li&gt;
+     &lt;li&gt;&lt;a class="titled" href="$xwiki.getURL("${doc.web}.DeadLines")?skin=$skin" title="$deadlineNb dont $deadlineNbNextWeek dans une semaine"&gt;Échéances&lt;/a&gt;&lt;/li&gt;
+     &lt;li&gt;&lt;a class="titled" href="$xwiki.getURL("${doc.web}.Updates")?skin=$skin" title="$updatesNbLastWeek la semaine dernière"&gt;Modifications&lt;/a&gt; &lt;/li&gt;     
+    &lt;/ul&gt;
+   &lt;/li&gt;
+   &lt;li&gt;&lt;a href="$xwiki.getURL("${doc.web}.Profile")?skin=$skin&amp;amp;id=$context.user"&gt;Profil&lt;/a&gt; &lt;/li&gt;
+   &lt;li&gt;&lt;a href="$xwiki.getURL("${doc.web}.Users")?skin=$skin" &gt;Annuaire&lt;/a&gt; &lt;/li&gt;
+ &lt;/ul&gt;
+ &lt;/fieldset&gt;</content>
+</xwikidoc>

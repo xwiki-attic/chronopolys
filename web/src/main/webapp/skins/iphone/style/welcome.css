@@ -1,0 +1,8 @@
+/*
+ ChronoMobile/Welcome Page
+*/
+a.titled::after{
+    display:block;
+    font-size: 15px;
+    content: attr(title);
+}

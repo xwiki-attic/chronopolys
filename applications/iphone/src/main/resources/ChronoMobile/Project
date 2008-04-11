@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xwikidoc>
+<web>ChronoMobile</web>
+<name>Project</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>XWiki.Admin</creator>
+<author>XWiki.Admin</author>
+<customClass></customClass>
+<contentAuthor>XWiki.Admin</contentAuthor>
+<creationDate>1201884344000</creationDate>
+<date>1205938225000</date>
+<contentUpdateDate>1205938225000</contentUpdateDate>
+<version>21.1</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<minorEdit>false</minorEdit>
+<object>
+<class>
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<cache>0</cache>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+<name>tags</name>
+<number>1</number>
+<prettyName>Tags</prettyName>
+<relationalStorage>1</relationalStorage>
+<separator> </separator>
+<separators> ,|</separators>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<values></values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>ChronoMobile.Project</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<property>
+<tags/>
+</property>
+</object>
+<content>#includeForm("ChronoMobile.Macro")
+#set ($project = $xwiki.chronopolys.getProject($request.id))
+#initCurrentProjectVars($project)
+#set ($pageKey = "project")
+#set ($pageTitle = "Projet " + $project.name)
+#set ($pageColor = $currentProjectColor)
+#set ($doc = $project.getProjectHomeDoc())
+#set ($obj = $doc.getObject("ChronoClasses.ProjectClass"))
+#set ($sql = ", BaseObject as obj where obj.name=doc.fullName and doc.web='$doc.web' and obj.className='ChronoClasses.ProjectArticleClass' order by doc.creationDate desc")
+&lt;div id="fil"&gt;&lt;a href="$xwiki.getURL("ChronoMobile.WebHome")" title="Retour à l'écran d'accueil"&gt;Accueil&lt;/a&gt;&lt;a href="$xwiki.getURL("ChronoMobile.Projects")" title="Retour à l'écran Mes Projets"&gt;Projets&lt;/a&gt;&lt;/div&gt;
+&lt;fieldset id="description"&gt;
+ &lt;legend class="pageColor" title="Projet ${project.name}"&gt;&lt;a&gt;$project.name&lt;/a&gt;&lt;/legend&gt;$obj.desc.value&lt;/fieldset&gt;
+&lt;fieldset id="plog"&gt;
+ &lt;legend class="pageColor"&gt; &lt;a&gt;PLOG&lt;/a&gt;&lt;/legend&gt;
+&lt;ul class="liste-plogs"&gt;
+#set($counter = 0)
+#foreach ($item in $xwiki.searchDocuments($sql, 10, $counter))
+ #if ($xwiki.hasAccessLevel("view", $context.user, "${context.database}:${item}"))
+  #set($counter = $counter+1)
+  #set($bentrydoc = $xwiki.getDocument($item))
+  #set($bentryobj = $bentrydoc.getObject("ChronoClasses.ProjectArticleClass"))
+  #set($creationDate = $xwiki.formatDate($bentrydoc.creationDate,"dd/MM/yyyy à mm:hh"))
+#set($plogstatus = "")#if($bentrydoc.taskcompletion == "100%" || $bentrydoc.getValue("meetingend").before($xwiki.getCurrentDate()))#set($plogstatus = "completed")#end
+&lt;li class="plog $bentrydoc.type $plogstatus"&gt;&lt;a href="$xwiki.getURL("ChronoMobile.Plog")?id=$bentrydoc.fullName"&gt;$bentrydoc.title&lt;/a&gt;&lt;span class="path"&gt;#if ($bentrydoc.type == "task")
+ Pour le $xwiki.formatDate($bentrydoc.getValue("taskduedate"),"dd/MM/yyyy") pour #displayUserProfileLink($bentrydoc.getValue("taskassignee")) faite à $bentrydoc.taskcompletion 
+#elseif ($bentrydoc.type == "meeting") 
+ Rendez-vous $bentrydoc.meetingstart à $bentrydoc.meetinglocation #* #displayRsvps($bentrydoc) *# #else
+  Créé le $creationDate par #displayUserProfileLink($bentrydoc.author)
+#end&lt;/span&gt;&lt;/li&gt;
+ #end
+#end
+&lt;/ul&gt;
+&lt;/fieldset&gt;
+&lt;fieldset id="participants"&gt;
+ &lt;legend class="pageColor"&gt; &lt;a&gt;Participants&lt;/a&gt;&lt;/legend&gt;
+&lt;ul class="star"&gt;
+#foreach ($member in $project.members)
+&lt;li&gt;#displayUserProfileLink($member)&lt;/li&gt;
+#end
+&lt;/ul&gt;
+&lt;/fieldset&gt;
+&lt;fieldset id="documents"&gt;
+ &lt;legend class="pageColor"&gt; &lt;a&gt;Documents&lt;/a&gt;&lt;/legend&gt;
+#set($docAttachments = $xwiki.getDocument("${request.id}.ProjectDocuments"))
+&lt;ul class="star"&gt;
+#foreach ($attach in $docAttachments.getAttachmentList())
+&lt;li&gt;&lt;a class="attachment" href="$docAttachments.getAttachmentURL("${attach.filename}", "download")" type="$attach.mimeType" title="test"&gt;#packName($attach.filename)&lt;/a&gt;&lt;span class="detail"&gt;#dynamicsize($attach.filesize) Version $attach.version&lt;/span&gt;&lt;/li&gt;
+#end
+&lt;/ul&gt;
+&lt;/fieldset&gt;
+&lt;fieldset id="planning"&gt;
+ &lt;legend class="pageColor"&gt; &lt;a&gt;Planning&lt;/a&gt;&lt;/legend&gt;
+&lt;ul class="star"&gt;
+#foreach ($phase in $project.phases)
+&lt;li class="phasis#if($phase.iscurrentphase != "No") current#end#if($phase.type == "Milestone") milestone#end"&gt;&lt;span&gt;$phase.display("name","view")&lt;/span&gt;&lt;span class="detail"&gt;Du $phase.display("start","view") au $phase.display("end","view") : $phase.display("desc","view")&lt;/span&gt;&lt;/li&gt;
+#end
+&lt;/ul&gt;
+&lt;/fieldset&gt;
+&lt;div id="update"&gt;Dernière modification le $xwiki.formatDate($doc.contentUpdateDate,"dd/MM/yyyy à mm:hh")&lt;/div&gt;</content>
+</xwikidoc>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xwikidoc>
+<web>ChronoMobile</web>
+<name>Plog</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>XWiki.Admin</creator>
+<author>XWiki.Demo</author>
+<customClass></customClass>
+<contentAuthor>XWiki.Demo</contentAuthor>
+<creationDate>1202395914000</creationDate>
+<date>1207741954000</date>
+<contentUpdateDate>1207741954000</contentUpdateDate>
+<version>114.1</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<minorEdit>false</minorEdit>
+<object>
+<class>
+<name>XWiki.TagClass</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<tags>
+<cache>0</cache>
+<displayType>input</displayType>
+<multiSelect>1</multiSelect>
+<name>tags</name>
+<number>1</number>
+<prettyName>Tags</prettyName>
+<relationalStorage>1</relationalStorage>
+<separator> </separator>
+<separators> ,|</separators>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<values></values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</tags>
+</class>
+<name>ChronoMobile.Plog</name>
+<number>0</number>
+<className>XWiki.TagClass</className>
+<property>
+<tags/>
+</property>
+</object>
+<content>#includeForm("ChronoMobile.Macro")
+#set ($doc = $xwiki.getDocument($request.id))
+#set ($pageKey = "plog")
+#set ($pageTitle = "PLOG " + $doc.name)
+#set ($project = $xwiki.chronopolys.getProject($doc.space))
+#initCurrentProjectVars($project)
+#set ($pageColor = $currentProjectColor)
+#if($request.command=="new-comment")&lt;p&gt;Comment:$request.comment&lt;/p&gt;#end
+&lt;div id="fil"&gt;&lt;a href="$xwiki.getURL("ChronoMobile.WebHome")" title="Retour à l'écran d'accueil"&gt;Accueil&lt;/a&gt;&lt;a href="$xwiki.getURL("ChronoMobile.Projects")" title="Retour à l'écran Mes Projets"&gt;Projets&lt;/a&gt;&lt;a href="$xwiki.getURL("ChronoMobile.Project")?id=$project.space"&gt;$project.get("name")&lt;/a&gt;&lt;/div&gt;
+&lt;fieldset id="description"&gt;
+ &lt;legend class="pageColor"&gt; &lt;a&gt;$doc.title&lt;/a&gt;&lt;/legend&gt;
+ &lt;div&gt;$doc.display("content")&lt;/div&gt;
+#if ($doc.type == "task")
+&lt;dl class="task"&gt;
+&lt;dt&gt;$msg.get("taskduedate")&lt;/dt&gt;&lt;dd&gt;$doc.taskduedate&lt;/dd&gt;
+&lt;dt&gt;$msg.get("taskassignee")&lt;/dt&gt;&lt;dd&gt;#displayUserProfileLink($doc.getValue("taskassignee"))&lt;/dd&gt;
+&lt;dt&gt;$msg.get("taskcompletion")&lt;/dt&gt;&lt;dd&gt;
+#set($projectArticle = $doc.getObject("ChronoClasses.ProjectArticleClass"))
+#if($context.user==$doc.getValue("taskassignee"))
+&lt;form action="$xwiki.getURL("$doc.fullName","saveandcontinue")"&gt;
+ &lt;input type="hidden" name="xredirect" value="$xwiki.getURL("ChronoMobile.Plog","view")?id=${doc.fullName}" /&gt;
+ &lt;select name="ChronoClasses.ProjectArticleClass_0_taskcompletion"&gt;
+  &lt;option value="0%"#if($projectArticle.taskcompletion == "0%") selected="selected"#{end}&gt;0%&lt;/option&gt;
+  &lt;option value="10%"#if($projectArticle.taskcompletion == "10%") selected="selected"#{end}&gt;10%&lt;/option&gt;
+  &lt;option value="20%"#if($projectArticle.taskcompletion == "20%") selected="selected"#{end}&gt;20%&lt;/option&gt;
+  &lt;option value="30%"#if($projectArticle.taskcompletion == "30%") selected="selected"#{end}&gt;30%&lt;/option&gt;
+  &lt;option value="40%"#if($projectArticle.taskcompletion == "40%") selected="selected"#{end}&gt;40%&lt;/option&gt;
+  &lt;option value="50%"#if($projectArticle.taskcompletion == "50%") selected="selected"#{end}&gt;50%&lt;/option&gt;
+  &lt;option value="60%"#if($projectArticle.taskcompletion == "60%") selected="selected"#{end}&gt;60%&lt;/option&gt;
+  &lt;option value="70%"#if($projectArticle.taskcompletion == "70%") selected="selected"#{end}&gt;70%&lt;/option&gt;
+  &lt;option value="80%"#if($projectArticle.taskcompletion == "80%") selected="selected"#{end}&gt;80%&lt;/option&gt;
+  &lt;option value="90%"#if($projectArticle.taskcompletion == "90%") selected="selected"#{end}&gt;90%&lt;/option&gt;
+  &lt;option value="100%"#if($projectArticle.taskcompletion == "100%") selected="selected"#{end}&gt;100%&lt;/option&gt;
+ &lt;/select&gt;
+ &lt;input type="submit" /&gt;
+&lt;/form&gt;
+#else
+ &lt;span&gt;$projectArticle.taskcompletion&lt;/span&gt;
+#end
+&lt;/dd&gt;
+&lt;/dl&gt;
+#elseif ($doc.type == "meeting")
+&lt;dl&gt;
+&lt;dt&gt;$msg.get("meetingstart")&lt;/dt&gt;&lt;dd&gt;$doc.meetingstart&lt;/dd&gt;
+&lt;dt&gt;$msg.get("meetingend")&lt;/dt&gt;&lt;dd&gt;$doc.meetingend&lt;/dd&gt;
+&lt;dt&gt;$msg.get("meetinglocation")&lt;/dt&gt;&lt;dd&gt;$doc.meetinglocation&lt;/dd&gt;
+&lt;/dl&gt;
+#end
+&lt;/fieldset&gt;
+#if ($doc.type == "meeting")
+&lt;fieldset id="meeting-guests"&gt;
+ &lt;legend class="pageColor"&gt; &lt;a&gt;Invités&lt;/a&gt;&lt;/legend&gt;
+&lt;ul&gt;
+#foreach ($invitation in $doc.getObjects("ChronoClasses.ProjectArticleRsvpClass"))
+&lt;li class="$invitation.status"&gt;
+#set($docUser = $xwiki.getDocument($invitation.member))
+&lt;div&gt;$docUser.display("last_name") $docUser.display("first_name")&lt;/div&gt;
+#if($invitation.member == $context.user)
+&lt;form action="$xwiki.getURL("$doc.fullName","saveandcontinue")"&gt;
+ &lt;input type="hidden" name="xredirect" value="$xwiki.getURL("ChronoMobile.Plog","view")?id=${doc.fullName}" /&gt;
+ &lt;select name="ChronoClasses.ProjectArticleRsvpClass_${invitation.getNumber()}_status"&gt;
+  &lt;option value="yes"#if($invitation.status=="yes")selected="selected"#{end}&gt;$msg.get("meetingyes")&lt;/option&gt;
+  &lt;option value="no"#if($invitation.status=="no")selected="selected"#{end}&gt;$msg.get("meetingno")&lt;/option&gt;
+  &lt;option value="maybe"#if($invitation.status=="maybe")selected="selected"#{end}&gt;$msg.get("meetingmaybe")&lt;/option&gt;
+ &lt;/select&gt;
+ &lt;input type="submit" /&gt;
+&lt;/form&gt;
+#else
+ &lt;span&gt;$msg.get("meeting$invitation.status")&lt;/span&gt;
+#end
+&lt;/li&gt;
+#end
+&lt;/ul&gt;
+&lt;/fieldset&gt;
+#end
+&lt;fieldset id="comments"&gt;
+ &lt;legend class="pageColor"&gt; &lt;a&gt;Commentaires&lt;/a&gt;&lt;span class="commands"&gt;&lt;a href="#new-comment" title="$msg.get("addcomment")"&gt;Add&lt;/a&gt;&lt;/span&gt;&lt;/legend&gt;
+&lt;ul class="star"&gt;
+#foreach ($comment in $doc.getComments())
+&lt;li&gt;&lt;span&gt;$comment.display("comment","view")&lt;/span&gt;&lt;span class="detail"&gt;Par #displayUserProfileLink($comment.author) le $comment.display("date","view")&lt;/span&gt;&lt;/li&gt;
+#end
+#if($xwiki.hasAccessLevel("comment"))
+#set($cclass = $xwiki.getDocument("XWiki.XWikiComments").getxWikiClass())
+#set($comment = $cclass.newObject())
+&lt;li id="new-comment"&gt;&lt;form action="$doc.getURL("commentadd")" method="post"&gt;
+ &lt;span&gt;$msg.get("addcomment")&lt;/span&gt;
+ &lt;input type="hidden" name="xredirect" value="$xwiki.getURL("ChronoMobile.Plog","view")?id=${doc.fullName}" /&gt;
+ &lt;input type="hidden" name="XWiki.XWikiComments_author" value="$context.user"/&gt;
+ &lt;input type="hidden" name="XWiki.XWikiComments_date" value=""/&gt;
+ &lt;textarea name="XWiki.XWikiComments_comment"&gt;&lt;/textarea&gt;
+ &lt;input type="submit" value="$msg.get("addcomment")"/&gt;
+&lt;/form&gt;&lt;/li&gt;
+#end
+&lt;/ul&gt;
+&lt;/fieldset&gt;
+&lt;fieldset id="documents"&gt;
+ &lt;legend class="pageColor"&gt; &lt;a&gt;Documents&lt;/a&gt;&lt;/legend&gt;
+&lt;ul class="star"&gt;
+#foreach ($attach in $doc.getAttachmentList())
+&lt;li&gt;&lt;a class="attachment" href="$doc.getAttachmentURL("${attach.filename}", "download")" type="$attach.mimeType" title="test"&gt;#packName($attach.filename)&lt;/a&gt;&lt;span class="detail"&gt;#dynamicsize($attach.filesize) Version $attach.version&lt;/span&gt;&lt;/li&gt;
+#end
+&lt;/ul&gt;
+&lt;/fieldset&gt;
+&lt;div id="update"&gt;Plog créé par #displayUserProfileLink($doc.author) le $xwiki.formatDate($doc.creationDate,"dd/MM/yyyy à mm:hh"), dernière modification le $xwiki.formatDate($doc.contentUpdateDate,"dd/MM/yyyy à mm:hh")&lt;/div&gt;
+#if($request.editmode)
+Edit Mode !
+#end</content>
+</xwikidoc>

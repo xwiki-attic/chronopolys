@@ -1,0 +1,62 @@
+### This is a test bed !
+
+ 
+#set ($projectsNb = $xwiki.chronopolys.getMyProjectsNb())
+#set ($deadlineNb = $xwiki.chronopolys.getMyNextDeadlines().size())
+#set ($deadlineNbNextWeek = $xwiki.chronopolys.getMyNextDeadlines(7).size())
+
+ <fieldset id="global-commands-user" title="Accueil" selected="true">
+ <legend> <a>Phillippe DUPOND</a></legend>
+ <ul id="global-menu" title="Global" > 
+   <li><span>Supervision</span>
+    <ul>
+     <li><a href="$xwiki.getURL("${doc.web}.Projects")" title="$projectsNb en cours">Projets</a></li>
+     <li><a href="$xwiki.getURL("${doc.web}.DeadLines")" title="$deadlineNb dont $deadlineNbNextWeek dans une semaine">Échéances</a></li>
+     <li><a href="$xwiki.getURL("${doc.web}.Updates")" title="7 la semaine dernière">Modifications</a> </li>     
+    </ul>
+   </li>
+   <li><a href="$xwiki.getURL("${doc.web}.Profile")">Profil</a> </li>
+   <li><a href="$xwiki.getURL("${doc.web}.Directory")" >Annuaire</a> </li>
+ </ul>
+ </fieldset>
+ 
+ 
+ 
+#set ($ilist = $xwiki.chronopolys.getMyProjects($projectsNb, 0))
+<fieldset id="global-commands-user" title="Accueil" selected="true">
+#foreach ($item in $ilist)
+#set ($project = $xwiki.chronopolys.getProject($item))
+<li>
+ <h2 class="name">[$project.get("name")>${item}.WebHome]</h2>
+ <div class="leader">$xwiki.getLocalUserName($project.getProjectLeader(), false)</div>
+#* <div class="breadcrumbs">#breadcrumb($xwiki.getDocument(${item}) "<a href='$doc.getURL('view')'>$tdoc.displayTitle</a>" 0)</div> *#
+#set( $projectMembers = $project.members )
+ <div>Member? 
+#if($context.user == $project.projectLeader)leader#elseif($project.isMember($context.user))member#elseif( $context.user == $project.projectCreator )creator#elseif( $project.isGuest($context.user) )guest#{else}unknown#end</div>
+
+ <ul class="members">
+   #foreach ($member in $project.getMembers())
+   <li>$xwiki.getLocalUserName($member, false)</li>
+   #end
+ </ul>
+</li>
+#end
+</ul>
+ 
+ $cdoc.getRenderedContent()
+ <!-- <fieldset id="global-commands-user" title="Accueil" selected="true">
+ <legend> <a>Phillippe DUPOND</a></legend>
+ <ul id="global-menu" title="Global" > 
+   <li><span>Supervision</span>
+    <ul>
+     <li><a href="listProject.html" title="23 en cours">Projets</a></li>
+     <li><a href="listDeadlines.html" title="50 dont 12 dans une semaine">Échéances</a></li>
+     <li><a href="#zone-modifications" title="7 la semaine dernière">Modifications</a> </li>     
+    </ul>
+   </li>
+   <li><a href="profil.html">Profil</a> </li>
+   <li><a href="utilisateurs.xml" >Annuaire</a> </li>
+ </ul>
+ </fieldset> -->
+</body>
+</html>

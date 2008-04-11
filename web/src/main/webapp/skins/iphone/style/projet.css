@@ -1,0 +1,114 @@
+/*
+ ChronoMobile/SupervisionList Page
+*/
+
+li.project .update, li.plog .update{
+ left: 20px; 
+}
+li.project, li.plog{
+ vertical-align: middle;
+}
+li.project .icon, li.deadline .icon, li.plog > a::before{
+ margin-right: 10px;
+ float : left;
+ content: "";
+ display: block;
+ width: 40px;
+ height : 40px;
+}
+
+li.project .path, li.plog .role, li.plog .path, .detail
+{
+ padding-left: 10px;
+ font-size: 15px;
+ display: block;
+}
+
+li.plog .icon[rel="meeting"] {
+    background-color:red;
+}
+
+li.plog.post > a::before{
+    background: url("icons/message.png") no-repeat 50% 50%;
+}
+
+li.plog.meeting > a::before{
+    background: url("icons/meeting.png") no-repeat 50% 50%;
+}
+li.plog.completed.meeting > a::before{
+    background: url("icons/meeting-past.png") no-repeat 50% 50%;
+}
+li.plog.task > a::before{
+    background: url("icons/task.png") no-repeat 50% 50%;
+}
+li.plog.completed.task > a::before{
+    background: url("icons/task-done.png") no-repeat 50% 50%;
+}
+
+li.leader .icon{
+    background: url("icons/manager.png") no-repeat 50% 50%;
+}
+li.creator .icon{
+    background: url("icons/user.png") no-repeat 50% 50%;
+}
+li.guest .icon{
+    background: url("icons/guest.png") no-repeat 50% 50%;
+}
+li.member .icon{
+    background: url("icons/user.png") no-repeat 50% 50%;
+}
+
+
+
+a.attachment::after{
+    padding-left: 5px;
+    font-size: 15px;
+    content: "(" attr(type) ")"
+}
+a.attachment::before{
+    margin-right: 10px;
+    display:block;
+    float: left;
+    width: 40px;
+    height: 40px;
+    content: "";
+}
+
+a.attachment[type="application/xml"]::before{
+    background: url("mimetype/xml.png") no-repeat 50% 50%;
+}
+
+a.attachment[type="application/rtf"]::before{
+    background: url("mimetype/txt.png") no-repeat 50% 50%;
+}
+
+a.attachment[type="application/pdf"]::before{
+    background: url("mimetype/pdf.png") no-repeat 50% 50%;
+}
+
+a.attachment[type="application/vnd.ms-excel"]::before{
+    background: url("mimetype/excel.png") no-repeat 50% 50%;
+}
+
+a.attachment[type="application/vnd.ms-powerpoint"]::before{
+    background: url("mimetype/ppt.png") no-repeat 50% 50%;
+}
+
+a.attachment[type="application/application/msword"]::before{
+    background: url("mimetype/word.png") no-repeat 50% 50%;
+}
+
+a.attachment[type^="image/"]::before{
+    background: url("mimetype/image.png") no-repeat 50% 50%;
+}
+a.attachment[type^="video/"]::before{
+    background: url("mimetype/video.png") no-repeat 50% 50%;
+}
+a.attachment[type^="audio/"]::before{
+    background: url("mimetype/sound.png") no-repeat 50% 50%;
+}
+
+
+a.attachment[type^="application/vnd.oasis.opendocument."]::before{
+    background: url("mimetype/openoffice.png") no-repeat 50% 50%;
+}

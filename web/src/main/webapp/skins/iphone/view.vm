@@ -1,0 +1,21 @@
+###
+### Main "view" template
+###
+### General wrapper for view actions
+###
+#set($content = $cdoc.getRenderedContent())<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+ <head>
+  <title>$xwiki.getWebPreference("title") - $!pageTitle</title>
+  <meta name="viewport" content="width=320; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+  <link href="$xwiki.getSkinFile("style/iphone.css")" rel="stylesheet" type="text/css" />
+  <link rel="icon" href="#getLogoURL()" type="image/png" title="Customer" />
+  <link rel="apple-touch-icon" href="$xwiki.getSkinFile("style/icon.png")"/>
+  #if($pageColor)
+  <style type="text/css"> .pageColor { background-color : $pageColor } </style>
+#end
+ </head>
+<body id="page-$!pageKey">$content
+</body>
+</html>

@@ -1559,7 +1559,9 @@ public class XWiki implements XWikiDocChangeNotificationInterface, XWikiInterfac
 
             }
             
-
+            if (context.getRequest().getHeader("user-agent").contains("iPhone")) {
+                skin = "iphone";
+            }
 
             if ((skin == null) || (skin.equals(""))) {
                 skin = getUserPreference("skin", context);

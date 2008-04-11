@@ -1,0 +1,14 @@
+/*
+ ChronoMobile/Login Page
+*/
+
+#page-login table{
+ width: 100%;
+}
+
+#page-login #login-logo{
+ margin-top: 10px;
+ margin-bottom: 10px;
+ width: 100%;
+ text-align: center;
+}
