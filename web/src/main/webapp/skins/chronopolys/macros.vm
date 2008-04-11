@@ -47,7 +47,11 @@ $context.getResponse().sendRedirect($xwiki.getURL($page,"view"))
 
 #macro(displayUser $value)
 #set($userDoc = $xwiki.getDocument($value))
+#if (!$userDoc.isNew())
 [$!{userDoc.display("first_name", "view")} $!{userDoc.display("last_name", "view")}>$value]
+#else
+$value.replaceAll("XWiki.", "")
+#end
 #end
 
 ###
