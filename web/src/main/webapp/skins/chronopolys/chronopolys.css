@@ -540,7 +540,7 @@ html {
 }
 
 .project_name a, .project_name pace alink, .project_name a:visited, .project_name a:active {
-    color: #fff;
+    color:#32353F;
     text-transform: uppercase;
     font-weight: bold;
     font-size: 14px;
@@ -548,7 +548,7 @@ html {
 }
 
 #project_bar_actions a, #project_bar_actions alink, #project_bar_actions a:visited, #project_bar_actions a:active {
-    color: #fff;
+    color:#32353F;
     font-weight: bold;
     font-size: 12px;
     text-decoration: none;
@@ -670,7 +670,7 @@ progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/xwiki/skins/chronopolys
     height: 20px;
     padding: 4px 0 0 10px;
     margin: 0 -5px;
-    color: #fff;
+    color: #32353F;
     font-weight: bold;
 }
 
@@ -683,7 +683,7 @@ progid:DXImageTransform.Microsoft.AlphaImageLoader(src='/xwiki/skins/chronopolys
     height: 20px;
     padding: 4px 0 0 10px;
     margin: 0 -5px;
-    color: #fff;
+    color: #32353F;
     font-weight: bold;
 }
 

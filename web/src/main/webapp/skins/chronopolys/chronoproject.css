@@ -184,8 +184,7 @@ progid:DXImageTransform.Microsoft.AlphaImageLoader(src='$xwiki.getSkinFile("proj
 .chronopanel_header {
   padding:4px 0px 0px 15px;
   height:20px;
-  //color:#32353F;
-  color:white;
+  color:#32353F;  
   text-transform:uppercase;
   font-weight:bold;
   font-size:12px;

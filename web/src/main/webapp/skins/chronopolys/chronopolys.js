@@ -1493,7 +1493,7 @@ xwkSlider.prototype = {
           var url = self.url;
           if(url.indexOf("?taskcompletion") > 0) 
             url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
-          url += "?taskcompletion=" + self.dp + "%";
+          url += "?taskcompletion=" + self.dp + "%25";
           var pivot = self;
           self.loading.style.display = "block";
           new Ajax.Request(url, {
@@ -1579,7 +1579,7 @@ xwkSlider.prototype = {
           var url = self.url;
           if(url.indexOf("?taskcompletion") > 0) 
             url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
-          url += "?taskcompletion=" + self.dp + "%";
+          url += "?taskcompletion=" + self.dp + "%25";
           var pivot = self;
           self.loading.style.display = "block";
           new Ajax.Request(url, {
