@@ -3,7 +3,7 @@
   <parent>
     <groupId>com.avane.xwiki.products</groupId>
     <artifactId>xwiki-product-chronopolys-parent</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
   </parent>
   <artifactId>xwiki-product-chronopolys-database</artifactId>
   <name>XWiki Products - Chronopolys - Database - Parent POM</name>
