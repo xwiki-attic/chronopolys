@@ -93,6 +93,7 @@
                   <version>${version}</version>
                   <type>war</type>
                   <outputDirectory>${project.build.directory}/container/webapps/xwiki</outputDirectory>
+                  <excludes>**/hibernate.cfg.xml</excludes>
                 </artifactItem>
                 <artifactItem>
                   <groupId>com.avane.xwiki.products</groupId>
