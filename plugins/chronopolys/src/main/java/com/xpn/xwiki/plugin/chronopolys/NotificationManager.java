@@ -278,11 +278,13 @@ public class NotificationManager
             String user = (String) it.next();
             String email = plugin.getUserManager().getUserEmail(user, context);
             String language = plugin.getUserManager().getUserLanguage(user, context);
+            String sender = context.getWiki()
+                .getXWikiPreference("admin_email", "mailer@xwiki.localdomain.com", context);
+
             vcontext
                 .put("username", context.getWiki().getLocalUserName(user, null, false, context));
             emailService.sendMessageFromTemplate(
-                plugin.getChronoPreference("notifications_sender", context),
-                email, null, null, language, mailTemplate, vcontext);
+                sender, email, null, null, language, mailTemplate, vcontext);
         }
     }
 }
