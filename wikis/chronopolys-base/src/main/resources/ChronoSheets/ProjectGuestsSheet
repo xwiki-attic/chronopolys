@@ -12,9 +12,9 @@
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
 <creationDate>1188907339000</creationDate>
-<date>1189608802000</date>
-<contentUpdateDate>1189608802000</contentUpdateDate>
-<version>1.11</version>
+<date>1208181726000</date>
+<contentUpdateDate>1208181726000</contentUpdateDate>
+<version>2.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
@@ -99,10 +99,9 @@ $msg.get("projectispublicextended")
 #if ($xwiki.hasAccessLevel("edit") &amp;&amp; !$project.isPublic())
 #set ($guests = $xwiki.chronopolys.getProject($doc.web).getGuests())
 #set ($members = $xwiki.chronopolys.getProject($doc.web).getMembers())
-#set ($users = $xwiki.rightsmanager.usersApi.getAllLocalUsersNames())
+#set ($users = $xwiki.chronopolys.getXWikiUsers())
 ## sort by last name
 #sortdocnamesbylastname($users) 
-#set($users_size = $users.size() - 1) ## because of XWiki.XWikiAdmin
 #set($users_left = $users.size() - $members.size() - $guests.size())
 #if ($users_left &gt; 0)
 #roundedtitletop($msg.get("addguest")) 
