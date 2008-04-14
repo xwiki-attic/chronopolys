@@ -1492,10 +1492,8 @@ xwkSlider.prototype = {
       // verify if the percent to change is different than previous percent
       // to avoid making ajax request for the same value
       if((code == 37 || code == 39) && self.keyDown && self.temp != self.dp) {
-          var url = self.url;
-          if(url.indexOf("?taskcompletion") > 0) 
-            url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
-          url += "?taskcompletion=" + self.dp + "%";
+          var url = self.url + self.dp + "%" + "&xredirect=/xwiki/blank.html";
+          url = encodeURI(url);
           var pivot = self;
           self.loading.style.display = "block";
           new Ajax.Request(url, {
@@ -1584,10 +1582,8 @@ xwkSlider.prototype = {
           if(self.updCol) self.updCol.style.width = self.dp + "%";
           if(self.dp != self.tempdp) {
             self.updHandler(self.slideNo, self.dp);       
-            var url = self.url;
-            if(url.indexOf("?taskcompletion") > 0) 
-              url = self.url.substring(0, self.url.indexOf("?taskcompletion"));
-            url += "?taskcompletion=" + self.dp + "%";
+            var url = self.url + self.dp + "%" + "&xredirect=/xwiki/blank.html";
+            url = encodeURI(url);
             var pivot = self;
             self.loading.style.display = "block";
             new Ajax.Request(url, {
