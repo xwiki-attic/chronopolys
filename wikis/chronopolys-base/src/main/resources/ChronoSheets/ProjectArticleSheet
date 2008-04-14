@@ -13,8 +13,8 @@
 <contentAuthor>XWiki.Admin</contentAuthor>
 <creationDate>1175075622000</creationDate>
 <date>1190219411000</date>
-<contentUpdateDate>1190219411000</contentUpdateDate>
-<version>1.80</version>
+<contentUpdateDate>1208179968000</contentUpdateDate>
+<version>1.1</version>
 <title></title>
 <template></template>
 <defaultTemplate></defaultTemplate>
@@ -59,13 +59,6 @@
 #set($creationDate = $xwiki.formatDate($bentrydoc.creationDate,"dd MMMM yyyy"))
 #if($context.action!="inline")
 ## ----------------------------------------------------------------------------
-## UPDATE TASK COMPLETION
-## ----------------------------------------------------------------------------
-#if($request.taskcompletion)
-$obj.set('taskcompletion', $request.taskcompletion)
-#set($discard = $doc.save())
-#end
-## ----------------------------------------------------------------------------
 ## VIEW
 ## ----------------------------------------------------------------------------
 #set($showattachments = "yes")
@@ -108,7 +101,8 @@ $obj.set('taskcompletion', $request.taskcompletion)
 #roundedbottom()
 {pre}
 &lt;script type="text/javascript"&gt;
-var slider = new xwkSlider({domNode:'slider', trackNode:'slider_track', updCol:'task_completed', loading:'tc_loading', url:'$doc.getURL()', updHandler:updTaskCompl} );
+#set($url = "${doc.getURL('save')}?ChronoClasses.ProjectArticleClass_${obj.getNumber()}_taskcompletion=")
+var slider = new xwkSlider({domNode:'slider', trackNode:'slider_track', updCol:'task_completed', loading:'tc_loading', url:'$url', updHandler:updTaskCompl} );
 &lt;/script&gt;
 {/pre}
 #end
@@ -371,4 +365,3 @@ Event.observe(window, 'load', loadRsvp, false);
 {/pre}
 #end</content>
 </xwikidoc>
-
