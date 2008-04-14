@@ -12,8 +12,8 @@
 <customClass></customClass>
 <contentAuthor>XWiki.jvdrean</contentAuthor>
 <creationDate>1173372305000</creationDate>
-<date>1208173695000</date>
-<contentUpdateDate>1208173695000</contentUpdateDate>
+<date>1208181766000</date>
+<contentUpdateDate>1208181766000</contentUpdateDate>
 <version>2.1</version>
 <title></title>
 <template></template>
@@ -99,8 +99,7 @@ $doc.display("role", $obj)&lt;/td&gt;
 #set ($users = $xwiki.chronopolys.getXWikiUsers())
 ## sort by last name
 #sortdocnamesbylastname($users)
-#set($users_size = $users.size() - 1) ## because of XWiki.Admin
-#if ($members.size() &lt;= $users_size)
+#if ($members.size() &lt;= $users.size())
 #roundedtitletop($msg.get("addmember")) 
 &lt;form name="addusertogroup" action="$doc.getURL("view")" method="post"&gt;
 &lt;input type="hidden" id="do" name="do" value="addmember" /&gt;
@@ -109,7 +108,7 @@ $doc.display("role", $obj)&lt;/td&gt;
 $msg.get("user") : 
 &lt;select id="member" name="member"&gt;
  #foreach($user in $users)
-    #if(!$members.contains($user) &amp;&amp; $user != "XWiki.Admin")
+    #if(!$members.contains($user))
     &lt;option value="$user"&gt;#displayUserFullName($user)&lt;/option&gt;
     #end
  #end
