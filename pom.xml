@@ -9,7 +9,7 @@
   <artifactId>xwiki-product-chronopolys-parent</artifactId>
   <packaging>pom</packaging>
   <name>XWiki Products - Chronopolys - Parent POM</name>
-  <version>1.0.1</version>
+  <version>1.0-SNAPSHOT</version>
   <description>XWiki Products - Chronopolys - Parent POM</description>  
   <properties>
     <!-- Versions of XWiki dependencies used in Chronopolys modules -->
@@ -76,8 +76,8 @@
     </extensions>
   </build>
   <scm>
-    <connection>scm:svn:http://svn.xwiki.org/svnroot/chronopolys/tags/xwiki-product-chronopolys-1.0.1</connection>
-    <developerConnection>scm:svn:https://svn.xwiki.org/svnroot/chronopolys/tags/xwiki-product-chronopolys-1.0.1</developerConnection>
-    <url>http://svn.xwiki.org/svnroot/chronopolys/tags/xwiki-product-chronopolys-1.0.1</url>
+    <connection>scm:svn:http://svn.xwiki.org/svnroot/chronopolys/branches/xwiki-product-chronopolys-1.0/</connection>
+    <developerConnection>scm:svn:https://svn.xwiki.org/svnroot/chronopolys/branches/xwiki-product-chronopolys-1.0/</developerConnection>
+    <url>http://svn.xwiki.org/svnroot/chronopolys/branches/xwiki-product-chronopolys-1.0/</url>
   </scm>
 </project>
