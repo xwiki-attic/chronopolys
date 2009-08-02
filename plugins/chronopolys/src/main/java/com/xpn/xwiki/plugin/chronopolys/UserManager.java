@@ -30,6 +30,8 @@ import com.xpn.xwiki.api.Object;
 
 import java.util.*;
 
+import org.apache.commons.lang.StringUtils;
+
 public class UserManager
 {
     // Deadline types
@@ -169,7 +171,12 @@ public class UserManager
      */
     public String getUserLanguage(String user, XWikiContext context) throws XWikiException
     {
-        return context.getWiki().getDocument(user, context).getStringValue("chronolanguage");
+    	String userLanguage = context.getWiki().getDocument(user, context).getStringValue("chronolanguage");    	
+    	if (StringUtils.isBlank(userLanguage)) {
+    		return context.getWiki().getLanguagePreference(context);
+    	}
+    	
+        return userLanguage;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
