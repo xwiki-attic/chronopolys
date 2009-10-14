@@ -73,6 +73,31 @@
         <version>${platform.tool.xar-handler.version}</version>
       </extension>
     </extensions>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <!-- Since 2.0-beta-9 maven-release-plugin uses remote tagging by default. Remote tagging implies that SCM
+               information is not fetched from the local working copy but from the SCM pom configuration. This forces
+               us to specify SCM configuration in every module which has its own lifecycle. Inheritance can't be used
+               for SCM configuration since a released parent pom contains SCM information about its tag and not about
+               the trunk. We could have globally set remoteTagging to false but we haven't since it would have
+               prevented us from using SVN 1.5. We also prefer to follow maven conventions as much as possible. -->
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <!-- Lock down plugin version for build reproducibility -->
+          <version>2.0-beta-9</version>
+          <configuration>
+            <!-- By default the release plugin will execute the "clean" and "verify" goals but won't perform an
+                 "install". This is causing problems since several modules will fail to build during release:prepare.
+                 See http://tinyurl.com/354vwe for more details. Thus we're forcing the execution of the "install"
+                 goal. -->
+            <preparationGoals>clean install</preparationGoals>
+            <!-- Avoid site generation during the release:perform to speed up release process -->
+            <goals>deploy</goals>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
   <scm>
     <connection>scm:svn:http://svn.xwiki.org/svnroot/chronopolys/trunk</connection>
