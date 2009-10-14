@@ -75,8 +75,8 @@
     </extensions>
   </build>
   <scm>
-    <connection>scm:svn:http://svn.xwiki.org/svnroot/chronopolys/trunk</connection>
-    <developerConnection>scm:svn:https://svn.xwiki.org/svnroot/chronopolys/trunk</developerConnection>
-    <url>http://svn.xwiki.org/svnroot/chronopolys/trunk</url>
+    <connection>scm:svn:http://svn.xwiki.org/svnroot/chronopolys/branches/xwiki-chronopolys-2.0</connection>
+    <developerConnection>scm:svn:https://svn.xwiki.org/svnroot/chronopolys/branches/xwiki-chronopolys-2.0</developerConnection>
+    <url>http://svn.xwiki.org/svnroot/chronopolys/branches/xwiki-chronopolys-2.0</url>
   </scm>
 </project>
